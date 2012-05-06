@@ -18,6 +18,10 @@ class Note : public QDialog, public Ui::Note {
      public slots:
       void saveNote();
       void dontSave();
+      void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+      void boldText(bool isBold);
+      void italicText(bool isItalic);
+      void underlinedText(bool isUnderlined);
 
      signals:
 
