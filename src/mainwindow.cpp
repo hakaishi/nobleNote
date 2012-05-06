@@ -3,6 +3,10 @@
 #include <QDebug>
 #include <QTextStream>
 #include <QFile>
+#include <QModelIndex>
+#include <QInputDialog>
+#include <filesystemmodel.h>
+
 
 NobleNote::NobleNote(){
 
@@ -16,11 +20,12 @@ NobleNote::NobleNote(){
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
 
-     fModel = new QFileSystemModel(this);
+     fModel = new FileSystemModel(this);
      fModel->setRootPath(origPath);
      fModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
 
-     nModel = new QFileSystemModel(this);
+
+     nModel = new FileSystemModel(this);
      nModel->setRootPath(origPath); //just as an example
      nModel->setFilter(QDir::Files);
 
@@ -48,6 +53,8 @@ NobleNote::NobleNote(){
     this, SLOT(showContextMenu(const QPoint &)));
      connect(nList, SIGNAL(customContextMenuRequested(const QPoint &)),
     this, SLOT(showContextMenu(const QPoint &)));
+
+     nList->setEditTriggers(QAbstractItemView::DoubleClicked);
 }
 
 NobleNote::~NobleNote(){}
@@ -89,8 +96,15 @@ void NobleNote::renameF(){ //TODO: somehow add flag to make it editable
 }
 
 void NobleNote::renameN(){ //TODO: somehow add flag to make it editable
-     nList->currentIndex().flags() | Qt::ItemIsEditable;
-     nList->edit(nList->currentIndex());
+    QModelIndex idx = nList->currentIndex();
+
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Rename"),
+                                         tr("Name:"), QLineEdit::Normal,
+                                          "enter a new name", &ok);
+     if(ok)
+         if(!nModel->setData(nList->currentIndex(),text,Qt::EditRole))
+             qDebug("rename failed");
 }
 
 void NobleNote::removeFolder(){
