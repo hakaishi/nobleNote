@@ -123,10 +123,11 @@ void NobleNote::showContextMenu(const QPoint &pos){
      connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
      menu->addAction(addNewF);
-     menu->addAction(addNewN);
      menu->addAction(renameF);
-     menu->addAction(renameN);
      menu->addAction(removeFolder);
+     menu->addSeparator();
+     menu->addAction(addNewN);
+     menu->addAction(renameN);
      menu->addAction(removeNote);
     
      menu->exec(globalPos);
