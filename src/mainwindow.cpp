@@ -16,19 +16,22 @@ NobleNote::NobleNote(){
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
 
-     dModel = new QFileSystemModel(this);
-     dModel->setRootPath(origPath);
-     dModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
-
      fModel = new QFileSystemModel(this);
-     fModel->setRootPath(origPath); //just as an example
+     fModel->setRootPath(origPath);
+     fModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+
+     nModel = new QFileSystemModel(this);
+     nModel->setRootPath(origPath); //just as an example
+     nModel->setFilter(QDir::Files);
 
      nbList = new QListView(splitter); //note book list
-     nbList->setModel(dModel);
-     nbList->setRootIndex(dModel->index(origPath));
+     nbList->setModel(fModel);
+     nbList->setRootIndex(fModel->index(origPath));
+     nbList->setContextMenuPolicy(Qt::CustomContextMenu);
      nList = new QListView(splitter);  //note list
-     nList->setModel(fModel);
-     nList->setRootIndex(fModel->index(origPath));
+     nList->setModel(nModel);
+     nList->setRootIndex(nModel->index(origPath));
+     nList->setContextMenuPolicy(Qt::CustomContextMenu);
 
   /* QString file(origPath + "/nobleNote.conf");
      QSettings settings(file, QSettings::IniFormat);
@@ -50,62 +53,81 @@ NobleNote::NobleNote(){
 NobleNote::~NobleNote(){}
 
 void NobleNote::setNewFolder(const QModelIndex &ind){
-     nList->setRootIndex(fModel->index(fModel->fileInfo(ind).filePath()));
+     nList->setRootIndex(nModel->setRootPath(nModel->fileInfo(ind).filePath()));
 }
 
 void NobleNote::nbAction(const QModelIndex &ind){
-     QString newPath = fModel->fileInfo(ind).filePath();
-     if(fModel->fileInfo(ind).isDir())
-       nList->setRootIndex(fModel->index(newPath));
-     if(fModel->fileInfo(ind).isFile()){
-       QFile file(newPath);
-       if(!file.open(QIODevice::ReadOnly))
-         return;
-       QTextStream stream(&file);
-       text = stream.readAll();  //TODO: there is uncalled text/html (after save)
-       file.close();
+     QString newPath = nModel->fileInfo(ind).filePath();
+     QFile file(newPath);
+     if(!file.open(QIODevice::ReadOnly))
+       return;
+     QTextStream stream(&file);
+     text = stream.readAll();
+     file.close();
 
-       Note *notes = new Note(this);
-       notes->text = text;
-       notes->notesPath = newPath;
-       notes->show();
-     }
+     Note *notes = new Note(this);
+     notes->text = text;
+     notes->notesPath = newPath;
+     notes->show();
 }
 
 void NobleNote::newF(){
-
+     QDir dir(origPath + "/" + tr("new folder"));
+     dir.mkdir(origPath + "/" + tr("new folder"));
 }
 
 void NobleNote::newN(){
-
+     QFile file(nModel->rootPath() + "/" + tr("new note"));
+     if(!file.open(QIODevice::WriteOnly))
+       return;
+     file.close();
 }
 
-void NobleNote::renameItem(){
-
+void NobleNote::renameF(){ //TODO: somehow add flag to make it editable
+     nbList->currentIndex().flags() | Qt::ItemIsEditable;
+     nbList->edit(nbList->currentIndex());
 }
 
-void NobleNote::removeItem(){
-
+void NobleNote::renameN(){ //TODO: somehow add flag to make it editable
+     nList->currentIndex().flags() | Qt::ItemIsEditable;
+     nList->edit(nList->currentIndex());
 }
 
-void NobleNote::showContextMenu(const QPoint &pos){ //TODO: won't work?
+void NobleNote::removeFolder(){
+     fModel->rmdir(nbList->currentIndex());
+//TODO: check why:
+//QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
+//QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
+}
+
+void NobleNote::removeNote(){
+     nModel->remove(nList->currentIndex());
+}
+
+void NobleNote::showContextMenu(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu* menu = new QMenu(this);
-     QAction* addNewF = new QAction(tr("New Folder"), this);
-     QAction* addNewN = new QAction(tr("New &Note"), this);
-     QAction* rename = new QAction(tr("R&ename Note"), this);
-     QAction* removeI = new QAction(tr("&Remove Note"), this);
+     QAction* addNewF = new QAction(tr("New &folder"), this);
+     QAction* addNewN = new QAction(tr("New &note"), this);
+     QAction* renameF = new QAction(tr("R&ename folder"), this);
+     QAction* renameN = new QAction(tr("Ren&ame note"), this);
+     QAction* removeFolder = new QAction(tr("&Remove folder"), this);
+     QAction* removeNote = new QAction(tr("Re&move note"), this);
 
      connect(addNewF, SIGNAL(triggered()), this, SLOT(newF()));
      connect(addNewN, SIGNAL(triggered()), this, SLOT(newN()));
-     connect(rename, SIGNAL(triggered()), this, SLOT(renameItem()));
-     connect(removeI, SIGNAL(triggered()), this, SLOT(removeItem()));
+     connect(renameF, SIGNAL(triggered()), this, SLOT(renameF()));
+     connect(renameN, SIGNAL(triggered()), this, SLOT(renameN()));
+     connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
+     connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
      menu->addAction(addNewF);
      menu->addAction(addNewN);
-     menu->addAction(rename);
-     menu->addAction(removeI);
+     menu->addAction(renameF);
+     menu->addAction(renameN);
+     menu->addAction(removeFolder);
+     menu->addAction(removeNote);
     
      menu->exec(globalPos);
 }

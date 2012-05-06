@@ -19,7 +19,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      private:
       QString text, str, origPath;
       QSplitter *splitter;
-      QFileSystemModel *dModel, *fModel;
+      QFileSystemModel *fModel, *nModel;
       QListView *nbList, *nList;
 
      private slots:
@@ -28,8 +28,10 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void showContextMenu(const QPoint &pos);
       void newF();
       void newN();
-      void renameItem();
-      void removeItem();
+      void renameF();
+      void renameN();
+      void removeFolder();
+      void removeNote();
 
      signals:
 

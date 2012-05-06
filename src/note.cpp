@@ -34,7 +34,6 @@ void Note::saveNote(){
 }
 
 void Note::dontSave(){
-     //TODO: restore to the state when file was first opened.
        QFile file(notesPath);
        if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
          return;
