@@ -50,11 +50,9 @@ NobleNote::NobleNote(){
      connect(nbList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(setNewFolder(const QModelIndex &)));
      connect(nList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(nbAction(const QModelIndex &)));
      connect(nbList, SIGNAL(customContextMenuRequested(const QPoint &)),
-    this, SLOT(showContextMenu(const QPoint &)));
+    this, SLOT(showContextMenuF(const QPoint &)));
      connect(nList, SIGNAL(customContextMenuRequested(const QPoint &)),
-    this, SLOT(showContextMenu(const QPoint &)));
-
-     nList->setEditTriggers(QAbstractItemView::DoubleClicked);
+    this, SLOT(showContextMenuN(const QPoint &)));
 }
 
 NobleNote::~NobleNote(){}
@@ -91,15 +89,22 @@ void NobleNote::newN(){
 }
 
 void NobleNote::renameF(){ //TODO: somehow add flag to make it editable
-     nbList->currentIndex().flags() | Qt::ItemIsEditable;
-     nbList->edit(nbList->currentIndex());
+     QModelIndex idx = nList->currentIndex();
+
+     bool ok;
+     QString text = QInputDialog::getText(this, tr("Rename"),
+                                         tr("Name:"), QLineEdit::Normal,
+                                          "enter a new name", &ok);
+     if(ok)
+         if(!fModel->setData(nbList->currentIndex(),text,Qt::EditRole))
+             qDebug("rename failed");
 }
 
 void NobleNote::renameN(){ //TODO: somehow add flag to make it editable
-    QModelIndex idx = nList->currentIndex();
+     QModelIndex idx = nList->currentIndex();
 
-    bool ok;
-    QString text = QInputDialog::getText(this, tr("Rename"),
+     bool ok;
+     QString text = QInputDialog::getText(this, tr("Rename"),
                                          tr("Name:"), QLineEdit::Normal,
                                           "enter a new name", &ok);
      if(ok)
@@ -118,28 +123,37 @@ void NobleNote::removeNote(){
      nModel->remove(nList->currentIndex());
 }
 
-void NobleNote::showContextMenu(const QPoint &pos){
+void NobleNote::showContextMenuF(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu* menu = new QMenu(this);
      QAction* addNewF = new QAction(tr("New &folder"), this);
-     QAction* addNewN = new QAction(tr("New &note"), this);
      QAction* renameF = new QAction(tr("R&ename folder"), this);
-     QAction* renameN = new QAction(tr("Ren&ame note"), this);
      QAction* removeFolder = new QAction(tr("&Remove folder"), this);
-     QAction* removeNote = new QAction(tr("Re&move note"), this);
 
      connect(addNewF, SIGNAL(triggered()), this, SLOT(newF()));
-     connect(addNewN, SIGNAL(triggered()), this, SLOT(newN()));
      connect(renameF, SIGNAL(triggered()), this, SLOT(renameF()));
-     connect(renameN, SIGNAL(triggered()), this, SLOT(renameN()));
      connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
-     connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
      menu->addAction(addNewF);
      menu->addAction(renameF);
      menu->addAction(removeFolder);
-     menu->addSeparator();
+    
+     menu->exec(globalPos);
+}
+
+void NobleNote::showContextMenuN(const QPoint &pos){
+     QPoint globalPos = this->mapToGlobal(pos);
+
+     QMenu* menu = new QMenu(this);
+     QAction* addNewN = new QAction(tr("New &note"), this);
+     QAction* renameN = new QAction(tr("Ren&ame note"), this);
+     QAction* removeNote = new QAction(tr("Re&move note"), this);
+
+     connect(addNewN, SIGNAL(triggered()), this, SLOT(newN()));
+     connect(renameN, SIGNAL(triggered()), this, SLOT(renameN()));
+     connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
+
      menu->addAction(addNewN);
      menu->addAction(renameN);
      menu->addAction(removeNote);

@@ -25,7 +25,8 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      private slots:
       void setNewFolder(const QModelIndex &ind);
       void nbAction(const QModelIndex &ind);
-      void showContextMenu(const QPoint &pos);
+      void showContextMenuF(const QPoint &pos);
+      void showContextMenuN(const QPoint &pos);
       void newF();
       void newN();
       void renameF();
