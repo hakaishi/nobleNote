@@ -12,6 +12,14 @@ Note::Note(QWidget *parent) : QDialog (parent){
      timer->setInterval(1000);
      timer->setSingleShot(true);
 
+     comboSize = new QComboBox(this);
+     comboSize->setEditable(true);
+     QFontDatabase db;
+     foreach(int size, db.standardSizes())
+       comboSize->addItem(QString::number(size));
+     comboSize->setCurrentIndex(comboSize->findText(QString::number(QApplication::font().pointSize())));
+     gridLayout->addWidget(comboSize, 0, 4, 1, 1);
+
      connect(textEdit, SIGNAL(textChanged()), timer, SLOT(start()));
      connect(timer, SIGNAL(timeout()), this, SLOT(saveNote()));
      connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked(bool)), this, SLOT(saveNote()));
@@ -19,9 +27,9 @@ Note::Note(QWidget *parent) : QDialog (parent){
      connect(toolB, SIGNAL(clicked()), this, SLOT(boldText()));
      connect(toolI, SIGNAL(clicked()), this, SLOT(italicText()));
      connect(toolU, SIGNAL(clicked()), this, SLOT(underlinedText()));
-     connect(fontComboBox, SIGNAL(currentFontChanged(const QFont &)), this, SLOT(fontOfText()));
-     connect(fontSizeSpin, SIGNAL(valueChanged(int)), this, SLOT(pointSizeOfText()));
-     connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(getFontAndPointSizeOfText()));
+     connect(fontComboBox, SIGNAL(activated(QString)), this, SLOT(fontOfText(QString)));
+     connect(comboSize, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
+     connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this, SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
 }
 
 Note::~Note(){}
@@ -87,23 +95,25 @@ void Note::underlinedText(){//TODO:for some reason (under-)line disappears while
      mergeFormatOnWordOrSelection(fmt);
 }
 
-void Note::getFontAndPointSizeOfText(){
-     fontComboBox->setCurrentFont(getFormatOnWordOrSelection().font());
-     fontSizeSpin->setValue(getFormatOnWordOrSelection().fontPointSize());
-  //TODO: this causes for some reason the text to change it's font settings when the text cursor changes its position or text is being selected...
+void Note::getFontAndPointSizeOfText(const QTextCharFormat &format){
+     fontComboBox->setCurrentIndex(fontComboBox->findText(format.font().family()));
+     comboSize->setCurrentIndex(comboSize->findText(QString::number(format.font().pointSize())));
+
 }
 
-void Note::fontOfText(){
+void Note::fontOfText(const QString &f){
      QTextCharFormat fmt;
-     fmt.setFont(fontComboBox->currentFont());
-     fmt.setFontPointSize(fontSizeSpin->value());
+     fmt.setFontFamily(f);
      mergeFormatOnWordOrSelection(fmt);
 }
 
-void Note::pointSizeOfText(){
-     QTextCharFormat fmt;
-     fmt.setFontPointSize(fontSizeSpin->value());
-     mergeFormatOnWordOrSelection(fmt);
+void Note::pointSizeOfText(const QString &p){
+     qreal pointSize = p.toFloat();
+     if(p.toFloat() > 0){
+       QTextCharFormat fmt;
+       fmt.setFontPointSize(pointSize);
+       mergeFormatOnWordOrSelection(fmt);
+     }
 }
 
 void Note::showEvent(QShowEvent* show_Note){

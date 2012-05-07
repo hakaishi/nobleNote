@@ -14,6 +14,7 @@ class Note : public QDialog, public Ui::Note {
 
      private:
       QTimer *timer;
+      QComboBox *comboSize;
 
      public slots:
       void saveNote();
@@ -23,9 +24,9 @@ class Note : public QDialog, public Ui::Note {
       void boldText();
       void italicText();
       void underlinedText();
-      void getFontAndPointSizeOfText();
-      void fontOfText();
-      void pointSizeOfText();
+      void getFontAndPointSizeOfText(const QTextCharFormat &format);
+      void fontOfText(const QString &f);
+      void pointSizeOfText(const QString &f);
 
      signals:
 
