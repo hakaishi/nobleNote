@@ -8,8 +8,6 @@ Note::Note(QWidget *parent) : QDialog (parent){
 
      setupUi(this);
 
-     //TODO:Make text formating possible
-
      timer = new QTimer(this);
      timer->setInterval(1000);
      timer->setSingleShot(true);
@@ -18,9 +16,12 @@ Note::Note(QWidget *parent) : QDialog (parent){
      connect(timer, SIGNAL(timeout()), this, SLOT(saveNote()));
      connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked(bool)), this, SLOT(saveNote()));
      connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked(bool)), this, SLOT(dontSave()));
-     connect(toolB, SIGNAL(clicked(bool)), this, SLOT(boldText(bool)));
-     connect(toolI, SIGNAL(clicked(bool)), this, SLOT(italicText(bool)));
-     connect(toolU, SIGNAL(clicked(bool)), this, SLOT(underlinedText(bool)));
+     connect(toolB, SIGNAL(clicked()), this, SLOT(boldText()));
+     connect(toolI, SIGNAL(clicked()), this, SLOT(italicText()));
+     connect(toolU, SIGNAL(clicked()), this, SLOT(underlinedText()));
+     connect(fontComboBox, SIGNAL(currentFontChanged(const QFont &)), this, SLOT(fontOfText()));
+     connect(fontSizeSpin, SIGNAL(valueChanged(int)), this, SLOT(pointSizeOfText()));
+     connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(getFontAndPointSizeOfText()));
 }
 
 Note::~Note(){}
@@ -32,7 +33,7 @@ void Note::saveNote(){
        QTextStream stream(&file);
        stream << textEdit->toHtml();
        file.close();
-       //TODO 3: create real notes (so far only journal)
+       //TODO: create real notes (so far only journal)
 }
 
 void Note::dontSave(){
@@ -44,6 +45,13 @@ void Note::dontSave(){
        file.close();
 }
 
+QTextCharFormat Note::getFormatOnWordOrSelection(){
+     QTextCursor cursor = textEdit->textCursor();
+     if (!cursor.hasSelection())
+         cursor.select(QTextCursor::WordUnderCursor);
+     return cursor.charFormat();
+}
+
 void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit->textCursor();
      if (!cursor.hasSelection())
@@ -52,21 +60,47 @@ void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      textEdit->mergeCurrentCharFormat(format);
 }
 
-void Note::boldText(bool isBold){ //TODO:for some reason variable is always false
+void Note::boldText(){
      QTextCharFormat fmt;
-     fmt.setFontWeight(isBold ? QFont::Bold : QFont::Normal);
+     if(getFormatOnWordOrSelection().fontWeight() == 75)
+       fmt.setFontWeight(QFont::Normal);
+     else
+       fmt.setFontWeight(QFont::Bold);
      mergeFormatOnWordOrSelection(fmt);
 }
 
-void Note::italicText(bool isItalic){//TODO:for some reason variable is always false
+void Note::italicText(){
      QTextCharFormat fmt;
-     fmt.setFontItalic(isItalic);
+     if(getFormatOnWordOrSelection().fontItalic())
+       fmt.setFontItalic(false);
+     else
+       fmt.setFontItalic(true);
      mergeFormatOnWordOrSelection(fmt);
 }
 
-void Note::underlinedText(bool isUnderlined){//TODO:for some reason variable is always false
+void Note::underlinedText(){//TODO:for some reason (under-)line disappears while text is selected
      QTextCharFormat fmt;
-     fmt.setFontUnderline(isUnderlined);
+     if(getFormatOnWordOrSelection().fontUnderline())
+       fmt.setFontUnderline(false);
+     else
+       fmt.setFontUnderline(true);
+     mergeFormatOnWordOrSelection(fmt);
+}
+
+void Note::getFontAndPointSizeOfText(){
+     fontComboBox->setCurrentFont(getFormatOnWordOrSelection().font());
+     fontSizeSpin->setValue(getFormatOnWordOrSelection().fontPointSize());
+}
+
+void Note::fontOfText(){
+     QTextCharFormat fmt;
+     fmt.setFont(fontComboBox->currentFont());
+     mergeFormatOnWordOrSelection(fmt);
+}
+
+void Note::pointSizeOfText(){
+     QTextCharFormat fmt;
+     fmt.setFontPointSize(fontSizeSpin->value());
      mergeFormatOnWordOrSelection(fmt);
 }
 

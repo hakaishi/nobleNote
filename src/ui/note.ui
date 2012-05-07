@@ -16,12 +16,6 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="3">
-      <widget class="QFontComboBox" name="fontComboBox"/>
-     </item>
-     <item row="1" column="0" colspan="4">
-      <widget class="QTextEdit" name="textEdit"/>
-     </item>
      <item row="0" column="2">
       <widget class="QToolButton" name="toolU">
        <property name="font">
@@ -30,9 +24,12 @@
         </font>
        </property>
        <property name="text">
-        <string>&amp;u</string>
+        <string>u</string>
        </property>
       </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QFontComboBox" name="fontComboBox"/>
      </item>
      <item row="0" column="1">
       <widget class="QToolButton" name="toolI">
@@ -42,7 +39,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&amp;i</string>
+        <string>i</string>
        </property>
       </widget>
      </item>
@@ -55,9 +52,19 @@
         </font>
        </property>
        <property name="text">
-        <string>&amp;b</string>
+        <string>b</string>
        </property>
       </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QSpinBox" name="fontSizeSpin">
+       <property name="value">
+        <number>12</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="5">
+      <widget class="QTextEdit" name="textEdit"/>
      </item>
     </layout>
    </item>
