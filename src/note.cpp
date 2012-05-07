@@ -90,11 +90,13 @@ void Note::underlinedText(){//TODO:for some reason (under-)line disappears while
 void Note::getFontAndPointSizeOfText(){
      fontComboBox->setCurrentFont(getFormatOnWordOrSelection().font());
      fontSizeSpin->setValue(getFormatOnWordOrSelection().fontPointSize());
+  //TODO: this causes for some reason the text to change it's font settings when the text cursor changes its position or text is being selected...
 }
 
 void Note::fontOfText(){
      QTextCharFormat fmt;
      fmt.setFont(fontComboBox->currentFont());
+     fmt.setFontPointSize(fontSizeSpin->value());
      mergeFormatOnWordOrSelection(fmt);
 }
 
