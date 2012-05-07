@@ -9,6 +9,13 @@
 #include <QFileSystemModel>
 #include <QListView>
 
+/**
+ * @brief note taking application main window
+ *
+ *  nb short for notebook
+ *  n short for note
+ */
+
 class NobleNote : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
  

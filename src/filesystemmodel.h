@@ -7,6 +7,7 @@
  * @brief  overwritten base class that circumvents a bug in QFileSystemodel which causes
  * the flags method to never return a Qt::ItemIsEditable
  *  because it checks for the permission QFile::WriteUser which seems to be always false
+ *  if Qt::ItemIsEditable is never set, setData or edit methods will always fail
  */
 
 class FileSystemModel : public QFileSystemModel

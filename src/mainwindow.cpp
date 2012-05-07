@@ -5,7 +5,8 @@
 #include <QFile>
 #include <QModelIndex>
 #include <QInputDialog>
-#include <filesystemmodel.h>
+#include <QMouseEvent>
+#include "filesystemmodel.h"
 
 
 NobleNote::NobleNote(){
@@ -33,7 +34,9 @@ NobleNote::NobleNote(){
      nbList->setModel(fModel);
      nbList->setRootIndex(fModel->index(origPath));
      nbList->setContextMenuPolicy(Qt::CustomContextMenu);
+     nbList->setEditTriggers(QListView::NoEditTriggers);
      nList = new QListView(splitter);  //note list
+     nList->setEditTriggers(QListView::NoEditTriggers);
      nList->setModel(nModel);
      nList->setRootIndex(nModel->index(origPath));
      nList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -89,27 +92,11 @@ void NobleNote::newN(){
 }
 
 void NobleNote::renameF(){ //TODO: somehow add flag to make it editable
-     QModelIndex idx = nList->currentIndex();
-
-     bool ok;
-     QString text = QInputDialog::getText(this, tr("Rename"),
-                                         tr("Name:"), QLineEdit::Normal,
-                                          "enter a new name", &ok);
-     if(ok)
-         if(!fModel->setData(nbList->currentIndex(),text,Qt::EditRole))
-             qDebug("rename failed");
+    nbList->edit(nbList->currentIndex());
 }
 
 void NobleNote::renameN(){ //TODO: somehow add flag to make it editable
-     QModelIndex idx = nList->currentIndex();
-
-     bool ok;
-     QString text = QInputDialog::getText(this, tr("Rename"),
-                                         tr("Name:"), QLineEdit::Normal,
-                                          "enter a new name", &ok);
-     if(ok)
-         if(!nModel->setData(nList->currentIndex(),text,Qt::EditRole))
-             qDebug("rename failed");
+    nList->edit(nList->currentIndex());
 }
 
 void NobleNote::removeFolder(){
