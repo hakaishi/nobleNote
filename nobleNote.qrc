@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="bold">src/icons/format-text-bold-symbolic.svg</file>
+        <file alias="italic">src/icons/format-text-italic-symbolic.svg</file>
+        <file alias="underlined">src/icons/format-text-italic-symbolic.svg</file>
+    </qresource>
+</RCC>

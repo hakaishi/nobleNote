@@ -3,8 +3,6 @@
 
 #include "ui_mainwindow.h"
 #include <QFileDialog>
-#include <QtGlobal>
-#include <QSettings>
 #include <QSplitter>
 #include <QFileSystemModel>
 #include <QListView>
@@ -14,6 +12,7 @@
  *
  *  nb short for notebook
  *  n short for note
+ *  f short for folder
  */
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
@@ -40,11 +39,6 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void renameN();
       void removeFolder();
       void removeNote();
-
-     signals:
-
-     protected:
-      //void mouseDoubleClickEvent(QMouseEvent *event){ Q_UNUSED(event); }
 };
 
 #endif
