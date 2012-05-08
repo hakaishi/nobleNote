@@ -25,18 +25,18 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      private:
       QString text, str, origPath;
       QSplitter *splitter;
-      QFileSystemModel *fModel, *nModel;
-      QListView *nbList, *nList;
+      QFileSystemModel *folderModel, *noteModel;
+      QListView *folderList, *noteList;
 
      private slots:
-      void setNewFolder(const QModelIndex &ind);
-      void nbAction(const QModelIndex &ind);
+      void setCurrentFolder(const QModelIndex &ind);
+      void openNote(const QModelIndex &ind = QModelIndex());
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);
-      void newF();
-      void newN();
-      void renameF();
-      void renameN();
+      void newFolder();
+      void newNote();
+      void renameFolder();
+      void renameNote();
       void removeFolder();
       void removeNote();
 };

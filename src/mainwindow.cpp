@@ -26,25 +26,25 @@ NobleNote::NobleNote(){
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
 
-     fModel = new FileSystemModel(this);
-     fModel->setRootPath(origPath);
-     fModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+     folderModel = new FileSystemModel(this);
+     folderModel->setRootPath(origPath);
+     folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
 
 
-     nModel = new FileSystemModel(this);
-     nModel->setRootPath(origPath); //just as an example
-     nModel->setFilter(QDir::Files);
+     noteModel = new FileSystemModel(this);
+     noteModel->setRootPath(origPath); //just as an example
+     noteModel->setFilter(QDir::Files);
 
-     nbList = new QListView(splitter); //note book list
-     nbList->setModel(fModel);
-     nbList->setRootIndex(fModel->index(origPath));
-     nbList->setContextMenuPolicy(Qt::CustomContextMenu);
+     folderList = new QListView(splitter); //note book list
+     folderList->setModel(folderModel);
+     folderList->setRootIndex(folderModel->index(origPath));
+     folderList->setContextMenuPolicy(Qt::CustomContextMenu);
      //nbList->setEditTriggers(QListView::NoEditTriggers);
-     nList = new QListView(splitter);  //note list
-     nList->setEditTriggers(QListView::NoEditTriggers);
-     nList->setModel(nModel);
-     nList->setRootIndex(nModel->index(origPath));
-     nList->setContextMenuPolicy(Qt::CustomContextMenu);
+     noteList = new QListView(splitter);  //note list
+     noteList->setEditTriggers(QListView::NoEditTriggers);
+     noteList->setModel(noteModel);
+     noteList->setRootIndex(noteModel->index(origPath));
+     noteList->setContextMenuPolicy(Qt::CustomContextMenu);
 
 //TODO: make it possible to import notes from some other folder or even another program
 
@@ -61,22 +61,28 @@ NobleNote::NobleNote(){
 //TODO: rather selectionChanged as clicked for setNewFolder.
 
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
-     connect(nbList, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setNewFolder(const QModelIndex &)));
-     connect(nList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(nbAction(const QModelIndex &)));
-     connect(nbList, SIGNAL(customContextMenuRequested(const QPoint &)),
+     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setCurrentFolder(const QModelIndex &)));
+     connect(folderList,SIGNAL(activated(QModelIndex)),this,SLOT(setCurrentFolder(QModelIndex)));
+     connect(noteList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(openNote(const QModelIndex &)));
+     connect(noteList,SIGNAL(activated(QModelIndex)),this,SLOT(openNote(QModelIndex)));
+     connect(folderList, SIGNAL(customContextMenuRequested(const QPoint &)),
     this, SLOT(showContextMenuF(const QPoint &)));
-     connect(nList, SIGNAL(customContextMenuRequested(const QPoint &)),
+     connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
     this, SLOT(showContextMenuN(const QPoint &)));
 }
 
 NobleNote::~NobleNote(){}
 
-void NobleNote::setNewFolder(const QModelIndex &ind){
-     nList->setRootIndex(nModel->setRootPath(nModel->fileInfo(ind).filePath()));
+void NobleNote::setCurrentFolder(const QModelIndex &ind){
+     noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
 }
 
-void NobleNote::nbAction(const QModelIndex &ind){
-     QString newPath = nModel->fileInfo(ind).filePath();
+void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
+    QModelIndex ind = index;
+    if(!ind.isValid()) // default constructed model index
+        ind = noteList->currentIndex();
+
+     QString newPath = noteModel->filePath(ind);
      QFile file(newPath);
      if(!file.open(QIODevice::ReadOnly))
        return;
@@ -90,35 +96,49 @@ void NobleNote::nbAction(const QModelIndex &ind){
      notes->show();
 }
 
-void NobleNote::newF(){
-     QDir dir(origPath + "/" + tr("new folder"));
-     dir.mkdir(origPath + "/" + tr("new folder"));
+void NobleNote::newFolder(){
+     QString path = origPath + "/" + tr("new folder");
+     int counter = 0;
+     while(QDir(path).exists())
+     {
+         ++counter;
+         path = origPath + "/" + tr("new folder (") + QString::number(counter) + ")";
+     }
+     QDir().mkdir(path);
 }
 
-void NobleNote::newN(){
-     QFile file(nModel->rootPath() + "/" + tr("new note"));
+void NobleNote::newNote(){
+    QString name = noteModel->rootPath() + "/" + tr("new note");
+    int counter = 0;
+    while(QFile::exists(name))
+    {
+        ++counter;
+        name = noteModel->rootPath() + "/" + tr("new note (") + QString::number(counter) + ")";
+    }
+
+     QFile file(name);
      if(!file.open(QIODevice::WriteOnly))
        return;
      file.close();
 }
 
-void NobleNote::renameF(){
-    nbList->edit(nbList->currentIndex());
+void NobleNote::renameFolder(){
+    folderList->edit(folderList->currentIndex());
 }
 
-void NobleNote::renameN(){
-    nList->edit(nList->currentIndex());
+void NobleNote::renameNote(){
+    noteList->edit(noteList->currentIndex());
 }
 
 void NobleNote::removeFolder(){
-     fModel->rmdir(nbList->currentIndex());
+     folderModel->rmdir(folderList->currentIndex());
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
 //QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
 }
 
 void NobleNote::removeNote(){
-     nModel->remove(nList->currentIndex());
+     noteModel->remove(noteList->currentIndex());
 }
 
 void NobleNote::showContextMenuF(const QPoint &pos){
@@ -129,8 +149,8 @@ void NobleNote::showContextMenuF(const QPoint &pos){
      QAction* renameF = new QAction(tr("R&ename folder"), this);
      QAction* removeFolder = new QAction(tr("&Remove folder"), this);
 
-     connect(addNewF, SIGNAL(triggered()), this, SLOT(newF()));
-     connect(renameF, SIGNAL(triggered()), this, SLOT(renameF()));
+     connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
+     connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
      connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
 
      menu->addAction(addNewF);
@@ -149,9 +169,9 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      QAction* renameN = new QAction(tr("Ren&ame note"), this);
      QAction* removeNote = new QAction(tr("Re&move note"), this);
 
-     connect(open, SIGNAL(triggered()), this, SLOT(openN()));
-     connect(addNewN, SIGNAL(triggered()), this, SLOT(newN()));
-     connect(renameN, SIGNAL(triggered()), this, SLOT(renameN()));
+     connect(open, SIGNAL(triggered()), this, SLOT(openNote()));
+     connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
+     connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
      connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
      menu->addAction(open);
