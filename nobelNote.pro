@@ -13,3 +13,4 @@ HEADERS = src/mainwindow.h src/note.h \
 FORMS = src/ui/note.ui src/ui/mainwindow.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/filesystemmodel.cpp
+RESOURCES = nobleNote.qrc
