@@ -94,6 +94,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      notes->text = text;
      notes->notesPath = newPath;
      notes->show();
+     notes->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void NobleNote::newFolder(){
