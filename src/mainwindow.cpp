@@ -63,7 +63,7 @@ NobleNote::NobleNote(){
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
      connect(folderList, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setCurrentFolder(const QModelIndex &)));
      connect(folderList,SIGNAL(activated(QModelIndex)),this,SLOT(setCurrentFolder(QModelIndex)));
-     connect(noteList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(openNote(const QModelIndex &)));
+     //connect(noteList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(openNote(const QModelIndex &)));
      connect(noteList,SIGNAL(activated(QModelIndex)),this,SLOT(openNote(QModelIndex)));
      connect(folderList, SIGNAL(customContextMenuRequested(const QPoint &)),
     this, SLOT(showContextMenuF(const QPoint &)));
@@ -144,41 +144,41 @@ void NobleNote::removeNote(){
 void NobleNote::showContextMenuF(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
-     QMenu* menu = new QMenu(this);
-     QAction* addNewF = new QAction(tr("New &folder"), this);
-     QAction* renameF = new QAction(tr("R&ename folder"), this);
-     QAction* removeFolder = new QAction(tr("&Remove folder"), this);
+     QMenu menu;
+     QAction* addNewF = new QAction(tr("New &folder"), &menu);
+     QAction* renameF = new QAction(tr("R&ename folder"), &menu);
+     QAction* removeFolder = new QAction(tr("&Remove folder"), &menu);
 
      connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
      connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
      connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
 
-     menu->addAction(addNewF);
-     menu->addAction(renameF);
-     menu->addAction(removeFolder);
+     menu.addAction(addNewF);
+     menu.addAction(renameF);
+     menu.addAction(removeFolder);
     
-     menu->exec(globalPos);
+     menu.exec(globalPos);
 }
 
 void NobleNote::showContextMenuN(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
-     QMenu* menu = new QMenu(this);
-     QAction* open = new QAction(tr("&Open note"), this);
-     QAction* addNewN = new QAction(tr("New &note"), this);
-     QAction* renameN = new QAction(tr("Ren&ame note"), this);
-     QAction* removeNote = new QAction(tr("Re&move note"), this);
+     QMenu menu;
+     QAction* open = new QAction(tr("&Open note"), &menu);
+     QAction* addNewN = new QAction(tr("New &note"), &menu);
+     QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
+     QAction* removeNote = new QAction(tr("Re&move note"), &menu);
 
      connect(open, SIGNAL(triggered()), this, SLOT(openNote()));
      connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
      connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
      connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
-     menu->addAction(open);
-     menu->addSeparator();
-     menu->addAction(addNewN);
-     menu->addAction(renameN);
-     menu->addAction(removeNote);
+     menu.addAction(open);
+     menu.addSeparator();
+     menu.addAction(addNewN);
+     menu.addAction(renameN);
+     menu.addAction(removeNote);
     
-     menu->exec(globalPos);
+     menu.exec(globalPos);
 }
