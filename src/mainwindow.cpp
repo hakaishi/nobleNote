@@ -16,7 +16,6 @@ NobleNote::NobleNote(){
 
 //TODO: create icon, system tray icon.
 //TODO: enable drag and drop.
-//TODO: open entry for notes.
 
      origPath = QDir::homePath() + "/.nobleNote";
      QDir nbDir(origPath);
@@ -35,12 +34,11 @@ NobleNote::NobleNote(){
      noteModel->setRootPath(origPath); //just as an example
      noteModel->setFilter(QDir::Files);
 
-     folderList = new QListView(splitter); //note book list
+     folderList = new QListView(splitter);
      folderList->setModel(folderModel);
      folderList->setRootIndex(folderModel->index(origPath));
      folderList->setContextMenuPolicy(Qt::CustomContextMenu);
-     //nbList->setEditTriggers(QListView::NoEditTriggers);
-     noteList = new QListView(splitter);  //note list
+     noteList = new QListView(splitter);
      noteList->setEditTriggers(QListView::NoEditTriggers);
      noteList->setModel(noteModel);
      noteList->setRootIndex(noteModel->index(origPath));
@@ -58,12 +56,9 @@ NobleNote::NobleNote(){
        qApp->quit();
      }*/
 
-//TODO: rather selectionChanged as clicked for setNewFolder.
-
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
      connect(folderList, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setCurrentFolder(const QModelIndex &)));
      connect(folderList,SIGNAL(activated(QModelIndex)),this,SLOT(setCurrentFolder(QModelIndex)));
-     //connect(noteList, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(openNote(const QModelIndex &)));
      connect(noteList,SIGNAL(activated(QModelIndex)),this,SLOT(openNote(QModelIndex)));
      connect(folderList, SIGNAL(customContextMenuRequested(const QPoint &)),
     this, SLOT(showContextMenuF(const QPoint &)));
@@ -165,18 +160,14 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu menu;
-     QAction* open = new QAction(tr("&Open note"), &menu);
      QAction* addNewN = new QAction(tr("New &note"), &menu);
      QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
      QAction* removeNote = new QAction(tr("Re&move note"), &menu);
 
-     connect(open, SIGNAL(triggered()), this, SLOT(openNote()));
      connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
      connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
      connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
-     menu.addAction(open);
-     menu.addSeparator();
      menu.addAction(addNewN);
      menu.addAction(renameN);
      menu.addAction(removeNote);
