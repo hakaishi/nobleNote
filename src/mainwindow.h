@@ -2,7 +2,7 @@
 #define NOBLENOTE_H
 
 #include "ui_mainwindow.h"
-#include <QFileDialog>
+#include <QSystemTrayIcon>
 #include <QSplitter>
 #include <QFileSystemModel>
 #include <QListView>
@@ -23,13 +23,19 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       ~NobleNote();
 
      private:
-      QString text, str, origPath;
-      QSplitter *splitter;
+      QString         text, str, origPath;
+      QSplitter       *splitter;
       QFileSystemModel *folderModel, *noteModel;
-      QListView *folderList, *noteList;
+      QListView       *folderList, *noteList;
+      QAction         *minimize_restore_action, *quit_action;
+      QIcon           icon;
+      QSystemTrayIcon *TIcon;
+      QMenu           *iMenu;
 
      private slots:
       void setCurrentFolder(const QModelIndex &ind);
+      void iconActivated(QSystemTrayIcon::ActivationReason reason);
+      void tray_actions();
       void openNote(const QModelIndex &ind = QModelIndex());
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);
@@ -39,6 +45,12 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void renameNote();
       void removeFolder();
       void removeNote();
+
+     protected:
+      void keyPressEvent(QKeyEvent* kEvent);
+      virtual void closeEvent(QCloseEvent* window_close);
+      virtual void showEvent(QShowEvent* window_show);
+      virtual void hideEvent(QHideEvent* window_hide);
 };
 
 #endif

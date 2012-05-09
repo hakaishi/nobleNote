@@ -17,6 +17,22 @@ NobleNote::NobleNote(){
 //TODO: create icon, system tray icon.
 //TODO: enable drag and drop.
 
+   //TrayIcon
+     QIcon icon = QIcon(":nobleNote");
+     TIcon = new QSystemTrayIcon(this);
+     TIcon->setIcon(icon);
+     TIcon->show();
+
+   //TrayIconContextMenu
+     iMenu = new QMenu(this);
+     minimize_restore_action = new QAction(tr("&Minimize"),this);
+     quit_action = new QAction(tr("&Quit"),this);
+
+     iMenu->addAction(minimize_restore_action);
+     iMenu->addAction(quit_action);
+
+     TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
+
      origPath = QDir::homePath() + "/.nobleNote";
      QDir nbDir(origPath);
      if(!nbDir.exists())
@@ -57,6 +73,10 @@ NobleNote::NobleNote(){
      }*/
 
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+     connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+       this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
+     connect(minimize_restore_action, SIGNAL(triggered()), this, SLOT(tray_actions()));
+     connect(quit_action, SIGNAL(triggered()), qApp, SLOT(quit())); //contextmenu "Quit" for the systray
      connect(folderList, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setCurrentFolder(const QModelIndex &)));
      connect(folderList,SIGNAL(activated(QModelIndex)),this,SLOT(setCurrentFolder(QModelIndex)));
      connect(noteList,SIGNAL(activated(QModelIndex)),this,SLOT(openNote(QModelIndex)));
@@ -70,6 +90,44 @@ NobleNote::~NobleNote(){}
 
 void NobleNote::setCurrentFolder(const QModelIndex &ind){
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
+}
+
+void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
+     if(reason == QSystemTrayIcon::Trigger){
+       if(isMinimized() || isHidden())  //in case that the window is minimized or hidden
+         tray_actions();
+     }
+}
+
+void NobleNote::tray_actions(){
+     if(isMinimized() || isHidden())  //in case that the window is minimized or hidden
+       showNormal();
+     else
+       hide();
+}
+
+void NobleNote::showEvent(QShowEvent* show_window){
+     minimize_restore_action->setText(tr("&Minimize"));
+     QWidget::showEvent(show_window);
+}
+
+void NobleNote::hideEvent(QHideEvent* window_hide){
+     minimize_restore_action->setText(tr("&Restore"));
+     QWidget::hideEvent(window_hide);
+}
+
+void NobleNote::closeEvent(QCloseEvent* window_close){
+     //if(!pref->getQuitOnClose())
+       hide();
+     //else
+       //qApp->quit();
+     QWidget::closeEvent(window_close);
+}
+
+void NobleNote::keyPressEvent(QKeyEvent *kEvent){
+     if(kEvent->modifiers() == Qt::ControlModifier)
+       if(kEvent->key() == Qt::Key_Q)
+         qApp->quit();
 }
 
 void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
