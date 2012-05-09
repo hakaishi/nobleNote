@@ -14,7 +14,6 @@ NobleNote::NobleNote(){
 
      setupUi(this);
 
-//TODO: create icon, system tray icon.
 //TODO: enable drag and drop.
 
    //TrayIcon
@@ -93,10 +92,8 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
 }
 
 void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
-     if(reason == QSystemTrayIcon::Trigger){
-       if(isMinimized() || isHidden())  //in case that the window is minimized or hidden
-         tray_actions();
-     }
+     if(reason == QSystemTrayIcon::Trigger)
+       tray_actions();
 }
 
 void NobleNote::tray_actions(){
