@@ -197,17 +197,18 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 
      QMenu menu;
      QAction* addNewF = new QAction(tr("New &folder"), &menu);
-     QAction* renameF = new QAction(tr("R&ename folder"), &menu);
-     QAction* removeFolder = new QAction(tr("&Remove folder"), &menu);
-
      connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
-     connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
-     connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
-
      menu.addAction(addNewF);
-     menu.addAction(renameF);
-     menu.addAction(removeFolder);
-    
+
+     if(folderList->indexAt(pos).isValid()) // if index exists at position
+     {
+         QAction* renameF = new QAction(tr("R&ename folder"), &menu);
+         QAction* removeFolder = new QAction(tr("&Remove folder"), &menu);
+         connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
+         connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
+         menu.addAction(renameF);
+         menu.addAction(removeFolder);
+     }
      menu.exec(globalPos);
 }
 
@@ -216,16 +217,17 @@ void NobleNote::showContextMenuN(const QPoint &pos){
 
      QMenu menu;
      QAction* addNewN = new QAction(tr("New &note"), &menu);
-     QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
-     QAction* removeNote = new QAction(tr("Re&move note"), &menu);
-
      connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
-     connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
-     connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
-
      menu.addAction(addNewN);
-     menu.addAction(renameN);
-     menu.addAction(removeNote);
-    
+
+     if(noteList->indexAt(pos).isValid()) // if index exists at position
+     {
+         QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
+         QAction* removeNote = new QAction(tr("Re&move note"), &menu);
+         connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
+         connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
+         menu.addAction(renameN);
+         menu.addAction(removeNote);
+     }
      menu.exec(globalPos);
 }
