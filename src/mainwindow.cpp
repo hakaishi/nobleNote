@@ -54,7 +54,7 @@ NobleNote::NobleNote(){
      folderList->setRootIndex(folderModel->index(origPath));
      folderList->setContextMenuPolicy(Qt::CustomContextMenu);
      noteList = new QListView(splitter);
-     noteList->setEditTriggers(QListView::NoEditTriggers);
+     noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
      noteList->setRootIndex(noteModel->index(origPath));
      noteList->setContextMenuPolicy(Qt::CustomContextMenu);

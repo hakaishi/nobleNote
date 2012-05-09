@@ -3,6 +3,6 @@
         <file alias="nobleNote">src/icons/nobleNote_64x64.png</file>
         <file alias="bold">src/icons/format-text-bold-symbolic.svg</file>
         <file alias="italic">src/icons/format-text-italic-symbolic.svg</file>
-        <file alias="underlined">src/icons/format-text-italic-symbolic.svg</file>
+        <file alias="underlined">src/icons/format-text-underline-symbolic.svg</file>
     </qresource>
 </RCC>
