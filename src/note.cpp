@@ -17,6 +17,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      connect(textEdit, SIGNAL(textChanged()), timer, SLOT(start()));
      connect(timer, SIGNAL(timeout()), this, SLOT(saveNote()));
+     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked(bool)), this, SLOT(saveJournal()));
      connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked(bool)), this, SLOT(saveNote()));
      connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked(bool)), this, SLOT(dontSave()));
      connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this, SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
@@ -24,14 +25,22 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
 Note::~Note(){}
 
-void Note::saveNote(){
-       QFile file(notesPath);
-       if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+void Note::saveJournal(){
+       QFile journal(journalsPath);
+       if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
          return;
-       QTextStream stream(&file);
+       QTextStream stream(&journal);
        stream << textEdit->toHtml();
-       file.close();
-       //TODO: create real notes (so far only journal)
+       journal.close();
+}
+
+void Note::saveNote(){
+       QFile note(notesPath);
+       if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
+         return;
+       QTextStream stream(&note);
+       stream << textEdit->toHtml();
+       note.close();     
 }
 
 void Note::dontSave(){

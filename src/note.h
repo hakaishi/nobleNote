@@ -12,7 +12,7 @@ class Note : public QMainWindow, public Ui::Note {
      public:
       Note(QWidget *parent = 0);
       ~Note();
-      QString text, notesPath;
+      QString text, journalsPath, notesPath;
 
      private:
       QTimer *timer;
@@ -23,6 +23,7 @@ class Note : public QMainWindow, public Ui::Note {
               *actionTextUnderline, *actionTextColor, *actionTextBColor;
 
      public slots:
+      void saveJournal();
       void saveNote();
       void dontSave();
       void setupTextFormattingOptions();

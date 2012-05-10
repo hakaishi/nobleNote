@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "note.h"
-#include <QDebug>
+#include "filesystemmodel.h"
+#include "preferences.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -8,9 +9,9 @@
 #include <QMouseEvent>
 #include <QDesktopServices>
 #include <QtConcurrentRun>
-//#include <QSettings>
-#include "filesystemmodel.h"
-
+#include <QSettings>
+#include <QMessageBox>
+#include <QDebug>
 
 NobleNote::NobleNote(){
 
@@ -34,16 +35,24 @@ NobleNote::NobleNote(){
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 
-     origPath = QDir::homePath() + "/.nobleNote";
-     QDir nobleNoteDir(origPath);
-     if(!nobleNoteDir.exists())
-       nobleNoteDir.mkdir(origPath);
+     QDir nbDir(QDir::homePath() + "/.nobleNote/Journals");
+     if(!nbDir.exists())
+       nbDir.mkdir(QDir::homePath() + "/.nobleNote/Journals");
 
-     // make sure there's at least one folder
-     if(nobleNoteDir.entryList(QDir::NoDotAndDotDot).isEmpty())
-     {
-         QDir(origPath).mkdir(tr("default"));
+     QString file(QDir::homePath() + "/.nobleNote/nobleNote.conf");
+     QSettings settings(file, QSettings::IniFormat);
+     if(!settings.isWritable()){
+       QTextStream myOutput;
+       myOutput << "W: nobelNote.conf is not writable!" << endl;
      }
+
+     pref = new Preferences(this);
+
+     pref->lineEdit->setText(settings.value("Path to note folders").toString());
+     if(pref->lineEdit->text().isEmpty())
+       origPath = QDir::homePath() + "/.nobleNote";
+     else
+       origPath = pref->lineEdit->text();
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
@@ -52,7 +61,7 @@ NobleNote::NobleNote(){
      folderModel->setRootPath(origPath);
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderModel->setReadOnly(false); // enable drag drop
-
+     //folderModel->setNameFilters(QStringList("Journals")); TODO:DON'T show journals.
 
      noteModel = new FileSystemModel(this);
      noteModel->setRootPath(origPath); //just as an example
@@ -100,21 +109,29 @@ NobleNote::NobleNote(){
      }*/
 
      // single shot connect
-     connect(folderModel,SIGNAL(directoryLoaded(QString)),this,SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
+     connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
+       SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
 
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
        this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
      connect(minimize_restore_action, SIGNAL(triggered()), this, SLOT(tray_actions()));
      connect(quit_action, SIGNAL(triggered()), qApp, SLOT(quit())); //contextmenu "Quit" for the systray
-     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setCurrentFolder(const QModelIndex &)));
-     connect(folderList,SIGNAL(activated(QModelIndex)),this,SLOT(setCurrentFolder(QModelIndex)));
-     connect(noteList,SIGNAL(activated(QModelIndex)),this,SLOT(openNote(QModelIndex)));
+     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
+       SLOT(setCurrentFolder(const QModelIndex &)));
+     connect(folderList,SIGNAL(activated(QModelIndex)), this,
+       SLOT(setCurrentFolder(QModelIndex)));
+     connect(noteList,SIGNAL(activated(QModelIndex)), this,
+       SLOT(openNote(QModelIndex)));
      connect(folderList, SIGNAL(customContextMenuRequested(const QPoint &)),
-    this, SLOT(showContextMenuF(const QPoint &)));
+       this, SLOT(showContextMenuF(const QPoint &)));
      connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
-    this, SLOT(showContextMenuN(const QPoint &)));
+       this, SLOT(showContextMenuN(const QPoint &)));
+     connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
+     connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
 }
+
+NobleNote::~NobleNote(){}
 
 void NobleNote::setFirstFolderCurrent(QString path)
 {
@@ -138,10 +155,24 @@ void NobleNote::setFirstFolderCurrent(QString path)
     thisMethodHasBeenCalled = true;
 }
 
-NobleNote::~NobleNote(){}
-
 void NobleNote::setCurrentFolder(const QModelIndex &ind){
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
+}
+
+void NobleNote::changeRootIndex(){
+     if(pref->lineEdit->text().isEmpty()){
+       origPath = QDir::homePath() + "/.nobleNote";
+       folderModel->setRootPath(origPath);
+       noteModel->setRootPath(origPath);
+       folderList->setRootIndex(folderModel->index(origPath));
+       noteList->setRootIndex(noteModel->index(origPath));
+     }
+     else{
+       folderModel->setRootPath(pref->lineEdit->text());
+       noteModel->setRootPath(pref->lineEdit->text());
+       folderList->setRootIndex(folderModel->index(pref->lineEdit->text()));
+       noteList->setRootIndex(noteModel->index(pref->lineEdit->text()));
+     }
 }
 
 void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
@@ -185,28 +216,42 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
     if(!ind.isValid()) // default constructed model index
         ind = noteList->currentIndex();
 
-     QString newPath = noteModel->filePath(ind);
-     QFile file(newPath);
-     if(!file.open(QIODevice::ReadOnly))
+     QString notesPath = noteModel->filePath(ind);
+     QFile noteFile(notesPath);
+     if(!noteFile.open(QIODevice::ReadOnly))
        return;
-     QTextStream stream(&file);
-     text = stream.readAll();
-     file.close();
+     QTextStream streamN(&noteFile);
+     text = streamN.readAll();
+     noteFile.close();
+
+     QString journalsPath = QDir::homePath() + "/.nobleNote/Journals/" +
+                  noteModel->fileName(ind) + ".journal";
+     QFile journalFile(journalsPath);
+     if(!journalFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     if(!journalFile.exists()){
+       QTextStream streamJ(&journalFile);
+       streamJ << text;
+     }
+     journalFile.close();
+
+     //TODO:
+     //if(QFileInfo(journalsPath).lastModified().toString() == QFileInfo(notesPath).lastModified().toString());
 
      Note *notes = new Note(this);
      notes->text = text;
-     notes->notesPath = newPath;
+     notes->notesPath = notesPath;
      notes->show();
      notes->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void NobleNote::newFolder(){
-     QString path = origPath + "/" + tr("new folder");
+     QString path = folderModel->rootPath() + "/" + tr("new folder");
      int counter = 0;
      while(QDir(path).exists())
      {
          ++counter;
-         path = origPath + "/" + tr("new folder (") + QString::number(counter) + ")";
+         path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
      QDir().mkdir(path);
 }
@@ -217,7 +262,7 @@ void NobleNote::newNote(){
     while(QFile::exists(name))
     {
         ++counter;
-        name = noteModel->rootPath() + "/" + tr("new note (") + QString::number(counter) + ")";
+        name = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
     }
 
      QFile file(name);
@@ -235,12 +280,22 @@ void NobleNote::renameNote(){
 }
 
 void NobleNote::removeFolder(){
-    QModelIndex ind = folderList->currentIndex();
+     //folderModel->rmdir(folderList->currentIndex());
+     QDir dir(folderModel->filePath(folderList->currentIndex()));
+     if(!dir.rmdir(folderModel->filePath(folderList->currentIndex()))){
+       QMessageBox msgBox;
+       msgBox.setWindowTitle(tr("Warning"));
+       msgBox.setIcon(QMessageBox::Warning);
+       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+       msgBox.setInformativeText(tr("The directory \"%1\" is not empty!").arg(
+         folderModel->filePath(folderList->currentIndex())));
+       QTimer::singleShot(6000, &msgBox, SLOT(close()));
+       msgBox.exec();
+     }
 #ifdef Q_OS_WIN32
     // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
     // and dir deletion is delayed until another dir has been selected or the application is closed
     folderList->setRowHidden(ind.row(),true);
-    folderModel->rmdir(ind);
 #endif
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden

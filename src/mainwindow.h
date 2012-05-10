@@ -15,6 +15,8 @@
  *  f short for folder
  */
 
+class Preferences;
+
 class NobleNote : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
  
@@ -30,8 +32,10 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QIcon           icon;
       QSystemTrayIcon *TIcon;
       QMenu           *iMenu;
+      Preferences     *pref;
 
      private slots:
+      void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
       void iconActivated(QSystemTrayIcon::ActivationReason reason);
       void tray_actions();
