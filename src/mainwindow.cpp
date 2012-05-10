@@ -92,11 +92,10 @@ NobleNote::NobleNote(){
      noteList->setModel(noteModel);
      noteList->setRootIndex(noteModel->index(origPath));
 
-     //QTimer::singleShot(2000,this,SLOT(setFirstFolderCurrent()));
-
 //TODO: make it possible to import notes from some other folder or even another program
 
-     // single shot connect
+     // sets random folder by default as current folder
+     // "single shot" slot
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
        SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
 
@@ -128,6 +127,7 @@ void NobleNote::setFirstFolderCurrent(QString path)
     // disconnecting this slot will not work button disconnect() will return true
     // qDebug() may work or not work depending how many time has elapsed in this function
 
+    // only call once
     static bool thisMethodHasBeenCalled = false;
 
     if(thisMethodHasBeenCalled)
@@ -282,9 +282,12 @@ void NobleNote::removeFolder(){
        QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.exec();
      }
+
+ // TODO  Important! the following #ifdef code must only be executed if the message box returns OK
 #ifdef Q_OS_WIN32
     // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
     // and dir deletion is delayed until another dir has been selected or the application is closed
+
     folderList->setRowHidden(idx.row(),true);
     QModelIndex idxAt = folderList->indexAt(QPoint(0,0));
     if(!idxAt.isValid())
