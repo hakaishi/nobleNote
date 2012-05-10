@@ -98,16 +98,6 @@ NobleNote::NobleNote(){
 
 //TODO: make it possible to import notes from some other folder or even another program
 
-//TODO?: Make it possible to change the search path for note books and notes?
-
-  /* QString file(origPath + "/nobleNote.conf");
-     QSettings settings(file, QSettings::IniFormat);
-     if(!settings.isWritable()){
-       QTextStream myOutput;
-       myOutput << "W: nobelNote.conf is not writable!" << endl;
-       qApp->quit();
-     }*/
-
      // single shot connect
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
        SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
@@ -241,6 +231,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      Note *notes = new Note(this);
      notes->text = text;
      notes->notesPath = notesPath;
+     notes->journalsPath = journalsPath;
      notes->show();
      notes->setAttribute(Qt::WA_DeleteOnClose);
 }
