@@ -6,6 +6,8 @@
 #include <QModelIndex>
 #include <QInputDialog>
 #include <QMouseEvent>
+#include <QDesktopServices>
+#include <QtConcurrentRun>
 //#include <QSettings>
 #include "filesystemmodel.h"
 
@@ -43,17 +45,33 @@ NobleNote::NobleNote(){
      folderModel = new FileSystemModel(this);
      folderModel->setRootPath(origPath);
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+     folderModel->setReadOnly(false); // enable drag drop
 
 
      noteModel = new FileSystemModel(this);
      noteModel->setRootPath(origPath); //just as an example
      noteModel->setFilter(QDir::Files);
 
-     folderList = new QListView(splitter);
+    folderList = new QListView(splitter);
+     noteList = new QListView(splitter);
+
+     QList<QListView*> listViews;
+     listViews << folderList << noteList;
+     foreach(QListView* list, listViews)
+     {
+        list->setContextMenuPolicy(Qt::CustomContextMenu);
+        //list->setSelectionMode(QAbstractItemView::SingleSelection); // single item can be draged or droped
+        list->setDragEnabled(true);
+        list->setDragDropMode(QAbstractItemView::DragDrop);
+        list->viewport()->setAcceptDrops(true);
+        list->setDropIndicatorShown(true);
+        list->setDefaultDropAction(Qt::MoveAction);
+     }
+
      folderList->setModel(folderModel);
      folderList->setRootIndex(folderModel->index(origPath));
      folderList->setContextMenuPolicy(Qt::CustomContextMenu);
-     noteList = new QListView(splitter);
+
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
      noteList->setRootIndex(noteModel->index(origPath));
@@ -182,7 +200,13 @@ void NobleNote::renameNote(){
 }
 
 void NobleNote::removeFolder(){
-     folderModel->rmdir(folderList->currentIndex());
+    QModelIndex ind = folderList->currentIndex();
+#ifdef Q_OS_WIN32
+    // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
+    // and dir deletion is delayed until another dir has been selected or the application is closed
+    folderList->setRowHidden(ind.row(),true);
+    folderModel->rmdir(ind);
+#endif
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
 //QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
