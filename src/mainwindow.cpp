@@ -86,13 +86,11 @@ NobleNote::NobleNote(){
      noteList->setDragEnabled(true);
      folderList->setDragEnabled(false);
 
-
      folderList->setModel(folderModel);
      folderList->setRootIndex(folderModel->index(origPath));
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
      noteList->setRootIndex(noteModel->index(origPath));
-
 
      //QTimer::singleShot(2000,this,SLOT(setFirstFolderCurrent()));
 
@@ -215,7 +213,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      noteFile.close();
 
      QString journalsPath = QDir::homePath() + "/.nobleNote/Journals/" +
-                  noteModel->fileName(ind) + ".journal";
+       folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
      QFile journalFile(journalsPath);
      if(!journalFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
