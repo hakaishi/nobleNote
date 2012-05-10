@@ -21,7 +21,6 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      public:
       NobleNote();
       ~NobleNote();
-
      private:
       QString         text, str, origPath;
       QSplitter       *splitter;
@@ -45,6 +44,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void renameNote();
       void removeFolder();
       void removeNote();
+      void setFirstFolderCurrent(QString path); // select first folder
 
      protected:
       void keyPressEvent(QKeyEvent* kEvent);

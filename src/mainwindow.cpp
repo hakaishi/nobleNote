@@ -35,9 +35,15 @@ NobleNote::NobleNote(){
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 
      origPath = QDir::homePath() + "/.nobleNote";
-     QDir nbDir(origPath);
-     if(!nbDir.exists())
-       nbDir.mkdir(origPath);
+     QDir nobleNoteDir(origPath);
+     if(!nobleNoteDir.exists())
+       nobleNoteDir.mkdir(origPath);
+
+     // make sure there's at least one folder
+     if(nobleNoteDir.entryList(QDir::NoDotAndDotDot).isEmpty())
+     {
+         QDir(origPath).mkdir(tr("default"));
+     }
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
@@ -51,8 +57,9 @@ NobleNote::NobleNote(){
      noteModel = new FileSystemModel(this);
      noteModel->setRootPath(origPath); //just as an example
      noteModel->setFilter(QDir::Files);
+     noteModel->setReadOnly(false);
 
-    folderList = new QListView(splitter);
+     folderList = new QListView(splitter);
      noteList = new QListView(splitter);
 
      QList<QListView*> listViews;
@@ -61,21 +68,24 @@ NobleNote::NobleNote(){
      {
         list->setContextMenuPolicy(Qt::CustomContextMenu);
         //list->setSelectionMode(QAbstractItemView::SingleSelection); // single item can be draged or droped
-        list->setDragEnabled(true);
+
         list->setDragDropMode(QAbstractItemView::DragDrop);
         list->viewport()->setAcceptDrops(true);
         list->setDropIndicatorShown(true);
         list->setDefaultDropAction(Qt::MoveAction);
      }
+     noteList->setDragEnabled(true);
+     folderList->setDragEnabled(false);
+
 
      folderList->setModel(folderModel);
      folderList->setRootIndex(folderModel->index(origPath));
-     folderList->setContextMenuPolicy(Qt::CustomContextMenu);
-
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
      noteList->setRootIndex(noteModel->index(origPath));
-     noteList->setContextMenuPolicy(Qt::CustomContextMenu);
+
+
+     //QTimer::singleShot(2000,this,SLOT(setFirstFolderCurrent()));
 
 //TODO: make it possible to import notes from some other folder or even another program
 
@@ -89,6 +99,9 @@ NobleNote::NobleNote(){
        qApp->quit();
      }*/
 
+     // single shot connect
+     connect(folderModel,SIGNAL(directoryLoaded(QString)),this,SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
+
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
        this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
@@ -101,6 +114,28 @@ NobleNote::NobleNote(){
     this, SLOT(showContextMenuF(const QPoint &)));
      connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
     this, SLOT(showContextMenuN(const QPoint &)));
+}
+
+void NobleNote::setFirstFolderCurrent(QString path)
+{
+    // this slot gets (probably) called by the QFileSystemModel gatherer thread
+    // due to some race conditions:
+    // disconnecting this slot will not work button disconnect() will return true
+    // qDebug() may work or not work depending how many time has elapsed in this function
+
+    static bool thisMethodHasBeenCalled = false;
+
+    if(thisMethodHasBeenCalled)
+        return;
+
+    QModelIndex idx = folderList->indexAt(QPoint(0,0));
+    if(!idx.isValid())
+    return;
+
+    folderList->selectionModel()->select(idx,QItemSelectionModel::Select);
+    setCurrentFolder(idx);
+
+    thisMethodHasBeenCalled = true;
 }
 
 NobleNote::~NobleNote(){}
