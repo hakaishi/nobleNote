@@ -270,21 +270,28 @@ void NobleNote::renameNote(){
 
 void NobleNote::removeFolder(){
      //folderModel->rmdir(folderList->currentIndex());
-     QDir dir(folderModel->filePath(folderList->currentIndex()));
-     if(!dir.rmdir(folderModel->filePath(folderList->currentIndex()))){
+    QModelIndex idx = folderList->currentIndex();
+     QDir dir(folderModel->filePath(idx));
+     if(!dir.rmdir(folderModel->filePath(idx))){
        QMessageBox msgBox;
        msgBox.setWindowTitle(tr("Warning"));
        msgBox.setIcon(QMessageBox::Warning);
        msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
        msgBox.setInformativeText(tr("The directory \"%1\" is not empty!").arg(
-         folderModel->filePath(folderList->currentIndex())));
+         folderModel->filePath(idx)));
        QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.exec();
      }
 #ifdef Q_OS_WIN32
     // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
     // and dir deletion is delayed until another dir has been selected or the application is closed
-    folderList->setRowHidden(ind.row(),true);
+    folderList->setRowHidden(idx.row(),true);
+    QModelIndex idxAt = folderList->indexAt(QPoint(0,0));
+    if(!idxAt.isValid())
+    return;
+
+    folderList->selectionModel()->select(idxAt,QItemSelectionModel::Select);
+    setCurrentFolder(idxAt);
 #endif
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
