@@ -5,7 +5,6 @@
 
 int main (int argc, char *argv[]){
 
-
      QApplication app(argc, argv);
      app.setApplicationName("NobleNote");
      app.setOrganizationName("Hakashi_and_Taiko");
@@ -14,6 +13,8 @@ int main (int argc, char *argv[]){
      qtTranslator.load("qt_" + QLocale::system().name(),
        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
      app.installTranslator(&qtTranslator);
+
+     app.setQuitOnLastWindowClosed(false);
 
      NobleNote window;
      window.show();

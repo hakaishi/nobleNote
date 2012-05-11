@@ -24,7 +24,9 @@ void Preferences::saveSettings(){
        QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.exec();
      }
-     settings.setValue("Path to note folders",lineEdit->text());
-     settings.setValue("Save notes periodically",pSpin->value());
+     settings.setValue("Path_to_note_folders",lineEdit->text());
+     settings.setValue("Save_notes_periodically",pSpin->value());
+     settings.setValue("Dont_quit_on_close", dontQuit->isChecked());
+
      sendPathChanged();
 }

@@ -35,16 +35,19 @@ NobleNote::NobleNote() : journalFolderName("Journals")
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 
-     QSettings settings;
-     QSettings::setDefaultFormat(QSettings::IniFormat);
+     QSettings settings(QDir::homePath() + "/.nobleNote/nobleNote.conf", QSettings::IniFormat);
      if(!settings.isWritable()){
        qWarning("W: nobelNote settings not writable!");
      }
 
-     origPath = settings.value("Path to note folders",QDir::homePath() + "/.nobleNote").toString();
      pref = new Preferences(this);
-     pref->lineEdit->setText(origPath);
-     pref->pSpin->setValue(settings.value("Save notes periodically",0).toInt());
+     pref->lineEdit->setText(settings.value("Path_to_note_folders").toString());
+     if(pref->lineEdit->text().isEmpty())
+       origPath = QDir::homePath() + "/.nobleNote";
+     else
+       origPath = pref->lineEdit->text();
+     pref->pSpin->setValue(settings.value("Save_notes_periodically",1).toInt());
+     pref->dontQuit->setChecked(settings.value("Dont_quit_on_close",false).toBool());
 
      QDir nbDir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
      if(!nbDir.exists())
@@ -191,10 +194,10 @@ void NobleNote::hideEvent(QHideEvent* window_hide){
 }
 
 void NobleNote::closeEvent(QCloseEvent* window_close){
-     //if(!pref->getQuitOnClose())
+     if(pref->dontQuit->isChecked())
        hide();
-     //else
-       //qApp->quit();
+     else
+       qApp->quit();
      QWidget::closeEvent(window_close);
 }
 
@@ -217,7 +220,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      text = streamN.readAll();
      noteFile.close();
 
-     QString journalsPath = QDir::homePath() + "/.nobleNote/" +journalFolderName + "/" +
+     QString journalsPath = QDir::homePath() + "/.nobleNote/" + journalFolderName + "/" +
        folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
      QFile journalFile(journalsPath);
      if(!journalFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
