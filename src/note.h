@@ -13,9 +13,10 @@ class Note : public QMainWindow, public Ui::Note {
       Note(QWidget *parent = 0);
       ~Note();
       QString text, journalsPath, notesPath;
+      QTimer *timer;
 
      private:
-      QTimer *timer;
+      QTimer *jTimer;
       QMenu *menu;
       QFontComboBox *fontComboBox;
       QComboBox *comboSize;
@@ -25,7 +26,7 @@ class Note : public QMainWindow, public Ui::Note {
      public slots:
       void saveJournal();
       void saveNote();
-      void dontSave();
+      void resetAll();
       void setupTextFormattingOptions();
       QTextCharFormat getFormatOnWordOrSelection();
       void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
@@ -39,10 +40,10 @@ class Note : public QMainWindow, public Ui::Note {
       void pointSizeOfText(const QString &f);
 
      signals:
+      void sendSaveBeforeClose();
 
      protected:
       virtual void showEvent(QShowEvent* show_Note);
-      virtual void closeEvent(QCloseEvent* close_Note);
 };
 
 #endif

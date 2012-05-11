@@ -11,45 +11,54 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setupTextFormattingOptions();
 
+     jTimer = new QTimer(this);
+     jTimer->setInterval(1000);
+     jTimer->setSingleShot(true);
+
      timer = new QTimer(this);
-     timer->setInterval(1000);
-     timer->setSingleShot(true);
 
      connect(textEdit, SIGNAL(textChanged()), timer, SLOT(start()));
+     connect(jTimer, SIGNAL(timeout()), this, SLOT(saveJournal()));
+     connect(jTimer, SIGNAL(timeout()), this, SLOT(saveNote()));
+     connect(timer, SIGNAL(timeout()), this, SLOT(saveJournal()));
      connect(timer, SIGNAL(timeout()), this, SLOT(saveNote()));
-     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked(bool)), this, SLOT(saveJournal()));
-     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked(bool)), this, SLOT(saveNote()));
-     connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked(bool)), this, SLOT(dontSave()));
-     connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this, SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
+     connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
+       this, SLOT(resetAll()));
+     connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
+       SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
+     connect(this, SIGNAL(sendSaveBeforeClose()), this, SLOT(saveJournal()));
+     connect(this, SIGNAL(sendSaveBeforeClose()), this, SLOT(saveNote()));
 }
 
-Note::~Note(){}
+Note::~Note(){ sendSaveBeforeClose(); }
 
 void Note::saveJournal(){
-       QFile journal(journalsPath);
-       if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
-         return;
-       QTextStream stream(&journal);
-       stream << textEdit->toHtml();
-       journal.close();
+     QFile journal(journalsPath);
+     if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     QTextStream stream(&journal);
+     stream << textEdit->toHtml();
+     journal.close();
 }
 
 void Note::saveNote(){
-       QFile note(notesPath);
-       if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
-         return;
-       QTextStream stream(&note);
-       stream << textEdit->toHtml();
-       note.close();     
+     QFile note(notesPath);
+     if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     QTextStream stream(&note);
+     stream << textEdit->toHtml();
+     note.close();
 }
 
-void Note::dontSave(){
-       QFile file(notesPath);
-       if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-         return;
-       QTextStream stream(&file);
-       stream << text;
-       file.close();
+void Note::resetAll(){
+     QFile file(notesPath);
+     if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     QTextStream stream(&file);
+     stream << text;
+     file.close();
+
+     textEdit->setHtml(text);
 }
 
 void Note::setupTextFormattingOptions(){
@@ -201,9 +210,4 @@ void Note::pointSizeOfText(const QString &p){
 void Note::showEvent(QShowEvent* show_Note){
      textEdit->setHtml(text);
      QWidget::showEvent(show_Note);
-}
-
-void Note::closeEvent(QCloseEvent* close_Note){
-     dontSave();
-     QWidget::closeEvent(close_Note);
 }

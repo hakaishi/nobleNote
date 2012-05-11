@@ -44,6 +44,7 @@ NobleNote::NobleNote() : journalFolderName("Journals")
      origPath = settings.value("Path to note folders",QDir::homePath() + "/.nobleNote").toString();
      pref = new Preferences(this);
      pref->lineEdit->setText(origPath);
+     pref->pSpin->setValue(settings.value("Save notes periodically",0).toInt());
 
      QDir nbDir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
      if(!nbDir.exists())
@@ -234,6 +235,8 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      notes->text = text;
      notes->notesPath = notesPath;
      notes->journalsPath = journalsPath;
+     if(pref->pSpin->value() > 0)
+       notes->timer->start(pref->pSpin->value() * 60000);
      notes->show();
      notes->setAttribute(Qt::WA_DeleteOnClose);
 }
