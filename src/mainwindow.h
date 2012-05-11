@@ -25,6 +25,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       ~NobleNote();
      private:
       QString         text, str, origPath;
+      const QString     journalFolderName;
       QSplitter       *splitter;
       QFileSystemModel *folderModel, *noteModel;
       QListView       *folderList, *noteList;

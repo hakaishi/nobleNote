@@ -13,8 +13,8 @@
 #include <QMessageBox>
 #include <QDebug>
 
-NobleNote::NobleNote(){
-
+NobleNote::NobleNote() : journalFolderName("Journals")
+{
      setupUi(this);
 
 //TODO: enable drag and drop.
@@ -35,24 +35,28 @@ NobleNote::NobleNote(){
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 
-     QDir nbDir(QDir::homePath() + "/.nobleNote/Journals");
-     if(!nbDir.exists())
-       nbDir.mkdir(QDir::homePath() + "/.nobleNote/Journals");
-
-     QString file(QDir::homePath() + "/.nobleNote/nobleNote.conf");
-     QSettings settings(file, QSettings::IniFormat);
+     QSettings settings;
+     QSettings::setDefaultFormat(QSettings::IniFormat);
      if(!settings.isWritable()){
-       QTextStream myOutput;
-       myOutput << "W: nobelNote.conf is not writable!" << endl;
+       qWarning("W: nobelNote settings not writable!");
      }
 
+     origPath = settings.value("Path to note folders",QDir::homePath() + "/.nobleNote").toString();
      pref = new Preferences(this);
+     pref->lineEdit->setText(origPath);
 
-     pref->lineEdit->setText(settings.value("Path to note folders").toString());
-     if(pref->lineEdit->text().isEmpty())
-       origPath = QDir::homePath() + "/.nobleNote";
-     else
-       origPath = pref->lineEdit->text();
+     QDir nbDir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
+     if(!nbDir.exists())
+       nbDir.mkdir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
+
+     // make sure there's at least one folder
+     QStringList dirList = nbDir.entryList(QDir::NoDotAndDotDot);
+     dirList.removeOne(journalFolderName);
+     if(dirList.isEmpty())
+     {
+         QDir(origPath).mkdir(tr("default"));
+     }
+
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
