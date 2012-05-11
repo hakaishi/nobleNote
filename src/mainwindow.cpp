@@ -272,22 +272,78 @@ void NobleNote::renameNote(){
     noteList->edit(noteList->currentIndex());
 }
 
-void NobleNote::removeFolder(){
-     //folderModel->rmdir(folderList->currentIndex());
-    QModelIndex idx = folderList->currentIndex();
-     QDir dir(folderModel->filePath(idx));
-     if(!dir.rmdir(folderModel->filePath(idx))){
-       QMessageBox msgBox;
-       msgBox.setWindowTitle(tr("Warning"));
-       msgBox.setIcon(QMessageBox::Warning);
-       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
-       msgBox.setInformativeText(tr("The directory \"%1\" is not empty!").arg(
-         folderModel->filePath(idx)));
-       QTimer::singleShot(6000, &msgBox, SLOT(close()));
-       msgBox.exec();
-     }
+static void recurseAddDir(QDir d, QStringList & list) {
 
- // TODO  Important! the following #ifdef code must only be executed if the message box returns OK
+    QStringList qsl = d.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
+
+    foreach (QString file, qsl) {
+
+        QFileInfo finfo(QString("%1/%2").arg(d.path()).arg(file));
+
+        if (finfo.isSymLink())
+        {
+            qDebug("symlink found");
+            return;
+        }
+
+        if (finfo.isDir()) {
+
+            QString dirname = finfo.fileName();
+            QDir sd(finfo.filePath());
+
+            recurseAddDir(sd, list);
+
+        } else
+            list << QDir::toNativeSeparators(finfo.filePath());
+    }
+}
+
+void NobleNote::removeFolder(){
+
+    QStringList dirList = QDir(origPath).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    dirList.removeOne(journalFolderName);
+
+    // keep at least one folder
+    if(dirList.size() == 1)
+    {
+        QMessageBox::information(this,tr("One notebook must remain"),tr("At least one notebook must remain."));
+        return;
+    }
+
+    QModelIndex idx = folderList->currentIndex();
+
+    // remove empty folders without prompt else show a yes/abort message box
+    if(!folderModel->rmdir(idx)) // folder not empty
+    {
+        if(QMessageBox::warning(this,tr("Remove Folder"),
+                                tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
+                             QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+            return;
+
+
+        // list all files & folders recursively
+        QString path = folderModel->filePath(idx);
+        QStringList fileList = QDir(path).entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
+
+        // try to remove each
+        foreach(QString name, fileList)
+        {
+            name = QDir::toNativeSeparators(QString("%1/%2").arg(path).arg(name));
+            if(!QFile::remove(name))
+            {
+                qWarning(qPrintable(QString("could not remove ") + name));
+            }
+        }
+
+        // try to remove the (now empty?) folder again
+        if(!folderModel->rmdir(idx))
+        {
+            QMessageBox::warning(this,tr("Folder could not be removed"), tr("The folder could not be removed because one or more files inside the folder could not be removed"));
+            return;
+        }
+    }
+
+// // TODO  Important! the following #ifdef code must only be executed if the folder has been removed
 #ifdef Q_OS_WIN32
     // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
     // and dir deletion is delayed until another dir has been selected or the application is closed
@@ -300,6 +356,7 @@ void NobleNote::removeFolder(){
     folderList->selectionModel()->select(idxAt,QItemSelectionModel::Select);
     setCurrentFolder(idxAt);
 #endif
+
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
 //QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
