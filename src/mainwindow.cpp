@@ -217,7 +217,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      text = streamN.readAll();
      noteFile.close();
 
-     QString journalsPath = QDir::homePath() + "/.nobleNote/Journals/" +
+     QString journalsPath = QDir::homePath() + "/.nobleNote/" +journalFolderName + "/" +
        folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
      QFile journalFile(journalsPath);
      if(!journalFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
