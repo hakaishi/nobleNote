@@ -13,25 +13,32 @@
 #include <QMessageBox>
 #include <QDebug>
 
+
+
 NobleNote::NobleNote() : journalFolderName("Journals")
 {
      setupUi(this);
 
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
+
+     minimize_restore_action = new QAction(tr("&Minimize"),this);
+     quit_action = new QAction(tr("&Quit"),this);
+
+#ifndef NO_SYSTEM_TRAY_ICON
      TIcon = new QSystemTrayIcon(this);
      TIcon->setIcon(icon);
      TIcon->show();
 
    //TrayIconContextMenu
      iMenu = new QMenu(this);
-     minimize_restore_action = new QAction(tr("&Minimize"),this);
-     quit_action = new QAction(tr("&Quit"),this);
-
      iMenu->addAction(minimize_restore_action);
      iMenu->addAction(quit_action);
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
+#endif
+
+
 
    //Configuration file
      QSettings settings;
@@ -110,9 +117,11 @@ NobleNote::NobleNote() : journalFolderName("Journals")
        SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
 
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    #ifndef NO_SYSTEM_TRAY_ICON
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-       this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
+       this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol     
      connect(minimize_restore_action, SIGNAL(triggered()), this, SLOT(tray_actions()));
+      #endif
      connect(quit_action, SIGNAL(triggered()), qApp, SLOT(quit())); //contextmenu "Quit" for the systray
      connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
        SLOT(setCurrentFolder(const QModelIndex &)));
@@ -173,17 +182,21 @@ void NobleNote::changeRootIndex(){
      }
 }
 
+#ifndef NO_SYSTEM_TRAY_ICON
 void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
      if(reason == QSystemTrayIcon::Trigger)
        tray_actions();
 }
+#endif
 
+#ifndef NO_SYSTEM_TRAY_ICON
 void NobleNote::tray_actions(){
      if(isMinimized() || isHidden())  //in case that the window is minimized or hidden
        showNormal();
      else
        hide();
 }
+#endif
 
 void NobleNote::showEvent(QShowEvent* show_window){
      minimize_restore_action->setText(tr("&Minimize"));

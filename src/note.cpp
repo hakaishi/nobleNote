@@ -5,6 +5,7 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QTextStream>
+#include <QTextFrame>
 
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
@@ -33,6 +34,17 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 Note::~Note(){ sendSaveBeforeClose(); }
 
 void Note::saveJournal(){
+    qDebug("journal saved");
+    QTextFrame * frame = this->textEdit->document()->rootFrame();
+
+    for(QTextFrame::Iterator it = frame->begin(); it != frame->end(); ++it)
+    {
+        for(QTextBlock::Iterator i = it.currentBlock().begin(); i != it.currentBlock().end(); ++i)
+        {
+            qDebug(i.fragment().text().toAscii());
+        }
+    }
+
      QFile journal(journalsPath);
      if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
@@ -42,6 +54,7 @@ void Note::saveJournal(){
 }
 
 void Note::saveNote(){
+
      QFile note(notesPath);
      if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;

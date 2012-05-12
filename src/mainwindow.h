@@ -15,6 +15,8 @@
  *  f short for folder
  */
 
+#define NO_SYSTEM_TRAY_ICON
+
 class Preferences;
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
@@ -30,17 +32,25 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QSplitter       *splitter;
       QFileSystemModel *folderModel, *noteModel;
       QListView       *folderList, *noteList;
-      QAction         *minimize_restore_action, *quit_action;
+      QAction         *quit_action;
       QIcon           icon;
-      QSystemTrayIcon *TIcon;
-      QMenu           *iMenu;
       Preferences     *pref;
+      QAction         *minimize_restore_action;
+
+#ifndef NO_SYSTEM_TRAY_ICON
+      QMenu           *iMenu;
+      QSystemTrayIcon *TIcon;
+#endif
 
      private slots:
       void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
+
+#ifndef NO_SYSTEM_TRAY_ICON
       void iconActivated(QSystemTrayIcon::ActivationReason reason);
       void tray_actions();
+#endif
+
       void openNote(const QModelIndex &ind = QModelIndex());
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);
