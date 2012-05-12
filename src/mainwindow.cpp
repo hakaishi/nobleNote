@@ -35,7 +35,8 @@ NobleNote::NobleNote() : journalFolderName("Journals")
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 
-     QSettings settings(QDir::homePath() + "/.nobleNote/nobleNote.conf", QSettings::IniFormat);
+     QSettings settings;
+     QSettings::setDefaultFormat(QSettings::IniFormat);
      if(!settings.isWritable()){
        qWarning("W: nobelNote settings not writable!");
      }

@@ -6,8 +6,9 @@
 int main (int argc, char *argv[]){
 
      QApplication app(argc, argv);
-     app.setApplicationName("NobleNote");
-     app.setOrganizationName("Hakashi_and_Taiko");
+     app.setApplicationName("nobleNote");
+     app.setOrganizationName("Hakaishi_and_Taiko");
+
      //Qt translations
      QTranslator qtTranslator;
      qtTranslator.load("qt_" + QLocale::system().name(),

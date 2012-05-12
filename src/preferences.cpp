@@ -13,20 +13,34 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 Preferences::~Preferences(){}
 
 void Preferences::saveSettings(){
-     QString file(QDir::homePath() + "/.nobleNote/nobleNote.conf");
-     QSettings settings(file, QSettings::IniFormat);
+     QSettings settings("Hakaishi_and_Taiko", "nobleNote");
+     QSettings::setDefaultFormat(QSettings::IniFormat);
      if(!settings.isWritable()){
        QMessageBox msgBox;
        msgBox.setWindowTitle(tr("Warning"));
        msgBox.setIcon(QMessageBox::Critical);
        msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
-       msgBox.setInformativeText(tr("nobleNote.conf ist not writable"));
+       msgBox.setInformativeText(tr("nobleNote.conf is not writable!"));
        QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.exec();
      }
+
+     QFileInfo file(lineEdit->text());
+     if(!lineEdit->text().isEmpty() && !file.isWritable()){
+       QMessageBox msgBox;
+       msgBox.setWindowTitle(tr("Warning"));
+       msgBox.setIcon(QMessageBox::Critical);
+       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+       msgBox.setInformativeText(tr("The path \"%1\" is not writable!").arg(file.filePath()));
+       QTimer::singleShot(6000, &msgBox, SLOT(close()));
+       msgBox.exec();
+       return;
+     }
+
      settings.setValue("Path_to_note_folders",lineEdit->text());
      settings.setValue("Save_notes_periodically",pSpin->value());
      settings.setValue("Dont_quit_on_close", dontQuit->isChecked());
 
      sendPathChanged();
+     accept();
 }
