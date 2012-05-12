@@ -34,17 +34,6 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 Note::~Note(){ sendSaveBeforeClose(); }
 
 void Note::saveJournal(){
-    qDebug("journal saved");
-    QTextFrame * frame = this->textEdit->document()->rootFrame();
-
-    for(QTextFrame::Iterator it = frame->begin(); it != frame->end(); ++it)
-    {
-        for(QTextBlock::Iterator i = it.currentBlock().begin(); i != it.currentBlock().end(); ++i)
-        {
-            qDebug(i.fragment().text().toAscii());
-        }
-    }
-
      QFile journal(journalsPath);
      if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
