@@ -24,8 +24,7 @@ class Note : public QMainWindow, public Ui::Note {
               *actionTextUnderline, *actionTextColor, *actionTextBColor;
 
      public slots:
-      void saveJournal();
-      void saveNote();
+      void saveText();
       void resetAll();
       void setupTextFormattingOptions();
       QTextCharFormat getFormatOnWordOrSelection();
@@ -40,7 +39,6 @@ class Note : public QMainWindow, public Ui::Note {
       void pointSizeOfText(const QString &f);
 
      signals:
-      void sendSaveBeforeClose();
 
      protected:
       virtual void showEvent(QShowEvent* show_Note);
