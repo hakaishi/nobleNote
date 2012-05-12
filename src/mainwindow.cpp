@@ -17,8 +17,6 @@ NobleNote::NobleNote() : journalFolderName("Journals")
 {
      setupUi(this);
 
-//TODO: enable drag and drop.
-
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
      TIcon = new QSystemTrayIcon(this);
@@ -35,12 +33,14 @@ NobleNote::NobleNote() : journalFolderName("Journals")
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 
+   //Configuration file
      QSettings settings;
      QSettings::setDefaultFormat(QSettings::IniFormat);
      if(!settings.isWritable()){
        qWarning("W: nobelNote settings not writable!");
      }
 
+   //Setup preferences
      pref = new Preferences(this);
      pref->lineEdit->setText(settings.value("Path_to_note_folders").toString());
      if(pref->lineEdit->text().isEmpty())
@@ -55,13 +55,14 @@ NobleNote::NobleNote() : journalFolderName("Journals")
        nbDir.mkdir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
 
      // make sure there's at least one folder
-     QStringList dirList = nbDir.entryList(QDir::NoDotAndDotDot);
+     QStringList dirList = QDir(origPath).entryList(QDir::Dirs);
+     dirList.removeOne(".");
+     dirList.removeOne("..");
      dirList.removeOne(journalFolderName);
      if(dirList.isEmpty())
      {
          QDir(origPath).mkdir(tr("default"));
      }
-
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
@@ -131,25 +132,25 @@ NobleNote::~NobleNote(){}
 
 void NobleNote::setFirstFolderCurrent(QString path)
 {
-    // this slot gets (probably) called by the QFileSystemModel gatherer thread
-    // due to some race conditions:
-    // disconnecting this slot will not work button disconnect() will return true
-    // qDebug() may work or not work depending how many time has elapsed in this function
+     // this slot gets (probably) called by the QFileSystemModel gatherer thread
+     // due to some race conditions:
+     // disconnecting this slot will not work button disconnect() will return true
+     // qDebug() may work or not work depending how many time has elapsed in this function
 
-    // only call once
-    static bool thisMethodHasBeenCalled = false;
+     // only call once
+     static bool thisMethodHasBeenCalled = false;
 
-    if(thisMethodHasBeenCalled)
-        return;
+     if(thisMethodHasBeenCalled)
+       return;
 
-    QModelIndex idx = folderList->indexAt(QPoint(0,0));
-    if(!idx.isValid())
-    return;
+     QModelIndex idx = folderList->indexAt(QPoint(0,0));
+     if(!idx.isValid())
+       return;
 
-    folderList->selectionModel()->select(idx,QItemSelectionModel::Select);
-    setCurrentFolder(idx);
+     folderList->selectionModel()->select(idx,QItemSelectionModel::Select);
+     setCurrentFolder(idx);
 
-    thisMethodHasBeenCalled = true;
+     thisMethodHasBeenCalled = true;
 }
 
 void NobleNote::setCurrentFolder(const QModelIndex &ind){
@@ -209,9 +210,9 @@ void NobleNote::keyPressEvent(QKeyEvent *kEvent){
 }
 
 void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
-    QModelIndex ind = index;
-    if(!ind.isValid()) // default constructed model index
-        ind = noteList->currentIndex();
+     QModelIndex ind = index;
+     if(!ind.isValid()) // default constructed model index
+       ind = noteList->currentIndex();
 
      QString notesPath = noteModel->filePath(ind);
      QFile noteFile(notesPath);
@@ -272,18 +273,18 @@ void NobleNote::newNote(){
 }
 
 void NobleNote::renameFolder(){
-    folderList->edit(folderList->currentIndex());
+     folderList->edit(folderList->currentIndex());
 }
 
 void NobleNote::renameNote(){
-    noteList->edit(noteList->currentIndex());
+     noteList->edit(noteList->currentIndex());
 }
 
 static void recurseAddDir(QDir d, QStringList & list) {
 
-    QStringList qsl = d.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
+     QStringList qsl = d.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
 
-    foreach (QString file, qsl) {
+     foreach (QString file, qsl) {
 
         QFileInfo finfo(QString("%1/%2").arg(d.path()).arg(file));
 
@@ -302,27 +303,27 @@ static void recurseAddDir(QDir d, QStringList & list) {
 
         } else
             list << QDir::toNativeSeparators(finfo.filePath());
-    }
+     }
 }
 
 void NobleNote::removeFolder(){
 
-    QStringList dirList = QDir(origPath).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-    dirList.removeOne(journalFolderName);
+     QStringList dirList = QDir(origPath).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     dirList.removeOne(journalFolderName);
 
-    // keep at least one folder
-    if(dirList.size() == 1)
-    {
+     // keep at least one folder
+     if(dirList.size() == 1)
+     {
         QMessageBox::information(this,tr("One notebook must remain"),tr("At least one notebook must remain."));
         return;
-    }
+     }
 
-    QModelIndex idx = folderList->currentIndex();
+     QModelIndex idx = folderList->currentIndex();
 
-    // remove empty folders without prompt else show a yes/abort message box
-    if(!folderModel->rmdir(idx)) // folder not empty
-    {
-        if(QMessageBox::warning(this,tr("Remove Folder"),
+     // remove empty folders without prompt else show a yes/abort message box
+     if(!folderModel->rmdir(idx)) // folder not empty
+     {
+         if(QMessageBox::warning(this,tr("Remove Folder"),
                                 tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
@@ -348,20 +349,20 @@ void NobleNote::removeFolder(){
             QMessageBox::warning(this,tr("Folder could not be removed"), tr("The folder could not be removed because one or more files inside the folder could not be removed"));
             return;
         }
-    }
+     }
 
 // // TODO  Important! the following #ifdef code must only be executed if the folder has been removed
 #ifdef Q_OS_WIN32
     // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
     // and dir deletion is delayed until another dir has been selected or the application is closed
 
-    folderList->setRowHidden(idx.row(),true);
-    QModelIndex idxAt = folderList->indexAt(QPoint(0,0));
-    if(!idxAt.isValid())
-    return;
+     folderList->setRowHidden(idx.row(),true);
+     QModelIndex idxAt = folderList->indexAt(QPoint(0,0));
+     if(!idxAt.isValid())
+     return;
 
-    folderList->selectionModel()->select(idxAt,QItemSelectionModel::Select);
-    setCurrentFolder(idxAt);
+     folderList->selectionModel()->select(idxAt,QItemSelectionModel::Select);
+     setCurrentFolder(idxAt);
 #endif
 
 //TODO: check why:
@@ -377,10 +378,13 @@ void NobleNote::showContextMenuF(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu menu;
-     QAction* addNewF = new QAction(tr("New &folder"), &menu);
-     connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
-     menu.addAction(addNewF);
 
+     if(!folderList->indexAt(pos).isValid()) // if index doesn't exists at position
+     {
+         QAction* addNewF = new QAction(tr("New &folder"), &menu);
+         connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
+         menu.addAction(addNewF);
+     }
      if(folderList->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* renameF = new QAction(tr("R&ename folder"), &menu);
@@ -397,10 +401,13 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu menu;
-     QAction* addNewN = new QAction(tr("New &note"), &menu);
-     connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
-     menu.addAction(addNewN);
 
+     if(!noteList->indexAt(pos).isValid()) // if index doesn't exists at position
+     {
+         QAction* addNewN = new QAction(tr("New &note"), &menu);
+         connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
+         menu.addAction(addNewN);
+     }
      if(noteList->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
