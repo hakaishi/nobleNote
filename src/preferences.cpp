@@ -15,8 +15,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 Preferences::~Preferences(){}
 
 void Preferences::saveSettings(){
-     QSettings settings("Hakaishi_and_Taiko", "nobleNote");
-     QSettings::setDefaultFormat(QSettings::IniFormat);
+     QSettings settings;
      if(!settings.isWritable()){
        QMessageBox msgBox;
        msgBox.setWindowTitle(tr("Warning"));
@@ -39,7 +38,7 @@ void Preferences::saveSettings(){
        return;
      }
 
-     settings.setValue("Path_to_note_folders",lineEdit->text());
+     settings.setValue("rootPath",lineEdit->text());
      settings.setValue("Save_notes_periodically",pSpin->value());
      settings.setValue("Dont_quit_on_close", dontQuit->isChecked());
 
