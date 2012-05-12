@@ -5,7 +5,6 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QTextStream>
-#include <QTextFrame>
 
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
@@ -18,37 +17,35 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      timer = new QTimer(this);
 
-     connect(textEdit, SIGNAL(textChanged()), timer, SLOT(start()));
-     connect(jTimer, SIGNAL(timeout()), this, SLOT(saveJournal()));
-     connect(jTimer, SIGNAL(timeout()), this, SLOT(saveNote()));
-     connect(timer, SIGNAL(timeout()), this, SLOT(saveJournal()));
-     connect(timer, SIGNAL(timeout()), this, SLOT(saveNote()));
+     connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
+     connect(jTimer, SIGNAL(timeout()), this, SLOT(saveText()));
+     connect(timer, SIGNAL(timeout()), this, SLOT(saveText()));
      connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
        this, SLOT(resetAll()));
      connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
        SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
-     connect(this, SIGNAL(sendSaveBeforeClose()), this, SLOT(saveJournal()));
-     connect(this, SIGNAL(sendSaveBeforeClose()), this, SLOT(saveNote()));
 }
 
-Note::~Note(){ sendSaveBeforeClose(); }
+Note::~Note(){ saveText(); }
 
-void Note::saveJournal(){
+void Note::showEvent(QShowEvent* show_Note){
+     textEdit->setHtml(text);
+     QWidget::showEvent(show_Note);
+}
+
+void Note::saveText(){
      QFile journal(journalsPath);
      if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
-     QTextStream stream(&journal);
-     stream << textEdit->toHtml();
+     QTextStream jStream(&journal);
+     jStream << textEdit->toHtml();
      journal.close();
-}
-
-void Note::saveNote(){
 
      QFile note(notesPath);
      if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
-     QTextStream stream(&note);
-     stream << textEdit->toHtml();
+     QTextStream nStream(&note);
+     nStream << textEdit->toHtml();
      note.close();
 }
 
@@ -76,6 +73,7 @@ void Note::setupTextFormattingOptions(){
      actionTextBold->setFont(bold);
      connect(actionTextBold, SIGNAL(triggered()), this, SLOT(boldText()));
      tb->addAction(actionTextBold);
+     actionTextBold->setCheckable(true);
 
      actionTextItalic = new QAction(QIcon::fromTheme("format-text-italic", QIcon(":italic")), tr("&Italic"), this);
      actionTextItalic->setPriority(QAction::LowPriority);
@@ -85,6 +83,7 @@ void Note::setupTextFormattingOptions(){
      actionTextItalic->setFont(italic);
      connect(actionTextItalic, SIGNAL(triggered()), this, SLOT(italicText()));
      tb->addAction(actionTextItalic);
+     actionTextItalic->setCheckable(true);
 
      actionTextUnderline = new QAction(QIcon::fromTheme("format-text-underline", QIcon(":underlined")), tr("&Underline"), this);
      actionTextUnderline->setShortcut(Qt::CTRL + Qt::Key_U);
@@ -94,6 +93,7 @@ void Note::setupTextFormattingOptions(){
      actionTextUnderline->setFont(underline);
      connect(actionTextUnderline, SIGNAL(triggered()), this, SLOT(underlinedText()));
      tb->addAction(actionTextUnderline);
+     actionTextUnderline->setCheckable(true);
 
      QPixmap textPix(16, 16);
      textPix.fill(Qt::black);
@@ -101,9 +101,9 @@ void Note::setupTextFormattingOptions(){
      connect(actionTextColor, SIGNAL(triggered()), this, SLOT(coloredText()));
      tb->addAction(actionTextColor);
 
-     QPixmap gPix(16, 16);
-     gPix.fill(Qt::white);
-     actionTextBColor = new QAction(gPix, tr("&Background color..."), this);
+     QPixmap bPix(16, 16);
+     bPix.fill(Qt::white);
+     actionTextBColor = new QAction(bPix, tr("&Background color..."), this);
      connect(actionTextBColor, SIGNAL(triggered()), this, SLOT(markedText()));
      tb->addAction(actionTextBColor);
 
@@ -138,30 +138,36 @@ void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      textEdit->mergeCurrentCharFormat(format);
 }
 
+void Note::getFontAndPointSizeOfText(const QTextCharFormat &format){
+     QFont f = format.font();
+     fontComboBox->setCurrentIndex(fontComboBox->findText(QFontInfo(f).family()));
+     comboSize->setCurrentIndex(comboSize->findText(QString::number(f.pointSize())));
+     actionTextBold->setChecked(f.bold());
+     actionTextItalic->setChecked(f.italic());
+     actionTextUnderline->setChecked(f.underline());
+     QPixmap textPix(16,16);
+     textPix.fill(format.foreground().color());
+     actionTextColor->setIcon(textPix);
+     QPixmap bPix(16,16);
+     bPix.fill(format.background().color());
+     actionTextBColor->setIcon(bPix);
+}
+
 void Note::boldText(){
      QTextCharFormat fmt;
-     if(getFormatOnWordOrSelection().fontWeight() == 75)
-       fmt.setFontWeight(QFont::Normal);
-     else
-       fmt.setFontWeight(QFont::Bold);
+     fmt.setFontWeight(actionTextBold->isChecked() ? QFont::Bold : QFont::Normal);
      mergeFormatOnWordOrSelection(fmt);
 }
 
 void Note::italicText(){
      QTextCharFormat fmt;
-     if(getFormatOnWordOrSelection().fontItalic())
-       fmt.setFontItalic(false);
-     else
-       fmt.setFontItalic(true);
+     fmt.setFontItalic(actionTextItalic->isChecked());
      mergeFormatOnWordOrSelection(fmt);
 }
 
 void Note::underlinedText(){
      QTextCharFormat fmt;
-     if(getFormatOnWordOrSelection().fontUnderline())
-       fmt.setFontUnderline(false);
-     else
-       fmt.setFontUnderline(true);
+     fmt.setFontUnderline(actionTextUnderline->isChecked());
      mergeFormatOnWordOrSelection(fmt);
 }
 
@@ -189,11 +195,6 @@ void Note::markedText(){
      actionTextColor->setIcon(pix);
 }
 
-void Note::getFontAndPointSizeOfText(const QTextCharFormat &format){
-     fontComboBox->setCurrentIndex(fontComboBox->findText(format.font().family()));
-     comboSize->setCurrentIndex(comboSize->findText(QString::number(format.font().pointSize())));
-}
-
 void Note::fontOfText(const QString &f){
      QTextCharFormat fmt;
      fmt.setFontFamily(f);
@@ -207,9 +208,4 @@ void Note::pointSizeOfText(const QString &p){
        fmt.setFontPointSize(pointSize);
        mergeFormatOnWordOrSelection(fmt);
      }
-}
-
-void Note::showEvent(QShowEvent* show_Note){
-     textEdit->setHtml(text);
-     QWidget::showEvent(show_Note);
 }
