@@ -7,6 +7,8 @@
 Preferences::Preferences(QWidget *parent): QDialog(parent){
      setupUi(this);
 
+     dontQuit->setChecked(QSettings().value("Dont_quit_on_close",false).toBool());
+     pSpin->setValue(QSettings().value("Save_notes_periodically",1).toInt());
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
 }
 

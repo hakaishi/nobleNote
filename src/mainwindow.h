@@ -27,8 +27,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       ~NobleNote();
 
      private:
-      QString         text, str, origPath;
-      const QString   journalFolderName;
+      QString         text;
       QSplitter       *splitter;
       QFileSystemModel *folderModel, *noteModel;
       QListView       *folderList, *noteList;
@@ -43,7 +42,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
 #endif
 
      private slots:
-      void changeRootIndex();
+      //void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
 
 #ifndef NO_SYSTEM_TRAY_ICON

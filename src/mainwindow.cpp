@@ -14,8 +14,7 @@
 #include <QDebug>
 
 
-
-NobleNote::NobleNote() : journalFolderName("Journals")
+NobleNote::NobleNote()
 {
      setupUi(this);
 
@@ -41,47 +40,43 @@ NobleNote::NobleNote() : journalFolderName("Journals")
 
 
    //Configuration file
-     QSettings settings;
-     QSettings::setDefaultFormat(QSettings::IniFormat);
+     QSettings settings; // ini format does save but in the executables directory, use native format
      if(!settings.isWritable()){
-       qWarning("W: nobelNote settings not writable!");
+       QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
      }
+     if(!settings.value("rootPath").isValid()) // root path has not been set before
+         settings.setValue("rootPath"           ,QDir::homePath() + "/.nobleNote");
+     if(!settings.value("journalFolderPath").isValid())
+         settings.setValue("journalFolderPath"  ,settings.value("rootPath").toString() + "/Journals");
+
+
+     if(!QDir(settings.value("journalFolderPath").toString()).exists())
+       QDir().mkdir(settings.value("journalFolderPath").toString());
 
    //Setup preferences
      pref = new Preferences(this);
-     pref->lineEdit->setText(settings.value("Path_to_note_folders").toString());
-     if(pref->lineEdit->text().isEmpty())
-       origPath = QDir::homePath() + "/.nobleNote";
-     else
-       origPath = pref->lineEdit->text();
-     pref->pSpin->setValue(settings.value("Save_notes_periodically",1).toInt());
-     pref->dontQuit->setChecked(settings.value("Dont_quit_on_close",false).toBool());
-
-     QDir nbDir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
-     if(!nbDir.exists())
-       nbDir.mkdir(QDir::homePath() + "/.nobleNote/" + journalFolderName);
 
      // make sure there's at least one folder
-     QStringList dirList = QDir(origPath).entryList(QDir::Dirs);
+     QStringList dirList = QDir(settings.value("rootPath").toString()).entryList(QDir::Dirs);
      dirList.removeOne(".");
      dirList.removeOne("..");
-     dirList.removeOne(journalFolderName);
+     dirList.removeFirst(); // this will remove the Journal folder if it is the only folder
      if(dirList.isEmpty())
      {
-         QDir(origPath).mkdir(tr("default"));
+         QDir(settings.value("rootPath").toString()).mkdir(tr("default"));
      }
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
 
      folderModel = new FileSystemModel(this);
-     folderModel->setRootPath(origPath);
+     folderModel->setRootPath(settings.value("rootPath").toString());
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderModel->setReadOnly(false); // enable drag drop
      //folderModel->setNameFilters(QStringList("Journals")); TODO:DON'T show journals.
 
      noteModel = new FileSystemModel(this);
-     noteModel->setRootPath(origPath); //just as an example
+     noteModel->setRootPath(settings.value("rootPath").toString()); //just as an example
      noteModel->setFilter(QDir::Files);
      noteModel->setReadOnly(false);
 
@@ -104,10 +99,10 @@ NobleNote::NobleNote() : journalFolderName("Journals")
      folderList->setDragEnabled(false);
 
      folderList->setModel(folderModel);
-     folderList->setRootIndex(folderModel->index(origPath));
+     folderList->setRootIndex(folderModel->index(settings.value("rootPath").toString()));
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
-     noteList->setRootIndex(noteModel->index(origPath));
+     noteList->setRootIndex(noteModel->index(settings.value("rootPath").toString()));
 
 //TODO: make it possible to import notes from some other folder or even another program
 
@@ -134,7 +129,7 @@ NobleNote::NobleNote() : journalFolderName("Journals")
      connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
        this, SLOT(showContextMenuN(const QPoint &)));
      connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
-     connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
+     //connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
 }
 
 NobleNote::~NobleNote(){}
@@ -166,21 +161,21 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
 }
 
-void NobleNote::changeRootIndex(){
-     if(pref->lineEdit->text().isEmpty()){
-       origPath = QDir::homePath() + "/.nobleNote";
-       folderModel->setRootPath(origPath);
-       noteModel->setRootPath(origPath);
-       folderList->setRootIndex(folderModel->index(origPath));
-       noteList->setRootIndex(noteModel->index(origPath));
-     }
-     else{
-       folderModel->setRootPath(pref->lineEdit->text());
-       noteModel->setRootPath(pref->lineEdit->text());
-       folderList->setRootIndex(folderModel->index(pref->lineEdit->text()));
-       noteList->setRootIndex(noteModel->index(pref->lineEdit->text()));
-     }
-}
+//void NobleNote::changeRootIndex(){
+//     if(pref->lineEdit->text().isEmpty()){
+//       origPath = QDir::homePath() + "/.nobleNote";
+//       folderModel->setRootPath(origPath);
+//       noteModel->setRootPath(origPath);
+//       folderList->setRootIndex(folderModel->index(origPath));
+//       noteList->setRootIndex(noteModel->index(origPath));
+//     }
+//     else{
+//       folderModel->setRootPath(pref->lineEdit->text());
+//       noteModel->setRootPath(pref->lineEdit->text());
+//       folderList->setRootIndex(folderModel->index(pref->lineEdit->text()));
+//       noteList->setRootIndex(noteModel->index(pref->lineEdit->text()));
+//     }
+//}
 
 #ifndef NO_SYSTEM_TRAY_ICON
 void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
@@ -235,9 +230,9 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      text = streamN.readAll();
      noteFile.close();
 
-     QString journalsPath = QDir::homePath() + "/.nobleNote/" + journalFolderName + "/" +
+     QString journalFilesPath = QSettings().value("journalFolderPath").toString() + "/" +
        folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
-     QFile journalFile(journalsPath);
+     QFile journalFile(journalFilesPath);
      if(!journalFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
      if(!journalFile.exists()){
@@ -252,7 +247,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      Note *notes = new Note(this);
      notes->text = text;
      notes->notesPath = notesPath;
-     notes->journalsPath = journalsPath;
+     notes->journalsPath = journalFilesPath;
      if(pref->pSpin->value() > 0)
        notes->timer->start(pref->pSpin->value() * 60000);
      notes->show();
@@ -321,8 +316,10 @@ static void recurseAddDir(QDir d, QStringList & list) {
 
 void NobleNote::removeFolder(){
 
-     QStringList dirList = QDir(origPath).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-     dirList.removeOne(journalFolderName);
+    qDebug() << QSettings().value("rootPath",QString("not exists")).toString();
+     QStringList dirList = QDir(QSettings().value("rootPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     qDebug() << dirList;
+     dirList.removeOne(QDir(QSettings().value("journalFolderPath").toString()).dirName());
 
      // keep at least one folder
      if(dirList.size() == 1)
