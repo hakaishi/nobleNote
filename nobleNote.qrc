@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file alias="nobleNote">src/icons/nobleNote_64x64.png</file>
-        <file alias="bold">src/icons/format-text-bold-symbolic.svg</file>
-        <file alias="italic">src/icons/format-text-italic-symbolic.svg</file>
-        <file alias="underlined">src/icons/format-text-underline-symbolic.svg</file>
-        <file alias="strikedout">src/icons/format-text-strikeout-symbolic.svg</file>
+        <file alias="bold">src/icons/format-text-bold.png</file>
+        <file alias="italic">src/icons/format-text-italic.png</file>
+        <file alias="strikedout">src/icons/format-text-strikethrough.png</file>
+        <file alias="underlined">src/icons/format-text-underline.png</file>
     </qresource>
 </RCC>
