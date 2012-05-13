@@ -45,13 +45,15 @@ NobleNote::NobleNote()
        QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
      }
      if(!settings.value("rootPath").isValid()) // root path has not been set before
-         settings.setValue("rootPath"           ,QDir::homePath() + "/.nobleNote");
+         settings.setValue("rootPath"           ,QDir::homePath() + "/.nobleNote/notes");
      if(!settings.value("journalFolderPath").isValid())
-         settings.setValue("journalFolderPath"  ,settings.value("rootPath").toString() + "/Journals");
+         settings.setValue("journalFolderPath"  ,QDir::homePath() + "/.nobleNote/Journals");
 
+     if(!QDir(settings.value("rootPath").toString()).exists())
+       QDir().mkpath(settings.value("rootPath").toString());
 
      if(!QDir(settings.value("journalFolderPath").toString()).exists())
-       QDir().mkdir(settings.value("journalFolderPath").toString());
+       QDir().mkpath(settings.value("journalFolderPath").toString());
 
    //Setup preferences
      pref = new Preferences(this);
@@ -60,7 +62,6 @@ NobleNote::NobleNote()
      QStringList dirList = QDir(settings.value("rootPath").toString()).entryList(QDir::Dirs);
      dirList.removeOne(".");
      dirList.removeOne("..");
-     dirList.removeFirst(); // this will remove the Journal folder if it is the only folder
      if(dirList.isEmpty())
      {
          QDir(settings.value("rootPath").toString()).mkdir(tr("default"));
@@ -254,7 +255,7 @@ void NobleNote::newFolder(){
          ++counter;
          path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
-     QDir().mkdir(path);
+     folderModel->mkdir(folderList->rootIndex(),QDir(path).dirName());
 }
 
 void NobleNote::newNote(){
@@ -280,38 +281,12 @@ void NobleNote::renameNote(){
      noteList->edit(noteList->currentIndex());
 }
 
-static void recurseAddDir(QDir d, QStringList & list) {
-
-     QStringList qsl = d.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
-
-     foreach (QString file, qsl) {
-
-        QFileInfo finfo(QString("%1/%2").arg(d.path()).arg(file));
-
-        if (finfo.isSymLink())
-        {
-            qDebug("symlink found");
-            return;
-        }
-
-        if (finfo.isDir()) {
-
-            QString dirname = finfo.fileName();
-            QDir sd(finfo.filePath());
-
-            recurseAddDir(sd, list);
-
-        } else
-            list << QDir::toNativeSeparators(finfo.filePath());
-     }
-}
-
 void NobleNote::removeFolder(){
 
-    qDebug() << QSettings().value("rootPath",QString("not exists")).toString();
      QStringList dirList = QDir(QSettings().value("rootPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-     qDebug() << dirList;
-     dirList.removeOne(QDir(QSettings().value("journalFolderPath").toString()).dirName());
+
+     // only needed if journal folder resides in the same folder
+     //dirList.removeOne(QDir(QSettings().value("journalFolderPath").toString()).dirName());
 
      // keep at least one folder
      if(dirList.size() == 1)
@@ -331,7 +306,7 @@ void NobleNote::removeFolder(){
             return;
 
 
-        // list all files & folders recursively
+        // list all files
         QString path = folderModel->filePath(idx);
         QStringList fileList = QDir(path).entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
 
@@ -339,7 +314,7 @@ void NobleNote::removeFolder(){
         foreach(QString name, fileList)
         {
             name = QDir::toNativeSeparators(QString("%1/%2").arg(path).arg(name));
-            if(!QFile::remove(name))
+            if(!folderModel->remove(folderModel->index(name)))
             {
                 qWarning(qPrintable(QString("could not remove ") + name));
             }

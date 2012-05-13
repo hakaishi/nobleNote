@@ -15,7 +15,7 @@
  *  f short for folder
  */
 
-#define NO_SYSTEM_TRAY_ICON
+//#define NO_SYSTEM_TRAY_ICON
 
 class Preferences;
 

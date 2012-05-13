@@ -95,6 +95,16 @@ void Note::setupTextFormattingOptions(){
      tb->addAction(actionTextUnderline);
      actionTextUnderline->setCheckable(true);
 
+     actionTextStrikeOut = new QAction(QIcon::fromTheme("format-text-strikethrough", QIcon(":strikedout")), tr("&Strike Out"), this);
+     actionTextStrikeOut->setShortcut(Qt::CTRL + Qt::Key_S);
+     actionTextStrikeOut->setPriority(QAction::LowPriority);
+     QFont strikeOut;
+     strikeOut.setStrikeOut(true);
+     actionTextStrikeOut->setFont(strikeOut);
+     connect(actionTextStrikeOut, SIGNAL(triggered()), this, SLOT(strikedOutText()));
+     tb->addAction(actionTextStrikeOut);
+     actionTextStrikeOut->setCheckable(true);
+
      QPixmap textPix(16, 16);
      textPix.fill(Qt::black);
      actionTextColor = new QAction(textPix, tr("&Text color..."), this);
@@ -123,17 +133,17 @@ void Note::setupTextFormattingOptions(){
      comboSize->setCurrentIndex(comboSize->findText(QString::number(QApplication::font().pointSize())));
 }
 
-QTextCharFormat Note::getFormatOnWordOrSelection(){
-     QTextCursor cursor = textEdit->textCursor();
-     if(!cursor.hasSelection())
-       cursor.select(QTextCursor::WordUnderCursor);
-     return cursor.charFormat();
-}
+//QTextCharFormat Note::getFormatOnWordOrSelection(){
+//     QTextCursor cursor = textEdit->textCursor();
+//     if(!cursor.hasSelection())
+//       cursor.select(QTextCursor::WordUnderCursor);
+//     return cursor.charFormat();
+//}
 
 void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit->textCursor();
-     if(!cursor.hasSelection())
-       cursor.select(QTextCursor::WordUnderCursor);
+     //if(!cursor.hasSelection())
+     //  cursor.select(QTextCursor::WordUnderCursor);
      cursor.mergeCharFormat(format);
      textEdit->mergeCurrentCharFormat(format);
 }
@@ -145,6 +155,7 @@ void Note::getFontAndPointSizeOfText(const QTextCharFormat &format){
      actionTextBold->setChecked(f.bold());
      actionTextItalic->setChecked(f.italic());
      actionTextUnderline->setChecked(f.underline());
+     actionTextStrikeOut->setChecked(f.strikeOut());
      QPixmap textPix(16,16);
      textPix.fill(format.foreground().color());
      actionTextColor->setIcon(textPix);
@@ -169,6 +180,12 @@ void Note::underlinedText(){
      QTextCharFormat fmt;
      fmt.setFontUnderline(actionTextUnderline->isChecked());
      mergeFormatOnWordOrSelection(fmt);
+}
+
+void Note::strikedOutText(){
+    QTextCharFormat fmt;
+    fmt.setFontStrikeOut(actionTextStrikeOut->isChecked());
+    mergeFormatOnWordOrSelection(fmt);
 }
 
 void Note::coloredText(){

@@ -21,17 +21,19 @@ class Note : public QMainWindow, public Ui::Note {
       QFontComboBox *fontComboBox;
       QComboBox *comboSize;
       QAction *actionTextBold, *actionTextItalic,
-              *actionTextUnderline, *actionTextColor, *actionTextBColor;
+              *actionTextUnderline, *actionTextColor,
+      *actionTextBColor, *actionTextStrikeOut;
 
      public slots:
       void saveText();
       void resetAll();
       void setupTextFormattingOptions();
-      QTextCharFormat getFormatOnWordOrSelection();
+      //QTextCharFormat getFormatOnWordOrSelection(); // unused method
       void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
       void boldText();
       void italicText();
       void underlinedText();
+      void strikedOutText();
       void coloredText();
       void markedText();
       void getFontAndPointSizeOfText(const QTextCharFormat &format);
