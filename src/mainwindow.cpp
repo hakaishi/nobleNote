@@ -162,19 +162,11 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
 }
 
 //void NobleNote::changeRootIndex(){
-//     if(pref->lineEdit->text().isEmpty()){
-//       origPath = QDir::homePath() + "/.nobleNote";
-//       folderModel->setRootPath(origPath);
-//       noteModel->setRootPath(origPath);
-//       folderList->setRootIndex(folderModel->index(origPath));
-//       noteList->setRootIndex(noteModel->index(origPath));
-//     }
-//     else{
-//       folderModel->setRootPath(pref->lineEdit->text());
-//       noteModel->setRootPath(pref->lineEdit->text());
-//       folderList->setRootIndex(folderModel->index(pref->lineEdit->text()));
-//       noteList->setRootIndex(noteModel->index(pref->lineEdit->text()));
-//     }
+//     QSettings s;
+//     folderModel->setRootPath(s.value("rootPath").toString());
+//     noteModel->setRootPath(s.value("rootPath").toString());
+//     folderList->setRootIndex(folderModel->index(s.value("rootPath").toString()));
+//     noteList->setRootIndex(noteModel->index(s.value("rootPath").toString()));
 //}
 
 #ifndef NO_SYSTEM_TRAY_ICON

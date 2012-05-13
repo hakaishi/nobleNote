@@ -9,6 +9,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 
      settings = new QSettings(this);
      pathLabel->setText(settings->value("rootPath").toString());
+     rootPath = settings->value("rootPath").toString();
 
      dontQuit->setChecked(QSettings().value("Dont_quit_on_close",false).toBool());
      pSpin->setValue(QSettings().value("Save_notes_periodically",1).toInt());
@@ -19,23 +20,18 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 Preferences::~Preferences(){}
 
 void Preferences::saveSettings(){
-     if(!settings->isWritable()){
-       QMessageBox msgBox;
-       msgBox.setWindowTitle(tr("Warning"));
-       msgBox.setIcon(QMessageBox::Critical);
-       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+     QMessageBox msgBox;
+     msgBox.setWindowTitle(tr("Warning"));
+     msgBox.setIcon(QMessageBox::Critical);
+     msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+     if(!settings->isWritable())
        msgBox.setInformativeText(tr("nobleNote.conf is not writable!"));
-       QTimer::singleShot(6000, &msgBox, SLOT(close()));
-       msgBox.exec();
-     }
-
+     
      QFileInfo file(rootPath);
-     if(!rootPath.isEmpty() && !file.isWritable()){
-       QMessageBox msgBox;
-       msgBox.setWindowTitle(tr("Warning"));
-       msgBox.setIcon(QMessageBox::Critical);
-       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+     if(!file.isWritable())
        msgBox.setInformativeText(tr("The path \"%1\" is not writable!").arg(file.filePath()));
+
+     if(!file.isWritable()){
        QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.exec();
        return;
@@ -50,8 +46,12 @@ void Preferences::saveSettings(){
 }
 
 void Preferences::openDir(){
-     rootPath = QFileDialog::getExistingDirectory(this,
-                  tr("Open Directory"), settings->value("rootPath").toString(), QFileDialog::ShowDirsOnly
+     QString path;
+     path = QFileDialog::getExistingDirectory(this,
+                  tr("Open Directory"), rootPath, QFileDialog::ShowDirsOnly
                   | QFileDialog::DontResolveSymlinks);
-     pathLabel->setText(rootPath);
+     if(!path.isEmpty()){
+       rootPath = path;
+       pathLabel->setText(rootPath);
+     }
 }
