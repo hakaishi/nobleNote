@@ -20,19 +20,14 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 Preferences::~Preferences(){}
 
 void Preferences::saveSettings(){
-     QMessageBox msgBox;
-     msgBox.setWindowTitle(tr("Warning"));
-     msgBox.setIcon(QMessageBox::Critical);
-     msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
-     QTimer::singleShot(6000, &msgBox, SLOT(close()));
-     if(!settings->isWritable())
+     if(!settings->isWritable()){
+       QMessageBox msgBox;
+       msgBox.setWindowTitle(tr("Warning"));
+       msgBox.setIcon(QMessageBox::Critical);
+       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+       QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.setInformativeText(tr("nobleNote.conf is not writable!"));
-     
-     QFileInfo file(rootPath);
-     if(!file.isWritable()){
-       msgBox.setInformativeText(tr("The path \"%1\" is not writable!").arg(file.filePath()));
        msgBox.exec();
-       return;
      }
 
      settings->setValue("rootPath",rootPath);
@@ -48,8 +43,20 @@ void Preferences::openDir(){
      path = QFileDialog::getExistingDirectory(this,
                   tr("Open Directory"), rootPath, QFileDialog::ShowDirsOnly
                   | QFileDialog::DontResolveSymlinks);
+     QFileInfo file(path);
+     if(!file.isWritable() && !path.isEmpty()){
+       QMessageBox msgBox;
+       msgBox.setWindowTitle(tr("Warning"));
+       msgBox.setIcon(QMessageBox::Critical);
+       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+       QTimer::singleShot(6000, &msgBox, SLOT(close()));
+       msgBox.setInformativeText(tr("The path \"%1\" is not writable!").arg(file.filePath()));
+       msgBox.exec();
+       return;
+     }
      if(!path.isEmpty()){
        rootPath = path;
        pathLabel->setText(rootPath);
      }
+
 }
