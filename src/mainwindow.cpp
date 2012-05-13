@@ -58,15 +58,6 @@ NobleNote::NobleNote()
    //Setup preferences
      pref = new Preferences(this);
 
-     // make sure there's at least one folder
-     QStringList dirList = QDir(settings.value("rootPath").toString()).entryList(QDir::Dirs);
-     dirList.removeOne(".");
-     dirList.removeOne("..");
-     if(dirList.isEmpty())
-     {
-         QDir(settings.value("rootPath").toString()).mkdir(tr("default"));
-     }
-
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 0, 0);
 
@@ -77,7 +68,6 @@ NobleNote::NobleNote()
      //folderModel->setNameFilters(QStringList("Journals")); TODO:DON'T show journals.
 
      noteModel = new FileSystemModel(this);
-     noteModel->setRootPath(settings.value("rootPath").toString()); //just as an example
      noteModel->setFilter(QDir::Files);
      noteModel->setReadOnly(false);
 
@@ -86,11 +76,10 @@ NobleNote::NobleNote()
 
      QList<QListView*> listViews;
      listViews << folderList << noteList;
-     foreach(QListView* list, listViews)
+     foreach(QListView* list, listViews) // add drag drop options
      {
         list->setContextMenuPolicy(Qt::CustomContextMenu);
         //list->setSelectionMode(QAbstractItemView::SingleSelection); // single item can be draged or droped
-
         list->setDragDropMode(QAbstractItemView::DragDrop);
         list->viewport()->setAcceptDrops(true);
         list->setDropIndicatorShown(true);
@@ -103,14 +92,27 @@ NobleNote::NobleNote()
      folderList->setRootIndex(folderModel->index(settings.value("rootPath").toString()));
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
-     noteList->setRootIndex(noteModel->index(settings.value("rootPath").toString()));
+     //noteList->setRootIndex(noteModel->index(settings.value("rootPath").toString()));
+
+     // make sure there's at least one folder
+     QStringList dirList = QDir(settings.value("rootPath").toString()).entryList(QDir::Dirs);
+     dirList.removeOne(".");
+     dirList.removeOne("..");
+     if(dirList.isEmpty())
+     {
+         QString defaultDirName = tr("default");
+         QDir(settings.value("rootPath").toString()).mkdir(defaultDirName);
+         noteList->setRootIndex(noteModel->setRootPath(settings.value("rootPath").toString() + "/" + defaultDirName)); // set default dir as current note folder
+     }
+     else
+         noteList->setRootIndex(noteModel->setRootPath(settings.value("rootPath").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
 
 //TODO: make it possible to import notes from some other folder or even another program
 
-     // sets random folder by default as current folder
-     // "single shot" slot
+//     // selects first folder as soon as the folderModel has populated its first folder
+//     // "single shot" slot
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
-       SLOT(setFirstFolderCurrent(QString)),Qt::QueuedConnection);
+       SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
 
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     #ifndef NO_SYSTEM_TRAY_ICON
@@ -135,7 +137,7 @@ NobleNote::NobleNote()
 
 NobleNote::~NobleNote(){}
 
-void NobleNote::setFirstFolderCurrent(QString path)
+void NobleNote::selectFirstFolder(QString path)
 {
      // this slot gets (probably) called by the QFileSystemModel gatherer thread
      // due to some race conditions:
@@ -153,7 +155,6 @@ void NobleNote::setFirstFolderCurrent(QString path)
        return;
 
      folderList->selectionModel()->select(idx,QItemSelectionModel::Select);
-     setCurrentFolder(idx);
 
      thisMethodHasBeenCalled = true;
 }
