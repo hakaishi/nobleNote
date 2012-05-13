@@ -6,32 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>141</height>
+    <width>386</width>
+    <height>149</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Preferences</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../nobleNote.qrc">
+    <normaloff>:/nobleNote</normaloff>:/nobleNote</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Path to note folders</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="2" column="0" colspan="2">
+   <property name="horizontalSpacing">
+    <number>10</number>
+   </property>
+   <item row="2" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="0" column="2">
+    <widget class="QPushButton" name="browseButton">
+     <property name="text">
+      <string>&amp;browse ...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_2">
@@ -66,21 +70,39 @@
      <item row="1" column="0" colspan="3">
       <widget class="QCheckBox" name="dontQuit">
        <property name="text">
-        <string>Don't quit when closing main window</string>
+        <string>&amp;Don't quit when closing main window</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Path to note folders</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="pathLabel">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="text">
+      <string>folder</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
   <tabstop>pSpin</tabstop>
   <tabstop>dontQuit</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../nobleNote.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
