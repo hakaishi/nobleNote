@@ -142,8 +142,8 @@ void Note::setupTextFormattingOptions(){
 
 void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit->textCursor();
-     //if(!cursor.hasSelection())
-     //  cursor.select(QTextCursor::WordUnderCursor);
+     if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
+       cursor.select(QTextCursor::WordUnderCursor);
      cursor.mergeCharFormat(format);
      textEdit->mergeCurrentCharFormat(format);
 }

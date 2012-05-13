@@ -12,6 +12,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QDebug>
+#include "findfilemodel.h"
 
 
 NobleNote::NobleNote()
