@@ -11,9 +11,9 @@ FindFileSystemModel::FindFileSystemModel(QObject *parent) :
 QString FindFileSystemModel::fileName(const QModelIndex &index) const
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-            return fsm->fileName(mapToSource(index));
+      return fsm->fileName(mapToSource(index));
     else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-        return ffm->fileName(mapToSource(index));
+      return ffm->fileName(mapToSource(index));
      qDebug("FindFileSystemModel: cast failed");
     return QString();
 }
@@ -21,9 +21,9 @@ QString FindFileSystemModel::fileName(const QModelIndex &index) const
 QString FindFileSystemModel::filePath(const QModelIndex &index) const
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-            return fsm->filePath(mapToSource(index));
+      return fsm->filePath(mapToSource(index));
     else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-        return ffm->filePath(mapToSource(index));
+      return ffm->filePath(mapToSource(index));
      qDebug("FindFileSystemModel: cast failed");
     return QString();
 }
@@ -31,9 +31,9 @@ QString FindFileSystemModel::filePath(const QModelIndex &index) const
 bool FindFileSystemModel::remove(const QModelIndex &index) const
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-            return fsm->remove(mapToSource(index));
+      return fsm->remove(mapToSource(index));
     else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-        return ffm->remove(mapToSource(index));
+      return ffm->remove(mapToSource(index));
      qDebug("FindFileSystemModel: cast failed");
     return false;
 }
@@ -41,9 +41,9 @@ bool FindFileSystemModel::remove(const QModelIndex &index) const
 QFileInfo FindFileSystemModel::fileInfo(const QModelIndex &index) const
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-            return fsm->fileInfo(mapToSource(index));
+      return fsm->fileInfo(mapToSource(index));
     else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-        return ffm->fileInfo(mapToSource(index));
+      return ffm->fileInfo(mapToSource(index));
      qDebug("FindFileSystemModel: cast failed");
     return QFileInfo();
 }
@@ -51,14 +51,14 @@ QFileInfo FindFileSystemModel::fileInfo(const QModelIndex &index) const
 void FindFileSystemModel::appendFile(QString file)
 {
     if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-            return ffm->appendFile(file);
+      return ffm->appendFile(file);
      qDebug("FindFileSystemModel: cast failed");
 }
 
 QModelIndex FindFileSystemModel::setRootPath(const QString &newPath)
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-            return mapFromSource(fsm->setRootPath(newPath));
+      return mapFromSource(fsm->setRootPath(newPath));
     qDebug("FindFileSystemModel: cast failed");
     return QModelIndex();
 }
@@ -66,7 +66,7 @@ QModelIndex FindFileSystemModel::setRootPath(const QString &newPath)
 QString FindFileSystemModel::rootPath() const
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-            return fsm->rootPath();
+      return fsm->rootPath();
     qDebug("FindFileSystemModel: cast failed");
     return QString();
 }

@@ -18,13 +18,13 @@ class FindFileSystemModel : public QSortFilterProxyModel
     Q_OBJECT
 public:
     explicit FindFileSystemModel(QObject *parent = 0);
-    QString fileName( const QModelIndex & index ) const;
-    QString filePath ( const QModelIndex & index ) const;
-    bool remove ( const QModelIndex & index ) const;
-    QFileInfo	fileInfo ( const QModelIndex & index ) const;
+    QString fileName(const QModelIndex & index) const;
+    QString filePath(const QModelIndex & index) const;
+    bool remove(const QModelIndex & index ) const;
+    QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString file); // append file with full path
     QModelIndex setRootPath(const QString & newPath);
-    QString	rootPath () const;
+    QString rootPath() const;
 };
 
 #endif // FINDFILESYSTEMMODEL_H

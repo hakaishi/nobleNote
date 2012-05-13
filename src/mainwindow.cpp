@@ -59,8 +59,15 @@ NobleNote::NobleNote()
    //Setup preferences
      pref = new Preferences(this);
 
+     searchName = new QLineEdit(this);
+     searchName->setPlaceholderText(tr("Search for note"));
+     gridLayout->addWidget(searchName, 0, 0);
+     searchText = new QLineEdit(this);
+     searchText->setPlaceholderText(tr("Search for content"));
+     gridLayout->addWidget(searchText, 1, 0);
+
      splitter = new QSplitter(centralwidget);
-     gridLayout->addWidget(splitter, 0, 0);
+     gridLayout->addWidget(splitter, 2, 0);
 
      folderModel = new FileSystemModel(this);
      folderModel->setRootPath(settings.value("rootPath").toString());

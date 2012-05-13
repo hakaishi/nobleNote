@@ -16,10 +16,10 @@ class FindFileModel : public QStandardItemModel
 public:
     explicit FindFileModel(QObject *parent = 0);
 
-    QString fileName( const QModelIndex & index ) const;
-    QString filePath ( const QModelIndex & index ) const;
-    bool remove ( const QModelIndex & index ) const;
-    QFileInfo	fileInfo ( const QModelIndex & index ) const;
+    QString fileName(const QModelIndex & index) const;
+    QString filePath(const QModelIndex & index) const;
+    bool remove(const QModelIndex & index) const;
+    QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString file); // append file with full path
     // icons with QFileIconProvider ()
     
