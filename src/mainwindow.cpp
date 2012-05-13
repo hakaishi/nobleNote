@@ -68,9 +68,14 @@ NobleNote::NobleNote()
      folderModel->setReadOnly(false); // enable drag drop
      //folderModel->setNameFilters(QStringList("Journals")); TODO:DON'T show journals.
 
-     noteModel = new FileSystemModel(this);
-     noteModel->setFilter(QDir::Files);
-     noteModel->setReadOnly(false);
+     noteFSModel = new FileSystemModel(this);
+     noteFSModel->setFilter(QDir::Files);
+     noteFSModel->setReadOnly(false);
+
+     FindFileModel * model = new FindFileModel(this);
+
+     noteModel = new FindFileSystemModel(this);
+     noteModel->setSourceModel(noteFSModel);
 
      folderList = new QListView(splitter);
      noteList = new QListView(splitter);
@@ -93,7 +98,6 @@ NobleNote::NobleNote()
      folderList->setRootIndex(folderModel->index(settings.value("rootPath").toString()));
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
-     //noteList->setRootIndex(noteModel->index(settings.value("rootPath").toString()));
 
      // make sure there's at least one folder
      QStringList dirList = QDir(settings.value("rootPath").toString()).entryList(QDir::Dirs);

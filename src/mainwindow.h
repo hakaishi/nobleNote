@@ -6,6 +6,8 @@
 #include <QSplitter>
 #include <QFileSystemModel>
 #include <QListView>
+#include <QAbstractItemModel>
+#include "findfilesystemmodel.h"
 
 /**
  * @brief note taking application main window
@@ -29,7 +31,8 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      private:
       QString         text;
       QSplitter       *splitter;
-      QFileSystemModel *folderModel, *noteModel;
+      QFileSystemModel *folderModel, *noteFSModel;
+      FindFileSystemModel * noteModel;
       QListView       *folderList, *noteList;
       QAction         *quit_action;
       QIcon           icon;
