@@ -24,13 +24,13 @@ void Preferences::saveSettings(){
      msgBox.setWindowTitle(tr("Warning"));
      msgBox.setIcon(QMessageBox::Critical);
      msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
+     QTimer::singleShot(6000, &msgBox, SLOT(close()));
      if(!settings->isWritable())
        msgBox.setInformativeText(tr("nobleNote.conf is not writable!"));
      
      QFileInfo file(rootPath);
      if(!file.isWritable()){
        msgBox.setInformativeText(tr("The path \"%1\" is not writable!").arg(file.filePath()));
-       QTimer::singleShot(6000, &msgBox, SLOT(close()));
        msgBox.exec();
        return;
      }
