@@ -8,6 +8,10 @@
 #include <QListView>
 #include <QAbstractItemModel>
 #include "findfilesystemmodel.h"
+#include <QToolButton>
+#include <QLabel>
+#include <QHBoxLayout>
+
 
 /**
  * @brief note taking application main window
@@ -40,6 +44,11 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       Preferences     *pref;
       QAction         *minimize_restore_action;
       QDir            searchDir;
+      QHBoxLayout     *hBoxLayout;
+      QToolButton     *showHideAdvancedSearchButton;
+      QLabel          *findLabel;
+      QFrame          *hLine;
+      bool            searchBoolean;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -57,6 +66,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
 
       void find();
       QStringList findFiles(const QStringList &files, const QString &text);
+      void showHideAdvancedSearch();
       void openNote(const QModelIndex &ind = QModelIndex());
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);
