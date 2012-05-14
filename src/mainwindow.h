@@ -39,6 +39,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QIcon           icon;
       Preferences     *pref;
       QAction         *minimize_restore_action;
+      QDir            searchDir;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -54,6 +55,8 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void tray_actions();
 #endif
 
+      void find();
+      QStringList findFiles(const QStringList &files, const QString &text);
       void openNote(const QModelIndex &ind = QModelIndex());
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);

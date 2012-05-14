@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "note.h"
+#include "findfilemodel.h"
 #include "filesystemmodel.h"
 #include "preferences.h"
 #include <QTextStream>
@@ -12,7 +13,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QDebug>
-#include "findfilemodel.h"
+#include <QProgressDialog>
 
 
 NobleNote::NobleNote()
@@ -62,9 +63,11 @@ NobleNote::NobleNote()
      searchName = new QLineEdit(this);
      searchName->setPlaceholderText(tr("Search for note"));
      gridLayout->addWidget(searchName, 0, 0);
+     connect(searchName, SIGNAL(returnPressed()), this, SLOT(find()));
      searchText = new QLineEdit(this);
      searchText->setPlaceholderText(tr("Search for content"));
      gridLayout->addWidget(searchText, 1, 0);
+     connect(searchName, SIGNAL(returnPressed()), this, SLOT(find()));
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 2, 0);
@@ -148,6 +151,58 @@ NobleNote::NobleNote()
 }
 
 NobleNote::~NobleNote(){}
+
+void NobleNote::find(){
+     QString fileName = searchName->text();
+     QString text = searchText->text();
+     QString path = folderModel->rootPath();
+
+     searchDir = QDir(path);
+     QStringList files;
+     if(fileName.isEmpty())
+       fileName = "*";
+     files = searchDir.entryList(QStringList(fileName), QDir::Files | QDir::NoSymLinks);
+
+     if(!text.isEmpty())
+         files = findFiles(files, text);
+     //add here the function to show the found files
+}
+
+QStringList NobleNote::findFiles(const QStringList &files, const QString &text){
+     QProgressDialog progressDialog(this);
+     progressDialog.setCancelButtonText(tr("&Cancel"));
+     progressDialog.setRange(0, files.size());
+     progressDialog.setWindowTitle(tr("Find Files"));
+
+     QStringList foundFiles;
+
+     for(int i = 0; i < files.size(); ++i){
+        progressDialog.setValue(i);
+        progressDialog.setLabelText(tr("Searching file number %1 of %2...")
+          .arg(i).arg(files.size()));
+        qApp->processEvents();
+
+        if(progressDialog.wasCanceled())
+          break;
+
+        QFile file(searchDir.absoluteFilePath(files[i]));
+
+        if(file.open(QIODevice::ReadOnly)){
+          QString line;
+          QTextStream in(&file);
+          while(!in.atEnd()){
+            if(progressDialog.wasCanceled())
+              break;
+            line = in.readLine();
+            if(line.contains(text)){
+              foundFiles << files[i];
+              break;
+            }
+          }
+        }
+     }
+     return foundFiles;
+}
 
 void NobleNote::selectFirstFolder(QString path)
 {
