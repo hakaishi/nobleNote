@@ -60,7 +60,7 @@ NobleNote::NobleNote()
    //Setup preferences
      pref = new Preferences(this);
 
-     hBoxLayout = new QHBoxLayout(this);
+     hBoxLayout = new QHBoxLayout();
      gridLayout->addLayout(hBoxLayout, 0, 0);
 
      showHideAdvancedSearchButton = new QToolButton(this);
