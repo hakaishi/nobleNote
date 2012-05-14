@@ -25,6 +25,8 @@ public:
     void appendFile(QString file); // append file with full path
     QModelIndex setRootPath(const QString & newPath);
     QString rootPath() const;
+
+    // TODO signal file changed
 };
 
 #endif // FINDFILESYSTEMMODEL_H
