@@ -5,5 +5,6 @@
         <file alias="italic">src/icons/format-text-italic.png</file>
         <file alias="strikedout">src/icons/format-text-strikethrough.png</file>
         <file alias="underlined">src/icons/format-text-underline.png</file>
+        <file alias="closeB">src/icons/fileclose.png</file>
     </qresource>
 </RCC>

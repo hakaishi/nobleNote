@@ -9,12 +9,15 @@ RCC_DIR = build
 
 # Input
 HEADERS = src/mainwindow.h src/note.h \
-    src/filesystemmodel.h preferences.h \
+    src/filesystemmodel.h \
+    src/preferences.h \
     src/findfilesystemmodel.h \
-    src/findfilemodel.h
+    src/findfilemodel.h \
+    src/lineedit.h
+
 FORMS = src/ui/note.ui src/ui/mainwindow.ui src/ui/preferences.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/filesystemmodel.cpp src/preferences.cpp \
     src/findfilemodel.cpp \
-    src/findfilesystemmodel.cpp
+    src/findfilesystemmodel.cpp src/lineedit.cpp
 RESOURCES = nobleNote.qrc
