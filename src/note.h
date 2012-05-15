@@ -41,6 +41,7 @@ class Note : public QMainWindow, public Ui::Note {
       void pointSizeOfText(const QString &f);
 
      signals:
+      void closing(QString &path);
 
      protected:
       void keyPressEvent(QKeyEvent *k);

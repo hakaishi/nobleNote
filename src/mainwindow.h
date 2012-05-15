@@ -54,6 +54,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QFrame          *hLine;
       bool            searchBoolean;
       FindFileModel   *findNoteModel;
+      QStringList     openNotes;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -72,6 +73,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void find();
       void showHideAdvancedSearch();
       void openNote(const QModelIndex &ind = QModelIndex());
+      void removeNoteFromOpenList(QString &path);
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);
       void newFolder();

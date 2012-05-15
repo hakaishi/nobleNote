@@ -284,6 +284,12 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
        ind = noteList->currentIndex();
 
      QString notesPath = noteModel->filePath(ind);
+
+     if(openNotes.contains(notesPath))
+       return; //TODO:Here the opened note should show up...
+     else
+       openNotes << notesPath;
+
      QFile noteFile(notesPath);
      if(!noteFile.open(QIODevice::ReadOnly))
        return;
@@ -314,7 +320,10 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      notes->setWindowTitle(noteModel->fileName(ind));
      notes->show();
      notes->setAttribute(Qt::WA_DeleteOnClose);
+     connect(notes, SIGNAL(closing(QString &)), this, SLOT(removeNoteFromOpenList(QString &)));
 }
+
+void NobleNote::removeNoteFromOpenList(QString &path){ openNotes.removeOne(path);}
 
 void NobleNote::newFolder(){
      QString path = folderModel->rootPath() + "/" + tr("new folder");

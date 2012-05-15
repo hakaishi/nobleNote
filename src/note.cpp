@@ -26,7 +26,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
        SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
 }
 
-Note::~Note(){ saveText(); }
+Note::~Note(){ saveText(); closing(notesPath); }
 
 void Note::showEvent(QShowEvent* show_Note){
      textEdit->setHtml(text);
