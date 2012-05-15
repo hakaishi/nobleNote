@@ -46,7 +46,7 @@ void FindFileModel::appendFile(QString filePath)
     while(filePathTrunc.count("/") > 1)
       filePathTrunc.remove(0,filePathTrunc.indexOf("/")+1);
 
-    QStandardItem * fileItem = new QStandardItem(info.fileName());
+    QStandardItem * fileItem = new QStandardItem(filePathTrunc);
     fileItem->setIcon(QFileIconProvider().icon(info));
     fileItem->setData(filePath,Qt::UserRole + 1); // store as user data
     appendRow(fileItem);
