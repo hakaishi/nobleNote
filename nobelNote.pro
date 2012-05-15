@@ -10,8 +10,8 @@ RCC_DIR = build
 # Input
 HEADERS = src/mainwindow.h src/note.h \
     src/filesystemmodel.h preferences.h \
-    src/findfilemodel.h \
-    src/findfilesystemmodel.h
+    src/findfilesystemmodel.h \
+    src/findfilemodel.h
 FORMS = src/ui/note.ui src/ui/mainwindow.ui src/ui/preferences.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/filesystemmodel.cpp src/preferences.cpp \

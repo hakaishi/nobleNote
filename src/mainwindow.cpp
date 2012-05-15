@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QProgressDialog>
 #include <QFileIconProvider>
+#include "findfilesystemmodel.h"
 
 
 NobleNote::NobleNote()
@@ -105,7 +106,7 @@ NobleNote::NobleNote()
      noteFSModel->setFilter(QDir::Files);
      noteFSModel->setReadOnly(false);
 
-     model = new FindFileModel(this);
+     findNoteModel = new FindFileModel(this);
 
      noteModel = new FindFileSystemModel(this);
      noteModel->setSourceModel(noteFSModel);
@@ -193,66 +194,14 @@ void NobleNote::showHideAdvancedSearch(){
 }
 
 void NobleNote::find(){
-//TODO: Reset or delete old entries for new search here
-     noteList->setModel(model);
-     QString fileName = searchName->text();
-     QString text = searchText->text();
-     QString path = folderModel->rootPath();
 
-     searchDir = QDir(path);
-     QStringList files;
-     if(fileName.isEmpty())
-       fileName = "*";
-     QDirIterator it(path, QDirIterator::Subdirectories);
-     while(it.hasNext())
-       files << it.next();
+     noteModel->setSourceModel(findNoteModel);
+     noteModel->clear(); // if findNoteModel already set, clear old found list
+     QStringList foundFiles = noteModel->find(searchName->text(),searchText->text(), folderModel->rootPath());
+     foreach(QString file,foundFiles)
+         noteModel->appendFile(file);
 
-     if(!text.isEmpty())
-       files = findFiles(files, text);
-
-     while(!files.isEmpty()){
-       QString file = files.takeFirst();
-       QFileInfo info(file);
-       if(!info.isDir())
-         model->appendFile(file);
-     }
-//TODO: when should the model swich back?
-}
-
-QStringList NobleNote::findFiles(const QStringList &files, const QString &text){
-     QProgressDialog progressDialog(this);
-     progressDialog.setCancelButtonText(tr("&Cancel"));
-     progressDialog.setRange(0, files.size());
-     progressDialog.setWindowTitle(tr("Find Files"));
-
-     QStringList foundFiles;
-
-     for(int i = 0; i < files.size(); ++i){
-        progressDialog.setValue(i);
-        progressDialog.setLabelText(tr("Searching file number %1 of %2...")
-          .arg(i).arg(files.size()));
-        qApp->processEvents();
-
-        if(progressDialog.wasCanceled())
-          break;
-
-        QFile file(searchDir.absoluteFilePath(files[i]));
-
-        if(file.open(QIODevice::ReadOnly)){
-          QString line;
-          QTextStream in(&file);
-          while(!in.atEnd()){
-            if(progressDialog.wasCanceled())
-              break;
-            line = in.readLine();
-            if(line.contains(text)){
-              foundFiles << files[i];
-              break;
-            }
-          }
-        }
-     }
-     return foundFiles;
+    //noteModel->sourceModel() is switched back in setCurrentFolder
 }
 
 void NobleNote::selectFirstFolder(QString path)
@@ -278,6 +227,7 @@ void NobleNote::selectFirstFolder(QString path)
 }
 
 void NobleNote::setCurrentFolder(const QModelIndex &ind){
+     noteModel->setSourceModel(noteFSModel);
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
 }
 

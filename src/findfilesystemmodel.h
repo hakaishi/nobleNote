@@ -22,9 +22,11 @@ public:
     QString filePath(const QModelIndex & index) const;
     bool remove(const QModelIndex & index ) const;
     QFileInfo fileInfo(const QModelIndex & index) const;
-    void appendFile(QString file); // append file with full path
+    void appendFile(QString filePath); // append file with full path
     QModelIndex setRootPath(const QString & newPath);
     QString rootPath() const;
+    void clear();
+    QStringList find(QString searchName, QString searchText, QString path);
 
     // TODO signal file changed
 };

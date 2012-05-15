@@ -18,11 +18,15 @@ public:
 
     QString fileName(const QModelIndex & index) const;
     QString filePath(const QModelIndex & index) const;
-    bool remove(const QModelIndex & index) const;
+    bool remove(const QModelIndex & index);
     QFileInfo fileInfo(const QModelIndex & index) const;
-    void appendFile(QString file); // append file with full path
-    // icons with QFileIconProvider ()
-    
+    void appendFile(QString filePath); // append file with full path
+    QStringList find(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role); // returns if rename succeeded, overwritten to enable QAbstractItemView::edit
+
+private:
+    QStringList findFiles(const QStringList &files, const QString &text, const QString &path);
 };
 
 #endif // FINDFILEMODEL_H
