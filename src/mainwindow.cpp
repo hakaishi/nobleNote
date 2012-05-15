@@ -308,6 +308,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      notes->journalsPath = journalFilesPath;
      if(pref->pSpin->value() > 0)
        notes->timer->start(pref->pSpin->value() * 60000);
+     notes->setWindowTitle(noteModel->fileName(ind));
      notes->show();
      notes->setAttribute(Qt::WA_DeleteOnClose);
 }
