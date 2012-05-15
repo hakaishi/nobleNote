@@ -1,6 +1,6 @@
 #include "findfilemodel.h"
 #include <QFileIconProvider>
-
+#include <QDebug>
 FindFileModel::FindFileModel(QObject *parent) :
     QStandardItemModel(parent)
 {
@@ -35,8 +35,12 @@ void FindFileModel::appendFile(QString file)
         return;
     }
 
+    QString fileAndDir = info.filePath();
+    
+    while(fileAndDir.count("/") > 1)
+      fileAndDir.remove(0,fileAndDir.indexOf("/")+1);
 
-    QStandardItem * fileItem = new QStandardItem(info.fileName());
+    QStandardItem * fileItem = new QStandardItem(fileAndDir);
     fileItem->setIcon(QFileIconProvider().icon(info));
     fileItem->setData(file,Qt::UserRole + 1); // store as user data
     appendRow(fileItem);

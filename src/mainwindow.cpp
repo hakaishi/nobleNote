@@ -217,7 +217,6 @@ void NobleNote::find(){
          model->appendFile(file);
      }
 //TODO: when should the model swich back?
-//TODO: show folder and file name
 }
 
 QStringList NobleNote::findFiles(const QStringList &files, const QString &text){
