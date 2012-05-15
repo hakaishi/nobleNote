@@ -102,6 +102,7 @@ NobleNote::NobleNote()
      folderModel->setRootPath(settings.value("rootPath").toString());
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderModel->setReadOnly(false);
+     folderModel->setOnlyOnItemDrops(true);
 
      noteFSModel = new FileSystemModel(this);
      noteFSModel->setFilter(QDir::Files);

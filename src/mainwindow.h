@@ -25,6 +25,7 @@
 class Preferences;
 class FindFileModel;
 class FindFileSystemModel;
+class FileSystemModel;
 class LineEdit;
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
@@ -38,7 +39,8 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QString         text;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
-      QFileSystemModel *folderModel, *noteFSModel;
+      FileSystemModel *folderModel;
+      FileSystemModel *noteFSModel;
       FindFileSystemModel * noteModel;
       QListView       *folderList;
       QListView         *noteList;
