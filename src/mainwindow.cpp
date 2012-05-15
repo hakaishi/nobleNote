@@ -3,6 +3,7 @@
 #include "findfilemodel.h"
 #include "filesystemmodel.h"
 #include "preferences.h"
+#include "lineedit.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -82,12 +83,12 @@ NobleNote::NobleNote()
      searchBoolean = false;
 
    //Search line edits
-     searchName = new QLineEdit(this);
+     searchName = new LineEdit(this);
      searchName->setPlaceholderText(tr("Search for note"));
      gridLayout->addWidget(searchName, 1, 0);
      searchName->setHidden(true);
      connect(searchName, SIGNAL(returnPressed()), this, SLOT(find()));
-     searchText = new QLineEdit(this);
+     searchText = new LineEdit(this);
      searchText->setPlaceholderText(tr("Search for content"));
      gridLayout->addWidget(searchText, 2, 0);
      searchText->setHidden(true);

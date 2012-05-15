@@ -25,6 +25,7 @@
 
 class Preferences;
 class FindFileModel;
+class LineEdit;
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
@@ -36,7 +37,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      private:
       QString         text;
       QSplitter       *splitter;
-      QLineEdit       *searchName, *searchText;
+      LineEdit        *searchName, *searchText;
       QFileSystemModel *folderModel, *noteFSModel;
       FindFileSystemModel * noteModel;
       QListView       *folderList, *noteList;
