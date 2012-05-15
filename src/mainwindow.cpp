@@ -14,6 +14,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QProgressDialog>
+#include <QFileIconProvider>
 
 
 NobleNote::NobleNote()
@@ -39,8 +40,6 @@ NobleNote::NobleNote()
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 #endif
 
-
-
    //Configuration file
      QSettings settings; // ini format does save but in the executables directory, use native format
      if(!settings.isWritable()){
@@ -60,6 +59,7 @@ NobleNote::NobleNote()
    //Setup preferences
      pref = new Preferences(this);
 
+   //Collabsable search
      hBoxLayout = new QHBoxLayout();
      gridLayout->addLayout(hBoxLayout, 0, 0);
 
@@ -81,6 +81,7 @@ NobleNote::NobleNote()
 
      searchBoolean = false;
 
+   //Search line edits
      searchName = new QLineEdit(this);
      searchName->setPlaceholderText(tr("Search for note"));
      gridLayout->addWidget(searchName, 1, 0);
@@ -90,7 +91,7 @@ NobleNote::NobleNote()
      searchText->setPlaceholderText(tr("Search for content"));
      gridLayout->addWidget(searchText, 2, 0);
      searchText->setHidden(true);
-     connect(searchName, SIGNAL(returnPressed()), this, SLOT(find()));
+     connect(searchText, SIGNAL(returnPressed()), this, SLOT(find()));
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 3, 0);
@@ -98,14 +99,13 @@ NobleNote::NobleNote()
      folderModel = new FileSystemModel(this);
      folderModel->setRootPath(settings.value("rootPath").toString());
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
-     folderModel->setReadOnly(false); // enable drag drop
-     //folderModel->setNameFilters(QStringList("Journals")); TODO:DON'T show journals.
+     folderModel->setReadOnly(false);
 
      noteFSModel = new FileSystemModel(this);
      noteFSModel->setFilter(QDir::Files);
      noteFSModel->setReadOnly(false);
 
-     FindFileModel * model = new FindFileModel(this);
+     model = new FindFileModel(this);
 
      noteModel = new FindFileSystemModel(this);
      noteModel->setSourceModel(noteFSModel);
@@ -193,6 +193,8 @@ void NobleNote::showHideAdvancedSearch(){
 }
 
 void NobleNote::find(){
+//TODO: Reset or delete old entries for new search here
+     noteList->setModel(model);
      QString fileName = searchName->text();
      QString text = searchText->text();
      QString path = folderModel->rootPath();
@@ -201,11 +203,21 @@ void NobleNote::find(){
      QStringList files;
      if(fileName.isEmpty())
        fileName = "*";
-     files = searchDir.entryList(QStringList(fileName), QDir::Files | QDir::NoSymLinks);
+     QDirIterator it(path, QDirIterator::Subdirectories);
+     while(it.hasNext())
+       files << it.next();
 
      if(!text.isEmpty())
-         files = findFiles(files, text);
-     //add here the function to show the found files
+       files = findFiles(files, text);
+
+     while(!files.isEmpty()){
+       QString file = files.takeFirst();
+       QFileInfo info(file);
+       if(!info.isDir())
+         model->appendFile(file);
+     }
+//TODO: when should the model swich back?
+//TODO: show folder and file name
 }
 
 QStringList NobleNote::findFiles(const QStringList &files, const QString &text){
@@ -310,12 +322,6 @@ void NobleNote::closeEvent(QCloseEvent* window_close){
      else
        qApp->quit();
      QWidget::closeEvent(window_close);
-}
-
-void NobleNote::keyPressEvent(QKeyEvent *kEvent){
-     if(kEvent->modifiers() == Qt::ControlModifier)
-       if(kEvent->key() == Qt::Key_Q)
-         qApp->quit();
 }
 
 void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
@@ -456,6 +462,10 @@ void NobleNote::removeFolder(){
 }
 
 void NobleNote::removeNote(){
+     if(QMessageBox::warning(this,tr("Delete note"),
+         tr("Do you really want to delete the note \"%1\"?").arg(noteModel->fileName(noteList->currentIndex())),
+           QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+       return;
      noteModel->remove(noteList->currentIndex());
 }
 

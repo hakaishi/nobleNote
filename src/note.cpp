@@ -5,7 +5,7 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QTextStream>
-
+#include <QDebug>
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
@@ -133,13 +133,6 @@ void Note::setupTextFormattingOptions(){
      comboSize->setCurrentIndex(comboSize->findText(QString::number(QApplication::font().pointSize())));
 }
 
-//QTextCharFormat Note::getFormatOnWordOrSelection(){
-//     QTextCursor cursor = textEdit->textCursor();
-//     if(!cursor.hasSelection())
-//       cursor.select(QTextCursor::WordUnderCursor);
-//     return cursor.charFormat();
-//}
-
 void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit->textCursor();
      if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
@@ -224,5 +217,11 @@ void Note::pointSizeOfText(const QString &p){
        QTextCharFormat fmt;
        fmt.setFontPointSize(pointSize);
        mergeFormatOnWordOrSelection(fmt);
+     }
+}
+
+void Note::keyPressEvent(QKeyEvent *k){
+     if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
+
      }
 }

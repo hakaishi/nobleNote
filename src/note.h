@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QFontComboBox>
 #include <QComboBox>
+#include <QKeyEvent>
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -28,7 +29,6 @@ class Note : public QMainWindow, public Ui::Note {
       void saveText();
       void resetAll();
       void setupTextFormattingOptions();
-      //QTextCharFormat getFormatOnWordOrSelection(); // unused method
       void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
       void boldText();
       void italicText();
@@ -43,6 +43,7 @@ class Note : public QMainWindow, public Ui::Note {
      signals:
 
      protected:
+      void keyPressEvent(QKeyEvent *k);
       virtual void showEvent(QShowEvent* show_Note);
 };
 

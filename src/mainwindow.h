@@ -24,6 +24,7 @@
 //#define NO_SYSTEM_TRAY_ICON
 
 class Preferences;
+class FindFileModel;
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
@@ -49,6 +50,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QLabel          *findLabel;
       QFrame          *hLine;
       bool            searchBoolean;
+      FindFileModel   *model;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -79,7 +81,6 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void selectFirstFolder(QString path); // select first folder
 
      protected:
-      void keyPressEvent(QKeyEvent* kEvent);
       virtual void closeEvent(QCloseEvent* window_close);
       virtual void showEvent(QShowEvent* window_show);
       virtual void hideEvent(QHideEvent* window_hide);
