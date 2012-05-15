@@ -4,6 +4,7 @@
 #include <QStandardItemModel>
 #include <QFile>
 #include <QFileInfo>
+#include <QMimeData>
 
 /**
  * @brief a model that shows a list of files
@@ -22,6 +23,9 @@ public:
     QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString filePath); // append file with full path
     QStringList find(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
+
+    QStringList mimeTypes() const;
+    QMimeData * mimeData(const QModelIndexList &indexes) const;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role); // returns if rename succeeded, overwritten to enable QAbstractItemView::edit
 

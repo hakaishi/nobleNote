@@ -108,6 +108,9 @@ NobleNote::NobleNote()
      noteFSModel->setFilter(QDir::Files);
      noteFSModel->setReadOnly(false);
 
+     //foreach(QString str, noteFSModel->mimeTypes())
+     //    qDebug() << "mime types: " << str;
+
      findNoteModel = new FindFileModel(this);
 
      noteModel = new FindFileSystemModel(this);

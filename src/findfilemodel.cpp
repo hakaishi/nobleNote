@@ -2,6 +2,7 @@
 #include <QFileIconProvider>
 #include <QDirIterator>
 #include <QTextStream>
+#include <QUrl>
 
 
 FindFileModel::FindFileModel(QObject *parent) :
@@ -83,6 +84,23 @@ QStringList FindFileModel::find(const QString &searchName, const QString &search
         results.append(file);
     }
     return results;
+}
+
+QStringList FindFileModel::mimeTypes() const
+{
+    return QStringList(QString("text/uri-list"));
+}
+
+QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
+{
+    QList<QUrl> urls;
+    for(QModelIndexList::ConstIterator it = indexes.constBegin(); it != indexes.constEnd(); ++it)
+    {
+        urls+=QUrl::fromLocalFile(this->filePath(*it));
+    }
+    QMimeData * mimeData = new QMimeData();
+    mimeData->setUrls(urls);
+    return mimeData;
 }
 
 QStringList FindFileModel::findFiles(const QStringList &files, const QString &text, const QString &path){
