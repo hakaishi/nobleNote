@@ -34,19 +34,27 @@ void Note::showEvent(QShowEvent* show_Note){
 }
 
 void Note::saveText(){
+     QFile note(notesPath);
+     if(!note.open(QIODevice::ReadOnly))
+       return;
+     QTextStream nStream(&note);
+     QString content = nStream.readAll();
+     note.close();
+     if(content == textEdit->toHtml())
+       return; //don't save if text didn't change
+     else{
+       if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
+         return;
+       nStream << textEdit->toHtml();
+       note.close();
+     }
+
      QFile journal(journalsPath);
      if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
        return;
      QTextStream jStream(&journal);
      jStream << textEdit->toHtml();
      journal.close();
-
-     QFile note(notesPath);
-     if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
-       return;
-     QTextStream nStream(&note);
-     nStream << textEdit->toHtml();
-     note.close();
 }
 
 void Note::resetAll(){

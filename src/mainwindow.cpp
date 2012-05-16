@@ -323,7 +323,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      connect(notes, SIGNAL(closing(QString &)), this, SLOT(removeNoteFromOpenList(QString &)));
 }
 
-void NobleNote::removeNoteFromOpenList(QString &path){ openNotes.removeOne(path);}
+void NobleNote::removeNoteFromOpenList(QString &path){ openNotes.removeOne(path); }
 
 void NobleNote::newFolder(){
      QString path = folderModel->rootPath() + "/" + tr("new folder");
