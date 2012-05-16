@@ -17,6 +17,9 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      timer = new QTimer(this);
 
+     noteWatcher = new QFileSystemWatcher(this);
+     journalWatcher = new QFileSystemWatcher(this);
+
      connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
      connect(jTimer, SIGNAL(timeout()), this, SLOT(saveText()));
      connect(timer, SIGNAL(timeout()), this, SLOT(saveText()));
@@ -24,13 +27,37 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
        this, SLOT(resetAll()));
      connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
        SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
+     connect(noteWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(updateNDir(QString)));
+     connect(journalWatcher, SIGNAL(directoryChanged(const QString &)), this, SLOT(updateJDir(QString)));
+     connect(noteWatcher, SIGNAL(fileChanged(QString)), this, SLOT(updateNoteFile(QString)));
 }
 
 Note::~Note(){ saveText(); closing(notesPath); }
 
 void Note::showEvent(QShowEvent* show_Note){
      textEdit->setHtml(text);
+     noteWatcher->addPath(notesPath);
+     journalWatcher->addPath(journalsPath);
      QWidget::showEvent(show_Note);
+}
+
+void Note::updateNDir(QString path){ notesPath = path; qDebug()<<"changed path to: "<<notesPath;}
+
+void Note::updateJDir(QString path){ journalsPath = path; }
+
+void Note::updateNoteFile(QString path){
+qDebug()<<"path: "<<path<<"\tnotesPath: "<< notesPath; //in case updateNDir doesn't work we should make
+                                    //notesPath = path; but this is also strange here for the moment...
+     if(text == textEdit->toHtml()){
+       QFile note(path);
+       if(!note.open(QIODevice::ReadOnly))
+         return;
+       QTextStream nStream(&note);
+       text = nStream.readAll();
+       note.close();
+       textEdit->setHtml(text);
+qDebug()<<"test";
+     }
 }
 
 void Note::saveText(){

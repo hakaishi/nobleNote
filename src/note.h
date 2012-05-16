@@ -6,6 +6,7 @@
 #include <QFontComboBox>
 #include <QComboBox>
 #include <QKeyEvent>
+#include <QFileSystemWatcher>
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -23,7 +24,8 @@ class Note : public QMainWindow, public Ui::Note {
       QComboBox *comboSize;
       QAction *actionTextBold, *actionTextItalic,
               *actionTextUnderline, *actionTextColor,
-      *actionTextBColor, *actionTextStrikeOut;
+              *actionTextBColor, *actionTextStrikeOut;
+     QFileSystemWatcher *noteWatcher, *journalWatcher;
 
      public slots:
       void saveText();
@@ -39,6 +41,9 @@ class Note : public QMainWindow, public Ui::Note {
       void getFontAndPointSizeOfText(const QTextCharFormat &format);
       void fontOfText(const QString &f);
       void pointSizeOfText(const QString &f);
+      void updateNDir(QString path);
+      void updateJDir(QString path);
+      void updateNoteFile(QString path);
 
      signals:
       void closing(QString &path);
