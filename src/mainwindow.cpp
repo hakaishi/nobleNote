@@ -434,7 +434,7 @@ void NobleNote::removeNote(){
 }
 
 void NobleNote::showContextMenuF(const QPoint &pos){
-     QPoint globalPos = this->mapToGlobal(pos);
+     QPoint globalPos = folderList->mapToGlobal(pos);
 
      QMenu menu;
 
@@ -458,7 +458,7 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 
 void NobleNote::showContextMenuN(const QPoint &pos){
 
-     QPoint globalPos = this->mapToGlobal(pos);
+     QPoint globalPos = noteList->mapToGlobal(pos);
 
      QMenu menu;
 
