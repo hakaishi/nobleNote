@@ -32,7 +32,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      connect(noteWatcher, SIGNAL(fileChanged(QString)), this, SLOT(updateNoteFile(QString)));
 }
 
-Note::~Note(){ saveText(); emit closing(static_cast<QObject*>(this)); }
+Note::~Note(){ saveText();}
 
 void Note::showEvent(QShowEvent* show_Note){
      textEdit->setHtml(text);
