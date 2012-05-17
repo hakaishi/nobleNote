@@ -18,6 +18,7 @@
 #include <QFileIconProvider>
 #include <QList>
 #include "findfilesystemmodel.h"
+#include "xorcipher.h"
 
 
 NobleNote::NobleNote()
@@ -285,7 +286,6 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
        ind = noteList->currentIndex();
 
      QString notePath = noteModel->filePath(ind);
-
 
      for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
