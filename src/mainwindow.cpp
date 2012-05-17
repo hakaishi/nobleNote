@@ -457,14 +457,13 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 }
 
 void NobleNote::showContextMenuN(const QPoint &pos){
-     if(noteModel->sourceModel() == findNoteModel)
-       return;
 
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu menu;
 
-     if(!noteList->indexAt(pos).isValid()) // if index doesn't exists at position
+     if(!noteList->indexAt(pos).isValid() &&
+        !(noteModel->sourceModel() == findNoteModel)) // if index doesn't exists at position
      {
          QAction* addNewN = new QAction(tr("New &note"), &menu);
          connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
