@@ -444,7 +444,7 @@ void NobleNote::removeNote(){
 }
 
 void NobleNote::showContextMenuF(const QPoint &pos){
-     QPoint globalPos = this->mapToGlobal(pos);
+     QPoint globalPos = folderList->mapToGlobal(pos);
 
      QMenu menu;
 
@@ -467,14 +467,13 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 }
 
 void NobleNote::showContextMenuN(const QPoint &pos){
-     if(noteModel->sourceModel() == findNoteModel)
-       return;
 
-     QPoint globalPos = this->mapToGlobal(pos);
+     QPoint globalPos = noteList->mapToGlobal(pos);
 
      QMenu menu;
 
-     if(!noteList->indexAt(pos).isValid()) // if index doesn't exists at position
+     if(!noteList->indexAt(pos).isValid() &&
+        !(noteModel->sourceModel() == findNoteModel)) // if index doesn't exists at position
      {
          QAction* addNewN = new QAction(tr("New &note"), &menu);
          connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
@@ -490,4 +489,13 @@ void NobleNote::showContextMenuN(const QPoint &pos){
          menu.addAction(removeNote);
      }
      menu.exec(globalPos);
+}
+
+void NobleNote::keyPressEvent(QKeyEvent *k){
+     if(k->key() == Qt::Key_Delete){
+       if(noteList->hasFocus())
+         removeNote();
+       if(folderList->hasFocus())
+         removeFolder();
+     }
 }
