@@ -325,7 +325,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      //TODO:
      //if(QFileInfo(journalsPath).lastModified().toString() == QFileInfo(notesPath).lastModified().toString());
 
-      Note* note=new Note(this);
+      Note* note=new Note();
       openNotes+= note;
      note->setObjectName(notePath);
      note->text = text;

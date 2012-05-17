@@ -9,8 +9,8 @@ private:
     XorCipher();
 public:
     // todo also encrypt the key if it is kept in memory
-    static QString encrypt(QString sourceString, int key);
-    static QString decrypt(QString encryptedString, int key);
+    static QString encrypt(QString sourceString, ushort key);
+    static QString decrypt(QString encryptedString, ushort key);
 
 
 };
