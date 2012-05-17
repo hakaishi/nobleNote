@@ -5,7 +5,13 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QTextStream>
+#include <QXmlStreamWriter>
+#include <QTextBlock>
+#include <QTextFragment>
+#include "xmlnote.h"
 #include <QDebug>
+
+
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
@@ -82,6 +88,14 @@ void Note::saveText(){
      QTextStream jStream(&journal);
      jStream << textEdit->toHtml();
      journal.close();
+
+     // test xml output
+//    QString xmlOutput;
+//    QString noteName ="foo bar";
+//    XmlNote writer(&xmlOutput);
+//    writer.setFrame(textEdit->document()->rootFrame());
+//    writer.write();
+//     qDebug() << xmlOutput;
 }
 
 void Note::resetAll(){

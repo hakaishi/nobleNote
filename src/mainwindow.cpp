@@ -290,13 +290,13 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
          // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
-         if((*it)==NULL)
+         if(!(*it))
          {
              it = openNotes.erase(it); // skip iterator position
              continue;
          }
          // check if the notePath is already used in a open note
-         if((*it)!=NULL && (*it)->objectName() == notePath)
+         if((*it) && (*it)->objectName() == notePath)
          {
              // highlight the note window
              (*it)->activateWindow();
