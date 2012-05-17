@@ -27,6 +27,7 @@ class FindFileModel;
 class FindFileSystemModel;
 class FileSystemModel;
 class LineEdit;
+class Note;
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
@@ -54,7 +55,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QFrame          *hLine;
       bool            searchBoolean;
       FindFileModel   *findNoteModel;
-      QStringList     openNotes;
+      QList<Note*>     openNotes;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -73,7 +74,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void find();
       void showHideAdvancedSearch();
       void openNote(const QModelIndex &ind = QModelIndex());
-      void removeNoteFromOpenList(QString &path);
+      void removeNoteFromOpenList(QObject * object);
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);
       void newFolder();

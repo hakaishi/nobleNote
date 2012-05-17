@@ -46,7 +46,7 @@ class Note : public QMainWindow, public Ui::Note {
       void updateNoteFile(QString path);
 
      signals:
-      void closing(QString &path);
+      void closing(QObject *object);
 
      protected:
       void keyPressEvent(QKeyEvent *k);

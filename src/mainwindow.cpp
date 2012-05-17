@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <QProgressDialog>
 #include <QFileIconProvider>
+#include <QList>
 #include "findfilesystemmodel.h"
 
 
@@ -283,14 +284,21 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      if(!ind.isValid()) // default constructed model index
        ind = noteList->currentIndex();
 
-     QString notesPath = noteModel->filePath(ind);
+     QString notePath = noteModel->filePath(ind);
 
-     if(openNotes.contains(notesPath))
-       return; //TODO:Here the opened note should show up...
-     else
-       openNotes << notesPath;
 
-     QFile noteFile(notesPath);
+     for(QList<Note*>::ConstIterator it = openNotes.constBegin(); it != openNotes.constEnd(); ++it)
+     {
+         // check if the notePath is already used in a open note
+         if((*it)->objectName() == notePath)
+         {
+             // highlight the note window
+             (*it)->activateWindow();
+             return; //TODO:Here the opened note should show up...
+         }
+     }
+
+     QFile noteFile(notePath);
      if(!noteFile.open(QIODevice::ReadOnly))
        return;
      QTextStream streamN(&noteFile);
@@ -311,19 +319,21 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      //TODO:
      //if(QFileInfo(journalsPath).lastModified().toString() == QFileInfo(notesPath).lastModified().toString());
 
-     Note *notes = new Note(this);
-     notes->text = text;
-     notes->notesPath = notesPath;
-     notes->journalsPath = journalFilesPath;
+     Note *note = new Note(this);
+     note->setObjectName(notePath);
+     openNotes+= note;
+     note->text = text;
+     note->notesPath = notePath;
+     note->journalsPath = journalFilesPath;
      if(pref->pSpin->value() > 0)
-       notes->timer->start(pref->pSpin->value() * 60000);
-     notes->setWindowTitle(noteModel->fileName(ind));
-     notes->show();
-     notes->setAttribute(Qt::WA_DeleteOnClose);
-     connect(notes, SIGNAL(closing(QString &)), this, SLOT(removeNoteFromOpenList(QString &)));
+       note->timer->start(pref->pSpin->value() * 60000);
+     note->setWindowTitle(noteModel->fileName(ind));
+     note->show();
+     note->setAttribute(Qt::WA_DeleteOnClose);
+     connect(note, SIGNAL(closing(QObject*)), this, SLOT(removeNoteFromOpenList(QObject*)));
 }
 
-void NobleNote::removeNoteFromOpenList(QString &path){ openNotes.removeOne(path); }
+void NobleNote::removeNoteFromOpenList(QObject* object){ openNotes.removeOne(qobject_cast<Note*>(object)); }
 
 void NobleNote::newFolder(){
      QString path = folderModel->rootPath() + "/" + tr("new folder");

@@ -13,11 +13,13 @@ HEADERS = src/mainwindow.h src/note.h \
     src/preferences.h \
     src/findfilesystemmodel.h \
     src/findfilemodel.h \
-    src/lineedit.h
+    src/lineedit.h \
+    src/xorcipher.h
 
 FORMS = src/ui/note.ui src/ui/mainwindow.ui src/ui/preferences.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/preferences.cpp \
     src/findfilemodel.cpp \
-    src/findfilesystemmodel.cpp src/lineedit.cpp
+    src/findfilesystemmodel.cpp src/lineedit.cpp \
+    src/xorcipher.cpp
 RESOURCES = nobleNote.qrc
