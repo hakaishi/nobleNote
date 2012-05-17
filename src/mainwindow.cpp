@@ -457,6 +457,9 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 }
 
 void NobleNote::showContextMenuN(const QPoint &pos){
+     if(noteModel->sourceModel() == findNoteModel)
+       return;
+
      QPoint globalPos = this->mapToGlobal(pos);
 
      QMenu menu;
