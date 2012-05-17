@@ -6,7 +6,7 @@
 #include <QFontComboBox>
 #include <QComboBox>
 #include <QKeyEvent>
-#include <QFileSystemWatcher>
+#include <QDateTime>
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -15,20 +15,22 @@ class Note : public QMainWindow, public Ui::Note {
       Note(QWidget *parent = 0);
       ~Note();
       QString text, journalsPath, notesPath;
-      QTimer *timer;
+      QTimer  *timer;
 
      private:
-      QTimer *jTimer;
-      QMenu *menu;
+      QTimer    *jTimer;
+      QMenu     *menu;
       QFontComboBox *fontComboBox;
       QComboBox *comboSize;
-      QAction *actionTextBold, *actionTextItalic,
-              *actionTextUnderline, *actionTextColor,
-              *actionTextBColor, *actionTextStrikeOut;
-     QFileSystemWatcher *noteWatcher, *journalWatcher;
+      QAction   *actionTextBold, *actionTextItalic,
+                *actionTextUnderline, *actionTextColor,
+                *actionTextBColor, *actionTextStrikeOut;
+      QDateTime noteModified, journalModified;
 
      public slots:
-      void saveText();
+      void saveAll();
+      void load();
+      void save_or_not();
       void resetAll();
       void setupTextFormattingOptions();
       void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
@@ -41,9 +43,6 @@ class Note : public QMainWindow, public Ui::Note {
       void getFontAndPointSizeOfText(const QTextCharFormat &format);
       void fontOfText(const QString &f);
       void pointSizeOfText(const QString &f);
-      void updateNDir(QString path);
-      void updateJDir(QString path);
-      void updateNoteFile(QString path);
 
      signals:
       void closing(QObject *object);

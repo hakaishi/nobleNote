@@ -286,6 +286,8 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
        ind = noteList->currentIndex();
 
      QString notePath = noteModel->filePath(ind);
+     QString journalFilesPath = QSettings().value("journalFolderPath").toString() + "/" +
+       folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
 
      for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
@@ -304,36 +306,16 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
          }
      }
 
-     QFile noteFile(notePath);
-     if(!noteFile.open(QIODevice::ReadOnly))
-       return;
-     QTextStream streamN(&noteFile);
-     text = streamN.readAll();
-     noteFile.close();
-
-     QString journalFilesPath = QSettings().value("journalFolderPath").toString() + "/" +
-       folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
-     QFile journalFile(journalFilesPath);
-     if(!journalFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
-       return;
-     if(!journalFile.exists()){
-       QTextStream streamJ(&journalFile);
-       streamJ << text;
-     }
-     journalFile.close();
-
      //TODO:
      //if(QFileInfo(journalsPath).lastModified().toString() == QFileInfo(notesPath).lastModified().toString());
 
-      Note* note=new Note();
-      openNotes+= note;
+     Note* note=new Note();
+     openNotes+= note;
      note->setObjectName(notePath);
-     note->text = text;
      note->notesPath = notePath;
      note->journalsPath = journalFilesPath;
      if(pref->pSpin->value() > 0)
        note->timer->start(pref->pSpin->value() * 60000);
-     note->setWindowTitle(noteModel->fileName(ind));
      note->show();
      note->setAttribute(Qt::WA_DeleteOnClose);
 }

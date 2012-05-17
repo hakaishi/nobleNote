@@ -1,4 +1,5 @@
 #include "note.h"
+#include "xmlnote.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
@@ -8,7 +9,7 @@
 #include <QXmlStreamWriter>
 #include <QTextBlock>
 #include <QTextFragment>
-#include "xmlnote.h"
+#include <QMessageBox>
 #include <QDebug>
 
 
@@ -23,64 +24,56 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      timer = new QTimer(this);
 
-     noteWatcher = new QFileSystemWatcher(this);
-     journalWatcher = new QFileSystemWatcher(this);
-
      connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
-     connect(jTimer, SIGNAL(timeout()), this, SLOT(saveText()));
-     connect(timer, SIGNAL(timeout()), this, SLOT(saveText()));
+     connect(jTimer, SIGNAL(timeout()), this, SLOT(save_or_not()));
+     connect(timer, SIGNAL(timeout()), this, SLOT(save_or_not()));
      connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
        this, SLOT(resetAll()));
      connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
        SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
-     connect(noteWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(updateNDir(QString)));
-     connect(journalWatcher, SIGNAL(directoryChanged(const QString &)), this, SLOT(updateJDir(QString)));
-     connect(noteWatcher, SIGNAL(fileChanged(QString)), this, SLOT(updateNoteFile(QString)));
 }
 
-Note::~Note(){ saveText();}
+Note::~Note(){ save_or_not();}
 
 void Note::showEvent(QShowEvent* show_Note){
-     textEdit->setHtml(text);
-     noteWatcher->addPath(notesPath);
-     journalWatcher->addPath(journalsPath);
+     load();
      QWidget::showEvent(show_Note);
 }
 
-void Note::updateNDir(QString path){ notesPath = path; qDebug()<<"changed path to: "<<notesPath;}
-
-void Note::updateJDir(QString path){ journalsPath = path; }
-
-void Note::updateNoteFile(QString path){
-qDebug()<<"path: "<<path<<"\tnotesPath: "<< notesPath; //in case updateNDir doesn't work we should make
-                                    //notesPath = path; but this is also strange here for the moment...
-     if(text == textEdit->toHtml()){
-       QFile note(path);
-       if(!note.open(QIODevice::ReadOnly))
-         return;
-       QTextStream nStream(&note);
-       text = nStream.readAll();
-       note.close();
-       textEdit->setHtml(text);
-qDebug()<<"test";
-     }
-}
-
-void Note::saveText(){
+void Note::load(){
      QFile note(notesPath);
      if(!note.open(QIODevice::ReadOnly))
        return;
      QTextStream nStream(&note);
-     QString content = nStream.readAll();
+     text = nStream.readAll();
      note.close();
-     if(content == textEdit->toHtml())
-       return; //don't save if text didn't change
-     else{
-       if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
-         return;
-       nStream << textEdit->toHtml();
-       note.close();
+     QFileInfo noteInfo(notesPath);
+     noteModified = noteInfo.lastModified();
+
+     setWindowTitle(noteInfo.fileName());
+     textEdit->setHtml(text);
+
+     QFile journal(journalsPath);
+     if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     if(!journal.exists()){
+       QTextStream jStream(&journal);
+       jStream << text;
      }
+     journal.close();
+     QFileInfo journalInfo(journalsPath);
+     journalModified = journalInfo.lastModified();
+}
+
+void Note::saveAll(){
+     QFile note(notesPath);
+     if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     QTextStream nStream(&note);
+     nStream << textEdit->toHtml();
+     note.close();
+     QFileInfo noteInfo(notesPath);
+     noteModified = noteInfo.lastModified();
 
      QFile journal(journalsPath);
      if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
@@ -88,6 +81,10 @@ void Note::saveText(){
      QTextStream jStream(&journal);
      jStream << textEdit->toHtml();
      journal.close();
+     QFileInfo journalInfo(journalsPath);
+     journalModified = journalInfo.lastModified();
+
+qDebug()<<"saved";
 
      // test xml output
 //    QString xmlOutput;
@@ -98,15 +95,57 @@ void Note::saveText(){
 //     qDebug() << xmlOutput;
 }
 
-void Note::resetAll(){
-     QFile file(notesPath);
-     if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-       return;
-     QTextStream stream(&file);
-     stream << text;
-     file.close();
+void Note::save_or_not(){
+     QFile note(notesPath);
 
+     if(!note.exists()){
+       if(QMessageBox::warning(this,tr("Note doesn't exist"),
+          tr("Do you want to save this Note as a new one?"),
+          QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+         close();
+       else
+         saveAll();
+     }
+
+     QFileInfo noteInfo(notesPath);
+     QFileInfo journalInfo(journalsPath);
+     if((noteModified != noteInfo.lastModified()) ||
+        (journalModified != journalInfo.lastModified())){
+       load(); //try to reload file
+       return;
+     }
+
+     if(!note.open(QIODevice::ReadOnly))
+       return;
+     QTextStream nStream(&note);
+     QString content = nStream.readAll();
+     note.close();
+     if(content == textEdit->toHtml())
+       return; //don't save if text didn't change
+     else
+       saveAll();
+}
+
+void Note::resetAll(){
      textEdit->setHtml(text);
+
+     QFile note(notesPath);
+     if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     QTextStream stream(&note);
+     stream << text;
+     note.close();
+     QFileInfo noteInfo(notesPath);
+     noteModified = noteInfo.lastModified();
+
+     QFile journal(journalsPath);
+     if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
+       return;
+     QTextStream jStream(&journal);
+     jStream << text;
+     journal.close();
+     QFileInfo journalInfo(journalsPath);
+     journalModified = journalInfo.lastModified();
 }
 
 void Note::setupTextFormattingOptions(){
