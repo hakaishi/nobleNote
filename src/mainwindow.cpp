@@ -480,3 +480,12 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      }
      menu.exec(globalPos);
 }
+
+void NobleNote::keyPressEvent(QKeyEvent *k){
+     if(k->key() == Qt::Key_Delete){
+       if(noteList->hasFocus())
+         removeNote();
+       if(folderList->hasFocus())
+         removeFolder();
+     }
+}
