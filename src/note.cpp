@@ -11,6 +11,7 @@
 #include <QTextFragment>
 #include <QMessageBox>
 #include <QDebug>
+#include "textformattingtoolbar.h"
 
 
 Note::Note(QWidget *parent) : QMainWindow(parent){

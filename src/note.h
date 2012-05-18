@@ -7,7 +7,8 @@
 #include <QComboBox>
 #include <QKeyEvent>
 #include <QDateTime>
-#include "textformattingtoolbar.h"
+
+class TextFormattingToolbar;
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
