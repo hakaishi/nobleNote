@@ -50,6 +50,7 @@ class Note : public QMainWindow, public Ui::Note {
      protected:
       void keyPressEvent(QKeyEvent *k);
       virtual void showEvent(QShowEvent* show_Note);
+      virtual void focusInEvent(QFocusEvent *fe);
 };
 
 #endif

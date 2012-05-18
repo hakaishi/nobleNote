@@ -16,6 +16,9 @@
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
+
+     setFocusPolicy(Qt::StrongFocus);
+
      setupTextFormattingOptions();
 
      jTimer = new QTimer(this);
@@ -38,6 +41,13 @@ Note::~Note(){ save_or_not();}
 void Note::showEvent(QShowEvent* show_Note){
      load();
      QWidget::showEvent(show_Note);
+}
+
+void Note::focusInEvent(QFocusEvent *ef){
+     save_or_not(); //checks if file was modified and reloads if that's the case
+                    //and also checks if the file still exists
+qDebug()<<"focus in";
+     QWidget::focusInEvent(ef);
 }
 
 void Note::load(){
@@ -100,7 +110,7 @@ void Note::save_or_not(){
 
      if(!note.exists()){
        if(QMessageBox::warning(this,tr("Note doesn't exist"),
-          tr("Do you want to save this Note as a new one?"),
+          tr("Do you want to save this note as a new one?"),
           QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
          close();
        else
@@ -148,12 +158,19 @@ void Note::resetAll(){
      journalModified = journalInfo.lastModified();
 }
 
+void Note::keyPressEvent(QKeyEvent *k){
+     if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
+//TODO:text search.
+     }
+}
+
 void Note::setupTextFormattingOptions(){
      QToolBar *tb = new QToolBar(this);
      tb->setWindowTitle(tr("Format Actions"));
      addToolBar(tb);
 
-     actionTextBold = new QAction(QIcon::fromTheme("format-text-bold", QIcon(":bold")), tr("&Bold"), this);
+     actionTextBold = new QAction(QIcon::fromTheme("format-text-bold",
+       QIcon(":bold")), tr("&Bold"), this);
      actionTextBold->setShortcut(Qt::CTRL + Qt::Key_B);
      actionTextBold->setPriority(QAction::LowPriority);
      QFont bold;
@@ -163,7 +180,8 @@ void Note::setupTextFormattingOptions(){
      tb->addAction(actionTextBold);
      actionTextBold->setCheckable(true);
 
-     actionTextItalic = new QAction(QIcon::fromTheme("format-text-italic", QIcon(":italic")), tr("&Italic"), this);
+     actionTextItalic = new QAction(QIcon::fromTheme("format-text-italic",
+       QIcon(":italic")), tr("&Italic"), this);
      actionTextItalic->setPriority(QAction::LowPriority);
      actionTextItalic->setShortcut(Qt::CTRL + Qt::Key_I);
      QFont italic;
@@ -173,7 +191,8 @@ void Note::setupTextFormattingOptions(){
      tb->addAction(actionTextItalic);
      actionTextItalic->setCheckable(true);
 
-     actionTextUnderline = new QAction(QIcon::fromTheme("format-text-underline", QIcon(":underlined")), tr("&Underline"), this);
+     actionTextUnderline = new QAction(QIcon::fromTheme("format-text-underline",
+       QIcon(":underlined")), tr("&Underline"), this);
      actionTextUnderline->setShortcut(Qt::CTRL + Qt::Key_U);
      actionTextUnderline->setPriority(QAction::LowPriority);
      QFont underline;
@@ -183,7 +202,8 @@ void Note::setupTextFormattingOptions(){
      tb->addAction(actionTextUnderline);
      actionTextUnderline->setCheckable(true);
 
-     actionTextStrikeOut = new QAction(QIcon::fromTheme("format-text-strikethrough", QIcon(":strikedout")), tr("&Strike Out"), this);
+     actionTextStrikeOut = new QAction(QIcon::fromTheme("format-text-strikethrough",
+       QIcon(":strikedout")), tr("&Strike Out"), this);
      actionTextStrikeOut->setShortcut(Qt::CTRL + Qt::Key_S);
      actionTextStrikeOut->setPriority(QAction::LowPriority);
      QFont strikeOut;
@@ -218,7 +238,8 @@ void Note::setupTextFormattingOptions(){
      QFontDatabase db;
      foreach(int size, db.standardSizes())
        comboSize->addItem(QString::number(size));
-     comboSize->setCurrentIndex(comboSize->findText(QString::number(QApplication::font().pointSize())));
+     comboSize->setCurrentIndex(comboSize->findText(QString::number(
+       QApplication::font().pointSize())));
 }
 
 void Note::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
@@ -305,11 +326,5 @@ void Note::pointSizeOfText(const QString &p){
        QTextCharFormat fmt;
        fmt.setFontPointSize(pointSize);
        mergeFormatOnWordOrSelection(fmt);
-     }
-}
-
-void Note::keyPressEvent(QKeyEvent *k){
-     if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
-
      }
 }
