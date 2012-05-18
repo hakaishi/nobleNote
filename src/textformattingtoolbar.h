@@ -5,6 +5,12 @@
 #include <QFontComboBox>
 #include <QTextEdit>
 
+/**
+  * a toolbar with buttons to format text on a QTextEdit
+  * you must call addToolBar on the MainWindow to add this toolbar
+  *
+  */
+
 class TextFormattingToolbar : public QToolBar
 {
     Q_OBJECT

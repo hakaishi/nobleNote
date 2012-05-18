@@ -5,6 +5,12 @@
 #include <QXmlStreamWriter>
 #include <QTextFrame>
 
+/**
+  *
+  *
+  *
+  */
+
 class XmlNote : protected QXmlStreamWriter , protected QXmlStreamReader
 {
 public:

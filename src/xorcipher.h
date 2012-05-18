@@ -2,7 +2,12 @@
 #define XORCIPHER_H
 #include <QString>
 
-// simple Xor encryption/decryption
+/**
+  * simple Xor encryption/decryption class
+  *
+  *
+  */
+
 class XorCipher
 {
 private:
