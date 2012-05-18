@@ -302,12 +302,9 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
          {
              // highlight the note window
              (*it)->activateWindow();
-             return; //TODO:Here the opened note should show up...
+             return;
          }
      }
-
-     //TODO:
-     //if(QFileInfo(journalsPath).lastModified().toString() == QFileInfo(notesPath).lastModified().toString());
 
      Note* note=new Note();
      openNotes+= note;

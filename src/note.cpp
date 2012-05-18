@@ -1,5 +1,6 @@
 #include "note.h"
 #include "xmlnote.h"
+#include "textformattingtoolbar.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
@@ -10,9 +11,9 @@
 #include <QTextBlock>
 #include <QTextFragment>
 #include <QMessageBox>
+#include <QSettings>
+#include <QDirIterator>
 #include <QDebug>
-#include "textformattingtoolbar.h"
-
 
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
@@ -77,6 +78,33 @@ void Note::load(){
      journalModified = journalInfo.lastModified();
 }
 
+void Note::reload(){
+     QSettings settings;
+     QDir rootPath(settings.value("rootPath").toString());
+
+     QStringList files;
+
+     QDirIterator it(rootPath, QDirIterator::Subdirectories);
+     while(it.hasNext())
+       files << it.next();
+
+     QString foundFile;
+
+     for(int i = 0; i < files.size(); ++i){
+       QFile file(QDir(rootPath).absoluteFilePath(files[i]));
+       if(file.open(QIODevice::ReadOnly)){
+         QTextStream in(&file);
+         QString line = in.readAll();
+         if(line.contains(text))
+           foundFile = files[i];
+       }
+     }
+
+     QFileInfo info(foundFile);
+     setWindowTitle(info.baseName());
+     notesPath = info.filePath();
+}
+
 void Note::saveAll(){
      QFile note(notesPath);
      if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
@@ -110,12 +138,16 @@ qDebug()<<"saved";
 void Note::save_or_not(){
      QFile note(notesPath);
      if(!note.exists()){
-       if(QMessageBox::warning(this,tr("Note doesn't exist"),
-          tr("Do you want to save this note as a new one?"),
-          QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-         close();
-       else
-         saveAll();
+       reload();
+       QFile note(notesPath);
+       if(!note.exists()){
+         if(QMessageBox::warning(this,tr("Note doesn't exist"),
+            tr("Do you want to save this note as a new one?"),
+            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+           close();
+         else
+           saveAll();
+       }
      }
      else
        checkAndSaveFile();

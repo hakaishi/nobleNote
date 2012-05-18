@@ -28,6 +28,7 @@ class Note : public QMainWindow, public Ui::Note {
      public slots:
       void saveAll();
       void load();
+      void reload();
       void save_or_not();
       void checkAndSaveFile();
       void resetAll();
