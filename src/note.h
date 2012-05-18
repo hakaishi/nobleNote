@@ -29,6 +29,7 @@ class Note : public QMainWindow, public Ui::Note {
       void saveAll();
       void load();
       void save_or_not();
+      void checkAndSaveFile();
       void resetAll();
 
 

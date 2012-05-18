@@ -38,7 +38,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
        this, SLOT(resetAll()));
 }
 
-Note::~Note(){ save_or_not(); }
+Note::~Note(){ checkAndSaveFile(); }
 
 void Note::showEvent(QShowEvent* show_Note){
      load();
@@ -109,7 +109,6 @@ qDebug()<<"saved";
 
 void Note::save_or_not(){
      QFile note(notesPath);
-
      if(!note.exists()){
        if(QMessageBox::warning(this,tr("Note doesn't exist"),
           tr("Do you want to save this note as a new one?"),
@@ -118,7 +117,12 @@ void Note::save_or_not(){
        else
          saveAll();
      }
+     else
+       checkAndSaveFile();
+}
 
+void Note::checkAndSaveFile(){
+     QFile note(notesPath);
      QFileInfo noteInfo(notesPath);
      QFileInfo journalInfo(journalsPath);
      if((noteModified != noteInfo.lastModified()) ||
