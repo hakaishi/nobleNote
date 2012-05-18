@@ -15,7 +15,7 @@ void XmlNote::write()
 {
     if((!outputString_ && !this->QXmlStreamWriter::device()) || !frame_)
     {
-        qDebug("XmlNote::write failed: textframe NULL or both outputString and device are NULL");
+        qDebug("XmlNote::write failed: textframe NULL or both outputString and output device are NULL");
         return;
     }
     setAutoFormatting(true);
@@ -50,4 +50,14 @@ void XmlNote::write()
      }
      writeEndElement();
      writeEndDocument();
+}
+
+void XmlNote::read()
+{
+    if(!this->QXmlStreamReader::device() || !frame_)
+    {
+        qDebug("XmlNote::read failed: textframe NULL or input device NULL");
+        return;
+    }
+
 }

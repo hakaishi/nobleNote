@@ -5,7 +5,7 @@
 #include <QXmlStreamWriter>
 #include <QTextFrame>
 
-class XmlNote : protected QXmlStreamWriter /*, protected QXmlStreamReader*/
+class XmlNote : protected QXmlStreamWriter , protected QXmlStreamReader
 {
 public:
     XmlNote();
@@ -13,8 +13,8 @@ public:
 
     void setOutputDevice(QIODevice * device)    { QXmlStreamWriter::setDevice(device);}
     QIODevice * outputDevice() const            { return QXmlStreamWriter::device();}
-//    void setInputDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
-//    QIODevice * inputDevice() const             { return QXmlStreamReader::device();}
+    void setInputDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
+    QIODevice * inputDevice() const             { return QXmlStreamReader::device();}
 
     // obtain this via     QTextFrame* frame = textEdit->document()->rootFrame();
     void setFrame(QTextFrame * frame)       {   frame_ = frame;}
@@ -24,6 +24,7 @@ public:
     const QString& noteTitle() const            { return title_;}
 
     void write(); // write the content's of frame to the specified device/outputString
+    void read();
 
     QString title_;
     QString * outputString_;
