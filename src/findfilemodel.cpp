@@ -60,7 +60,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
 }
 
 
-QStringList FindFileModel::find(const QString &searchName, const QString &searchText,const QString& path)
+/*static*/ QStringList  FindFileModel::find(const QString &searchName, const QString &searchText,const QString& path)
 {
     if(searchName.isEmpty() && searchText.isEmpty())
         return QStringList();
@@ -103,7 +103,7 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
     return mimeData;
 }
 
-QStringList FindFileModel::findFiles(const QStringList &files, const QString &text, const QString &path){
+/*static*/ QStringList FindFileModel::findFiles(const QStringList &files, const QString &text, const QString &path){
 //     QProgressDialog progressDialog(this);
 //     progressDialog.setCancelButtonText(tr("&Cancel"));
 //     progressDialog.setRange(0, files.size());

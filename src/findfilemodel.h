@@ -22,7 +22,7 @@ public:
     bool remove(const QModelIndex & index);
     QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString filePath); // append file with full path
-    QStringList find(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
+    static QStringList find(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
 
     QStringList mimeTypes() const;
     QMimeData * mimeData(const QModelIndexList &indexes) const;
@@ -30,7 +30,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role); // returns if rename succeeded, overwritten to enable QAbstractItemView::edit
 
 private:
-    QStringList findFiles(const QStringList &files, const QString &text, const QString &path);
+    static QStringList findFiles(const QStringList &files, const QString &text, const QString &path);
 };
 
 #endif // FINDFILEMODEL_H
