@@ -18,8 +18,6 @@
 #include <QFileIconProvider>
 #include <QList>
 #include "findfilesystemmodel.h"
-#include "xorcipher.h"
-#include "xmlnote.h"
 
 
 NobleNote::NobleNote()
@@ -450,20 +448,6 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 }
 
 void NobleNote::showContextMenuN(const QPoint &pos){
-    //TESTCODE
-    XmlNote note;
-    QFile file("C:\\Users\\Taiko\\a.note");
-    file.open(QFile::ReadOnly | QFile::Text);
-    note.setInputDevice(&file);
-    QTextEdit * edit = new QTextEdit();
-    note.setFrame(edit->document()->rootFrame());
-    QTime t;
-    t.start();
-    note.read();
-    qDebug("Time elapsed: %d ms", t.elapsed());
-    edit->show();
-
-
      QPoint globalPos = noteList->mapToGlobal(pos);
 
      QMenu menu;

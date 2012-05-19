@@ -30,7 +30,7 @@ public:
     const QString& noteTitle() const            { return title_;}
 
     void write(); // write the content's of frame to the specified device/outputString
-    void read();
+    void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
 
     // TODO clear statement?
 
