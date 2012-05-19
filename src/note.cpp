@@ -30,8 +30,6 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      timer = new QTimer(this);
 
-
-
      connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
      connect(jTimer, SIGNAL(timeout()), this, SLOT(save_or_not()));
      connect(timer, SIGNAL(timeout()), this, SLOT(save_or_not()));
@@ -67,9 +65,9 @@ void Note::load(){
      textEdit->setHtml(text);
 
      QFile journal(journalsPath);
-     if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
-       return;
      if(!journal.exists()){
+       if(!journal.open(QIODevice::WriteOnly | QIODevice::Truncate))
+         return;
        QTextStream jStream(&journal);
        jStream << text;
      }
@@ -79,8 +77,8 @@ void Note::load(){
 }
 
 void Note::reload(){
-     QSettings settings;
-     QDir rootPath(settings.value("rootPath").toString());
+
+     QDir rootPath(QSettings().value("rootPath").toString());
 
      QStringList files;
 
@@ -96,13 +94,18 @@ void Note::reload(){
          QTextStream in(&file);
          QString line = in.readAll();
          if(line.contains(text))
-           foundFile = files[i];
+           foundFile = files[i]; //This will be a problem if there is another note with te same content.
        }
      }
 
      QFileInfo info(foundFile);
      setWindowTitle(info.baseName());
      notesPath = info.filePath();
+     QString dirTrunc = info.filePath();
+     dirTrunc.remove( "/" + info.baseName());
+     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
+     journalsPath = QSettings().value("journalFolderPath").toString() + "/" +
+       dirTrunc + "_" + info.baseName() + ".journal";
 }
 
 void Note::saveAll(){

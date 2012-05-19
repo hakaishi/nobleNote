@@ -285,8 +285,11 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
        ind = noteList->currentIndex();
 
      QString notePath = noteModel->filePath(ind);
+     QString dirTrunc = notePath;
+     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
+     dirTrunc.remove("/" + noteModel->fileName(ind));
      QString journalFilesPath = QSettings().value("journalFolderPath").toString() + "/" +
-       folderModel->fileName(folderList->currentIndex()) + "_" + noteModel->fileName(ind) + ".journal";
+       dirTrunc + "_" + noteModel->fileName(ind) + ".journal";
 
      for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
