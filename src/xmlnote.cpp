@@ -108,6 +108,7 @@ void XmlNote::readContent()
 
             break;
         }
+        default:; // suppress compiler warnings
         }
 
         if (QXmlStreamReader::hasError())

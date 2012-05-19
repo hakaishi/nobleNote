@@ -19,9 +19,10 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
 
-     setFocusPolicy(Qt::StrongFocus);
+     setFocusPolicy(Qt::NoFocus);
 
      toolbar = new TextFormattingToolbar(textEdit,this);
+     toolbar->setFocusPolicy(Qt::TabFocus);
      addToolBar(toolbar);
 
      jTimer = new QTimer(this);
