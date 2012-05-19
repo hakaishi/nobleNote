@@ -4,6 +4,7 @@
 #include "filesystemmodel.h"
 #include "preferences.h"
 #include "lineedit.h"
+#include "findfilesystemmodel.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -17,7 +18,6 @@
 #include <QProgressDialog>
 #include <QFileIconProvider>
 #include <QList>
-#include "findfilesystemmodel.h"
 
 
 NobleNote::NobleNote()

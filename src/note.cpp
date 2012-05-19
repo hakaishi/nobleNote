@@ -19,8 +19,6 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
 
-     setFocusPolicy(Qt::NoFocus);
-
      toolbar = new TextFormattingToolbar(textEdit,this);
      toolbar->setFocusPolicy(Qt::TabFocus);
      addToolBar(toolbar);
@@ -95,7 +93,7 @@ void Note::reload(){
          QTextStream in(&file);
          QString line = in.readAll();
          if(line.contains(text))
-           foundFile = files[i]; //This will be a problem if there is another note with te same content.
+           foundFile = files[i]; //This will be a problem if there is another note with the same content.
        }
      }
 

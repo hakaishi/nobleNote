@@ -1,7 +1,7 @@
 #include "findfilesystemmodel.h"
 #include "findfilemodel.h"
-#include <QFileSystemModel>
 #include "filesystemmodel.h"
+#include <QFileSystemModel>
 
 FindFileSystemModel::FindFileSystemModel(QObject *parent) :
     QSortFilterProxyModel(parent)
