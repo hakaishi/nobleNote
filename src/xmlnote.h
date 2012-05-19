@@ -32,9 +32,16 @@ public:
     void write(); // write the content's of frame to the specified device/outputString
     void read();
 
+    // TODO clear statement?
+
+private:
+
+    void readContent(); // read contents of <note-content> tag
+
     QString title_;
     QString * outputString_;
      QTextFrame * frame_;
+
 };
 
 #endif // XMLNOTE_H
