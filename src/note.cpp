@@ -2,6 +2,7 @@
 #include "xmlnote.h"
 #include "textformattingtoolbar.h"
 #include "newnotename.h"
+#include "textedit.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
@@ -20,6 +21,9 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
 
+     textEdit = new TextEdit(this);
+     gridLayout->addWidget(textEdit, 0, 0, 1, 1);
+
      alreadyAsked = false;
 
      toolbar = new TextFormattingToolbar(textEdit,this);
@@ -33,6 +37,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      timer = new QTimer(this);
 
      connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
+     connect(textEdit, SIGNAL(sendFocusIn()), this, SLOT(save_or_not()));
      connect(jTimer, SIGNAL(timeout()), this, SLOT(save_or_not()));
      connect(timer, SIGNAL(timeout()), this, SLOT(save_or_not()));
      connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
@@ -44,13 +49,6 @@ Note::~Note(){ save_or_not(); }
 void Note::showEvent(QShowEvent* show_Note){
      load();
      QWidget::showEvent(show_Note);
-}
-
-void Note::focusInEvent(QFocusEvent *ef){
-     save_or_not(); //checks if file was modified and reloads if that's the case
-                    //and also checks if the file still exists
-qDebug()<<"focus in";
-     QWidget::focusInEvent(ef);
 }
 
 void Note::load(){

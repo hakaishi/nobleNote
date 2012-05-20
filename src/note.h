@@ -10,6 +10,7 @@
 
 class TextFormattingToolbar;
 class NewNoteName;
+class TextEdit;
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -21,6 +22,7 @@ class Note : public QMainWindow, public Ui::Note {
       QTimer  *timer;
 
      private:
+      TextEdit  *textEdit;
       QTimer    *jTimer;
       QMenu     *menu;
       QDateTime noteModified, journalModified;
@@ -44,7 +46,6 @@ class Note : public QMainWindow, public Ui::Note {
      protected:
       void keyPressEvent(QKeyEvent *k);
       virtual void showEvent(QShowEvent* show_Note);
-      virtual void focusInEvent(QFocusEvent *fe);
 };
 
 #endif
