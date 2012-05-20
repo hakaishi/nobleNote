@@ -161,7 +161,6 @@ void Note::save_or_not(){
        }
      }
 
-     QFile note(notesPath);
      QFileInfo noteInfo(notesPath);
      QFileInfo journalInfo(journalsPath);
      if((noteModified != noteInfo.lastModified()) ||
@@ -177,7 +176,6 @@ void Note::save_or_not(){
        }
      }
 
-     QFile note(notesPath);
      if(!note.open(QIODevice::ReadOnly))
        return;
      QTextStream nStream(&note);
