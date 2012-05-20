@@ -9,6 +9,7 @@
 #include <QDateTime>
 
 class TextFormattingToolbar;
+class NewNoteName;
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -24,14 +25,17 @@ class Note : public QMainWindow, public Ui::Note {
       QMenu     *menu;
       QDateTime noteModified, journalModified;
       TextFormattingToolbar * toolbar;
+      bool      alreadyAsked;
+      NewNoteName *newNote;
 
      public slots:
       void saveAll();
       void load();
       void reload();
       void save_or_not();
-      void checkAndSaveFile();
       void resetAll();
+      void askForName();
+      void getNewName();
 
 
      signals:

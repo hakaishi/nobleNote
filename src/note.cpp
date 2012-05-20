@@ -1,6 +1,7 @@
 #include "note.h"
 #include "xmlnote.h"
 #include "textformattingtoolbar.h"
+#include "newnotename.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
@@ -19,6 +20,8 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
 
+     alreadyAsked = false;
+
      toolbar = new TextFormattingToolbar(textEdit,this);
      toolbar->setFocusPolicy(Qt::TabFocus);
      addToolBar(toolbar);
@@ -36,7 +39,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
        this, SLOT(resetAll()));
 }
 
-Note::~Note(){ checkAndSaveFile(); }
+Note::~Note(){ save_or_not(); }
 
 void Note::showEvent(QShowEvent* show_Note){
      load();
@@ -91,20 +94,22 @@ void Note::reload(){
        QFile file(QDir(rootPath).absoluteFilePath(files[i]));
        if(file.open(QIODevice::ReadOnly)){
          QTextStream in(&file);
-         QString line = in.readAll();
-         if(line.contains(text))
+         QString str = in.readAll();
+         if(str.contains(text)) //Here the UUID should be searched.
            foundFile = files[i]; //This will be a problem if there is another note with the same content.
        }
      }
 
-     QFileInfo info(foundFile);
-     setWindowTitle(info.baseName());
-     notesPath = info.filePath();
-     QString dirTrunc = info.filePath();
-     dirTrunc.remove( "/" + info.baseName());
-     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
-     journalsPath = QSettings().value("journalFolderPath").toString() + "/" +
-       dirTrunc + "_" + info.baseName() + ".journal";
+     if(!foundFile.isEmpty()){
+       QFileInfo info(foundFile);
+       setWindowTitle(info.baseName());
+       notesPath = info.filePath();
+       QString dirTrunc = info.filePath();
+       dirTrunc.remove( "/" + info.baseName());
+       dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
+       journalsPath = QSettings().value("journalFolderPath").toString() + "/" +
+         dirTrunc + "_" + info.baseName() + ".journal";
+     }
 }
 
 void Note::saveAll(){
@@ -126,8 +131,6 @@ void Note::saveAll(){
      QFileInfo journalInfo(journalsPath);
      journalModified = journalInfo.lastModified();
 
-qDebug()<<"saved";
-
      // test xml output
 //    QString xmlOutput;
 //    QString noteName ="foo bar";
@@ -140,31 +143,43 @@ qDebug()<<"saved";
 void Note::save_or_not(){
      QFile note(notesPath);
      if(!note.exists()){
+       if(alreadyAsked)  
+         return;
        reload();
        QFile note(notesPath);
        if(!note.exists()){
          if(QMessageBox::warning(this,tr("Note doesn't exist"),
-            tr("Do you want to save this note as a new one?"),
-            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+            tr("This note does no longer exist. Do you want to "
+               "save this note as a new one?"),
+            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes){
            close();
-         else
+           alreadyAsked = true;
+           return;
+         }
+         else{
            saveAll();
+           return;
+         }
        }
      }
-     else
-       checkAndSaveFile();
-}
 
-void Note::checkAndSaveFile(){
      QFile note(notesPath);
      QFileInfo noteInfo(notesPath);
      QFileInfo journalInfo(journalsPath);
      if((noteModified != noteInfo.lastModified()) ||
         (journalModified != journalInfo.lastModified())){
-       load(); //try to reload file
-       return;
+       if(QMessageBox::warning(this,tr("Note was modified"),
+          tr("The note was modified. Do you want to save it "
+             "as a new one? \"No\" reloads the content."),
+          QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+         load(); //try to reload file
+       else{
+         askForName();
+         return;
+       }
      }
 
+     QFile note(notesPath);
      if(!note.open(QIODevice::ReadOnly))
        return;
      QTextStream nStream(&note);
@@ -196,6 +211,27 @@ void Note::resetAll(){
      journal.close();
      QFileInfo journalInfo(journalsPath);
      journalModified = journalInfo.lastModified();
+}
+
+void Note::askForName(){
+     newNote = new NewNoteName(this);
+     newNote->show();
+     connect(newNote, SIGNAL(newName()), this, SLOT(getNewName()));
+}
+
+void Note::getNewName(){
+     QFileInfo old(notesPath);
+     QString newName = old.filePath();
+     newName.remove(old.baseName());
+     newName.append(newNote->lineEdit->text());
+     setWindowTitle(newNote->lineEdit->text());
+     notesPath = newName;
+     QString dirTrunc = newName;
+     dirTrunc.remove( "/" + newNote->lineEdit->text());
+     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
+     journalsPath = QSettings().value("journalFolderPath").toString() + "/" +
+       dirTrunc + "_" + newNote->lineEdit->text() + ".journal";
+     saveAll();
 }
 
 void Note::keyPressEvent(QKeyEvent *k){
