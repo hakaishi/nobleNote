@@ -150,7 +150,7 @@ void Note::save_or_not(){
        if(!note.exists()){
          if(QMessageBox::warning(this,tr("Note doesn't exist"),
             tr("This note does no longer exist. Do you want to "
-               "save this note as a new one?"),
+               "save it as a new one?"),
             QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes){
            close();
            alreadyAsked = true;
