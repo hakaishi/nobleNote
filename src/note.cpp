@@ -30,7 +30,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
      textEdit->setFocus();
 
-//     alreadyAsked = false;
+     alreadyAsked = false;
 
      toolbar = new TextFormattingToolbar(textEdit,this);
      toolbar->setFocusPolicy(Qt::TabFocus);
