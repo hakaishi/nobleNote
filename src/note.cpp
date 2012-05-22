@@ -244,7 +244,8 @@ void Note::keyPressEvent(QKeyEvent *k){
 }
 
 void Note::markExpression(){
-     if(!textEdit->find(searchB->searchEdit->text())) //TODO: always skipping one expression because of this if()
+     if(!textEdit->find(searchB->searchEdit->text())){
        textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-     textEdit->find(searchB->searchEdit->text());
+       textEdit->find(searchB->searchEdit->text());
+     }
 }
