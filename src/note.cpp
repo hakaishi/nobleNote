@@ -28,7 +28,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      textEdit->ensureCursorVisible();
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
 
-     alreadyAsked = false;
+//     alreadyAsked = false;
 
      toolbar = new TextFormattingToolbar(textEdit,this);
      toolbar->setFocusPolicy(Qt::TabFocus);

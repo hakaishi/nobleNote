@@ -5,5 +5,5 @@ TextEdit::TextEdit(QWidget *parent) : QTextEdit(parent){ }
 
 void TextEdit::focusInEvent(QFocusEvent *event){
      sendFocusIn();
-     QWidget::focusInEvent(event);
+     QTextEdit::focusInEvent(event);
 }
