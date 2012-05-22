@@ -3,6 +3,8 @@
 Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){ }
 
 void Highlighter::highlightBlock(const QString &text){
+    if(expression.isEmpty())return;
+
      HighlightingRule rule;
 
      keywordFormat.setBackground(Qt::yellow);

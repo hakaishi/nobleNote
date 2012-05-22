@@ -8,6 +8,7 @@
 /**
   * a class for reading and writing formatted text in xml files
   * the format is similar to the xml format used by tomboy/gnote
+  * reading and writing requires a QTextFrame
   *
   */
 
