@@ -26,7 +26,9 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      textEdit = new TextEdit(this);
      textEdit->ensureCursorVisible();
+
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
+     textEdit->setFocus();
 
 //     alreadyAsked = false;
 
@@ -40,6 +42,8 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      timer = new QTimer(this);
 
+
+
      connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
      connect(textEdit, SIGNAL(sendFocusIn()), this, SLOT(save_or_not()));
      connect(jTimer, SIGNAL(timeout()), this, SLOT(save_or_not()));
@@ -52,7 +56,7 @@ Note::~Note(){ save_or_not(); }
 
 void Note::showEvent(QShowEvent* show_Note){
      load();
-     QWidget::showEvent(show_Note);
+     QMainWindow::showEvent(show_Note);
 }
 
 void Note::load(){
