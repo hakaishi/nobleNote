@@ -3,6 +3,7 @@
 #include "textformattingtoolbar.h"
 #include "newnotename.h"
 #include "textedit.h"
+#include "searchbox.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
@@ -21,7 +22,10 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
 
+     setAttribute(Qt::WA_DeleteOnClose);
+
      textEdit = new TextEdit(this);
+     textEdit->ensureCursorVisible();
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
 
      alreadyAsked = false;
@@ -232,8 +236,15 @@ void Note::getNewName(){
 
 void Note::keyPressEvent(QKeyEvent *k){
      if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
-//TODO:text search.
+       searchB = new SearchBox(this);
+       searchB->doc = textEdit->document();
+       searchB->show();
+       connect(searchB->findButton, SIGNAL(clicked(bool)), this, SLOT(markExpression()));
      }
 }
 
-
+void Note::markExpression(){
+     if(!textEdit->find(searchB->searchEdit->text())) //TODO: always skipping one expression because of this if()
+       textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+     textEdit->find(searchB->searchEdit->text());
+}

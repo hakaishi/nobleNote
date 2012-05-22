@@ -316,7 +316,6 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      if(pref->pSpin->value() > 0)
        note->timer->start(pref->pSpin->value() * 60000);
      note->show();
-     note->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void NobleNote::newFolder(){

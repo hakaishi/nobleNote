@@ -18,10 +18,10 @@ HEADERS = src/mainwindow.h src/note.h \
     src/xorcipher.h \
     src/xmlnote.h \
     src/textformattingtoolbar.h \
-    src/newnotename.h
-
+    src/newnotename.h \
+    src/highlighter.h src/searchbox.h
 FORMS = src/ui/note.ui src/ui/mainwindow.ui src/ui/preferences.ui \
-        src/ui/newnotename.ui
+        src/ui/newnotename.ui src/ui/searchbox.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/preferences.cpp \
     src/findfilemodel.cpp \
@@ -29,5 +29,6 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/xorcipher.cpp \
     src/xmlnote.cpp \
     src/textformattingtoolbar.cpp \
-    src/newnotename.cpp
+    src/newnotename.cpp \
+    src/highlighter.cpp src/searchbox.cpp
 RESOURCES = nobleNote.qrc

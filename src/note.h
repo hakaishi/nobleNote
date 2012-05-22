@@ -11,6 +11,7 @@
 class TextFormattingToolbar;
 class NewNoteName;
 class TextEdit;
+class SearchBox;
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -29,6 +30,7 @@ class Note : public QMainWindow, public Ui::Note {
       TextFormattingToolbar * toolbar;
       bool      alreadyAsked;
       NewNoteName *newNote;
+      SearchBox *searchB;
 
      public slots:
       void saveAll();
@@ -38,6 +40,7 @@ class Note : public QMainWindow, public Ui::Note {
       void resetAll();
       void askForName();
       void getNewName();
+      void markExpression();
 
 
      signals:
