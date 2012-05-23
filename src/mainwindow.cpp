@@ -263,12 +263,12 @@ void NobleNote::tray_actions(){
 
 void NobleNote::showEvent(QShowEvent* show_window){
      minimize_restore_action->setText(tr("&Minimize"));
-     QWidget::showEvent(show_window);
+     QMainWindow::showEvent(show_window);
 }
 
 void NobleNote::hideEvent(QHideEvent* window_hide){
      minimize_restore_action->setText(tr("&Restore"));
-     QWidget::hideEvent(window_hide);
+     QMainWindow::hideEvent(window_hide);
 }
 
 void NobleNote::closeEvent(QCloseEvent* window_close){
@@ -276,7 +276,7 @@ void NobleNote::closeEvent(QCloseEvent* window_close){
        hide();
      else
        qApp->quit();
-     QWidget::closeEvent(window_close);
+     QMainWindow::closeEvent(window_close);
 }
 
 void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
