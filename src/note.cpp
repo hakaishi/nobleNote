@@ -1,5 +1,4 @@
 #include "note.h"
-#include "xmlnote.h"
 #include "textformattingtoolbar.h"
 #include "newnotename.h"
 #include "textedit.h"

@@ -1,27 +1,27 @@
-#ifndef XMLNOTE_H
-#define XMLNOTE_H
+#ifndef XMLNOTEWRITER_H
+#define XMLNOTEWRITER_H
 
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QTextFrame>
+#include <QUuid>
 
 /**
-  * a class for reading and writing formatted text in xml files
+  * a class writing formatted text in xml files
   * the format is similar to the xml format used by tomboy/gnote
-  * reading and writing requires a QTextFrame
+  * writing requires a QTextFrame
   *
   */
 
-class XmlNote : protected QXmlStreamWriter , protected QXmlStreamReader
+class XmlNoteWriter : protected QXmlStreamWriter
 {
 public:
-    XmlNote();
-    XmlNote(QString* outputString);
+    XmlNoteWriter();
+    XmlNoteWriter(QString* outputString);
 
     void setOutputDevice(QIODevice * device)    { QXmlStreamWriter::setDevice(device);}
     QIODevice * outputDevice() const            { return QXmlStreamWriter::device();}
-    void setInputDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
-    QIODevice * inputDevice() const             { return QXmlStreamReader::device();}
+
 
     // obtain this via     QTextFrame* frame = textEdit->document()->rootFrame();
     void setFrame(QTextFrame * frame)       {   frame_ = frame;}
@@ -31,18 +31,19 @@ public:
     const QString& noteTitle() const            { return title_;}
 
     void write(); // write the content's of frame to the specified device/outputString
-    void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
+
+    void setUuid(QUuid uuid) { uuid_ = uuid;}
+    QUuid uuid() const {return uuid_;}
+
 
     // TODO clear statement?
 
 private:
-
-    void readContent(); // read contents of <note-content> tag
-
     QString title_;
     QString * outputString_;
-     QTextFrame * frame_;
+    QTextFrame * frame_;
+    QUuid uuid_;
 
 };
 
-#endif // XMLNOTE_H
+#endif // XMLNOTEWRITER_H
