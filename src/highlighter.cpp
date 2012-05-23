@@ -9,7 +9,7 @@ void Highlighter::highlightBlock(const QString &text){
 
      keywordFormat.setBackground(Qt::yellow);
 
-     rule.pattern = QRegExp(expression);
+     rule.pattern = QRegExp(expression, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
      rule.format = keywordFormat;
      highlightingRules.append(rule);
 
