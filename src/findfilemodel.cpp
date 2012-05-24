@@ -3,6 +3,7 @@
 #include <QDirIterator>
 #include <QTextStream>
 #include <QUrl>
+#include <QTextDocumentFragment>
 
 
 FindFileModel::FindFileModel(QObject *parent) :
@@ -123,16 +124,12 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
         QFile file(QDir(path).absoluteFilePath(files[i]));
 
         if(file.open(QIODevice::ReadOnly)){
-          QString line;
           QTextStream in(&file);
-          while(!in.atEnd()){
-//            if(progressDialog.wasCanceled())
-//              break;
-            line = in.readLine();
-            if(line.contains(text)){
-              foundFiles << files[i];
-              break;
-            }
+          QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
+          QString noteText = doc.toPlainText();
+          if(noteText.contains(text)){
+            foundFiles << files[i];
+            break;
           }
         }
      }

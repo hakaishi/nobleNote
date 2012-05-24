@@ -13,6 +13,7 @@ class Highlighter : public QSyntaxHighlighter{
      public:
       Highlighter(QTextDocument *parent = 0);
       QString expression;
+      bool    caseSensitive;
 
      protected:
       void highlightBlock(const QString &text);

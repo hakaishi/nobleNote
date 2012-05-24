@@ -16,4 +16,8 @@ SearchBox::~SearchBox(){}
 void SearchBox::searchAndMark(){
      highlighter = new Highlighter(doc);
      highlighter->expression = searchEdit->text();
+     if(caseBox->isChecked())
+       highlighter->caseSensitive = true;
+     else
+       highlighter->caseSensitive = false;
 }

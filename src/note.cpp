@@ -247,8 +247,16 @@ void Note::keyPressEvent(QKeyEvent *k){
 }
 
 void Note::markExpression(){
-     if(!textEdit->find(searchB->searchEdit->text())){
-       textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-       textEdit->find(searchB->searchEdit->text());
+     if(searchB->caseBox->isChecked()){
+       if(!textEdit->find(searchB->searchEdit->text(), QTextDocument::FindCaseSensitively)){
+         textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit->find(searchB->searchEdit->text(), QTextDocument::FindCaseSensitively);
+       }
+     }
+     else{
+       if(!textEdit->find(searchB->searchEdit->text())){
+         textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit->find(searchB->searchEdit->text());
+       }
      }
 }
