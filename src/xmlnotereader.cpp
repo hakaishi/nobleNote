@@ -58,6 +58,8 @@ void XmlNoteReader::readContent()
             if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(false);
 
+            // ignore id
+
             break;
         }
         default:; // suppress compiler warnings
@@ -80,8 +82,16 @@ void XmlNoteReader::read()
     }
 
     // skip everything until <note-content>
-    while(!atEnd() && !(this->readNextStartElement() && this->name() == "note-content"))
+    while(!atEnd() && !this->readNextStartElement())
     {
+        if(name() == "note-content")
+          readContent();
+        if(name() == "id" || name() == "uuid") // only "id" is written
+        {
+            // this should take either urn:uuid:A3E428-23485asv... or only the uuid
+            // check for : at th position and take the number of characters a uuid normally contains or switch to "complex parsing"
+            // should also check for null
+        }
     }
 
     readContent();

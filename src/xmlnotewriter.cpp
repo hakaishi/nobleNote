@@ -24,6 +24,19 @@ void XmlNoteWriter::write()
     writeStartDocument();
     writeEmptyElement("note");
     writeAttribute("version","0.3");
+    if(!uuid_.isNull())
+    {
+        QString uuidStr = uuid_.toString().remove(0,1); // uuid without the { } braces
+        uuidStr.chop(1);
+        writeTextElement("id","urn:uuid:" + uuidStr);
+    }
+    else
+    {
+        qDebug("XmlNoteWriter::write() : UUID is null, using generated UUID");
+        QString uuidStr = QUuid::createUuid().toString().remove(0,1);
+        uuidStr.chop(1);
+        writeTextElement("id","urn:uuid:" + uuidStr);
+    }
     writeTextElement("title",title_);
     writeEmptyElement("text");
     writeAttribute("xml:space","preserve");
