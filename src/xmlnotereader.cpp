@@ -86,15 +86,38 @@ void XmlNoteReader::read()
     {
         if(name() == "note-content")
           readContent();
+
         if(name() == "id" || name() == "uuid") // only "id" is written
         {
-            // this should take either urn:uuid:A3E428-23485asv... or only the uuid
-            // check for : at th position and take the number of characters a uuid normally contains or switch to "complex parsing"
-            // should also check for null
+            QString idStr = readElementText();
+
+            bool ok = false; // parsing success check variable
+
+            // try to parse the rightmost 32 digits and four hyphens
+            uuid_ = QUuid(idStr.rightRef(32 + 4).toString());
+            ok = uuid_.isNull();
+
+            if(!ok) // if parsing fails, try more complex parsing
+            {
+                if(idStr.leftRef(QString("urn:uuid:").length()) == "urn:uuid:") // check if first 9 chars match "urn:uuid:"
+                {
+                    QStringRef uuidRef = idStr.midRef(QString("urn:uuid:").length(),32+4); //32 digits and four hyphens
+                    uuid_ = QUuid(uuidRef.toString());
+                    ok = uuid_.isNull();
+                }
+                else // try to parse the whole string
+                {
+                    uuid_ = QUuid(idStr.simplified());
+                    ok = uuid_.isNull();
+                }
+            }
+
+            if(!ok)
+                qDebug("XmlNoteReader::read : error generating UUID, null UUID has been set");
+
+
         }
     }
-
-    readContent();
 
     if (QXmlStreamReader::hasError())
     {
