@@ -1,6 +1,6 @@
 #include "xmlnotereader.h"
 #include <qtextcursor.h>
-#include <QDebug>
+#include <QDirIterator>
 
 
 XmlNoteReader::XmlNoteReader()
@@ -142,9 +142,25 @@ void XmlNoteReader::read()
         }
         if (reader.hasError())
         {
-            qDebug("XmlNoteReader::uuid failed: Error reading xml content, returning null UUID");
+            //qDebug("XmlNoteReader::uuid failed: Error reading xml content, returning null UUID");
             return QUuid();
         }
     }
     return QUuid();
+}
+
+/*static*/ QString XmlNoteReader::findUuid(const QUuid uuid, const QString &path)
+{
+    QDirIterator it(path, QDirIterator::Subdirectories);
+    while(it.hasNext())
+    {
+              QString filePath = it.next();
+              QFile file(filePath);
+              if(file.open(QIODevice::ReadOnly))
+              {
+                  if(uuid == XmlNoteReader::uuid(&file))
+                      return filePath;
+              }
+    }
+    return QString();
 }

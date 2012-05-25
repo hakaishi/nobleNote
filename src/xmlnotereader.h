@@ -33,7 +33,12 @@ public:
 
     inline QUuid uuid() const; // get the uuid that has been extracted during read()
 
-    static QUuid uuid(QIODevice * device); // reads a uuid from a file, if uuid could not be found, a null uuid is returned
+     // reads a uuid from a file, if uuid could not be found, a null uuid is returned
+    static QUuid uuid(QIODevice * device);
+
+    // searches all directorys under the given path recursively for a file with the given UUID
+    // returns the first file that contains the given uuid or an empty string if the uuid could not be found
+    static QString findUuid(const QUuid uuid, const QString & path);
 
 private:
     static QUuid parseUuid(QString idStr);
