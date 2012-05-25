@@ -317,4 +317,5 @@ void Note::highlightText(){
      else
        highlighter->caseSensitive = false;
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
+     connect(searchB->closeSearch, SIGNAL(clicked(bool)), textEdit, SLOT(setFocus()));
 }

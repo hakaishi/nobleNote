@@ -3,7 +3,6 @@
 
 #include <QToolBar>
 #include <QCheckBox>
-#include <QPushButton>
 #include <QToolButton>
 #include <QTextEdit>
 #include <QLineEdit>
@@ -13,9 +12,8 @@ class TextSearchToolbar : public QToolBar
     Q_OBJECT
 public:
      explicit TextSearchToolbar(QTextEdit* textEdit,QWidget *parent = 0);
-     QLineEdit    *searchLine;
-     QPushButton *findNext, *findPrevious;
-     QToolButton *closeSearch;
+     QLineEdit   *searchLine;
+     QToolButton *findNext, *findPrevious, *closeSearch;
      QCheckBox   *caseSensitiveBox;  
      QTextEdit   *textEdit_;  
 };
