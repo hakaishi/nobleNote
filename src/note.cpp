@@ -148,11 +148,9 @@ void Note::saveAll(){
      QFileInfo journalInfo(journalsPath);
      journalModified = journalInfo.lastModified();
 
-      //test xml output
+//      //test xml output
 //    QBuffer buffer;
 //    buffer.open(QBuffer::ReadWrite);
-////    QString xmlOutput;
-////    QString noteName ="foo bar";
 
 //    XmlNoteWriter writer;
 //    writer.setDevice(&buffer);
@@ -160,15 +158,6 @@ void Note::saveAll(){
 //    writer.setFrame(textEdit->document()->rootFrame());
 //    writer.write();
 //     qDebug() << buffer.data();
-
-////     QXmlStreamWriter stream(&buffer);
-////          stream.setAutoFormatting(true);
-////          stream.writeStartDocument();
-////          stream.writeStartElement("bookmark");
-////          stream.writeAttribute("href", "http://qt.nokia.com/");
-////          stream.writeTextElement("title", "Qt Home");
-////          stream.writeEndElement(); // bookmark
-////          stream.writeEndDocument();
 
 //     buffer.close();
 //     buffer.open(QBuffer::ReadWrite);
@@ -180,7 +169,10 @@ void Note::saveAll(){
 //     reader.setDevice(&buffer);
 //     reader.setFrame((new QTextDocument())->rootFrame());
 //     reader.read();
-//     qDebug() << reader.uuid();
+//     qDebug() << reader.uuid() << "and static: ";
+//     buffer.close();
+//     buffer.open(QBuffer::ReadOnly);
+//     qDebug() << XmlNoteReader::uuid(&buffer);
 }
 
 void Note::save_or_not(){

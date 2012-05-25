@@ -93,25 +93,7 @@ void XmlNoteReader::read()
         if(name() == "id" || name() == "uuid") // only "id" is written
         {
             QString idStr = readElementText();
-
-            // try to parse the rightmost 32 digits and four hyphens
-            uuid_ = QUuid(idStr.rightRef(32 + 4).toString());
-
-            if(uuid_.isNull()) // if parsing fails, try more complex parsing
-            {
-                if(idStr.leftRef(QString("urn:uuid:").length()) == "urn:uuid:") // check if first 9 chars match "urn:uuid:"
-                {
-                    QStringRef uuidRef = idStr.midRef(QString("urn:uuid:").length(),32+4); //32 digits and four hyphens
-                    uuid_ = QUuid(uuidRef.toString());
-                }
-                else // try to parse the whole string
-                {
-                    uuid_ = QUuid(idStr.simplified());
-                }
-            }
-
-            if(uuid_.isNull())
-                qDebug("XmlNoteReader::read : error reading UUID, null UUID has been set");
+            uuid_ = parseUuid(idStr);
         }
     }
 
@@ -123,7 +105,46 @@ void XmlNoteReader::read()
 
 }
 
-QUuid XmlNoteReader::uuid() const
+/*static*/ QUuid XmlNoteReader::parseUuid(QString idStr)
 {
-    return uuid_;
+    QUuid uuid;
+     // try to parse the rightmost 32 digits and four hyphens
+    uuid = QUuid(idStr.rightRef(32 + 4).toString());
+
+    if(uuid.isNull()) // if parsing fails, try more complex parsing
+    {
+        if(idStr.leftRef(QString("urn:uuid:").length()) == "urn:uuid:") // check if first 9 chars match "urn:uuid:"
+        {
+            QStringRef uuidRef = idStr.midRef(QString("urn:uuid:").length(),32+4); //32 digits and four hyphens
+            uuid = QUuid(uuidRef.toString());
+        }
+        else // try to parse the whole string
+        {
+            uuid = QUuid(idStr.simplified());
+        }
+    }
+
+    if(uuid.isNull())
+        qDebug("XmlNoteReader::parseUuid : error parsing UUID, null UUID has been generated");
+
+    return uuid;
+}
+
+/*static*/ QUuid XmlNoteReader::uuid(QIODevice *device)
+{
+    QXmlStreamReader reader(device);
+    while(!reader.atEnd())
+    {
+        if(reader.readNextStartElement() && (reader.name() == "id" || reader.name() == "uuid"))
+        {
+            QString idStr = reader.readElementText();
+            return parseUuid(idStr);
+        }
+        if (reader.hasError())
+        {
+            qDebug("XmlNoteReader::uuid failed: Error reading xml content, returning null UUID");
+            return QUuid();
+        }
+    }
+    return QUuid();
 }

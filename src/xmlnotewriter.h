@@ -11,8 +11,9 @@
   * the format is similar to the xml format used by tomboy/gnote
   * writing requires a QTextFrame
   *
-  * Warning: when using a QIODevice for both XmlNoteReader and XmlNoteWriter
-  * the device must be closed and opened again before it can be used in the other
+  * Warning: when using a QIODevice for each of the methods XmlNoteReader::read, XmlNoteWriter::write
+  * and the static XmlNoteReader::uuid(QIODevice* devce)
+  * the device must be closed and opened separately
   * The same QString* in QXmlStreamWriter cannot be reused in QXmlStreamReader.
   *
   */
