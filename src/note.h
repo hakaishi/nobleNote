@@ -9,9 +9,10 @@
 #include <QDateTime>
 
 class TextFormattingToolbar;
+class TextSearchToolbar;
 class NewNoteName;
 class TextEdit;
-class SearchBox;
+class Highlighter;
 
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
@@ -28,9 +29,10 @@ class Note : public QMainWindow, public Ui::Note {
       QMenu     *menu;
       QDateTime noteModified, journalModified;
       TextFormattingToolbar * toolbar;
+      TextSearchToolbar *searchB;
       bool      alreadyAsked;
       NewNoteName *newNote;
-      SearchBox *searchB;
+      Highlighter *highlighter;
 
      public slots:
       void saveAll();
@@ -40,8 +42,9 @@ class Note : public QMainWindow, public Ui::Note {
       void resetAll();
       void askForName();
       void getNewName();
-      void markExpression();
-
+      void selectNextExpression();
+      void selectPreviousExpression();
+      void highlightText();
 
      signals:
       void closing(QObject *object);
