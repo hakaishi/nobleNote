@@ -11,16 +11,19 @@
   * the format is similar to the xml format used by tomboy/gnote
   * writing requires a QTextFrame
   *
+  * Warning: when using a QIODevice for both XmlNoteReader and XmlNoteWriter
+  * the device must be closed and opened again before it can be used in the other
+  * The same QString* in QXmlStreamWriter cannot be reused in QXmlStreamReader.
+  *
   */
 
 class XmlNoteWriter : protected QXmlStreamWriter
 {
 public:
     XmlNoteWriter();
-    XmlNoteWriter(QString* outputString);
 
-    void setOutputDevice(QIODevice * device)    { QXmlStreamWriter::setDevice(device);}
-    QIODevice * outputDevice() const            { return QXmlStreamWriter::device();}
+    void setDevice(QIODevice * device)    { QXmlStreamWriter::setDevice(device);}
+    QIODevice * device() const            { return QXmlStreamWriter::device();}
 
 
     // obtain this via     QTextFrame* frame = textEdit->document()->rootFrame();
@@ -40,7 +43,6 @@ public:
 
 private:
     QString title_;
-    QString * outputString_;
     QTextFrame * frame_;
     QUuid uuid_;
 

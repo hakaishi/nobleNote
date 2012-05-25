@@ -16,6 +16,9 @@
 #include <QSettings>
 #include <QDirIterator>
 #include <QDebug>
+#include "xmlnotewriter.h"
+#include "xmlnotereader.h"
+#include <QBuffer>
 
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
@@ -136,13 +139,39 @@ void Note::saveAll(){
      QFileInfo journalInfo(journalsPath);
      journalModified = journalInfo.lastModified();
 
-     // test xml output
-//    QString xmlOutput;
-//    QString noteName ="foo bar";
-//    XmlNote writer(&xmlOutput);
+      //test xml output
+//    QBuffer buffer;
+//    buffer.open(QBuffer::ReadWrite);
+////    QString xmlOutput;
+////    QString noteName ="foo bar";
+
+//    XmlNoteWriter writer;
+//    writer.setDevice(&buffer);
+//    writer.setUuid(QUuid::createUuid());
 //    writer.setFrame(textEdit->document()->rootFrame());
 //    writer.write();
-//     qDebug() << xmlOutput;
+//     qDebug() << buffer.data();
+
+////     QXmlStreamWriter stream(&buffer);
+////          stream.setAutoFormatting(true);
+////          stream.writeStartDocument();
+////          stream.writeStartElement("bookmark");
+////          stream.writeAttribute("href", "http://qt.nokia.com/");
+////          stream.writeTextElement("title", "Qt Home");
+////          stream.writeEndElement(); // bookmark
+////          stream.writeEndDocument();
+
+//     buffer.close();
+//     buffer.open(QBuffer::ReadWrite);
+
+//     QFile f("C:/Users/Taiko/a.note");
+//     f.open(QFile::ReadOnly);
+
+//     XmlNoteReader reader;
+//     reader.setDevice(&buffer);
+//     reader.setFrame((new QTextDocument())->rootFrame());
+//     reader.read();
+//     qDebug() << reader.uuid();
 }
 
 void Note::save_or_not(){

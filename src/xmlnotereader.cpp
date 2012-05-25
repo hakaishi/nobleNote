@@ -1,5 +1,6 @@
 #include "xmlnotereader.h"
 #include <qtextcursor.h>
+#include <QDebug>
 
 
 XmlNoteReader::XmlNoteReader()
@@ -75,15 +76,17 @@ void XmlNoteReader::readContent()
 
 void XmlNoteReader::read()
 {
-    if(!this->QXmlStreamReader::device() || !frame_)
+    if( !this->QXmlStreamReader::device()  || !frame_)
     {
-        qDebug("XmlNoteReader::read failed: textframe NULL or input device NULL");
+        qDebug("XmlNoteReader::read failed: textframe NULL or input string and device NULL");
         return;
     }
 
     // skip everything until <note-content>
-    while(!atEnd() && !this->readNextStartElement())
+    while(!atEnd())
     {
+        readNext();
+
         if(name() == "note-content")
           readContent();
 
@@ -91,31 +94,24 @@ void XmlNoteReader::read()
         {
             QString idStr = readElementText();
 
-            bool ok = false; // parsing success check variable
-
             // try to parse the rightmost 32 digits and four hyphens
             uuid_ = QUuid(idStr.rightRef(32 + 4).toString());
-            ok = uuid_.isNull();
 
-            if(!ok) // if parsing fails, try more complex parsing
+            if(uuid_.isNull()) // if parsing fails, try more complex parsing
             {
                 if(idStr.leftRef(QString("urn:uuid:").length()) == "urn:uuid:") // check if first 9 chars match "urn:uuid:"
                 {
                     QStringRef uuidRef = idStr.midRef(QString("urn:uuid:").length(),32+4); //32 digits and four hyphens
                     uuid_ = QUuid(uuidRef.toString());
-                    ok = uuid_.isNull();
                 }
                 else // try to parse the whole string
                 {
                     uuid_ = QUuid(idStr.simplified());
-                    ok = uuid_.isNull();
                 }
             }
 
-            if(!ok)
-                qDebug("XmlNoteReader::read : error generating UUID, null UUID has been set");
-
-
+            if(uuid_.isNull())
+                qDebug("XmlNoteReader::read : error reading UUID, null UUID has been set");
         }
     }
 

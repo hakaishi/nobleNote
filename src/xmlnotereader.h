@@ -5,12 +5,22 @@
 #include <QTextFrame>
 #include <QUuid>
 
+/**
+  * a class reading formatted text in xml files
+  * the format is similar to the xml format used by tomboy/gnote
+  * reading requires a QTextFrame
+  *
+  * Warning: when using a QIODevice for both XmlNoteReader and XmlNoteWriter
+  * the device must be closed and opened again before it can be used in the other
+  *
+  */
+
 class XmlNoteReader : protected QXmlStreamReader
 {
 public:
-    explicit XmlNoteReader();
-    void setInputDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
-    QIODevice * inputDevice() const             { return QXmlStreamReader::device();}
+    XmlNoteReader();
+    void setDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
+    QIODevice * device() const             { return QXmlStreamReader::device();}
 
     // obtain this via     QTextFrame* frame = textEdit->document()->rootFrame();
     void setFrame(QTextFrame * frame)       {   frame_ = frame;}
@@ -27,7 +37,6 @@ private:
     QString title_;
     QTextFrame * frame_;
     QUuid uuid_;
-    
 };
 
 #endif // XMLNOTEREADER_H

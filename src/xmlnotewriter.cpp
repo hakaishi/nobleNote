@@ -2,28 +2,24 @@
 #include <QTextDocument>
 #include <qtextcursor.h>
 
-XmlNoteWriter::XmlNoteWriter() : outputString_(NULL), frame_(NULL)
+XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {
     title_ = "untitled note";
 }
 
-XmlNoteWriter::XmlNoteWriter(QString *outputString) : QXmlStreamWriter(outputString), outputString_(NULL), frame_(NULL)
-{
-    title_ = "untitled note";
-    outputString_ = outputString;
-}
-
+// must write well formed xml 1.0 for QXmlStreamReader compatibility
 void XmlNoteWriter::write()
 {
-    if((!outputString_ && !this->QXmlStreamWriter::device()) || !frame_)
+    if(!this->QXmlStreamWriter::device() || !frame_)
     {
-        qDebug("XmlNoteWriter::write failed: textframe NULL or both outputString and output device are NULL");
+        qDebug("XmlNoteWriter::write failed: textframe NULL or output device are NULL");
         return;
     }
     setAutoFormatting(true);
     writeStartDocument();
-    writeEmptyElement("note");
+    writeStartElement("note");
     writeAttribute("version","0.3");
+    writeNamespace("http://example.com","link");
     if(!uuid_.isNull())
     {
         QString uuidStr = uuid_.toString().remove(0,1); // uuid without the { } braces
@@ -38,7 +34,8 @@ void XmlNoteWriter::write()
         writeTextElement("id","urn:uuid:" + uuidStr);
     }
     writeTextElement("title",title_);
-    writeEmptyElement("text");
+
+    writeStartElement("text");
     writeAttribute("xml:space","preserve");
     writeStartElement("note-content");
     writeAttribute("version","0.1");
@@ -63,7 +60,9 @@ void XmlNoteWriter::write()
                  writeEndElement();
          }
      }
-     writeEndElement();
+     writeEndElement(); // "note-content"
+     writeEndElement(); // "text"
+     writeEndElement(); // "note"
      writeEndDocument();
 }
 
