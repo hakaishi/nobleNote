@@ -39,6 +39,14 @@ public:
     void setLastChange(const QDateTime& dt)     { lastChange_ = dt;}
     const QDateTime& lastChange() const         { return lastChange_;}
 
+    // set last metadata change date, if not set, the current date is used
+    void setLastMetadataChange(const QDateTime& dt)     { lastMetadataChange_ = dt;}
+    const QDateTime& lastMetadataChange() const         { return lastMetadataChange_;}
+
+    // set create date, if not set, the current date is used
+    void setCreateDate(const QDateTime& dt)     { createDate_ = dt;}
+    const QDateTime& createDate() const         { return createDate_;}
+
     void write(); // write the content's of frame to the specified device/outputString
 
     void setUuid(QUuid uuid) { uuid_ = uuid;}
@@ -52,6 +60,8 @@ private:
     QTextFrame * frame_;
     QUuid uuid_;
     QDateTime lastChange_;
+    QDateTime lastMetadataChange_;
+    QDateTime createDate_;
 };
 
 #endif // XMLNOTEWRITER_H
