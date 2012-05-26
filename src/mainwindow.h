@@ -58,7 +58,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       bool            searchBoolean;
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> >     openNotes;
-      QSyntaxHighlighter *highlighter;
+      Highlighter *highlighter;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
