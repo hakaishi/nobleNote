@@ -282,6 +282,10 @@ void Note::getNewName(){
 
 void Note::keyPressEvent(QKeyEvent *k){
      if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
+       if(textEdit->textCursor().hasSelection()){
+         searchB->searchLine->setText(textEdit->textCursor().selectedText());
+         highlightText(textEdit->textCursor().selectedText());
+       }
        if(!searchB->isVisible())
          searchB->setVisible(true);
          searchB->searchLine->setFocus();
