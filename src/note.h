@@ -23,9 +23,10 @@ class Note : public QMainWindow, public Ui::Note {
       ~Note();
       QString text, journalsPath, notesPath;
       QTimer  *timer;
-      QTextEdit  *textEdit;
+      bool    searchbarVisible;
 
      private:
+      QTextEdit *textEdit;
       QTimer    *jTimer;
       QMenu     *menu;
       QDateTime noteModified, journalModified;
@@ -45,7 +46,7 @@ class Note : public QMainWindow, public Ui::Note {
       void getNewName();
       void selectNextExpression();
       void selectPreviousExpression();
-      void highlightText();
+      void highlightText(QString str);
 
      signals:
       void closing(QObject *object);

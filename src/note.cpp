@@ -26,6 +26,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      setupUi(this);
 
      setAttribute(Qt::WA_DeleteOnClose);
+     searchbarVisible = false; //initializing
 
      textEdit = new TextEdit(this);
      textEdit->ensureCursorVisible();
@@ -45,6 +46,10 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      searchB->setFocusPolicy(Qt::TabFocus);
      addToolBar(searchB);
 
+     restoreState(QSettings().value("Toolbars/state").toByteArray());
+
+     searchB->setVisible(false);
+
      jTimer = new QTimer(this);
      jTimer->setInterval(1000);
      jTimer->setSingleShot(true);
@@ -58,7 +63,7 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      connect(timer, SIGNAL(timeout()), this, SLOT(save_or_not()));
      connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
        this, SLOT(resetAll()));
-     connect(searchB->searchLine, SIGNAL(returnPressed()), this, SLOT(selectNextExpression()));
+     connect(searchB->searchLine, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
      connect(searchB->findNext, SIGNAL(clicked(bool)), SLOT(selectNextExpression()));
      connect(searchB->findPrevious, SIGNAL(clicked(bool)), SLOT(selectPreviousExpression()));
 }
@@ -66,9 +71,9 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 Note::~Note(){ save_or_not(); }
 
 void Note::showEvent(QShowEvent* show_Note){
-     restoreState(QSettings().value("Toolbars/state").toByteArray());
-     searchB->setVisible(false);
      load();
+     if(searchbarVisible)
+       searchB->setVisible(true);
      QMainWindow::showEvent(show_Note);
 }
 
@@ -296,7 +301,7 @@ void Note::selectNextExpression(){
          textEdit->find(searchB->searchLine->text());
        }
      }
-     highlightText();
+     highlightText(searchB->searchLine->text());
 }
 
 void Note::selectPreviousExpression(){
@@ -314,12 +319,12 @@ void Note::selectPreviousExpression(){
          textEdit->find(searchB->searchLine->text(), QTextDocument::FindBackward);
        }
      }
-     highlightText();
+     highlightText(searchB->searchLine->text());
 }
 
-void Note::highlightText(){
+void Note::highlightText(QString str){
      highlighter = new Highlighter(textEdit->document());
-     highlighter->expression = searchB->searchLine->text();
+     highlighter->expression = str;
      if(searchB->caseSensitiveBox->isChecked())
        highlighter->caseSensitive = true;
      else

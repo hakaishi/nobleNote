@@ -6,7 +6,6 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
 
      setWindowTitle(tr("Searchbar"));
      setObjectName(tr("Searchtoolbar"));
-     setVisible(false);    
 
      closeSearch = new QToolButton(this);
      closeSearch->setText("X");

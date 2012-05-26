@@ -320,12 +320,11 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      note->journalsPath = journalFilesPath;
      if(pref->pSpin->value() > 0)
        note->timer->start(pref->pSpin->value() * 60000);
-     note->show();
-
      if(noteModel->sourceModel() == findNoteModel){
-       highlighter = new Highlighter(note->textEdit->document());
-       highlighter->expression = searchText->text();
+       note->highlightText(searchText->text());
+       note->searchbarVisible = true;
      }
+     note->show();
 }
 
 void NobleNote::newFolder(){
