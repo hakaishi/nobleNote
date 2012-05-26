@@ -10,7 +10,7 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
      closeSearch->setText("X");
      addWidget(closeSearch);
 
-     searchLine = new QLineEdit(this);
+     searchLine = new LineEdit(this);
      searchLine->setPlaceholderText(tr("Enter search argument"));
      addWidget(searchLine);
 

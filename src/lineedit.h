@@ -38,5 +38,5 @@ private:
     QToolButton *clearButton;
 };
 
-#endif // LIENEDIT_H
+#endif // LINEEDIT_H
 

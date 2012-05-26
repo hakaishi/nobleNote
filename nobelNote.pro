@@ -20,7 +20,8 @@ HEADERS = src/mainwindow.h src/note.h \
     src/newnotename.h \
     src/highlighter.h src/textsearchtoolbar.h \
     src/xmlnotewriter.h \
-    src/xmlnotereader.h
+    src/xmlnotereader.h \
+    src/datetime.h
 FORMS = src/ui/note.ui src/ui/mainwindow.ui src/ui/preferences.ui \
         src/ui/newnotename.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \

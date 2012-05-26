@@ -5,6 +5,7 @@
 #include <QXmlStreamWriter>
 #include <QTextFrame>
 #include <QUuid>
+#include <QDateTime>
 
 /**
   * a class writing formatted text in xml files
@@ -34,6 +35,10 @@ public:
     void setNoteTitle(const QString& title)     { title_ = title;}
     const QString& noteTitle() const            { return title_;}
 
+    // set last change date, if not set, the current date is used
+    void setLastChange(const QDateTime& dt)     { lastChange_ = dt;}
+    const QDateTime& lastChange() const         { return lastChange_;}
+
     void write(); // write the content's of frame to the specified device/outputString
 
     void setUuid(QUuid uuid) { uuid_ = uuid;}
@@ -46,7 +51,7 @@ private:
     QString title_;
     QTextFrame * frame_;
     QUuid uuid_;
-
+    QDateTime lastChange_;
 };
 
 #endif // XMLNOTEWRITER_H

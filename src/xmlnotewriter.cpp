@@ -1,10 +1,12 @@
 #include "xmlnotewriter.h"
 #include <QTextDocument>
 #include <qtextcursor.h>
+#include <datetime.h>
 
 XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {
     title_ = "untitled note";
+    lastChange_ = QDateTime::currentDateTime();
 }
 
 // must write well formed xml 1.0 for QXmlStreamReader compatibility
@@ -62,6 +64,7 @@ void XmlNoteWriter::write()
      }
      writeEndElement(); // "note-content"
      writeEndElement(); // "text"
+     writeTextElement("last-change-date",DateTime::toISO8601(lastChange_)); // e.g. 2012-05-26T15:11:15.7750000+02:00
      writeEndElement(); // "note"
      writeEndDocument();
 }

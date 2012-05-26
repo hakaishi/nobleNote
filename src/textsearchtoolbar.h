@@ -6,13 +6,14 @@
 #include <QToolButton>
 #include <QTextEdit>
 #include <QLineEdit>
+#include "lineedit.h"
 
 class TextSearchToolbar : public QToolBar
 {
     Q_OBJECT
 public:
      explicit TextSearchToolbar(QTextEdit* textEdit,QWidget *parent = 0);
-     QLineEdit   *searchLine;
+     QLineEdit    *searchLine;
      QToolButton *findNext, *findPrevious, *closeSearch;
      QCheckBox   *caseSensitiveBox;  
      QTextEdit   *textEdit_;  

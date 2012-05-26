@@ -27,7 +27,7 @@ void XmlNoteReader::readContent()
             // read elements <bold> <italic> and set the formatting
         case StartElement:
         {
-            if(name() == "bold");
+            if(name() == "bold")
                 format.setFontWeight(QFont::Bold);
 
             if(name() == "italic")
@@ -47,7 +47,7 @@ void XmlNoteReader::readContent()
             if(name() == "note-content") // end of note content
                 break;
 
-            if(name() == "bold");
+            if(name() == "bold")
                 format.setFontWeight(QFont::Normal);
 
             if(name() == "italic")

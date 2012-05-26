@@ -14,7 +14,7 @@ class FileSystemModel : public QFileSystemModel
 {
     Q_OBJECT
 public:
-    explicit FileSystemModel(QObject *parent = 0) : onlyOnItemDrops_(false) {}
+    explicit FileSystemModel(QObject *parent = 0) : QFileSystemModel(parent), onlyOnItemDrops_(false) {}
     Qt::ItemFlags flags(const QModelIndex &index) const
     {
         return QFileSystemModel::flags(index) | Qt::ItemIsEditable;
