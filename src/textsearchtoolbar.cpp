@@ -1,16 +1,18 @@
 #include "textsearchtoolbar.h"
+#include "lineedit.h"
 
 TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
        QToolBar(parent), textEdit_(textEdit){
 
-     setWindowTitle(tr("Search bar"));
+     setWindowTitle(tr("Searchbar"));
+     setObjectName(tr("Searchtoolbar"));
      setVisible(false);    
 
      closeSearch = new QToolButton(this);
      closeSearch->setText("X");
      addWidget(closeSearch);
 
-     searchLine = new QLineEdit(this);
+     searchLine = new LineEdit(this);
      searchLine->setPlaceholderText(tr("Enter search argument"));
      addWidget(searchLine);
 

@@ -18,7 +18,7 @@
 #include <QProgressDialog>
 #include <QFileIconProvider>
 #include <QList>
-
+#include "highlighter.h"
 
 NobleNote::NobleNote()
 {
@@ -321,6 +321,11 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      if(pref->pSpin->value() > 0)
        note->timer->start(pref->pSpin->value() * 60000);
      note->show();
+
+     if(noteModel->sourceModel() == findNoteModel){
+       highlighter = new Highlighter(note->textEdit->document());
+       highlighter->expression = searchText->text();
+     }
 }
 
 void NobleNote::newFolder(){

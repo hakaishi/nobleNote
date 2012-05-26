@@ -4,6 +4,8 @@
 #include "textedit.h"
 #include "textsearchtoolbar.h"
 #include "highlighter.h"
+#include "xmlnotewriter.h"
+#include "xmlnotereader.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
@@ -16,10 +18,8 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QDirIterator>
-#include <QDebug>
-#include "xmlnotewriter.h"
-#include "xmlnotereader.h"
 #include <QBuffer>
+#include <QDebug>
 
 Note::Note(QWidget *parent) : QMainWindow(parent){
 
@@ -66,8 +66,15 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
 Note::~Note(){ save_or_not(); }
 
 void Note::showEvent(QShowEvent* show_Note){
+     restoreState(QSettings().value("Toolbars/state").toByteArray());
+     searchB->setVisible(false);
      load();
      QMainWindow::showEvent(show_Note);
+}
+
+void Note::closeEvent(QCloseEvent* close_Note){
+     QSettings().setValue("Toolbars/state", saveState());
+     QMainWindow::closeEvent(close_Note);
 }
 
 void Note::load(){
@@ -318,4 +325,5 @@ void Note::highlightText(){
        highlighter->caseSensitive = false;
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), textEdit, SLOT(setFocus()));
+     connect(searchB->closeSearch, SIGNAL(clicked(bool)), searchB->searchLine, SLOT(clear()));
 }

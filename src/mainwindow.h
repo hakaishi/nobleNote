@@ -2,6 +2,7 @@
 #define NOBLENOTE_H
 
 #include "ui_mainwindow.h"
+#include <QSyntaxHighlighter>
 #include <QSystemTrayIcon>
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -29,6 +30,7 @@ class FindFileSystemModel;
 class FileSystemModel;
 class LineEdit;
 class Note;
+class Highlighter;
 
 class NobleNote : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
@@ -56,6 +58,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       bool            searchBoolean;
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> >     openNotes;
+      QSyntaxHighlighter *highlighter;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;

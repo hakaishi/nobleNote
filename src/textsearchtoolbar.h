@@ -7,6 +7,8 @@
 #include <QTextEdit>
 #include <QLineEdit>
 
+class LineEdit;
+
 class TextSearchToolbar : public QToolBar
 {
     Q_OBJECT
