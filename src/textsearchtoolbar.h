@@ -8,6 +8,8 @@
 #include <QLineEdit>
 #include "lineedit.h"
 
+class LineEdit;
+
 class TextSearchToolbar : public QToolBar
 {
     Q_OBJECT

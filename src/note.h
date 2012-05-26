@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QKeyEvent>
 #include <QDateTime>
+#include <QTextEdit>
 
 class TextFormattingToolbar;
 class TextSearchToolbar;
@@ -22,9 +23,9 @@ class Note : public QMainWindow, public Ui::Note {
       ~Note();
       QString text, journalsPath, notesPath;
       QTimer  *timer;
+      QTextEdit  *textEdit;
 
      private:
-      TextEdit  *textEdit;
       QTimer    *jTimer;
       QMenu     *menu;
       QDateTime noteModified, journalModified;
@@ -52,6 +53,7 @@ class Note : public QMainWindow, public Ui::Note {
      protected:
       void keyPressEvent(QKeyEvent *k);
       virtual void showEvent(QShowEvent* show_Note);
+      virtual void closeEvent(QCloseEvent* close_Note);
 };
 
 #endif

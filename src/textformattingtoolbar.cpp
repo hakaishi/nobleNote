@@ -6,7 +6,8 @@
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
     QToolBar(parent), textEdit_(textEdit)
 {
-    this->setWindowTitle(tr("Format Actions"));
+    this->setWindowTitle(tr("Format actions"));
+    setObjectName(tr("Formattoolbar"));
 
     actionTextBold = new QAction(QIcon::fromTheme("format-text-bold",
       QIcon(":bold")), tr("&Bold"), this);
