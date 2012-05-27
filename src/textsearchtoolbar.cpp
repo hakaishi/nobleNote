@@ -9,6 +9,7 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
 
      closeSearch = new QToolButton(this);
      closeSearch->setText("X");
+     closeSearch->setShortcut(Qt::Key_Escape);
      addWidget(closeSearch);
 
      searchLine = new LineEdit(this);

@@ -6,7 +6,7 @@
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
     QToolBar(parent), textEdit_(textEdit)
 {
-    this->setWindowTitle(tr("Format actions"));
+    setWindowTitle(tr("Format actions"));
     setObjectName(tr("Formattoolbar"));
 
     actionTextBold = new QAction(QIcon::fromTheme("format-text-bold",
@@ -17,7 +17,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     bold.setBold(true);
     actionTextBold->setFont(bold);
     connect(actionTextBold, SIGNAL(triggered()), this, SLOT(boldText()));
-    this->addAction(actionTextBold);
+    addAction(actionTextBold);
     actionTextBold->setCheckable(true);
 
     actionTextItalic = new QAction(QIcon::fromTheme("format-text-italic",
@@ -28,7 +28,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     italic.setItalic(true);
     actionTextItalic->setFont(italic);
     connect(actionTextItalic, SIGNAL(triggered()), this, SLOT(italicText()));
-    this->addAction(actionTextItalic);
+    addAction(actionTextItalic);
     actionTextItalic->setCheckable(true);
 
     actionTextUnderline = new QAction(QIcon::fromTheme("format-text-underline",
@@ -39,7 +39,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     underline.setUnderline(true);
     actionTextUnderline->setFont(underline);
     connect(actionTextUnderline, SIGNAL(triggered()), this, SLOT(underlinedText()));
-    this->addAction(actionTextUnderline);
+    addAction(actionTextUnderline);
     actionTextUnderline->setCheckable(true);
 
     actionTextStrikeOut = new QAction(QIcon::fromTheme("format-text-strikethrough",
@@ -50,28 +50,28 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     strikeOut.setStrikeOut(true);
     actionTextStrikeOut->setFont(strikeOut);
     connect(actionTextStrikeOut, SIGNAL(triggered()), this, SLOT(strikedOutText()));
-    this->addAction(actionTextStrikeOut);
+    addAction(actionTextStrikeOut);
     actionTextStrikeOut->setCheckable(true);
 
     QPixmap textPix(16, 16);
     textPix.fill(Qt::black);
     actionTextColor = new QAction(textPix, tr("&Text color..."), this);
     connect(actionTextColor, SIGNAL(triggered()), this, SLOT(coloredText()));
-    this->addAction(actionTextColor);
+    addAction(actionTextColor);
 
     QPixmap bPix(16, 16);
     bPix.fill(Qt::white);
     actionTextBColor = new QAction(bPix, tr("&Background color..."), this);
     connect(actionTextBColor, SIGNAL(triggered()), this, SLOT(markedText()));
-    this->addAction(actionTextBColor);
+    addAction(actionTextBColor);
 
     fontComboBox = new QFontComboBox(this);
-    this->addWidget(fontComboBox);
+    addWidget(fontComboBox);
     connect(fontComboBox, SIGNAL(activated(QString)), this, SLOT(fontOfText(QString)));
 
     comboSize = new QComboBox(this);
     comboSize->setObjectName("comboSize");
-    this->addWidget(comboSize);
+    addWidget(comboSize);
     comboSize->setEditable(true);
     connect(comboSize, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
 
