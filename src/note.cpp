@@ -161,31 +161,31 @@ void Note::saveAll(){
      journalModified = journalInfo.lastModified();
 
 //      //test xml output
-//    QBuffer buffer;
-//    buffer.open(QBuffer::ReadWrite);
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
 
-//    XmlNoteWriter writer;
-//    writer.setDevice(&buffer);
-//    writer.setUuid(QUuid::createUuid());
-//    writer.setLastChange(QDateTime::currentDateTime());
-//    writer.setFrame(textEdit->document()->rootFrame());
-//    writer.write();
-//     qDebug() << buffer.data();
+    XmlNoteWriter writer;
+    writer.setDevice(&buffer);
+    writer.setUuid(QUuid::createUuid());
+    writer.setLastChange(QDateTime::currentDateTime());
+    writer.setFrame(textEdit->document()->rootFrame());
+    writer.write();
+     qDebug() << buffer.data();
 
-//     buffer.close();
-//     buffer.open(QBuffer::ReadWrite);
+     buffer.close();
+     buffer.open(QBuffer::ReadWrite);
 
-//     QFile f("C:/Users/Taiko/a.note");
+//     QFile f("C:/Users/Taiko/.nobleNote/notes/hand/easdf");
 //     f.open(QFile::ReadOnly);
 
-//     XmlNoteReader reader;
-//     reader.setDevice(&buffer);
-//     reader.setFrame((new QTextDocument())->rootFrame());
-//     reader.read();
-//     qDebug() << reader.uuid() << "and static: ";
-//     buffer.close();
-//     buffer.open(QBuffer::ReadOnly);
-//     qDebug() << XmlNoteReader::uuid(&buffer);
+     XmlNoteReader reader;
+     reader.setDevice(&buffer);
+     //reader.setFrame((new QTextDocument())->rootFrame());
+     qDebug() << reader.lastChange() << reader.lastMetadataChange() << reader.createDate();
+     qDebug() << reader.uuid() << "and static: ";
+     buffer.close();
+     buffer.open(QBuffer::ReadOnly);
+     qDebug() << XmlNoteReader::uuid(&buffer);
 }
 
 void Note::save_or_not(){

@@ -40,6 +40,8 @@ void XmlNoteWriter::write()
     writeStartElement("text");
     writeAttribute("xml:space","preserve");
     writeStartElement("note-content");
+
+     // tomboy compatibility
     writeAttribute("version","0.1");
 
      for(QTextFrame::Iterator it = frame_->begin(); it != frame_->end(); ++it)

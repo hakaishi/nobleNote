@@ -4,6 +4,7 @@
 #include <QXmlStreamReader>
 #include <QTextFrame>
 #include <QUuid>
+#include <QDateTime>
 
 /**
   * a class reading formatted text in xml files
@@ -27,11 +28,20 @@ public:
     void setFrame(QTextFrame * frame)       {   frame_ = frame;}
     QTextFrame * frame() const              { return frame_;}
 
-    const QString& noteTitle() const            { return title_;}
-
     void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
 
     inline QUuid uuid() const; // get the uuid that has been extracted during read()
+
+    const QString& noteTitle() const            { return title_;}
+
+     // get last change date
+    const QDateTime& lastChange() const         { return lastChange_;}
+
+    // get last metadata change date
+    const QDateTime& lastMetadataChange() const { return lastMetadataChange_;}
+
+    // get create date, if not set
+    const QDateTime& createDate() const         { return createDate_;}
 
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     static QUuid uuid(QIODevice * device);
@@ -46,6 +56,9 @@ private:
     QString title_;
     QTextFrame * frame_;
     QUuid uuid_;
+    QDateTime lastChange_;
+    QDateTime lastMetadataChange_;
+    QDateTime createDate_;
 };
 
 
