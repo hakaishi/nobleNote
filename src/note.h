@@ -22,14 +22,14 @@ class Note : public QMainWindow, public Ui::Note {
       Note(QWidget *parent = 0);
       ~Note();
       QString text, journalsPath, notesPath;
-      QTimer  *timer;
+//      QTimer  *timer;
       bool    searchbarVisible;
 
      private:
       QTextEdit *textEdit;
-      QTimer    *jTimer;
+//      QTimer    *jTimer;
       QMenu     *menu;
-      QDateTime noteModified, journalModified;
+//      QDateTime noteModified, journalModified;
       TextFormattingToolbar * toolbar;
       TextSearchToolbar *searchB;
       bool      alreadyAsked;
@@ -37,19 +37,16 @@ class Note : public QMainWindow, public Ui::Note {
       Highlighter *highlighter;
 
      public slots:
-      void saveAll();
-      void load();
-      void reload();
-      void save_or_not();
-      void resetAll();
-      void askForName();
-      void getNewName();
+//      void saveAll();
+//      void load();
+//      void reload();
+//      void save_or_not();
+//      void resetAll();
+//      void askForName();
+//      void getNewName();
       void selectNextExpression();
       void selectPreviousExpression();
       void highlightText(QString str);
-
-     signals:
-      void closing(QObject *object);
 
      protected:
       void keyPressEvent(QKeyEvent *k);
