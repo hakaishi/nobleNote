@@ -6,6 +6,7 @@
 #include <QTextFrame>
 #include <QUuid>
 #include <QDateTime>
+#include <QFile>
 
 /**
   * a class writing formatted text in xml files
@@ -23,7 +24,10 @@ class XmlNoteWriter : protected QXmlStreamWriter
 {
 public:
     XmlNoteWriter();
+    XmlNoteWriter(const QString &filePath);
 
+    // Warning: The application will crash if device* points to a local stack object
+    // that gets destroyed before write() is called
     void setDevice(QIODevice * device)    { QXmlStreamWriter::setDevice(device);}
     QIODevice * device() const            { return QXmlStreamWriter::device();}
 
@@ -62,6 +66,8 @@ private:
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
+
+    QFile file;
 };
 
 #endif // XMLNOTEWRITER_H

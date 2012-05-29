@@ -8,6 +8,68 @@ XmlNoteReader::XmlNoteReader()
     frame_ = NULL;
 }
 
+XmlNoteReader::XmlNoteReader(const QString& filePath) : file(filePath)
+{
+    frame_ = NULL;
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        qDebug("XmlNoteReader::XmlNoteReader failed : could not open filepath");
+           return;
+    }
+    QXmlStreamReader::setDevice(&file);
+}
+
+void XmlNoteReader::read()
+{
+    if( !this->QXmlStreamReader::device())
+    {
+        qDebug("XmlNoteReader::read failed: input device NULL");
+        return;
+    }
+
+    // skip everything until <note-content>
+    while(!atEnd())
+    {
+        readNext();
+
+        if(name() == "note-content")
+        {
+            if(!frame_) // if no frame_ set where note content can be written into
+                skipCurrentElement();
+            else
+                readContent();
+        }
+        else if(name() == "id" || name() == "uuid") // only "id" is written
+        {
+            QString idStr = readElementText();
+            uuid_ = parseUuid(idStr);
+        }
+        else if(name() == "title")
+        {
+            title_ = readElementText();
+        }
+        else if(name() == "last-change-date")
+        {
+            lastChange_ = QDateTime::fromString(readElementText(),Qt::ISODate);
+        }
+        else if(name() == "last-metadata-change")
+        {
+            lastMetadataChange_ = QDateTime::fromString(readElementText(),Qt::ISODate);
+        }
+        else if(name() == "create-date")
+        {
+            createDate_ = QDateTime::fromString(readElementText(),Qt::ISODate);
+        }
+
+        if (QXmlStreamReader::hasError())
+        {
+            qDebug("XmlNoteReader::read failed: Error reading xml content");
+            return;
+        }
+    }
+}
+
 void XmlNoteReader::readContent()
 {
     QTextCursor cursor(frame_);
@@ -75,56 +137,6 @@ void XmlNoteReader::readContent()
     }
 }
 
-void XmlNoteReader::read()
-{
-    if( !this->QXmlStreamReader::device())
-    {
-        qDebug("XmlNoteReader::read failed: input device NULL");
-        return;
-    }
-
-    // skip everything until <note-content>
-    while(!atEnd())
-    {
-        readNext();
-
-        if(name() == "note-content")
-        {
-            if(!frame_) // if no frame_ set where note content can be written into
-                skipCurrentElement();
-            else
-                readContent();
-        }
-        else if(name() == "id" || name() == "uuid") // only "id" is written
-        {
-            QString idStr = readElementText();
-            uuid_ = parseUuid(idStr);
-        }
-        else if(name() == "title")
-        {
-            title_ = readElementText();
-        }
-        else if(name() == "last-change-date")
-        {
-            lastChange_ = QDateTime::fromString(readElementText(),Qt::ISODate);
-        }
-        else if(name() == "last-metadata-change")
-        {
-            lastMetadataChange_ = QDateTime::fromString(readElementText(),Qt::ISODate);
-        }
-        else if(name() == "create-date")
-        {
-            createDate_ = QDateTime::fromString(readElementText(),Qt::ISODate);
-        }
-
-        if (QXmlStreamReader::hasError())
-        {
-            qDebug("XmlNoteReader::read failed: Error reading xml content");
-            return;
-        }
-    }
-}
-
 /*static*/ QUuid XmlNoteReader::parseUuid(QString idStr)
 {
     QUuid uuid;
@@ -171,6 +183,9 @@ void XmlNoteReader::read()
 
 /*static*/ QString XmlNoteReader::findUuid(const QUuid uuid, const QString &path)
 {
+    if(uuid.isNull())
+        return QString();
+
     QDirIterator it(path, QDirIterator::Subdirectories);
     while(it.hasNext())
     {

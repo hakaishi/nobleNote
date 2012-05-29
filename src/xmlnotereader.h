@@ -5,6 +5,7 @@
 #include <QTextFrame>
 #include <QUuid>
 #include <QDateTime>
+#include <QFile>
 
 /**
   * a class reading formatted text in xml files
@@ -21,6 +22,10 @@ class XmlNoteReader : protected QXmlStreamReader
 {
 public:
     XmlNoteReader();
+    XmlNoteReader(const QString &filePath);
+
+    // Warning: The application will crash if device* points to a local stack object
+    // that gets destroyed before read() is called
     void setDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
     QIODevice * device() const             { return QXmlStreamReader::device();}
 
@@ -47,7 +52,7 @@ public:
     static QUuid uuid(QIODevice * device);
 
     // searches all directorys under the given path recursively for a file with the given UUID
-    // returns the first file that contains the given uuid or an empty string if the uuid could not be found
+    // returns the first file that contains the given uuid or an empty string if the uuid could not be found or if the given uuid is null
     static QString findUuid(const QUuid uuid, const QString & path);
 
 private:
@@ -59,6 +64,8 @@ private:
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
+
+    QFile file;
 };
 
 

@@ -58,7 +58,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
      searchB->setVisible(false);
 
-     connect(textDocument,SIGNAL(delayedModificationChanged()),this->noteDescriptor_,SLOT(stateChange()));
+
      connect(textEdit,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
 //     jTimer = new QTimer(this);
@@ -85,9 +85,6 @@ void Note::showEvent(QShowEvent* show_Note){
 //     load();
      if(searchbarVisible)
        searchB->setVisible(true);
-
-     if(textDocument->isModified())
-         noteDescriptor_->stateChange();
 
      QMainWindow::showEvent(show_Note);
 }

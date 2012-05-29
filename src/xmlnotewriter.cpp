@@ -3,10 +3,23 @@
 #include <qtextcursor.h>
 #include <datetime.h>
 #include <QApplication>
+#include <QFile>
 
 XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {
     title_ = "untitled note";
+}
+
+XmlNoteWriter::XmlNoteWriter(const QString &filePath) : file(filePath)
+{
+    title_ = "untitled note";
+
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        qDebug("XmlNoteWriter::XmlNoteWriter failed : could not open filepath");
+           return;
+    }
+    QXmlStreamWriter::setDevice(&file);
 }
 
 // must write well formed xml 1.0 for QXmlStreamReader compatibility

@@ -5,6 +5,7 @@
 #include "xmlnotereader.h"
 #include "xmlnotewriter.h"
 #include <QTextDocument>
+#include "textdocument.h"
 
 /**
  * @brief The NoteDescriptor class provides an abstraction layer to the underlying note
@@ -17,21 +18,24 @@ class NoteDescriptor : public QObject
 {
     Q_OBJECT
 public:
-    explicit NoteDescriptor(QString filePath, QTextDocument *document, QObject *parent = 0);
+    explicit NoteDescriptor(QString filePath, TextDocument *document, QObject *parent = 0);
     
 signals:
     
 public slots:
     void stateChange();
 
+private slots:
+    void setStateChangeEnabled();
+
 private:
 
     QString filePath_;
-    QTextDocument * document_;
-    XmlNoteReader reader;
-    XmlNoteWriter writer;
+    TextDocument * document_;
     QDateTime lastChange_;
     QUuid uuid_;
+
+    bool stateChangeEnabled;
 };
 
 #endif // NOTEDESCRIPTOR_H
