@@ -20,7 +20,7 @@ public:
     
 signals:
 
-    void delayedModificationChanged(bool changed);
+    void delayedModificationChanged();
     
 private slots:
 

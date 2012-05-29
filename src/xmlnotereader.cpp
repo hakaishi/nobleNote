@@ -45,8 +45,8 @@ void XmlNoteReader::readContent()
            // unset formatting
         case EndElement:
         {
-            if(name() == "note-content") // end of note content
-                break;
+            if(name() == "note-content") // end of note content, exit this method
+                return;
 
             if(name() == "bold")
                 format.setFontWeight(QFont::Normal);

@@ -18,20 +18,26 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <textdocument.h>
+
 #include <QDirIterator>
 #include <QBuffer>
 #include <QDebug>
 
-Note::Note(QWidget *parent) : QMainWindow(parent){
+Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
      setupUi(this);
-
      setAttribute(Qt::WA_DeleteOnClose);
+
+     notePath = filePath;
+
      searchbarVisible = false; //initializing
 
      textEdit = new TextEdit(this);
-     textEdit->setDocument(new TextDocument(this));
+     textDocument = new TextDocument(this);
+     textEdit->setDocument(textDocument);
      textEdit->ensureCursorVisible();
+
+     noteDescriptor_ = new NoteDescriptor(filePath,textDocument,this); // must be constructed after TextDocument
 
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
      textEdit->setFocus();
@@ -51,6 +57,9 @@ Note::Note(QWidget *parent) : QMainWindow(parent){
      restoreState(QSettings().value("Toolbars/state").toByteArray());
 
      searchB->setVisible(false);
+
+     connect(textDocument,SIGNAL(delayedModificationChanged()),this->noteDescriptor_,SLOT(stateChange()));
+     connect(textEdit,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
 //     jTimer = new QTimer(this);
 //     jTimer->setInterval(1000);
@@ -76,22 +85,30 @@ void Note::showEvent(QShowEvent* show_Note){
 //     load();
      if(searchbarVisible)
        searchB->setVisible(true);
+
+     if(textDocument->isModified())
+         noteDescriptor_->stateChange();
+
      QMainWindow::showEvent(show_Note);
 }
 
 void Note::closeEvent(QCloseEvent* close_Note){
      QSettings().setValue("Toolbars/state", saveState());
+
+      if(textDocument->isModified())
+        noteDescriptor_->stateChange();
+
      QMainWindow::closeEvent(close_Note);
 }
 
 //void Note::load(){
-//     QFile note(notesPath);
+//     QFile note(notePath);
 //     if(!note.open(QIODevice::ReadOnly))
 //       return;
 //     QTextStream nStream(&note);
 //     text = nStream.readAll();
 //     note.close();
-//     QFileInfo noteInfo(notesPath);
+//     QFileInfo noteInfo(notePath);
 //     noteModified = noteInfo.lastModified();
 
 //     setWindowTitle(noteInfo.fileName());
@@ -134,7 +151,7 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //     if(!foundFile.isEmpty()){
 //       QFileInfo info(foundFile);
 //       setWindowTitle(info.baseName());
-//       notesPath = info.filePath();
+//       notePath = info.filePath();
 //       QString dirTrunc = info.filePath();
 //       dirTrunc.remove( "/" + info.baseName());
 //       dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
@@ -144,13 +161,13 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //}
 
 //void Note::saveAll(){
-//     QFile note(notesPath);
+//     QFile note(notePath);
 //     if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
 //       return;
 //     QTextStream nStream(&note);
 //     nStream << textEdit->toHtml();
 //     note.close();
-//     QFileInfo noteInfo(notesPath);
+//     QFileInfo noteInfo(notePath);
 //     noteModified = noteInfo.lastModified();
 
 //     QFile journal(journalsPath);
@@ -191,12 +208,12 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //}
 
 //void Note::save_or_not(){
-//     QFile note(notesPath);
+//     QFile note(notePath);
 //     if(!note.exists()){
 //       if(alreadyAsked)
 //         return;
 //       reload();
-//       QFile note(notesPath);
+//       QFile note(notePath);
 //       if(!note.exists()){
 //         if(QMessageBox::warning(this,tr("Note doesn't exist"),
 //            tr("This note does no longer exist. Do you want to "
@@ -213,7 +230,7 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //       }
 //     }
 
-//     QFileInfo noteInfo(notesPath);
+//     QFileInfo noteInfo(notePath);
 //     QFileInfo journalInfo(journalsPath);
 //     if((noteModified != noteInfo.lastModified()) ||
 //        (journalModified != journalInfo.lastModified())){
@@ -242,13 +259,13 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //void Note::resetAll(){
 //     textEdit->setHtml(text);
 
-//     QFile note(notesPath);
+//     QFile note(notePath);
 //     if(!note.open(QIODevice::WriteOnly | QIODevice::Truncate))
 //       return;
 //     QTextStream stream(&note);
 //     stream << text;
 //     note.close();
-//     QFileInfo noteInfo(notesPath);
+//     QFileInfo noteInfo(notePath);
 //     noteModified = noteInfo.lastModified();
 
 //     QFile journal(journalsPath);
@@ -268,12 +285,12 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //}
 
 //void Note::getNewName(){
-//     QFileInfo old(notesPath);
+//     QFileInfo old(notePath);
 //     QString newName = old.filePath();
 //     newName.remove(old.baseName());
 //     newName.append(newNote->lineEdit->text());
 //     setWindowTitle(newNote->lineEdit->text());
-//     notesPath = newName;
+//     notePath = newName;
 //     QString dirTrunc = newName;
 //     dirTrunc.remove( "/" + newNote->lineEdit->text());
 //     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");

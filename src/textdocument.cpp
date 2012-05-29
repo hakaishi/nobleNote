@@ -26,6 +26,6 @@ void TextDocument::sendDelayedModificationChanged()
 {
     if(this->isModified())
     {
-        emit delayedModificationChanged(true);
+        emit delayedModificationChanged();
     }
 }

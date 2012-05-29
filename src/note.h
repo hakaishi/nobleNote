@@ -8,6 +8,8 @@
 #include <QKeyEvent>
 #include <QDateTime>
 #include <QTextEdit>
+#include "notedescriptor.h"
+#include "textdocument.h"
 
 class TextFormattingToolbar;
 class TextSearchToolbar;
@@ -19,22 +21,30 @@ class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
  
      public:
-      Note(QWidget *parent = 0);
+      Note(QString filePath, QWidget *parent = 0);
       ~Note();
-      QString text, journalsPath, notesPath;
-//      QTimer  *timer;
+      QString text, journalsPath, notePath;
       bool    searchbarVisible;
 
      private:
-      QTextEdit *textEdit;
-//      QTimer    *jTimer;
+      TextEdit *textEdit;
+      TextDocument *textDocument;
+
       QMenu     *menu;
-//      QDateTime noteModified, journalModified;
+
       TextFormattingToolbar * toolbar;
       TextSearchToolbar *searchB;
       bool      alreadyAsked;
       NewNoteName *newNote;
       Highlighter *highlighter;
+
+      NoteDescriptor * noteDescriptor_;
+
+
+
+//      QTimer    *jTimer;
+//      QDateTime noteModified, journalModified;
+//      QTimer  *timer;
 
      public slots:
 //      void saveAll();

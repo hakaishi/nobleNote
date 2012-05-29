@@ -313,10 +313,9 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
          }
      }
 
-     Note* note=new Note();
+     Note* note=new Note(notePath);
      openNotes+= note;
      note->setObjectName(notePath);
-     note->notesPath = notePath;
      note->journalsPath = journalFilesPath;
 //     if(pref->pSpin->value() > 0)
 //       note->timer->start(pref->pSpin->value() * 60000);

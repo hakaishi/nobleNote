@@ -15,10 +15,12 @@ class TextEdit : public QTextEdit{
       TextEdit(QWidget *parent = 0);
 
      signals:
-      void sendFocusIn();
+      void signalFocusInEvent();
+      void signalFocusOutEvent();
 
      protected:
       virtual void focusInEvent(QFocusEvent *fe);
+      virtual void focusOutEvent(QFocusEvent *e);
 };
 
 #endif // TEXTEDIT_H
