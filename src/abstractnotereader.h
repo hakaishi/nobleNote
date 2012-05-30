@@ -29,7 +29,7 @@ public:
     virtual const QDateTime& createDate() const         = 0;
 
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
-    //virtual static QUuid uuid(QIODevice * device) = 0;
+    //virtual static QUuid uuid(QString filePath) = 0;
 
     // searches all directorys under the given path recursively for a file with the given UUID
     // returns the first file that contains the given uuid or an empty string if the uuid could not be found or if the given uuid is null

@@ -2,6 +2,7 @@
 #include <QTextStream>
 #include <QXmlStreamReader>
 #include <QFileInfo>
+#include <QDirIterator>
 
 
 HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
@@ -23,26 +24,43 @@ HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
    file.close(); // local object gets destroyed
 }
 
-// TODO note title can be stored via QTextDocument.setMetaInformation
-void HtmlNoteReader::read(QIODevice * file)
+/*QUuid*/ QUuid HtmlNoteReader::uuid(QString filePath)
 {
-    QString content;
-
-    QTextStream in(file);
-    content = in.readAll();
-    if(content.isEmpty())
-        return;
-
-    if(document_)
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
     {
-        document_->setHtml(content);
+        return QUuid();
     }
+    QString content;
+    QTextStream in(&file);
+    content = in.readAll();
+    file.close();
+    return uuidFromHtml(content);
+}
+
+/*static*/ QString HtmlNoteReader::findUuid(const QUuid uuid, const QString & path)
+{
+    if(uuid.isNull())
+        return QString();
+
+    QDirIterator it(path, QDirIterator::Subdirectories);
+    while(it.hasNext())
+    {
+              QString filePath = it.next();
+                  if(uuid == HtmlNoteReader::uuid(filePath))
+                      return filePath;
+    }
+    return QString();
+}
+
+/*static*/ QUuid HtmlNoteReader::uuidFromHtml(const QString& html)
+{
+    QString content = html;
 
     int metaIdx = 0;
     int endIdx = 0;
     QTime time;
     time.start();
-
     // find the meta elements in the html files and read the uuid
     while(metaIdx != -1 || time.elapsed() > 500)
     {
@@ -58,15 +76,35 @@ void HtmlNoteReader::read(QIODevice * file)
             int idx = metaLine.lastIndexOf('\"');
             int beforeIdx = metaLine.lastIndexOf('\"',idx-1);
             QStringRef between = metaLine.toString().midRef(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
-            uuid_ = QUuid(between.toString().trimmed());
+            return QUuid(between.toString().trimmed());
 
             // simpler alternative
             // 32 + 4 is the lenght of an uuid
             //QStringRef uuidRef = metaLine.toString().midRef(idx-(32 + 4),32+4); // take 32+4 chars before the last "
             //qDebug(uuidRef.toAscii());
         }
-
     }
+    return QUuid();
+}
+
+// TODO note title can be stored via QTextDocument.setMetaInformation
+void HtmlNoteReader::read(QIODevice * file)
+{
+    QString content;
+
+    QTextStream in(file);
+    content = in.readAll();
+    if(content.isEmpty())
+        return;
+
+    if(document_)
+    {
+        document_->setHtml(content);
+    }
+
+    uuid_ = uuidFromHtml(content);
+
+
 
 // does not work because QXmlStreamReader sometimes reports errors with html
     // TODO same device for both QTextStreama and QXmlStreamReader allowed?

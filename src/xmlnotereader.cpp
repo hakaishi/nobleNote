@@ -159,9 +159,14 @@ void XmlNoteReader::readContent()
     return uuid;
 }
 
-/*static*/ QUuid XmlNoteReader::uuid(QIODevice *device)
+/*static*/ QUuid XmlNoteReader::uuid(QString filePath)
 {
-    QXmlStreamReader reader(device);
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        return QUuid();
+    }
+    QXmlStreamReader reader(&file);
     while(!reader.atEnd())
     {
         if(reader.readNextStartElement() && (reader.name() == "id" || reader.name() == "uuid"))
@@ -187,12 +192,8 @@ void XmlNoteReader::readContent()
     while(it.hasNext())
     {
               QString filePath = it.next();
-              QFile file(filePath);
-              if(file.open(QIODevice::ReadOnly))
-              {
-                  if(uuid == XmlNoteReader::uuid(&file))
+                  if(uuid == XmlNoteReader::uuid(filePath))
                       return filePath;
-              }
     }
     return QString();
 }

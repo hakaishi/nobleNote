@@ -17,7 +17,8 @@ public:
     void setDocument(QTextDocument * document)       {   document_ = document;}
     QTextDocument * document() const              { return document_;}
 
-    QUuid uuid() const                         { return uuid_;} // get the uuid that has been extracted during read()
+    // get the uuid that has been extracted during read()
+    QUuid uuid() const                         { return uuid_;}
 
     const QString& noteTitle() const            { return title_;}
 
@@ -31,14 +32,16 @@ public:
     const QDateTime& createDate() const         { return createDate_;}
 
 //     // reads a uuid from a file, if uuid could not be found, a null uuid is returned
-//    static QUuid uuid(QIODevice * device);
+    static QUuid uuid(QString filePath);
 
 //    // searches all directorys under the given path recursively for a file with the given UUID
 //    // returns the first file that contains the given uuid or an empty string if the uuid could not be found or if the given uuid is null
-//    static QString findUuid(const QUuid uuid, const QString & path);
+    static QString findUuid(const QUuid uuid, const QString & path);
+
+    // reads a uuid from the html contents of string
+    static QUuid uuidFromHtml(const QString &html);
 
 private:
-
     void read(QIODevice *file); // read the content's of a QIODevice and write the formatted text into a QTextDocument
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
