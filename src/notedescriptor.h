@@ -18,28 +18,37 @@ class NoteDescriptor : public QObject
 {
     Q_OBJECT
 public:
-    explicit NoteDescriptor(QString filePath, TextDocument *document, QObject *parent = 0);
+    explicit NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget = 0);
     
 signals:
+    void close(); // emitted if the user wants to close the note via a message box
     
 public slots:
     void stateChange();
 
 private slots:
-    void setStateChangeEnabled();
+    void setActivityIdle();
 
 private:
-    void save(); // save modified document to file
-    void load(); // load a note file into the document
 
+    enum
+    {
+        Idle,
+        CheckFilePath,
+        CheckLastChange,
+        ProcessEvents
+    } Activity;
+
+    void save(const QString &filePath, QUuid uuid); // save modified document to file
+    void load(const QString& filePath); // load a note file into the document
+
+    QWidget * noteWidget_;
     QString filePath_;
     TextDocument * document_;
     QDateTime lastChange_;
     QDateTime createDate_;
     QDateTime lastMetadataChange_;
     QUuid uuid_;
-
-    bool stateChangeEnabled;
 };
 
 #endif // NOTEDESCRIPTOR_H

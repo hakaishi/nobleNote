@@ -43,5 +43,6 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/notedescriptor.cpp \
     src/abstractnotereader.cpp \
     src/htmlnotereader.cpp \
-    src/htmlnotewriter.cpp
+    src/htmlnotewriter.cpp \
+    src/datetime.cpp
 RESOURCES = nobleNote.qrc

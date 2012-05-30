@@ -4,24 +4,14 @@
 #include "textedit.h"
 #include "textsearchtoolbar.h"
 #include "highlighter.h"
-#include "xmlnotewriter.h"
-#include "xmlnotereader.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
 #include <QToolBar>
 #include <QColorDialog>
-#include <QTextStream>
-#include <QXmlStreamWriter>
-#include <QTextBlock>
-#include <QTextFragment>
-#include <QMessageBox>
 #include <QSettings>
 #include <textdocument.h>
-
-#include <QDirIterator>
-#include <QBuffer>
-#include <QDebug>
+#include "notedescriptor.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
@@ -58,7 +48,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
      searchB->setVisible(false);
 
-
+     connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(textEdit,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
 //     jTimer = new QTimer(this);

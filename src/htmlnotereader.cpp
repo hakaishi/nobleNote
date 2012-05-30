@@ -8,20 +8,45 @@
 HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
 {
    document_ = doc;
-   QFile file(filePath);
-   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-   {
-       qDebug("HtmlNoteReader::HtmlNoteReader failed : could not open filepath");
-          return;
-   }
+   read(filePath);
+}
 
-   QFileInfo info(filePath);
-   lastChange_ = info.lastModified();
-   lastMetadataChange_ = info.lastModified();
-   createDate_ = info.created();
+// TODO note title can be stored via QTextDocument.setMetaInformation
+// TODO fallback file info also for XmlNoteReader
+void HtmlNoteReader::read(const QString& filePath)
+{
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug("HtmlNoteReader::HtmlNoteReader failed : could not open filepath");
+           return;
+    }
+    QString content;
 
-   read(&file);
-   file.close(); // local object gets destroyed
+    QTextStream in(&file);
+    content = in.readAll();
+    if(content.isEmpty())
+        return;
+
+    if(document_)
+    {
+        document_->setHtml(content);
+    }
+
+    uuid_ = uuidFromHtml(content);
+    lastChange_ = QDateTime::fromString(metaContent(content,"last-change-date"),Qt::ISODate);
+    createDate_ = QDateTime::fromString(metaContent(content,"create-date"),Qt::ISODate);
+    //lastMetadataChange_ = info.lastModified(); // not implemented
+
+    // fallback dates
+    QFileInfo info(filePath);
+    if(lastChange_.isNull())
+        lastChange_ = info.lastModified();
+
+     if(createDate_.isNull())
+        createDate_ = info.created();
+
+    file.close(); // local object gets destroyed
 }
 
 /*QUuid*/ QUuid HtmlNoteReader::uuid(QString filePath)
@@ -55,6 +80,11 @@ HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
 
 /*static*/ QUuid HtmlNoteReader::uuidFromHtml(const QString& html)
 {
+    return QUuid(metaContent(html,"uuid").trimmed());
+}
+
+QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
+{
     QString content = html;
 
     int metaIdx = 0;
@@ -71,38 +101,18 @@ HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
 
         endIdx = content.indexOf(">",metaIdx+1);
         QStringRef metaLine = content.midRef(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
-        if(metaLine.contains("uuid"))
+        if(metaLine.contains(name))
         {
             int idx = metaLine.lastIndexOf('\"');
             int beforeIdx = metaLine.lastIndexOf('\"',idx-1);
             QStringRef between = metaLine.toString().midRef(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
-            return QUuid(between.toString().trimmed());
-
-            // simpler alternative
-            // 32 + 4 is the lenght of an uuid
-            //QStringRef uuidRef = metaLine.toString().midRef(idx-(32 + 4),32+4); // take 32+4 chars before the last "
-            //qDebug(uuidRef.toAscii());
+            return between.toString();
         }
     }
-    return QUuid();
+    return QString();
 }
 
-// TODO note title can be stored via QTextDocument.setMetaInformation
-void HtmlNoteReader::read(QIODevice * file)
-{
-    QString content;
 
-    QTextStream in(file);
-    content = in.readAll();
-    if(content.isEmpty())
-        return;
-
-    if(document_)
-    {
-        document_->setHtml(content);
-    }
-
-    uuid_ = uuidFromHtml(content);
 
 
 
@@ -133,4 +143,3 @@ void HtmlNoteReader::read(QIODevice * file)
 //            return;
 //        }
 //    }
-}

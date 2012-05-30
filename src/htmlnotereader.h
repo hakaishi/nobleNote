@@ -41,8 +41,11 @@ public:
     // reads a uuid from the html contents of string
     static QUuid uuidFromHtml(const QString &html);
 
+    // returns the text of the content attribute in a <meta name="foo" content="bar" /> element for the given name
+    static QString metaContent(const QString &html, const QString &name);
+
 private:
-    void read(QIODevice *file); // read the content's of a QIODevice and write the formatted text into a QTextDocument
+    void read(const QString &filePath); // read the content's of a QIODevice and write the formatted text into a QTextDocument
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
