@@ -14,19 +14,13 @@ NoteDescriptor::NoteDescriptor(QString filePath, TextDocument *document, QObject
     reader.setFrame(document->rootFrame());
     reader.read(); // add the read text to the document
 
-    uuid_ = reader.uuid();
-    if(uuid_.isNull())
-    {
-        // should overwrite the file in this program's format with a generated uuid
-        qDebug("NoteDescriptor::NoteDescriptor : uuid is null, TODO missing implementation of uuid generation");
-    }
+    uuid_ = reader.uuid().isNull() ? QUuid::createUuid() : reader.uuid();
 
+
+    // dates can be null, XmlNoteWriter will generate non null dates
     lastChange_ = reader.lastChange();
-    if(lastChange_.isNull())
-    {
-        // should overwrite the file in this program's format with the current last change date
-        qDebug("NoteDescriptor::NoteDescriptor : uuid is null, TODO missing implementation of uuid generation");
-    }
+    createDate_ = reader.createDate();
+    lastMetadataChange_ = reader.lastMetadataChange();
 
     document_->setModified(false); // avoid emit of delayedModificationChanged()
     connect(document_,SIGNAL(delayedModificationChanged()),this,SLOT(stateChange()));
@@ -51,9 +45,12 @@ void NoteDescriptor::stateChange()
     }
     filePath_ = newFilePath; // old filePath_ not longer needed
 
-    XmlNoteReader reader(newFilePath);
-    reader.read();
-    QDateTime laterLastChange = reader.lastChange(); // TODO handle last change is null
+    QDateTime laterLastChange;
+    {
+        XmlNoteReader reader(newFilePath);
+        reader.read();
+        laterLastChange = reader.lastChange(); // TODO handle last change is null
+    }
 
     if(this->lastChange_ < laterLastChange)
     {
@@ -62,14 +59,12 @@ void NoteDescriptor::stateChange()
 
         // else // not modified, silently reload
         //  reload();
-
-
         return;
     }
 
     if(document_->isModified())
     {
-        // TODO save
+        save();
         document_->setModified(false);
         return;
     }
@@ -78,4 +73,20 @@ void NoteDescriptor::stateChange()
 void NoteDescriptor::setStateChangeEnabled()
 {
     stateChangeEnabled = true;
+}
+
+void NoteDescriptor::save()
+{
+    XmlNoteWriter writer(filePath_);
+    writer.setFrame(document_->rootFrame());
+    writer.setUuid(uuid_);
+    writer.setLastChange(QDateTime::currentDateTime());
+    writer.setLastMetadataChange(lastMetadataChange_);
+    writer.setCreateDate(createDate_);
+    writer.write();
+}
+
+void NoteDescriptor::load()
+{
+    // TODO title
 }

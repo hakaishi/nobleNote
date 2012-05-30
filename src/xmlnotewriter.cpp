@@ -4,6 +4,7 @@
 #include <datetime.h>
 #include <QApplication>
 #include <QFile>
+#include <QDebug>
 
 XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {
@@ -59,8 +60,16 @@ void XmlNoteWriter::write()
 
      for(QTextFrame::Iterator it = frame_->begin(); it != frame_->end(); ++it)
      {
+//         QTextCursor cursor(it.currentBlock());
+//         cursor.movePosition(QTextCursor::PreviousBlock);
+//         cursor.movePosition(QTextCursor::EndOfBlock);
+//         cursor.movePosition(QTextCursor::NextBlock,QTextCursor::KeepAnchor);
+//         writeCharacters(cursor.selectedText().replace(QChar(QChar::ParagraphSeparator),QString('\n')));
+
+//         qDebug() << "selected Text:" << cursor.selectedText();
          for(QTextBlock::Iterator blit = it.currentBlock().begin(); blit != it.currentBlock().end(); ++blit)
          {
+             //qDebug("block iteration");
              int elements = 0;
              if(blit.fragment().charFormat().fontItalic())
                  writeStartElement("italic"),++elements;
@@ -71,11 +80,17 @@ void XmlNoteWriter::write()
              if(blit.fragment().charFormat().underlineStyle() != QTextCharFormat::NoUnderline)
                  writeStartElement("underline"),++elements;
 
-             writeCharacters(blit.fragment().text());
+             writeCharacters(blit.fragment().text().replace(QChar(QChar::ParagraphSeparator),QString('\n')));
+             //writeCharacters(QString('\n'));
 
              for(int i = 0; i<elements; ++i)
                  writeEndElement();
          }
+                  QTextCursor cursor(it.currentBlock());
+                  cursor.movePosition(QTextCursor::EndOfBlock);
+                  cursor.movePosition(QTextCursor::NextBlock,QTextCursor::KeepAnchor);
+                  writeCharacters(cursor.selectedText().replace(QChar(QChar::ParagraphSeparator),QString('\n')));
+
      }
      writeEndElement(); // "note-content"
      writeEndElement(); // "text"

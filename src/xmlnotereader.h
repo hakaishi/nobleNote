@@ -6,6 +6,7 @@
 #include <QUuid>
 #include <QDateTime>
 #include <QFile>
+#include "abstractnotereader.h"
 
 /**
   * a class reading formatted text in xml files
@@ -18,7 +19,7 @@
   *
   */
 
-class XmlNoteReader : protected QXmlStreamReader
+class XmlNoteReader : public AbstractNoteReader, protected QXmlStreamReader
 {
 public:
     XmlNoteReader();
@@ -35,7 +36,7 @@ public:
 
     void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
 
-    inline QUuid uuid() const; // get the uuid that has been extracted during read()
+    QUuid uuid() const                         { return uuid_;}       // get the uuid that has been extracted during read()
 
     const QString& noteTitle() const            { return title_;}
 
@@ -45,7 +46,7 @@ public:
     // get last metadata change date
     const QDateTime& lastMetadataChange() const { return lastMetadataChange_;}
 
-    // get create date, if not set
+    // get create date
     const QDateTime& createDate() const         { return createDate_;}
 
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
@@ -67,11 +68,5 @@ private:
 
     QFile file;
 };
-
-
-QUuid XmlNoteReader::uuid() const
-{
-    return uuid_;
-}
 
 #endif // XMLNOTEREADER_H

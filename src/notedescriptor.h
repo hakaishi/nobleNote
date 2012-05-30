@@ -29,10 +29,14 @@ private slots:
     void setStateChangeEnabled();
 
 private:
+    void save(); // save modified document to file
+    void load(); // load a note file into the document
 
     QString filePath_;
     TextDocument * document_;
     QDateTime lastChange_;
+    QDateTime createDate_;
+    QDateTime lastMetadataChange_;
     QUuid uuid_;
 
     bool stateChangeEnabled;
