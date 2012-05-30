@@ -58,6 +58,7 @@ void XmlNoteWriter::write()
      // tomboy compatibility
     writeAttribute("version","0.1");
 
+
      for(QTextFrame::Iterator it = frame_->begin(); it != frame_->end(); ++it)
      {
 //         QTextCursor cursor(it.currentBlock());
@@ -86,6 +87,7 @@ void XmlNoteWriter::write()
              for(int i = 0; i<elements; ++i)
                  writeEndElement();
          }
+
                   QTextCursor cursor(it.currentBlock());
                   cursor.movePosition(QTextCursor::EndOfBlock);
                   cursor.movePosition(QTextCursor::NextBlock,QTextCursor::KeepAnchor);

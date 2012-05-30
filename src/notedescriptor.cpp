@@ -77,13 +77,14 @@ void NoteDescriptor::setStateChangeEnabled()
 
 void NoteDescriptor::save()
 {
-    XmlNoteWriter writer(filePath_);
-    writer.setFrame(document_->rootFrame());
-    writer.setUuid(uuid_);
-    writer.setLastChange(QDateTime::currentDateTime());
-    writer.setLastMetadataChange(lastMetadataChange_);
-    writer.setCreateDate(createDate_);
-    writer.write();
+    // HtmlNoteWriter writer(filePath_);
+//    XmlNoteWriter writer(filePath_);
+//    writer.setFrame(document_->rootFrame());
+//    writer.setUuid(uuid_);
+//    writer.setLastChange(QDateTime::currentDateTime());
+//    writer.setLastMetadataChange(lastMetadataChange_);
+//    writer.setCreateDate(createDate_);
+//    writer.write();
 }
 
 void NoteDescriptor::load()

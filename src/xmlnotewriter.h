@@ -18,6 +18,11 @@
   * the device must be closed and opened separately
   * The same QString* in QXmlStreamWriter cannot be reused in QXmlStreamReader.
   *
+  *
+  * this class should not be used at the moment because the xml output is missing new line special chars
+  * this is due to implementation problems of the detection of QChar::ParagraphSeparator between the QTextFragments and
+  * QTextBlocks while iterating over a QTextFragment. See write() for details
+  *
   */
 
 class XmlNoteWriter : protected QXmlStreamWriter

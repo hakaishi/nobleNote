@@ -6,11 +6,17 @@
 #include <QDateTime>
 #include <QUuid>
 #include <QFile>
+#include <QTextDocument>
 
 class HtmlNoteReader : public AbstractNoteReader
 {
 public:
     HtmlNoteReader();
+     HtmlNoteReader(const QString &filePath);
+
+
+    void setDocument(QTextDocument * document)       {   document_ = document;}
+    QTextDocument * document() const              { return document_;}
 
     void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
 
@@ -38,7 +44,7 @@ private:
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
-    QTextFrame * frame_;
+    QTextDocument * document_;
     QUuid uuid_;
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
