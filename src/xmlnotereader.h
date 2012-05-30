@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QFile>
 #include "abstractnotereader.h"
+#include <QTextDocument>
 
 /**
   * a class reading formatted text in xml files
@@ -23,18 +24,16 @@ class XmlNoteReader : public AbstractNoteReader, protected QXmlStreamReader
 {
 public:
     XmlNoteReader();
-    XmlNoteReader(const QString &filePath);
+    XmlNoteReader(const QString &filePath, QTextDocument* doc = 0);
 
     // Warning: The application will crash if device* points to a local stack object
     // that gets destroyed before read() is called
     void setDevice(QIODevice * device)     { QXmlStreamReader::setDevice(device);}
     QIODevice * device() const             { return QXmlStreamReader::device();}
 
-    // obtain this via     QTextFrame* frame = textEdit->document()->rootFrame();
-    void setFrame(QTextFrame * frame)       {   frame_ = frame;}
-    QTextFrame * frame() const              { return frame_;}
-
-    void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
+    // only the root frame is used via QTextFrame* frame = document_->rootFrame();
+    void setDocument(QTextDocument * document)       {   document_ = document;}
+    QTextDocument * document() const              { return document_;}
 
     QUuid uuid() const                         { return uuid_;}       // get the uuid that has been extracted during read()
 
@@ -57,16 +56,15 @@ public:
     static QString findUuid(const QUuid uuid, const QString & path);
 
 private:
+    void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
-    QTextFrame * frame_;
+    QTextDocument * document_;
     QUuid uuid_;
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
-
-    QFile file;
 };
 
 #endif // XMLNOTEREADER_H

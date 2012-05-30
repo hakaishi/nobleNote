@@ -12,13 +12,11 @@ class HtmlNoteReader : public AbstractNoteReader
 {
 public:
     HtmlNoteReader();
-     HtmlNoteReader(const QString &filePath);
+     HtmlNoteReader(const QString &filePath, QTextDocument* doc = 0);
 
 
     void setDocument(QTextDocument * document)       {   document_ = document;}
     QTextDocument * document() const              { return document_;}
-
-    void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
 
     QUuid uuid() const                         { return uuid_;} // get the uuid that has been extracted during read()
 
@@ -41,6 +39,8 @@ public:
 //    static QString findUuid(const QUuid uuid, const QString & path);
 
 private:
+
+    void read(QIODevice *file); // read the content's of a QIODevice and write the formatted text into a QTextDocument
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
@@ -49,8 +49,6 @@ private:
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
-
-    QFile file;
 };
 
 #endif // HTMLNOTEREADER_H

@@ -15,8 +15,6 @@ class AbstractNoteReader
 public:
     AbstractNoteReader();
 
-    virtual void read() = 0; // read the content's of a QIODevice and write the formatted text into a QTextFrame
-
     virtual QUuid uuid() const = 0; // get the uuid that has been extracted during read()
 
     virtual const QString& noteTitle() const     = 0;

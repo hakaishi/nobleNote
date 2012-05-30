@@ -5,19 +5,21 @@
 
 XmlNoteReader::XmlNoteReader()
 {
-    frame_ = NULL;
+    document_ = NULL;
 }
 
-XmlNoteReader::XmlNoteReader(const QString& filePath) : file(filePath)
+XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
 {
-    frame_ = NULL;
-
+    document_ = doc;
+    QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly))
     {
         qDebug("XmlNoteReader::XmlNoteReader failed : could not open filepath");
            return;
     }
     QXmlStreamReader::setDevice(&file);
+    read();
+    file.close(); // local object gets destroyed
 }
 
 void XmlNoteReader::read()
@@ -35,7 +37,7 @@ void XmlNoteReader::read()
 
         if(name() == "note-content")
         {
-            if(!frame_) // if no frame_ set where note content can be written into
+            if(!document_) // if no document_ set where note content can be written into
                 skipCurrentElement();
             else
                 readContent();
@@ -72,7 +74,7 @@ void XmlNoteReader::read()
 
 void XmlNoteReader::readContent()
 {
-    QTextCursor cursor(frame_);
+    QTextCursor cursor(document_->rootFrame());
     QTextCharFormat format;
     while (!atEnd())
     {
