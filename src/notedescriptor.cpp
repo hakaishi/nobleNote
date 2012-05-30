@@ -39,6 +39,7 @@ void NoteDescriptor::stateChange()
                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
         {
             save(filePath_,QUuid::createUuid()); // save under old path with new uuid
+            Activity = Idle;
         }
         else
         {
