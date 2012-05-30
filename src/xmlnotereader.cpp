@@ -3,11 +3,6 @@
 #include <QDirIterator>
 
 
-XmlNoteReader::XmlNoteReader()
-{
-    document_ = NULL;
-}
-
 XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
 {
     document_ = doc;

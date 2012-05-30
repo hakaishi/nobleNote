@@ -23,7 +23,6 @@
 class XmlNoteReader : public AbstractNoteReader, protected QXmlStreamReader
 {
 public:
-    XmlNoteReader();
     XmlNoteReader(const QString &filePath, QTextDocument* doc = 0);
 
     // Warning: The application will crash if device* points to a local stack object

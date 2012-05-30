@@ -36,13 +36,9 @@ public:
     void setDevice(QIODevice * device)    { QXmlStreamWriter::setDevice(device);}
     QIODevice * device() const            { return QXmlStreamWriter::device();}
 
-
     // obtain this via     QTextFrame* frame = textEdit->document()->rootFrame();
     void setFrame(QTextFrame * frame)       {   frame_ = frame;}
     QTextFrame * frame() const              { return frame_;}
-
-    void setNoteTitle(const QString& title)     { title_ = title;}
-    const QString& noteTitle() const            { return title_;}
 
     // set last change date, if not set, the current date is used
     void setLastChange(const QDateTime& dt)     { lastChange_ = dt;}
@@ -65,7 +61,6 @@ public:
     // TODO clear statement?
 
 private:
-    QString title_;
     QTextFrame * frame_;
     QUuid uuid_;
     QDateTime lastChange_;

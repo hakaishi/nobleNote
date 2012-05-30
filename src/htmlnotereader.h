@@ -11,7 +11,6 @@
 class HtmlNoteReader : public AbstractNoteReader
 {
 public:
-    HtmlNoteReader();
      HtmlNoteReader(const QString &filePath, QTextDocument* doc = 0);
 
 

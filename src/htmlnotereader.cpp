@@ -3,10 +3,6 @@
 #include <QXmlStreamReader>
 #include <QFileInfo>
 
-HtmlNoteReader::HtmlNoteReader()
-{
-    document_ = NULL;
-}
 
 HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
 {

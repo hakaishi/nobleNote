@@ -7,32 +7,38 @@
 #include <QIODevice>
 #include <QFile>
 
+/**
+  * a class writing formatted text in html files
+  * the format is similar to the html format can be read by any web browser
+  *
+  *
+  */
+
 class HtmlNoteWriter
 {
 public:
-    HtmlNoteWriter();
     HtmlNoteWriter(const QString &filePath, QTextDocument* doc = 0);
 
-    void setNoteTitle(const QString& title)     { title_ = title;}
-    const QString& noteTitle() const            { return title_;}
+    void write(); // write the content's of document to the specified file
 
+    // uuid is written into the document as a meta element
+    void setUuid(QUuid uuid) { uuid_ = uuid;}
+    QUuid uuid() const {return uuid_;}
+
+    // does nothing at the moment
     // set last change date, if not set, the current date is used
     void setLastChange(const QDateTime& dt)     { lastChange_ = dt;}
     const QDateTime& lastChange() const         { return lastChange_;}
 
+    // does nothing at the moment
     // set last metadata change date, if not set, the current date is used
     void setLastMetadataChange(const QDateTime& dt)     { lastMetadataChange_ = dt;}
     const QDateTime& lastMetadataChange() const         { return lastMetadataChange_;}
 
+    // does nothing at the moment
     // set create date, if not set, the current date is used
     void setCreateDate(const QDateTime& dt)     { createDate_ = dt;}
     const QDateTime& createDate() const         { return createDate_;}
-
-    void write(); // write the content's of frame to the specified device/outputString
-
-    void setUuid(QUuid uuid) { uuid_ = uuid;}
-    QUuid uuid() const {return uuid_;}
-
 
     // TODO clear statement?
 

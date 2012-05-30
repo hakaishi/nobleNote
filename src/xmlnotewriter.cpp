@@ -8,13 +8,10 @@
 
 XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {
-    title_ = "untitled note";
 }
 
 XmlNoteWriter::XmlNoteWriter(const QString &filePath) : file(filePath)
 {
-    title_ = "untitled note";
-
     if(!file.open(QIODevice::WriteOnly))
     {
         qDebug("XmlNoteWriter::XmlNoteWriter failed : could not open filepath");
@@ -49,7 +46,7 @@ void XmlNoteWriter::write()
         uuidStr.chop(1);
         writeTextElement("id","urn:uuid:" + uuidStr);
     }
-    writeTextElement("title",title_);
+    writeTextElement("title",frame_->document()->metaInformation(QTextDocument::DocumentTitle));
 
     writeStartElement("text");
     writeAttribute("xml:space","preserve");

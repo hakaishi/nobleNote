@@ -2,9 +2,6 @@
 #include <QFile>
 #include <QTextStream>
 
-HtmlNoteWriter::HtmlNoteWriter()
-{
-}
 
 HtmlNoteWriter::HtmlNoteWriter(const QString &filePath, QTextDocument *doc) : file(filePath)
 {
