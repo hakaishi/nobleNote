@@ -20,7 +20,7 @@ public:
     // get the uuid that has been extracted during read()
     QUuid uuid() const                         { return uuid_;}
 
-    const QString& noteTitle() const            { return title_;}
+    const QString& title() const            { return title_;}
 
      // get last change date
     const QDateTime& lastChange() const         { return lastChange_;}

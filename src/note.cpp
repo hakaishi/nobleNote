@@ -51,19 +51,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(textEdit,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
-//     jTimer = new QTimer(this);
-//     jTimer->setInterval(1000);
-//     jTimer->setSingleShot(true);
 
-//     timer = new QTimer(this);
-
-
-//     connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
-//     connect(textEdit, SIGNAL(sendFocusIn()), this, SLOT(save_or_not()));
-//     connect(jTimer, SIGNAL(timeout()), this, SLOT(save_or_not()));
-//     connect(timer, SIGNAL(timeout()), this, SLOT(save_or_not()));
-//     connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
-//       this, SLOT(resetAll()));
      connect(searchB->searchLine, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
      connect(searchB->findNext, SIGNAL(clicked(bool)), SLOT(selectNextExpression()));
      connect(searchB->findPrevious, SIGNAL(clicked(bool)), SLOT(selectPreviousExpression()));
@@ -87,6 +75,26 @@ void Note::closeEvent(QCloseEvent* close_Note){
 
      QMainWindow::closeEvent(close_Note);
 }
+
+
+
+
+
+// old ctor code
+//     jTimer = new QTimer(this);
+//     jTimer->setInterval(1000);
+//     jTimer->setSingleShot(true);
+
+//     timer = new QTimer(this);
+
+
+//     connect(textEdit, SIGNAL(textChanged()), jTimer, SLOT(start()));
+//     connect(textEdit, SIGNAL(sendFocusIn()), this, SLOT(save_or_not()));
+//     connect(jTimer, SIGNAL(timeout()), this, SLOT(save_or_not()));
+//     connect(timer, SIGNAL(timeout()), this, SLOT(save_or_not()));
+//     connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
+//       this, SLOT(resetAll()));
+// end old ctor code
 
 //void Note::load(){
 //     QFile note(notePath);

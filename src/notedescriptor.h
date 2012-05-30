@@ -49,6 +49,7 @@ private:
     QDateTime createDate_;
     QDateTime lastMetadataChange_;
     QUuid uuid_;
+    QString title_;
 };
 
 #endif // NOTEDESCRIPTOR_H

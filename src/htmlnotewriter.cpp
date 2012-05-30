@@ -5,23 +5,19 @@
 #include "datetime.h"
 
 
-HtmlNoteWriter::HtmlNoteWriter(const QString &filePath, QTextDocument *doc) : file(filePath)
+HtmlNoteWriter::HtmlNoteWriter(const QString &filePath, QTextDocument *doc)
 {
    document_ = doc;
-   if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-   {
-       qDebug("HtmlNoteWriter::HtmlNoteReader failed : could not open filepath");
-          return;
-   }
+   filePath_ = filePath;
 }
 
 void HtmlNoteWriter::write()
 {
-    if(!file.isOpen())
-    {
-        qDebug("HtmlNoteWriter::write failed : file not open");
+
+    if(!document_)
         return;
-    }
+
+    document_->setMetaInformation(QTextDocument::DocumentTitle,title_);
 
     QString content = document_->toHtml();
 
@@ -40,6 +36,14 @@ void HtmlNoteWriter::write()
     content.insert(headIdx + qstrlen("<head>"), metaLastChange);
     content.insert(headIdx + qstrlen("<head>"), metaUuid);
 
+    QFile file(filePath_);
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        qDebug("HtmlNoteWriter::write failed : could not open filepath");
+           return;
+    }
+
     QTextStream out(&file);
     out << content;
+    file.close();
 }

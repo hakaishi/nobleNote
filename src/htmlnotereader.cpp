@@ -18,20 +18,19 @@ void HtmlNoteReader::read(const QString& filePath)
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug("HtmlNoteReader::HtmlNoteReader failed : could not open filepath");
+        qDebug("HtmlNoteReader::read failed : could not open filepath");
            return;
     }
+
+
     QString content;
 
     QTextStream in(&file);
     content = in.readAll();
+    file.close();
+
     if(content.isEmpty())
         return;
-
-    if(document_)
-    {
-        document_->setHtml(content);
-    }
 
     uuid_ = uuidFromHtml(content);
     lastChange_ = QDateTime::fromString(metaContent(content,"last-change-date"),Qt::ISODate);
@@ -46,7 +45,13 @@ void HtmlNoteReader::read(const QString& filePath)
      if(createDate_.isNull())
         createDate_ = info.created();
 
-    file.close(); // local object gets destroyed
+     if(document_)
+     {
+         document_->setHtml(content);
+         title_ = document_->metaInformation(QTextDocument::DocumentTitle);
+         if(title_.isEmpty())
+             title_ = info.baseName();  // fallback title
+     }
 }
 
 /*QUuid*/ QUuid HtmlNoteReader::uuid(QString filePath)

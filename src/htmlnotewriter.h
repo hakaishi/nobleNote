@@ -21,6 +21,10 @@ public:
 
     void write(); // write the content's of document to the specified file
 
+    // set the note title
+    void setTitle( const QString& title){ title_ = title; }
+    const QString& title() const { return title_; }
+
     // uuid is written into the document as a meta element
     void setUuid(QUuid uuid) { uuid_ = uuid;}
     QUuid uuid() const {return uuid_;}
@@ -50,7 +54,7 @@ private:
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
 
-    QFile file;
+    QString filePath_;
 };
 
 #endif // HTMLNOTEWRITER_H

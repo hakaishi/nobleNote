@@ -17,7 +17,7 @@ public:
 
     virtual QUuid uuid() const = 0; // get the uuid that has been extracted during read()
 
-    virtual const QString& noteTitle() const     = 0;
+    virtual const QString& title() const     = 0;
 
      // get last change date
     virtual const QDateTime& lastChange() const          = 0;
