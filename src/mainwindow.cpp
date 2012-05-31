@@ -11,17 +11,15 @@
 #include <QInputDialog>
 #include <QMouseEvent>
 #include <QDesktopServices>
-#include <QtConcurrentRun>
 #include <QSettings>
 #include <QMessageBox>
 #include <QDebug>
-#include <QProgressDialog>
 #include <QFileIconProvider>
 #include <QList>
-#include "highlighter.h"
 #include <QFileDialog>
-#include "htmlnotewriter.h"
+#include "highlighter.h"
 #include "notedescriptor.h"
+#include "htmlnotewriter.h"
 
 NobleNote::NobleNote()
 {
@@ -162,6 +160,7 @@ NobleNote::NobleNote()
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
        SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
 
+     connect(folderList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(action_Import,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     #ifndef NO_SYSTEM_TRAY_ICON
@@ -234,6 +233,12 @@ void NobleNote::selectFirstFolder(QString path)
      folderList->selectionModel()->select(idx,QItemSelectionModel::Select);
 
      thisMethodHasBeenCalled = true;
+}
+
+void NobleNote::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
+{
+    if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
+        setCurrentFolder(folderList->currentIndex());
 }
 
 void NobleNote::setCurrentFolder(const QModelIndex &ind){

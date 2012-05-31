@@ -87,6 +87,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void removeNote();
       void importXmlNotes();
       void selectFirstFolder(QString path); // select first folder
+      void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint );
 
 
      protected:
