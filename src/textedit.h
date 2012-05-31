@@ -18,6 +18,9 @@ class TextEdit : public QTextEdit{
       void signalFocusInEvent();
       void signalFocusOutEvent();
 
+public slots:
+      void slotSetReadOnly(bool ro); // wrapper slot
+
      protected:
       virtual void focusInEvent(QFocusEvent *fe);
       virtual void focusOutEvent(QFocusEvent *e);

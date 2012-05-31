@@ -57,6 +57,9 @@ public:
     // returns the first file that contains the given uuid or an empty string if the uuid could not be found or if the given uuid is null
     static QString findUuid(const QUuid uuid, const QString & path);
 
+    // heuristic that checks for <note ... > xml element
+    static bool mightBeXmlNote(const QString & filePath);
+
 private:
     void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
     static QUuid parseUuid(QString idStr);

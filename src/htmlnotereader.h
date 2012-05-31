@@ -8,6 +8,12 @@
 #include <QFile>
 #include <QTextDocument>
 
+/**
+  * a class reading formatted html text and plain text
+  * reading requires a QTextFrame
+  *
+  */
+
 class HtmlNoteReader : public AbstractNoteReader
 {
 public:

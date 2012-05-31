@@ -10,7 +10,7 @@
 
 /**
   * a class writing formatted text in html files
-  * the format is similar to the html format can be read by any web browser
+  * the resulting files can be read by any web browser
   *
   *
   */

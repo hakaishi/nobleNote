@@ -205,3 +205,27 @@ void XmlNoteReader::readContent()
     }
     return QString();
 }
+
+/*static*/ bool XmlNoteReader::mightBeXmlNote(const QString &filePath)
+{
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        return false;
+    }
+    QXmlStreamReader reader(&file);
+    while(!reader.atEnd())
+    {
+        reader.readNext();
+        if(reader.isStartElement())
+        {
+            if(reader.name() == "note")
+                return true;
+            else if(reader.name() == "html" || reader.name() == "head") // detect html
+                return false;
+        }
+        if(reader.hasError()) // this should detect plain text
+            return false;
+    }
+    return false;
+}

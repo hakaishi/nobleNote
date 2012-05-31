@@ -19,6 +19,8 @@ class NoteDescriptor : public QObject
     Q_OBJECT
 public:
     explicit NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget = 0);
+    bool readOnly() const { return readOnly_; }
+
     
 signals:
     void close(); // emitted if the user wants to close the note via a message box
@@ -42,14 +44,16 @@ private:
     void save(const QString &filePath, QUuid uuid); // save modified document to file
     void load(const QString& filePath); // load a note file into the document
 
+
     QWidget * noteWidget_;
     QString filePath_;
     TextDocument * document_;
     QDateTime lastChange_;
     QDateTime createDate_;
-    QDateTime lastMetadataChange_;
+    //QDateTime lastMetadataChange_;
     QUuid uuid_;
     QString title_;
+    bool readOnly_;
 };
 
 #endif // NOTEDESCRIPTOR_H

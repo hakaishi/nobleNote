@@ -28,6 +28,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textEdit->ensureCursorVisible();
 
      noteDescriptor_ = new NoteDescriptor(filePath,textDocument,this); // must be constructed after TextDocument
+     textEdit->setReadOnly(noteDescriptor_->readOnly());
 
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
      textEdit->setFocus();

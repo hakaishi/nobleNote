@@ -13,3 +13,9 @@ void TextEdit::focusOutEvent(QFocusEvent *e)
     emit signalFocusOutEvent();
     QTextEdit::focusOutEvent(e);
 }
+
+
+void TextEdit::slotSetReadOnly(bool ro)
+{
+    this->setReadOnly(ro);
+}

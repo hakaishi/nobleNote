@@ -3,6 +3,7 @@
 #include <QXmlStreamReader>
 #include <QFileInfo>
 #include <QDirIterator>
+#include <QTextDocument>
 
 
 HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
@@ -29,6 +30,9 @@ void HtmlNoteReader::read(const QString& filePath)
     content = in.readAll();
     file.close();
 
+    if(!Qt::mightBeRichText(content))
+        content = Qt::convertFromPlainText(content);
+
     if(content.isEmpty())
         return;
 
@@ -37,13 +41,13 @@ void HtmlNoteReader::read(const QString& filePath)
     createDate_ = QDateTime::fromString(metaContent(content,"create-date"),Qt::ISODate);
     //lastMetadataChange_ = info.lastModified(); // not implemented
 
-    // fallback dates
-    QFileInfo info(filePath);
-    if(lastChange_.isNull())
-        lastChange_ = info.lastModified();
+        QFileInfo info(filePath);
+//    // fallback dates
+//    if(lastChange_.isNull())
+//        lastChange_ = info.lastModified();
 
-     if(createDate_.isNull())
-        createDate_ = info.created();
+//     if(createDate_.isNull())
+//        createDate_ = info.created();
 
      if(document_)
      {
@@ -110,8 +114,10 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
         {
             int idx = metaLine.lastIndexOf('\"');
             int beforeIdx = metaLine.lastIndexOf('\"',idx-1);
-            QStringRef between = metaLine.toString().midRef(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
-            return between.toString();
+            if(idx != -1 || beforeIdx != -1)
+            {
+                return metaLine.toString().mid(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
+            }
         }
     }
     return QString();

@@ -11,8 +11,9 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
      pathLabel->setText(settings->value("rootPath").toString());
      rootPath = settings->value("rootPath").toString();
 
-     dontQuit->setChecked(QSettings().value("Dont_quit_on_close",false).toBool());
-     pSpin->setValue(QSettings().value("Save_notes_periodically",1).toInt());
+     dontQuit->setChecked(settings->value("Dont_quit_on_close",false).toBool());
+     convertNotes->setChecked(settings->value("convert_notes",true).toBool());
+     pSpin->setValue(settings->value("Save_notes_periodically",1).toInt());
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
 }
@@ -33,6 +34,7 @@ void Preferences::saveSettings(){
      settings->setValue("rootPath",rootPath);
      settings->setValue("Save_notes_periodically",pSpin->value());
      settings->setValue("Dont_quit_on_close", dontQuit->isChecked());
+     settings->setValue("convert_notes", convertNotes->isChecked());
 
      sendPathChanged();
      accept();
