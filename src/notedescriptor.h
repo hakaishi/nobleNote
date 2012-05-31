@@ -19,7 +19,9 @@ class NoteDescriptor : public QObject
     Q_OBJECT
 public:
     explicit NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget = 0);
+    const QString& filePath() const { return filePath_; } // return the current filePath
     bool readOnly() const { return readOnly_; }
+
 
     
 signals:

@@ -18,7 +18,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setAttribute(Qt::WA_DeleteOnClose);
 
-     notePath = filePath;
+     //notePath = filePath;
 
      searchbarVisible = false; //initializing
 

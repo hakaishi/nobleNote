@@ -23,7 +23,8 @@ class Note : public QMainWindow, public Ui::Note {
      public:
       Note(QString filePath, QWidget *parent = 0);
       ~Note();
-      QString text, journalsPath, notePath;
+      NoteDescriptor* noteDescriptor() const { return noteDescriptor_; }
+      //QString text, journalsPath, notePath;
       bool    searchbarVisible;
 
      private:

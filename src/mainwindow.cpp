@@ -21,6 +21,7 @@
 #include "highlighter.h"
 #include <QFileDialog>
 #include "htmlnotewriter.h"
+#include "notedescriptor.h"
 
 NobleNote::NobleNote()
 {
@@ -308,7 +309,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
              continue;
          }
          // check if the notePath is already used in a open note
-         if((*it) && (*it)->objectName() == notePath)
+         if((*it) && (*it)->noteDescriptor()->filePath() == notePath)
          {
              // highlight the note window
              (*it)->activateWindow();
@@ -319,7 +320,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      Note* note=new Note(notePath);
      openNotes+= note;
      note->setObjectName(notePath);
-     note->journalsPath = journalFilesPath;
+     //note->journalsPath = journalFilesPath;
 //     if(pref->pSpin->value() > 0)
 //       note->timer->start(pref->pSpin->value() * 60000);
      if(noteModel->sourceModel() == findNoteModel){
