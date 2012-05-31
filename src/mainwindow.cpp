@@ -19,6 +19,8 @@
 #include <QFileIconProvider>
 #include <QList>
 #include "highlighter.h"
+#include <QFileDialog>
+#include "htmlnotewriter.h"
 
 NobleNote::NobleNote()
 {
@@ -159,6 +161,7 @@ NobleNote::NobleNote()
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
        SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
 
+     connect(action_Import,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     #ifndef NO_SYSTEM_TRAY_ICON
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
@@ -432,6 +435,24 @@ void NobleNote::removeNote(){
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
      noteModel->remove(noteList->currentIndex());
+}
+
+void NobleNote::importXmlNotes()
+{
+    QStringList files = QFileDialog::getOpenFileNames(
+                            this,
+                            "Select one or more files to open",
+                            "/home",
+                "Notes (*.note)");
+    if(files.isEmpty())
+        return;
+
+    // TODO save last selected path
+
+    foreach(QString filePath, files)
+    {
+        HtmlNoteWriter::writeXml(filePath,QSettings().value("rootPath").toString());
+    }
 }
 
 void NobleNote::showContextMenuF(const QPoint &pos){

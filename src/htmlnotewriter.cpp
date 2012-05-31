@@ -54,7 +54,7 @@ void HtmlNoteWriter::write()
     file.close();
 }
 
-/*static*/ void HtmlNoteWriter::writeXml(const QString &xmlFilePath, const QString &outputPath, bool createFolder)
+/*static*/ void HtmlNoteWriter::writeXml(const QString &xmlFilePath, const QString &outputPath)
 {
     if(xmlFilePath.isEmpty() || outputPath.isEmpty())
         return;
@@ -72,13 +72,8 @@ void HtmlNoteWriter::write()
     QString title = reader.title().isEmpty() ? tr("untitled note") : reader.title();
 
     QString filePath;
-    QString path = outputPath;
-    if(createFolder)
-    {
-         path += "/" + folder;
-    }
-    QDir().mkpath( path);
-    filePath =  path + "/" + title;
+    QDir().mkpath(outputPath + "/" + folder);
+    filePath =  outputPath + "/"+ folder + "/" + title;
 
     int counter = 0;
     QString origPath = filePath;

@@ -62,7 +62,6 @@ void NoteDescriptor::stateChange()
             }
             return;
         }
-        qDebug() << newFilePath;
         filePath_ = newFilePath; // old filePath_ not longer needed
     }
 

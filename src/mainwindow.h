@@ -85,7 +85,9 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void renameNote();
       void removeFolder();
       void removeNote();
+      void importXmlNotes();
       void selectFirstFolder(QString path); // select first folder
+
 
      protected:
       void keyPressEvent(QKeyEvent *k);
