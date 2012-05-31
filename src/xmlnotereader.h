@@ -47,6 +47,9 @@ public:
     // get create date
     const QDateTime& createDate() const         { return createDate_;}
 
+    // return the notebook tag, e.g. system:notebook:MyNotebook
+    const QString& tag() const { return tag_; }
+
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     static QUuid uuid(QString filePath);
 
@@ -64,6 +67,7 @@ private:
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
+    QString tag_;
 };
 
 #endif // XMLNOTEREADER_H

@@ -6,6 +6,7 @@
 #include <QTextDocument>
 #include <QIODevice>
 #include <QFile>
+#include <QCoreApplication>
 
 /**
   * a class writing formatted text in html files
@@ -16,10 +17,14 @@
 
 class HtmlNoteWriter
 {
+    Q_DECLARE_TR_FUNCTIONS(HtmlNoteWriter)
 public:
-    HtmlNoteWriter(const QString &filePath, QTextDocument* doc = 0);
+    HtmlNoteWriter(const QString &filePath);
 
     void write(); // write the content's of document to the specified file
+
+    void setDocument(QTextDocument* document){ document_ = document; }
+    QTextDocument* document() const { return document_; }
 
     // set the note title
     void setTitle( const QString& title){ title_ = title; }
@@ -43,6 +48,11 @@ public:
     // set create date, if not set, the current date is used
     void setCreateDate(const QDateTime& dt)     { createDate_ = dt;}
     const QDateTime& createDate() const         { return createDate_;}
+
+    // writes the given tomboy xml note as a html note. if creatFolder is true, the file will be created
+    // inside a folder. The name of the folder is determined by the <tag> element
+    // outputPath is a directory
+    static void writeXml(const QString &xmlFilePath, const QString & outputPath, bool createFolder = false);
 
     // TODO clear statement?
 

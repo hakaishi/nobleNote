@@ -3,11 +3,13 @@
 #include <QTextStream>
 #include <QDateTime>
 #include "datetime.h"
+#include "xmlnotereader.h"
+#include <QDir>
 
 
-HtmlNoteWriter::HtmlNoteWriter(const QString &filePath, QTextDocument *doc)
+HtmlNoteWriter::HtmlNoteWriter(const QString &filePath)
 {
-   document_ = doc;
+   document_ = 0;
    filePath_ = filePath;
 }
 
@@ -15,7 +17,11 @@ void HtmlNoteWriter::write()
 {
 
     if(!document_)
+    {
+        qDebug("HtmlNoteWriter::write failed : no QTextDocument set");
         return;
+    }
+
 
     document_->setMetaInformation(QTextDocument::DocumentTitle,title_);
 
@@ -46,4 +52,48 @@ void HtmlNoteWriter::write()
     QTextStream out(&file);
     out << content;
     file.close();
+}
+
+/*static*/ void HtmlNoteWriter::writeXml(const QString &xmlFilePath, const QString &outputPath, bool createFolder)
+{
+    if(xmlFilePath.isEmpty() || outputPath.isEmpty())
+        return;
+
+    QTextDocument document;
+    XmlNoteReader reader(xmlFilePath,&document);
+
+    QString folder;
+    QString tag = reader.tag();
+    if(!tag.isEmpty())
+        folder = tag.remove("system:notebook:");
+    else
+        folder = tr("default");
+
+    QString title = reader.title().isEmpty() ? tr("untitled note") : reader.title();
+
+    QString filePath;
+    QString path = outputPath;
+    if(createFolder)
+    {
+         path += "/" + folder;
+    }
+    QDir().mkpath( path);
+    filePath =  path + "/" + title;
+
+    int counter = 0;
+    QString origPath = filePath;
+    while(QFile::exists(filePath))
+    {
+        ++counter;
+        filePath = origPath +  QString(" (%1)").arg(counter);
+    }
+
+    HtmlNoteWriter writer(filePath);
+    writer.setDocument(&document);
+    writer.setTitle(title);
+    writer.setLastChange(reader.lastChange());
+    writer.setLastMetadataChange(reader.lastMetadataChange());
+    writer.setCreateDate(reader.createDate());
+    writer.setUuid(reader.uuid());
+    writer.write();
 }

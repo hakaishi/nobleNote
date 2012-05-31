@@ -5,6 +5,7 @@
 #include "htmlnotereader.h"
 #include "htmlnotewriter.h"
 #include <QMessageBox>
+#include <QFileInfo>
 
 NoteDescriptor::NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget)
@@ -52,12 +53,22 @@ void NoteDescriptor::stateChange()
     laterLastChange = reader.lastChange();
     if(lastChange_ < laterLastChange) // modified elsewhere
     {
-        if(document_->isModified() && QMessageBox::warning(noteWidget_,tr("Note does not longer exist"),
+        if(document_->isModified() && QMessageBox::warning(noteWidget_,tr("Note modified"),
                                                            tr("The note has been modified by another program. Should the note be saved under a different name?"
-                                                              "Else the note will be reloaded."),
+                                                              " Else the note will be reloaded."),
                                                            QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
         {
-            save(filePath_ + QUuid::createUuid().toString().mid(1,4),QUuid::createUuid()); // save under random name with new uuid
+            int counter = 0;
+            QString origPath = filePath_;
+            while(QFile::exists(filePath_))
+            {
+                ++counter;
+                filePath_ = origPath +  QString(" (%1)").arg(counter);
+            }
+            uuid_ = QUuid::createUuid();
+            title_ = QFileInfo(filePath_).baseName();
+            createDate_ = QDateTime::currentDateTime();
+            save(filePath_,uuid_); // save under new name with new uuid
             Activity = Idle;
         }
         else // not modified, silently reload
@@ -86,7 +97,8 @@ void NoteDescriptor::setActivityIdle()
 
 void NoteDescriptor::save(const QString& filePath,QUuid uuid)
 {
-     HtmlNoteWriter writer(filePath,document_);
+     HtmlNoteWriter writer(filePath);
+     writer.setDocument(document_);
      writer.setUuid(uuid);
      lastChange_ = QDateTime::currentDateTime();
      writer.setLastChange(lastChange_);
@@ -94,6 +106,9 @@ void NoteDescriptor::save(const QString& filePath,QUuid uuid)
      writer.setCreateDate(createDate_);
      writer.setTitle(title_);
      writer.write();
+
+     if(noteWidget_)
+         noteWidget_->setWindowTitle(title_);
 }
 
 void NoteDescriptor::load(const QString& filePath)
@@ -103,7 +118,8 @@ void NoteDescriptor::load(const QString& filePath)
     HtmlNoteReader reader(filePath,document_);
 
     uuid_ = reader.uuid().isNull() ? QUuid::createUuid() : reader.uuid();
-    title_ = reader.title();
+   // title_ = reader.title();
+    title_ = QFileInfo(filePath).baseName();
 
     if(noteWidget_)
         noteWidget_->setWindowTitle(title_);

@@ -14,6 +14,10 @@ XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
     }
     QXmlStreamReader::setDevice(&file);
     read();
+    // if uuid wasn't inside the xml text try to get it out of the filename
+    if(uuid_.isNull())
+        uuid_ = QUuid(QFileInfo(filePath).baseName());
+
     file.close(); // local object gets destroyed
 }
 
@@ -57,6 +61,10 @@ void XmlNoteReader::read()
         else if(name() == "create-date")
         {
             createDate_ = QDateTime::fromString(readElementText(),Qt::ISODate);
+        }
+        else if(name() == "tag")
+        {
+            tag_ = readElementText();
         }
 
         if (QXmlStreamReader::hasError())
