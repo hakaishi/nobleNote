@@ -161,6 +161,8 @@ NobleNote::NobleNote()
        SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
 
      connect(folderList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
+     //connect(noteList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(noteRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
+     connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
      connect(action_Import,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
      connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     #ifndef NO_SYSTEM_TRAY_ICON
@@ -241,6 +243,15 @@ void NobleNote::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::End
         setCurrentFolder(folderList->currentIndex());
 }
 
+void NobleNote::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
+{
+
+    QString filePath = noteModel->filePath(noteList->currentIndex());
+    Note * w = noteWindow(path + "/" + oldName);
+    if(w)
+        w->setWindowTitle(QFileInfo(path + "/" + newName).baseName());
+}
+
 void NobleNote::setCurrentFolder(const QModelIndex &ind){
      noteModel->setSourceModel(noteFSModel);
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
@@ -305,21 +316,12 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      QString journalFilesPath = QSettings().value("journalFolderPath").toString() + "/" +
        dirTrunc + "_" + noteModel->fileName(ind) + ".journal";
 
-     for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
+      // check if the notePath is already used in a open note
+     Note* w = noteWindow(notePath);
+     if(w)
      {
-         // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
-         if(!(*it))
-         {
-             it = openNotes.erase(it); // skip iterator position
-             continue;
-         }
-         // check if the notePath is already used in a open note
-         if((*it) && (*it)->noteDescriptor()->filePath() == notePath)
-         {
-             // highlight the note window
-             (*it)->activateWindow();
-             return;
-         }
+         w->activateWindow();  // highlight the note window
+         return;
      }
 
      Note* note=new Note(notePath);
@@ -333,6 +335,25 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
        note->searchbarVisible = true;
      }
      note->show();
+}
+
+Note *NobleNote::noteWindow(const QString &filePath)
+{
+    for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
+    {
+        // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
+        if(!(*it))
+        {
+            it = openNotes.erase(it); // skip iterator position
+            continue;
+        }
+
+        if((*it) && (*it)->noteDescriptor()->filePath() == filePath)
+        {
+            return (*it);
+        }
+    }
+    return 0;
 }
 
 void NobleNote::newFolder(){

@@ -65,6 +65,8 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QSystemTrayIcon *TIcon;
 #endif
 
+      Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
+
      private slots:
       //void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
@@ -87,7 +89,8 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       void removeNote();
       void importXmlNotes();
       void selectFirstFolder(QString path); // select first folder
-      void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint );
+      void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder
+      void noteRenameFinished(const QString &path, const QString &oldName, const QString &newName); // updates window title
 
 
      protected:
