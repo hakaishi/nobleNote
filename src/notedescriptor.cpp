@@ -75,6 +75,8 @@ void NoteDescriptor::stateChange()
         Activity = Idle;
         return;
     }
+
+    Activity = Idle;
 }
 
 void NoteDescriptor::setActivityIdle()
