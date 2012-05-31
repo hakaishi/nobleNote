@@ -21,8 +21,6 @@ public:
     explicit NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget = 0);
     const QString& filePath() const { return filePath_; } // return the current filePath
     bool readOnly() const { return readOnly_; }
-
-
     
 signals:
     void close(); // emitted if the user wants to close the note via a message box
@@ -31,17 +29,9 @@ public slots:
     void stateChange();
 
 private slots:
-    void setActivityIdle();
+    void unlockStateChange();
 
 private:
-
-    enum
-    {
-        Idle,
-        CheckFilePath,
-        CheckLastChange,
-        ProcessEvents
-    } Activity;
 
     void save(const QString &filePath, QUuid uuid); // save modified document to file
     void load(const QString& filePath); // load a note file into the document
@@ -56,6 +46,20 @@ private:
     QUuid uuid_;
     QString title_;
     bool readOnly_;
+
+    // thread locking mechanism for stateChange(), because if a MessageBox opens inside stateChange()
+    // stateChange() can still be called from events from the GUI-Thread
+    struct Lock
+    {
+        Lock(){count++;}
+        ~Lock(){count = count > 0 ? count-1 : count;}
+        static bool isLocked();
+        static int count;
+    };
+
+    Lock * initialLock;
 };
+
+
 
 #endif // NOTEDESCRIPTOR_H

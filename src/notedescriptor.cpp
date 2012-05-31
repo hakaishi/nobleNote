@@ -13,7 +13,7 @@
 NoteDescriptor::NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
 {
-    Activity = ProcessEvents; // this will block focusInEvent from the textEdit if this object is constructed
+    initialLock = new Lock; // this will block focusInEvent from the textEdit from signalling stateChange() if this object is constructed
 
     noteWidget_ = noteWidget;
     document_ = document;
@@ -21,15 +21,15 @@ NoteDescriptor::NoteDescriptor(QString filePath, TextDocument *document, QWidget
     load(filePath_);
     connect(document_,SIGNAL(delayedModificationChanged()),this,SLOT(stateChange()));
 
-    QTimer::singleShot(0,this,SLOT(setActivityIdle())); // enable stateChange() after all events have been processed
+    QTimer::singleShot(0,this,SLOT(unlockStateChange())); // enable stateChange() after all events have been processed
 }
 
 void NoteDescriptor::stateChange()
 {
-    if(Activity !=Idle || readOnly_)
+    if(Lock::isLocked()|| readOnly_)
         return;
 
-    Activity = CheckFilePath;
+    Lock lock;
 
     // get file Path
     // uuid_ != reader.uuid() checks if the file has been replaces by another file of the same name
@@ -54,7 +54,6 @@ void NoteDescriptor::stateChange()
                     filePath_ = origPath +  QString(" (%1)").arg(counter);
                 }
                 save(filePath_,uuid_); // save under old path with new uuid
-                Activity = Idle;
             }
             else
             {
@@ -67,8 +66,6 @@ void NoteDescriptor::stateChange()
 
      HtmlNoteReader reader(filePath_);
 
-
-    Activity = CheckLastChange;
     if(lastChange_ < reader.lastChange() && !reader.lastChange().isNull()) // modified elsewhere, lastChange can be null for html files not created with this software
     {
         if(document_->isModified() && QMessageBox::warning(noteWidget_,tr("Note modified"),
@@ -89,30 +86,25 @@ void NoteDescriptor::stateChange()
                 filePath_ = origPath +  QString(" (%1)").arg(counter);
             }
             save(filePath_,uuid_); // save under new name with new uuid
-            Activity = Idle;
         }
         else // not modified, silently reload
         {
             load(filePath_);
-            Activity = Idle;
         }
         return;
-    }
+     }
 
     if(document_->isModified())
     {
         save(filePath_,uuid_);
         document_->setModified(false);
-        Activity = Idle;
         return;
     }
-
-    Activity = Idle;
 }
 
-void NoteDescriptor::setActivityIdle()
+void NoteDescriptor::unlockStateChange()
 {
-    Activity = Idle;
+    delete initialLock;
 }
 
 void NoteDescriptor::save(const QString& filePath,QUuid uuid)
@@ -179,3 +171,11 @@ void NoteDescriptor::load(const QString& filePath)
     document_->setModified(false); // avoid emit of delayedModificationChanged()
     delete reader;
 }
+
+
+bool NoteDescriptor::Lock::isLocked()
+{
+    return count >0;
+}
+
+int NoteDescriptor::Lock::count = 0;
