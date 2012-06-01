@@ -64,6 +64,8 @@ void HtmlNoteWriter::write()
 
     QString folder;
     QString tag = reader.tag();
+
+    QRegExp illegal("[" +QRegExp::escape("\\^/?<>:*|\"")+ "]|^(com\\d|lpt\\d|con|nul|prn)$");
     if(!tag.isEmpty())
     {
         //  takes 2nd colon, remove before
@@ -71,13 +73,18 @@ void HtmlNoteWriter::write()
         //folder = tag.right(tag.length()-colonIdx);
         tag.remove("system:notebook:");
         tag.remove("system:template");
-        tag.remove(QRegExp("[" +QRegExp::escape("\\^/?<>:*|\"")+ "]"));//remove illegal chars in filenames
+        tag.remove(illegal);//remove illegal chars in filenames
+        if(tag[0] == '.') // would be invisible if allowed
+            tag.remove(0,1);
         folder = tag;
     }
     else
         folder = tr("default");
 
-    QString title = reader.title().isEmpty() ? tr("untitled note") : reader.title();
+    QString title = reader.title();
+    title.remove(illegal);
+    if(title.isEmpty())
+        title = tr("untitled note");
 
     QString filePath;
     QDir().mkpath(outputPath + "/" + folder);
