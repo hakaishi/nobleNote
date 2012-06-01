@@ -45,7 +45,7 @@ void HtmlNoteWriter::write()
     QFile file(filePath_);
     if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        qDebug("HtmlNoteWriter::write failed : could not open filepath");
+        qDebug(qPrintable(QString("HtmlNoteWriter::write failed : could not open ") + filePath_));
            return;
     }
 
@@ -54,7 +54,7 @@ void HtmlNoteWriter::write()
     file.close();
 }
 
-/*static*/ void HtmlNoteWriter::writeXml(const QString &xmlFilePath, const QString &outputPath)
+/*static*/ void HtmlNoteWriter::writeXml2Html(const QString &xmlFilePath, const QString &outputPath)
 {
     if(xmlFilePath.isEmpty() || outputPath.isEmpty())
         return;
@@ -65,7 +65,15 @@ void HtmlNoteWriter::write()
     QString folder;
     QString tag = reader.tag();
     if(!tag.isEmpty())
-        folder = tag.remove("system:notebook:");
+    {
+        //  takes 2nd colon, remove before
+        //int colonIdx = tag.indexOf(":",tag.indexOf(":")+1); // 2nd index of :, e.g. "system:notebook:tagname"
+        //folder = tag.right(tag.length()-colonIdx);
+        tag.remove("system:notebook:");
+        tag.remove("system:template");
+        tag.remove(QRegExp("[" +QRegExp::escape("\\^/?<>:*|\"")+ "]"));//remove illegal chars in filenames
+        folder = tag;
+    }
     else
         folder = tr("default");
 
@@ -75,6 +83,7 @@ void HtmlNoteWriter::write()
     QDir().mkpath(outputPath + "/" + folder);
     filePath =  outputPath + "/"+ folder + "/" + title;
 
+    // TODO move this in extra static method
     int counter = 0;
     QString origPath = filePath;
     while(QFile::exists(filePath))

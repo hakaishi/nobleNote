@@ -478,7 +478,7 @@ void NobleNote::importXmlNotes()
 
     foreach(QString filePath, files)
     {
-        HtmlNoteWriter::writeXml(filePath,QSettings().value("rootPath").toString());
+        HtmlNoteWriter::writeXml2Html(filePath,QSettings().value("rootPath").toString());
     }
 }
 

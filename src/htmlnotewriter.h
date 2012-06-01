@@ -52,7 +52,7 @@ public:
     // writes the given tomboy xml note as a html note. if creatFolder is true, the file will be created
     // inside a folder. The name of the folder is determined by the <tag> element
     // outputPath is a directory
-    static void writeXml(const QString &xmlFilePath, const QString & outputPath);
+    static void writeXml2Html(const QString &xmlFilePath, const QString & outputPath);
 
     // TODO clear statement?
 

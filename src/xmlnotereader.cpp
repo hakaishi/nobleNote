@@ -18,6 +18,17 @@ XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
     if(uuid_.isNull())
         uuid_ = QUuid(QFileInfo(filePath).baseName());
 
+    // remove the title inside the document and the empty 2nd line, because the title is already in the window title
+    QTextCursor cursor(document_); // point to start of the document
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString titleLine = cursor.selectedText();
+    if(titleLine.trimmed() == title_.trimmed())
+        cursor.deleteChar();
+    cursor.movePosition(QTextCursor::NextBlock,QTextCursor::KeepAnchor,2);
+    QString emptyLine = cursor.selectedText();
+    if(emptyLine.trimmed().isEmpty())
+        cursor.deleteChar();
+
     file.close(); // local object gets destroyed
 }
 
@@ -188,7 +199,8 @@ void XmlNoteReader::readContent()
             return QUuid();
         }
     }
-    return QUuid();
+    // if uuid wasn't inside the xml text try to get it out of the filename
+    return QUuid(QFileInfo(filePath).baseName());
 }
 
 /*static*/ QString XmlNoteReader::findUuid(const QUuid uuid, const QString &path)
