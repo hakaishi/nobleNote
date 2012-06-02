@@ -90,12 +90,12 @@ NobleNote::NobleNote()
      searchName->setPlaceholderText(tr("Search for note"));
      gridLayout->addWidget(searchName, 1, 0);
      searchName->setHidden(true);
-     connect(searchName, SIGNAL(returnPressed()), this, SLOT(find()));
+     connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      searchText = new LineEdit(this);
      searchText->setPlaceholderText(tr("Search for content"));
      gridLayout->addWidget(searchText, 2, 0);
      searchText->setHidden(true);
-     connect(searchText, SIGNAL(returnPressed()), this, SLOT(find()));
+     connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 3, 0);
@@ -205,11 +205,11 @@ void NobleNote::showHideAdvancedSearch(){
 }
 
 void NobleNote::find(){
-
+     searchTextStr = searchText->text(); //saving for opening note
      noteModel->setSourceModel(findNoteModel);
      noteModel->clear(); // if findNoteModel already set, clear old found list
-     QStringList foundFiles = noteModel->find(searchName->text(),searchText->text(), folderModel->rootPath());
-     foreach(QString file,foundFiles)
+     QStringList foundFiles = noteModel->find(searchName->text(), searchTextStr, folderModel->rootPath());
+     foreach(QString file, foundFiles)
          noteModel->appendFile(file);
 
     //noteModel->sourceModel() is switched back in setCurrentFolder
@@ -331,7 +331,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
 //     if(pref->pSpin->value() > 0)
 //       note->timer->start(pref->pSpin->value() * 60000);
      if(noteModel->sourceModel() == findNoteModel){
-       note->highlightText(searchText->text());
+       note->highlightText(searchTextStr);
        note->searchbarVisible = true;
      }
      note->show();

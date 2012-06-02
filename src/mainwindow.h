@@ -42,6 +42,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
      private:
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
+      QString         searchTextStr;
       FileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
       FindFileSystemModel * noteModel;
