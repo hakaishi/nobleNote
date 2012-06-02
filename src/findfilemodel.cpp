@@ -127,10 +127,8 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
           QTextStream in(&file);
           QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
           QString noteText = doc.toPlainText();
-          if(noteText.contains(text)){
+          if(noteText.contains(text))
             foundFiles << files[i];
-            break;
-          }
         }
      }
      return foundFiles;
