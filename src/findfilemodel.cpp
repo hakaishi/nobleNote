@@ -130,6 +130,8 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
           if(noteText.contains(text))
             foundFiles << files[i];
         }
+        if(file.isOpen())
+          file.close();
      }
      return foundFiles;
 }
