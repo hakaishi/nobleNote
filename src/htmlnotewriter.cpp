@@ -78,7 +78,7 @@ void HtmlNoteWriter::write()
             tag.remove(0,1);
         folder = tag;
     }
-    else
+    if(folder.isEmpty())
         folder = tr("default");
 
     QString title = reader.title();

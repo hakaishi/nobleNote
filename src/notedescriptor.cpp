@@ -162,7 +162,7 @@ void NoteDescriptor::load(const QString& filePath)
         // createDate_ gets written by HtmlNoteWriter
         readOnly_ = !QSettings().value("convert_notes",true).toBool();
         if(!readOnly_)
-            save(filePath_,uuid_); // only overwrite if convert_notes is disabled in settings
+            save(filePath_,uuid_); // only overwrite if convert_notes is enabled in settings
     }
 
 
