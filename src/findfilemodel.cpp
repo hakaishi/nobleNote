@@ -25,7 +25,7 @@ bool FindFileModel::remove(const QModelIndex &index)
 {
     bool b = QFile::remove(itemFromIndex(index)->data(Qt::UserRole + 1).toString());
     if(b)
-        delete takeItem(index.row(),index.column());
+         this->removeRow(index.row(),index.parent());
     return b;
 }
 
