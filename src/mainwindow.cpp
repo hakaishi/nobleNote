@@ -51,14 +51,14 @@ NobleNote::NobleNote()
      }
      if(!settings.value("rootPath").isValid()) // root path has not been set before
          settings.setValue("rootPath"           ,QDir::homePath() + "/.nobleNote/notes");
-     if(!settings.value("journalFolderPath").isValid())
-         settings.setValue("journalFolderPath"  ,QDir::homePath() + "/.nobleNote/Journals");
+     if(!settings.value("backupDirPath").isValid())
+         settings.setValue("backupDirPath"  ,QDir::homePath() + "/.nobleNote/backups");
 
      if(!QDir(settings.value("rootPath").toString()).exists())
        QDir().mkpath(settings.value("rootPath").toString());
 
-     if(!QDir(settings.value("journalFolderPath").toString()).exists())
-       QDir().mkpath(settings.value("journalFolderPath").toString());
+     if(!QDir(settings.value("backupDirPath").toString()).exists())
+       QDir().mkpath(settings.value("backupDirPath").toString());
 
    //Setup preferences
      pref = new Preferences(this);
@@ -310,11 +310,6 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
          QMessageBox::warning(this,tr("Note does not exist"), tr("The selected note cannot be opened because it has been moved or renamed"));
          return;
      }
-     QString dirTrunc = notePath;
-     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
-     dirTrunc.remove("/" + noteModel->fileName(ind));
-     QString journalFilesPath = QSettings().value("journalFolderPath").toString() + "/" +
-       dirTrunc + "_" + noteModel->fileName(ind) + ".journal";
 
       // check if the notePath is already used in a open note
      Note* w = noteWindow(notePath);

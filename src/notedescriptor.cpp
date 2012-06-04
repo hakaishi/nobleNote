@@ -109,19 +109,30 @@ void NoteDescriptor::unlockStateChange()
 
 void NoteDescriptor::save(const QString& filePath,QUuid uuid)
 {
-     HtmlNoteWriter writer(filePath);
-     writer.setDocument(document_);
-     // TODO uuid null?
-     writer.setUuid(uuid);
-     lastChange_ = QDateTime::currentDateTime();
-     writer.setLastChange(lastChange_);
-     //writer.setLastMetadataChange(lastMetadataChange_);
-     writer.setCreateDate(createDate_);
-     writer.setTitle(title_);
-     writer.write();
+    write(filePath,uuid); // write note
+    QString backupDirPath = QSettings().value("backupDirPath").toString();
+    QString uuidStr = uuid.toString();
+    uuidStr.chop(1); // }
+    uuidStr = uuidStr.remove(0,1); // {
+    QString backupFilePath = backupDirPath + "/" + uuidStr;
+    write(backupFilePath,uuid); // write backup
 
      if(noteWidget_)
          noteWidget_->setWindowTitle(title_);
+}
+
+void NoteDescriptor::write(const QString &filePath, QUuid uuid)
+{
+    HtmlNoteWriter writer(filePath);
+    writer.setDocument(document_);
+    // TODO uuid null?
+    writer.setUuid(uuid);
+    lastChange_ = QDateTime::currentDateTime();
+    writer.setLastChange(lastChange_);
+    //writer.setLastMetadataChange(lastMetadataChange_);
+    writer.setCreateDate(createDate_);
+    writer.setTitle(title_);
+    writer.write();
 }
 
 void NoteDescriptor::load(const QString& filePath)

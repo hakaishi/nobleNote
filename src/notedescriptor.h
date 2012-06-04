@@ -33,7 +33,8 @@ private slots:
 
 private:
 
-    void save(const QString &filePath, QUuid uuid); // save modified document to file
+    void save(const QString &filePath, QUuid uuid); // calls write with note and backup
+    void write(const QString &filePath, QUuid uuid); // write note file to disc
     void load(const QString& filePath); // load a note file into the document
 
 
