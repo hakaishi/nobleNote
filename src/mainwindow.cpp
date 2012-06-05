@@ -283,6 +283,8 @@ void NobleNote::tray_actions(){
 
 void NobleNote::showEvent(QShowEvent* show_window){
      minimize_restore_action->setText(tr("&Minimize"));
+     if(QSettings().contains("mainwindow_size"))
+       restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
      QMainWindow::showEvent(show_window);
 }
 
@@ -294,8 +296,10 @@ void NobleNote::hideEvent(QHideEvent* window_hide){
 void NobleNote::closeEvent(QCloseEvent* window_close){
      if(pref->dontQuit->isChecked())
        hide();
-     else
+     else{
+       QSettings().setValue("mainwindow_size", saveGeometry());
        qApp->quit();
+     }
      QMainWindow::closeEvent(window_close);
 }
 
@@ -328,6 +332,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      if(noteModel->sourceModel() == findNoteModel){
        note->highlightText(searchTextStr);
        note->searchbarVisible = true;
+       note->setSearchBarText(searchTextStr);
      }
      note->show();
 }

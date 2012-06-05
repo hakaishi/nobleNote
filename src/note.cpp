@@ -352,3 +352,5 @@ void Note::highlightText(QString str){
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), textEdit, SLOT(setFocus()));
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), searchB->searchLine, SLOT(clear()));
 }
+
+void Note::setSearchBarText(QString str){ searchB->searchLine->setText(str); }

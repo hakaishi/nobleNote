@@ -58,6 +58,7 @@ class Note : public QMainWindow, public Ui::Note {
       void selectNextExpression();
       void selectPreviousExpression();
       void highlightText(QString str);
+      void setSearchBarText(QString str);
 
      protected:
       void keyPressEvent(QKeyEvent *k);
