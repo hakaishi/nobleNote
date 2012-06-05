@@ -74,7 +74,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
       files << it.next();
 
     if(!searchText.isEmpty())
-      files = findFiles(files, searchText,path);
+      files = findFiles(files, searchText);
 
     while(!files.isEmpty()){
       QString file = files.takeFirst();
@@ -104,7 +104,7 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
     return mimeData;
 }
 
-/*static*/ QStringList FindFileModel::findFiles(const QStringList &files, const QString &text, const QString &path){
+/*static*/ QStringList FindFileModel::findFiles(const QStringList &files, const QString &text/*, const QString &path*/){
 //     QProgressDialog progressDialog(this);
 //     progressDialog.setCancelButtonText(tr("&Cancel"));
 //     progressDialog.setRange(0, files.size());
@@ -121,7 +121,8 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
 //        if(progressDialog.wasCanceled())
 //          break;
 
-        QFile file(QDir(path).absoluteFilePath(files[i]));
+        //QFile file(QDir(path).absoluteFilePath(files[i]));
+         QFile file(files[i]);
 
         if(file.open(QIODevice::ReadOnly)){
           QTextStream in(&file);
@@ -135,3 +136,30 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
      }
      return foundFiles;
 }
+
+// TODO model should populate itself, remove findFiles and find functions and instead add the found files via a FutureWatcher
+// but first test it with a blockingFiltered
+QFuture<QString> FindFileModel::findInFiles(const QStringList &files, const QString &text)
+{
+    if(future.isRunning())
+        future.cancel();
+
+    fileContainsFunctor.text = text;
+    future = QtConcurrent::filtered(files,fileContainsFunctor);
+    return future;
+}
+
+
+bool FindFileModel::FileContains::operator ()(const QString& htmlFilePath)
+{
+
+    QFile file(htmlFilePath);
+    if(file.open(QIODevice::ReadOnly)){
+      QTextStream in(&file);
+      QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
+      QString noteText = doc.toPlainText();
+      return noteText.contains(text);
+    }
+    return false;
+}
+

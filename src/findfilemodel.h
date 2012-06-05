@@ -4,6 +4,8 @@
 #include <QStandardItemModel>
 #include <QFile>
 #include <QFileInfo>
+#include <QtConcurrentFilter>
+#include <QFuture>
 #include <QMimeData>
 
 /**
@@ -30,7 +32,17 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role); // returns if rename succeeded, overwritten to enable QAbstractItemView::edit
 
 private:
-    static QStringList findFiles(const QStringList &files, const QString &text, const QString &path);
+    struct FileContains // functor that checks if a text file (read as html) contains a given text
+    {
+        QString text;
+        bool operator()(const QString& htmlFilePath);
+    };
+
+    QFuture<QString> future;
+    FileContains fileContainsFunctor;
+
+    static QStringList findFiles(const QStringList &files, const QString &text); // deprecated
+    QFuture<QString> findInFiles(const QStringList &files, const QString &text);
 };
 
 #endif // FINDFILEMODEL_H
