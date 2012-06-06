@@ -17,6 +17,7 @@
 #include <QFileIconProvider>
 #include <QList>
 #include <QFileDialog>
+#include <QPushButton>
 #include "highlighter.h"
 #include "notedescriptor.h"
 #include "htmlnotewriter.h"
@@ -49,10 +50,31 @@ NobleNote::NobleNote()
      if(!settings.isWritable()){
        QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
      }
-     if(!settings.value("rootPath").isValid()) // root path has not been set before
-         settings.setValue("rootPath"           ,QDir::homePath() + "/.nobleNote/notes");
+     if(!settings.value("rootPath").isValid()){ // root path has not been set before
+       QMessageBox msgBox;
+       msgBox.setIcon(QMessageBox::Question);
+       QPushButton *chooseFolder = msgBox.addButton(tr("Choose a directory"), QMessageBox::ActionRole);
+       QPushButton *useStandard = msgBox.addButton(tr("Use default location"), QMessageBox::RejectRole);
+       msgBox.setWindowTitle(tr("Welcome to nobleNote"));
+       msgBox.setText(tr("This is the first time that nobleNote has been started. "
+                         "You can choose a directory where the notes will be saved in. "
+                         "The default is ~/.nobleNote/notes."));
+       msgBox.exec();
+
+       if(msgBox.clickedButton() == chooseFolder){
+         QString str = QFileDialog::getExistingDirectory(this,
+           tr("Choose a directory"), "/home",
+           QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+         if(str != "")
+           settings.setValue("rootPath",str);
+         else
+           settings.setValue("rootPath",QDir::homePath() + "/.nobleNote/notes");
+       }
+       else
+         settings.setValue("rootPath",QDir::homePath() + "/.nobleNote/notes");
+     }
      if(!settings.value("backupDirPath").isValid())
-         settings.setValue("backupDirPath"  ,QDir::homePath() + "/.nobleNote/backups");
+       settings.setValue("backupDirPath",QDir::homePath() + "/.nobleNote/backups");
 
      if(!QDir(settings.value("rootPath").toString()).exists())
        QDir().mkpath(settings.value("rootPath").toString());
