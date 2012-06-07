@@ -214,12 +214,6 @@ void NobleNote::showHideAdvancedSearch(){
 }
 
 void NobleNote::find(){
-//     searchTextStr = searchText->text(); //saving for opening note
-//     noteModel->setSourceModel(findNoteModel);
-//     noteModel->clear(); // if findNoteModel already set, clear old found list
-//     QStringList foundFiles = noteModel->find(searchName->text(), searchTextStr, folderModel->rootPath());
-//     foreach(QString file, foundFiles)
-//         noteModel->appendFile(file);
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
