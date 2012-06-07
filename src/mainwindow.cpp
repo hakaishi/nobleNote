@@ -147,9 +147,7 @@ NobleNote::NobleNote()
      noteList->setModel(noteModel);
 
      // make sure there's at least one folder
-     QStringList dirList = QDir(settings.value("noteDirPath").toString()).entryList(QDir::Dirs);
-     dirList.removeOne(".");
-     dirList.removeOne("..");
+     QStringList dirList = QDir(settings.value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
      if(dirList.isEmpty())
      {
          QString defaultDirName = tr("default");
@@ -193,7 +191,7 @@ NobleNote::NobleNote()
      connect(showHideAdvancedSearchButton, SIGNAL(clicked(bool)), this,
        SLOT(showHideAdvancedSearch()));
      connect(actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-     //connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
+     connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
 }
 
 NobleNote::~NobleNote(){}
@@ -217,8 +215,6 @@ void NobleNote::find(){
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
-
-    //noteModel->sourceModel() is switched back in setCurrentFolder
 }
 
 void NobleNote::selectFirstFolder(QString path)
@@ -263,13 +259,15 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
 }
 
-//void NobleNote::changeRootIndex(){
-//     QSettings s;
-//     folderModel->setRootPath(s.value("noteDirPath").toString());
-//     noteModel->setRootPath(s.value("noteDirPath").toString());
-//     folderList->setRootIndex(folderModel->index(s.value("noteDirPath").toString()));
-//     noteList->setRootIndex(noteModel->index(s.value("noteDirPath").toString()));
-//}
+void NobleNote::changeRootIndex(){
+     foreach(Note *note, openNotes)
+       note->close();
+     openNotes.clear();
+     QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     noteList->setRootIndex(noteModel->setRootPath(QSettings().value("noteDirPath").toString() +
+                                                   "/" + dirList.first()));
+     folderList->setRootIndex(folderModel->index(QSettings().value("noteDirPath").toString()));
+}
 
 #ifndef NO_SYSTEM_TRAY_ICON
 void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
@@ -332,9 +330,6 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      Note* note=new Note(notePath);
      openNotes+= note;
      note->setObjectName(notePath);
-     //note->journalsPath = journalFilesPath;
-//     if(pref->pSpin->value() > 0)
-//       note->timer->start(pref->pSpin->value() * 60000);
      if(noteModel->sourceModel() == findNoteModel){
        note->highlightText(searchTextStr);
        note->searchbarVisible = true;

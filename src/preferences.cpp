@@ -8,17 +8,22 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
      setupUi(this);
 
      settings = new QSettings(this);
-     pathLabel->setText(settings->value("rootPath").toString());
-     rootPath = settings->value("rootPath").toString();
 
      dontQuit->setChecked(settings->value("Dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
-     pSpin->setValue(settings->value("Save_notes_periodically",1).toInt());
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
 }
 
 Preferences::~Preferences(){}
+
+void Preferences::showEvent(QShowEvent* show_pref){
+     pathLabel->setText(settings->value("rootPath").toString());
+     rootPath = settings->value("rootPath").toString();
+     originalRootPath = rootPath;
+
+     QWidget::showEvent(show_pref);
+}
 
 void Preferences::saveSettings(){
      if(!settings->isWritable()){
@@ -31,12 +36,16 @@ void Preferences::saveSettings(){
        msgBox.exec();
      }
 
-     settings->setValue("rootPath",rootPath);
-     settings->setValue("Save_notes_periodically",pSpin->value());
+     if(rootPath != originalRootPath){
+       settings->setValue("rootPath",rootPath);
+       settings->setValue("noteDirPath",rootPath + "/notes");
+       settings->setValue("backupDirPath",rootPath + "/backups");
+       sendPathChanged();
+     }
+
      settings->setValue("Dont_quit_on_close", dontQuit->isChecked());
      settings->setValue("convert_notes", convertNotes->isChecked());
 
-     sendPathChanged();
      accept();
 }
 

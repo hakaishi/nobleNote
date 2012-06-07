@@ -71,7 +71,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
 
      private slots:
-      //void changeRootIndex();
+      void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
 
 #ifndef NO_SYSTEM_TRAY_ICON

@@ -24,7 +24,6 @@ class Note : public QMainWindow, public Ui::Note {
       Note(QString filePath, QWidget *parent = 0);
       ~Note();
       NoteDescriptor* noteDescriptor() const { return noteDescriptor_; }
-      //QString text, journalsPath, notePath;
       bool    searchbarVisible;
 
      private:
@@ -41,20 +40,8 @@ class Note : public QMainWindow, public Ui::Note {
 
       NoteDescriptor * noteDescriptor_;
 
-
-
-//      QTimer    *jTimer;
-//      QDateTime noteModified, journalModified;
-//      QTimer  *timer;
-
      public slots:
-//      void saveAll();
-//      void load();
-//      void reload();
-//      void save_or_not();
-//      void resetAll();
-//      void askForName();
-//      void getNewName();
+
       void selectNextExpression();
       void selectPreviousExpression();
       void highlightText(QString str);
