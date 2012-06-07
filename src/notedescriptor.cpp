@@ -36,7 +36,7 @@ void NoteDescriptor::stateChange()
     if(!QFile::exists(filePath_) || uuid_ != HtmlNoteReader::uuid(filePath_))
     {
         // search the moved or renamed file by its uuid
-        QString newFilePath = HtmlNoteReader::findUuid(uuid_, QSettings().value("rootPath").toString());
+        QString newFilePath = HtmlNoteReader::findUuid(uuid_, QSettings().value("noteDirPath").toString());
 
         if(newFilePath.isEmpty())
         {

@@ -58,7 +58,7 @@ NobleNote::NobleNote()
        msgBox.setWindowTitle(tr("Welcome to nobleNote"));
        msgBox.setText(tr("This is the first time that nobleNote has been started. "
                          "You can choose a directory where the notes will be saved in. "
-                         "The default is ~/.nobleNote/notes."));
+                         "The default is ~/.nobleNote."));
        msgBox.exec();
 
        if(msgBox.clickedButton() == chooseFolder){
@@ -68,16 +68,18 @@ NobleNote::NobleNote()
          if(str != "")
            settings.setValue("rootPath",str);
          else
-           settings.setValue("rootPath",QDir::homePath() + "/.nobleNote/notes");
+           settings.setValue("rootPath",QDir::homePath() + "/.nobleNote");
        }
-       else
-         settings.setValue("rootPath",QDir::homePath() + "/.nobleNote/notes");
+       else if(msgBox.clickedButton() == useStandard)
+         settings.setValue("rootPath",QDir::homePath() + "/.nobleNote");
      }
+     if(!settings.value("noteDirPath").isValid())
+       settings.setValue("noteDirPath",settings.value("rootPath").toString() + "/notes");
      if(!settings.value("backupDirPath").isValid())
-       settings.setValue("backupDirPath",QDir::homePath() + "/.nobleNote/backups");
+       settings.setValue("backupDirPath",settings.value("rootPath").toString() + "/backups");
 
-     if(!QDir(settings.value("rootPath").toString()).exists())
-       QDir().mkpath(settings.value("rootPath").toString());
+     if(!QDir(settings.value("noteDirPath").toString()).exists())
+       QDir().mkpath(settings.value("noteDirPath").toString());
 
      if(!QDir(settings.value("backupDirPath").toString()).exists())
        QDir().mkpath(settings.value("backupDirPath").toString());
@@ -123,7 +125,7 @@ NobleNote::NobleNote()
      gridLayout->addWidget(splitter, 3, 0);
 
      folderModel = new FileSystemModel(this);
-     folderModel->setRootPath(settings.value("rootPath").toString());
+     folderModel->setRootPath(settings.value("noteDirPath").toString());
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderModel->setReadOnly(false);
      folderModel->setOnlyOnItemDrops(true);
@@ -158,22 +160,22 @@ NobleNote::NobleNote()
      folderList->setDragEnabled(false);
 
      folderList->setModel(folderModel);
-     folderList->setRootIndex(folderModel->index(settings.value("rootPath").toString()));
+     folderList->setRootIndex(folderModel->index(settings.value("noteDirPath").toString()));
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
 
      // make sure there's at least one folder
-     QStringList dirList = QDir(settings.value("rootPath").toString()).entryList(QDir::Dirs);
+     QStringList dirList = QDir(settings.value("noteDirPath").toString()).entryList(QDir::Dirs);
      dirList.removeOne(".");
      dirList.removeOne("..");
      if(dirList.isEmpty())
      {
          QString defaultDirName = tr("default");
-         QDir(settings.value("rootPath").toString()).mkdir(defaultDirName);
-         noteList->setRootIndex(noteModel->setRootPath(settings.value("rootPath").toString() + "/" + defaultDirName)); // set default dir as current note folder
+         QDir(settings.value("noteDirPath").toString()).mkdir(defaultDirName);
+         noteList->setRootIndex(noteModel->setRootPath(settings.value("noteDirPath").toString() + "/" + defaultDirName)); // set default dir as current note folder
      }
      else
-         noteList->setRootIndex(noteModel->setRootPath(settings.value("rootPath").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
+         noteList->setRootIndex(noteModel->setRootPath(settings.value("noteDirPath").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
 
 //TODO: make it possible to import notes from some other folder or even another program
 
@@ -282,10 +284,10 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
 
 //void NobleNote::changeRootIndex(){
 //     QSettings s;
-//     folderModel->setRootPath(s.value("rootPath").toString());
-//     noteModel->setRootPath(s.value("rootPath").toString());
-//     folderList->setRootIndex(folderModel->index(s.value("rootPath").toString()));
-//     noteList->setRootIndex(noteModel->index(s.value("rootPath").toString()));
+//     folderModel->setRootPath(s.value("noteDirPath").toString());
+//     noteModel->setRootPath(s.value("noteDirPath").toString());
+//     folderList->setRootIndex(folderModel->index(s.value("noteDirPath").toString()));
+//     noteList->setRootIndex(noteModel->index(s.value("noteDirPath").toString()));
 //}
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -415,7 +417,7 @@ void NobleNote::renameNote(){
 
 void NobleNote::removeFolder(){
 
-     QStringList dirList = QDir(QSettings().value("rootPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
      // only needed if journal folder resides in the same folder
      //dirList.removeOne(QDir(QSettings().value("journalFolderPath").toString()).dirName());
@@ -501,7 +503,7 @@ void NobleNote::importXmlNotes()
 
     foreach(QString filePath, files)
     {
-        HtmlNoteWriter::writeXml2Html(filePath,QSettings().value("rootPath").toString());
+        HtmlNoteWriter::writeXml2Html(filePath,QSettings().value("noteDirPath").toString());
     }
 }
 

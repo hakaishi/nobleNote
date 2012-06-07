@@ -124,7 +124,7 @@ void Note::closeEvent(QCloseEvent* close_Note){
 
 //void Note::reload(){
 
-//     QDir rootPath(QSettings().value("rootPath").toString());
+//     QDir rootPath(QSettings().value("noteDirPath").toString());
 
 //     QStringList files;
 
@@ -150,7 +150,7 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //       notePath = info.filePath();
 //       QString dirTrunc = info.filePath();
 //       dirTrunc.remove( "/" + info.baseName());
-//       dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
+//       dirTrunc.remove(QSettings().value("noteDirPath").toString() + "/");
 //       journalsPath = QSettings().value("journalFolderPath").toString() + "/" +
 //         dirTrunc + "_" + info.baseName() + ".journal";
 //     }
@@ -289,7 +289,7 @@ void Note::closeEvent(QCloseEvent* close_Note){
 //     notePath = newName;
 //     QString dirTrunc = newName;
 //     dirTrunc.remove( "/" + newNote->lineEdit->text());
-//     dirTrunc.remove(QSettings().value("rootPath").toString() + "/");
+//     dirTrunc.remove(QSettings().value("noteDirPath").toString() + "/");
 //     journalsPath = QSettings().value("journalFolderPath").toString() + "/" +
 //       dirTrunc + "_" + newNote->lineEdit->text() + ".journal";
 //     saveAll();
