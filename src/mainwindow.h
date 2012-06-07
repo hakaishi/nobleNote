@@ -24,6 +24,7 @@
 
 //#define NO_SYSTEM_TRAY_ICON
 
+class Welcome;
 class Preferences;
 class FindFileModel;
 class FindFileSystemModel;
@@ -40,6 +41,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       ~NobleNote();
 
      private:
+      Welcome         *welcome;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
       QString         searchTextStr;
