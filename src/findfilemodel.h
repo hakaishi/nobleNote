@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QtConcurrentFilter>
 #include <QFuture>
+#include <QFutureWatcher>
 #include <QMimeData>
 
 /**
@@ -24,7 +25,8 @@ public:
     bool remove(const QModelIndex & index);
     QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString filePath); // append file with full path
-    static QStringList find(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
+    static QStringList find0(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
+    void find(const QString &text,const QString& path);
 
     QStringList mimeTypes() const;
     QMimeData * mimeData(const QModelIndexList &indexes) const;
@@ -41,8 +43,13 @@ private:
     QFuture<QString> future;
     FileContains fileContainsFunctor;
 
-    static QStringList findFiles(const QStringList &files, const QString &text); // deprecated
+    QFutureWatcher<QString> futureWatcher;
+    static QStringList findinFiles0(const QStringList &files, const QString &text); // deprecated
     QFuture<QString> findInFiles(const QStringList &files, const QString &text);
+    QList<QString> blockingFindInFiles(const QStringList &files, const QString &text); // for testing
+
+private slots:
+    void findInFilesFinished(); // populate model with find results
 };
 
 #endif // FINDFILEMODEL_H

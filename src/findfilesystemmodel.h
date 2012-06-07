@@ -26,7 +26,8 @@ public:
     QModelIndex setRootPath(const QString & newPath);
     QString rootPath() const;
     void clear();
-    QStringList find(QString searchName, QString searchText, QString path);
+    QStringList find0(QString searchName, QString searchText, QString path);
+    void find(const QString &text,const QString& path);
 
     // TODO signal file changed
 };
