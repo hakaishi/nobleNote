@@ -60,7 +60,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       QFrame          *hLine;
       bool            searchBoolean;
       FindFileModel   *findNoteModel;
-      QList<QPointer<Note> >     openNotes;
+      QList<QPointer<Note> >     openNotes; // every access to openNotes must check for null pointers
       Highlighter *highlighter;
 
 #ifndef NO_SYSTEM_TRAY_ICON

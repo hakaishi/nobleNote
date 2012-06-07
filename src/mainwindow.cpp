@@ -260,11 +260,12 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
 }
 
 void NobleNote::changeRootIndex(){
-     if(!openNotes.isEmpty()){
-       foreach(Note *note, openNotes)
-         note->close();
-       openNotes.clear();
-     }
+    if(!openNotes.isEmpty()){
+        foreach(Note *note, openNotes)
+            if(note)
+                note->close();
+        openNotes.clear();
+    }
      QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
      noteList->setRootIndex(noteModel->setRootPath(QSettings().value("noteDirPath").toString() +
                                                    "/" + dirList.first()));
