@@ -14,6 +14,7 @@ class Preferences : public QDialog, public Ui::Preferences {
 
      private:
       QSettings *settings;
+      QString    originalRootPath;
 
      private slots:
       void saveSettings();
@@ -21,6 +22,9 @@ class Preferences : public QDialog, public Ui::Preferences {
 
      signals:
       void sendPathChanged();
+
+     protected:
+      virtual void showEvent(QShowEvent* show_pref);
 };
 
 #endif //PREFERENCES_H

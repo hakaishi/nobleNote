@@ -148,7 +148,6 @@ NobleNote::NobleNote()
 
      // make sure there's at least one folder
      QStringList dirList = QDir(settings.value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-qDebug()<<dirList;
      if(dirList.isEmpty())
      {
          QString defaultDirName = tr("default");
@@ -261,6 +260,9 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
 }
 
 void NobleNote::changeRootIndex(){
+     foreach(Note *note, openNotes)
+       note->close();
+     openNotes.clear();
      QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
      noteList->setRootIndex(noteModel->setRootPath(QSettings().value("noteDirPath").toString() +
                                                    "/" + dirList.first()));
