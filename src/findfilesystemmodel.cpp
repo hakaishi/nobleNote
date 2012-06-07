@@ -95,5 +95,15 @@ void FindFileSystemModel::find(const QString &text, const QString &path)
         ffm->find(text,path);
         return ;
     }
-   qDebug("FindFileSystemModel::find failed: cast failed");
+    qDebug("FindFileSystemModel::find failed: cast failed");
+}
+
+void FindFileSystemModel::findInFiles(const QString &fileName, const QString &content, const QString &path)
+{
+    if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
+    {
+        ffm->findInFiles(fileName,content,path);
+        return;
+    }
+    qDebug("FindFileSystemModel::findInFiles failed: cast failed");
 }

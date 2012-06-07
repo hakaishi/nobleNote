@@ -28,6 +28,7 @@ public:
     void clear();
     QStringList find0(QString searchName, QString searchText, QString path);
     void find(const QString &text,const QString& path);
+    void findInFiles(const QString& fileName, const QString &content, const QString &path);
 
     // TODO signal file changed
 };

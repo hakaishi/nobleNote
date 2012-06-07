@@ -27,6 +27,7 @@ public:
     void appendFile(QString filePath); // append file with full path
     static QStringList find0(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
     void find(const QString &text,const QString& path);
+    void findInFiles(const QString &path, const QString& fileName, const QString &content);
 
     QStringList mimeTypes() const;
     QMimeData * mimeData(const QModelIndexList &indexes) const;
@@ -36,8 +37,17 @@ public:
 private:
     struct FileContains // functor that checks if a text file (read as html) contains a given text
     {
+        enum
+        {
+            Content,
+            NameAndContent,
+            Name
+        } Search;
         QString text;
+        QString fileName;
+        QString content;
         bool operator()(const QString& htmlFilePath);
+        bool fileContentContains(const QString& htmlFilePath);
     };
 
     QFuture<QString> future;
@@ -45,7 +55,7 @@ private:
 
     QFutureWatcher<QString> futureWatcher;
     static QStringList findinFiles0(const QStringList &files, const QString &text); // deprecated
-    QFuture<QString> findInFiles(const QStringList &files, const QString &text);
+
     QList<QString> blockingFindInFiles(const QStringList &files, const QString &text); // for testing
 
 private slots:

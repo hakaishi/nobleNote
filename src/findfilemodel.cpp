@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include <QUrl>
 #include <QTextDocumentFragment>
+#include <QtDebug>
 
 
 FindFileModel::FindFileModel(QObject *parent) :
@@ -102,7 +103,7 @@ void FindFileModel::find(const QString &text, const QString &path)
 
 //    foreach(QString str,results)
 //        this->appendFile(str);
-    findInFiles(files,text);
+    //findInFiles(files,text);
 
 }
 
@@ -158,23 +159,44 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
      return foundFiles;
 }
 
-// TODO model should populate itself, remove findFiles and find functions and instead add the found files via a FutureWatcher
-// but first test it with a blockingFiltered
-QFuture<QString> FindFileModel::findInFiles(const QStringList &files, const QString &text)
+void FindFileModel::findInFiles(const QString& fileName, const QString &content,const QString &path)
 {
+
+    if(path.isEmpty() || (fileName.isEmpty() && content.isEmpty()))
+        return;
+
+    QStringList files;
+    QDirIterator it(path, QDirIterator::Subdirectories);
+    while(it.hasNext())
+    {
+        QString filePath = it.next();
+        if(it.fileInfo().isFile())
+            files << filePath;
+    }
+
     if(future.isRunning())
         future.cancel();
 
-    fileContainsFunctor.text = text;
+    fileContainsFunctor.text = content;
+    fileContainsFunctor.content = content;
+    fileContainsFunctor.fileName = fileName;
+
+//    if(!fileName.isEmpty() && !content.isEmpty())
+//        fileContainsFunctor.Search = FileContains::NameAndContent;
+//    else if(!content.isEmpty() && fileName.isEmpty())
+//        fileContainsFunctor.Search = FileContains::Content;
+//    else if( ! fileName.isEmpty() && content.isEmpty())
+//        fileContainsFunctor.Search = FileContains::Name;
+
     future = QtConcurrent::filtered(files,fileContainsFunctor);
 
     futureWatcher.setFuture(future);
-    return future;
 }
 
 QList<QString> FindFileModel::blockingFindInFiles(const QStringList &files, const QString &text)
 {
     fileContainsFunctor.text = text;
+    fileContainsFunctor.Search = FileContains::Content;
     return QtConcurrent::blockingFiltered(files,fileContainsFunctor);
 }
 
@@ -187,13 +209,37 @@ void FindFileModel::findInFilesFinished()
 
 bool FindFileModel::FileContains::operator ()(const QString& htmlFilePath)
 {
+//    qDebug() << Search;
+//    switch(Search)
+//    {
+//    case Name:
+//        return QFileInfo(htmlFilePath).baseName().contains(text);
+//        break;
+//    case Content:
+//        return fileContentContains(htmlFilePath);
+//        break;
+//    case NameAndContent:
+//        return QFileInfo(htmlFilePath).baseName().contains(text) && fileContentContains(htmlFilePath);
+//        break;
+//    default:;
+//    }
+//    return false;
+        if(!fileName.isEmpty() && !content.isEmpty())
+           return QFileInfo(htmlFilePath).baseName().contains(fileName) && fileContentContains(htmlFilePath);
+        else if(!content.isEmpty())
+            return fileContentContains(htmlFilePath);
+        else
+            return QFileInfo(htmlFilePath).baseName().contains(fileName);
+}
 
+bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePath)
+{
     QFile file(htmlFilePath);
     if(file.open(QIODevice::ReadOnly)){
       QTextStream in(&file);
       QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
       QString noteText = doc.toPlainText();
-      return noteText.contains(text);
+      return noteText.contains(content);
     }
     return false;
 }

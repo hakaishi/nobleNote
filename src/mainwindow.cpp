@@ -240,7 +240,7 @@ void NobleNote::find(){
 //         noteModel->appendFile(file);
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
-         noteModel->find(searchText->text(),folderModel->rootPath());
+         noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
 
     //noteModel->sourceModel() is switched back in setCurrentFolder
 }
