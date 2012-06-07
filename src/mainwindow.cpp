@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "welcome.h"
 #include "note.h"
 #include "findfilemodel.h"
 #include "filesystemmodel.h"
@@ -51,27 +52,8 @@ NobleNote::NobleNote()
        QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
      }
      if(!settings.value("rootPath").isValid()){ // root path has not been set before
-       QMessageBox msgBox;
-       msgBox.setIcon(QMessageBox::Question);
-       QPushButton *chooseFolder = msgBox.addButton(tr("Choose a directory"), QMessageBox::ActionRole);
-       QPushButton *useStandard = msgBox.addButton(tr("Use default location"), QMessageBox::RejectRole);
-       msgBox.setWindowTitle(tr("Welcome to nobleNote"));
-       msgBox.setText(tr("This is the first time that nobleNote has been started. "
-                         "You can choose a directory where the notes will be saved in. "
-                         "The default is ~/.nobleNote."));
-       msgBox.exec();
-
-       if(msgBox.clickedButton() == chooseFolder){
-         QString str = QFileDialog::getExistingDirectory(this,
-           tr("Choose a directory"), "/home",
-           QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-         if(str != "")
-           settings.setValue("rootPath",str);
-         else
-           settings.setValue("rootPath",QDir::homePath() + "/.nobleNote");
-       }
-       else if(msgBox.clickedButton() == useStandard)
-         settings.setValue("rootPath",QDir::homePath() + "/.nobleNote");
+       welcome = new Welcome(this);
+       welcome->exec();
      }
      if(!settings.value("noteDirPath").isValid())
        settings.setValue("noteDirPath",settings.value("rootPath").toString() + "/notes");

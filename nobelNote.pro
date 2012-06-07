@@ -8,7 +8,7 @@ UI_DIR = build
 RCC_DIR = build
 
 # Input
-HEADERS = src/mainwindow.h src/note.h \
+HEADERS = src/mainwindow.h src/note.h src/welcome.h \
     src/filesystemmodel.h \
     src/preferences.h \
     src/findfilesystemmodel.h \
@@ -27,9 +27,9 @@ HEADERS = src/mainwindow.h src/note.h \
     src/abstractnotereader.h \
     src/htmlnotereader.h \
     src/htmlnotewriter.h
-FORMS = src/ui/note.ui src/ui/mainwindow.ui src/ui/preferences.ui \
-        src/ui/newnotename.ui
-SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
+FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
+        src/ui/preferences.ui src/ui/newnotename.ui
+SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
     src/preferences.cpp \
     src/findfilemodel.cpp \
     src/findfilesystemmodel.cpp src/lineedit.cpp src/textedit.cpp \
