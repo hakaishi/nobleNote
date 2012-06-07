@@ -96,12 +96,12 @@ NobleNote::NobleNote()
      searchName->setPlaceholderText(tr("Search for note"));
      gridLayout->addWidget(searchName, 1, 0);
      searchName->setHidden(true);
-     connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
+
      searchText = new LineEdit(this);
      searchText->setPlaceholderText(tr("Search for content"));
      gridLayout->addWidget(searchText, 2, 0);
      searchText->setHidden(true);
-     connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
+
 
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 3, 0);
@@ -166,6 +166,8 @@ NobleNote::NobleNote()
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
        SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
 
+     connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
+     connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(folderList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      //connect(noteList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(noteRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
@@ -212,12 +214,15 @@ void NobleNote::showHideAdvancedSearch(){
 }
 
 void NobleNote::find(){
-     searchTextStr = searchText->text(); //saving for opening note
-     noteModel->setSourceModel(findNoteModel);
-     noteModel->clear(); // if findNoteModel already set, clear old found list
-     QStringList foundFiles = noteModel->find(searchName->text(), searchTextStr, folderModel->rootPath());
-     foreach(QString file, foundFiles)
-         noteModel->appendFile(file);
+//     searchTextStr = searchText->text(); //saving for opening note
+//     noteModel->setSourceModel(findNoteModel);
+//     noteModel->clear(); // if findNoteModel already set, clear old found list
+//     QStringList foundFiles = noteModel->find(searchName->text(), searchTextStr, folderModel->rootPath());
+//     foreach(QString file, foundFiles)
+//         noteModel->appendFile(file);
+         noteModel->setSourceModel(findNoteModel);
+         noteModel->clear(); // if findNoteModel already set, clear old found list
+         noteModel->find(searchText->text(),folderModel->rootPath());
 
     //noteModel->sourceModel() is switched back in setCurrentFolder
 }

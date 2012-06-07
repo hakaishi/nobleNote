@@ -80,10 +80,20 @@ void FindFileSystemModel::clear()
         qDebug("FindFileSystemModel::clear failed: cast failed");
 }
 
-QStringList FindFileSystemModel::find(QString searchName, QString searchText, QString path)
+QStringList FindFileSystemModel::find0(QString searchName, QString searchText, QString path)
 {
     if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-        return ffm->find(searchName,searchText,path);
+        return ffm->find0(searchName,searchText,path);
    qDebug("FindFileSystemModel::find failed: cast failed");
    return QStringList();
+}
+
+void FindFileSystemModel::find(const QString &text, const QString &path)
+{
+    if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
+    {
+        ffm->find(text,path);
+        return ;
+    }
+   qDebug("FindFileSystemModel::find failed: cast failed");
 }

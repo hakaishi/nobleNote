@@ -9,6 +9,7 @@
 FindFileModel::FindFileModel(QObject *parent) :
     QStandardItemModel(parent)
 {
+    connect(&futureWatcher,SIGNAL(finished()),this,SLOT(findInFilesFinished()));
 }
 
 QString FindFileModel::fileName(const QModelIndex &index) const
@@ -61,7 +62,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
 }
 
 
-/*static*/ QStringList  FindFileModel::find(const QString &searchName, const QString &searchText,const QString& path)
+/*static*/ QStringList  FindFileModel::find0(const QString &searchName, const QString &searchText,const QString& path)
 {
     if(searchName.isEmpty() && searchText.isEmpty())
         return QStringList();
@@ -74,7 +75,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
       files << it.next();
 
     if(!searchText.isEmpty())
-      files = findFiles(files, searchText);
+      files = findinFiles0(files, searchText);
 
     while(!files.isEmpty()){
       QString file = files.takeFirst();
@@ -86,6 +87,26 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
     }
     return results;
 }
+
+void FindFileModel::find(const QString &text, const QString &path)
+{
+    if(text.isEmpty() || path.isEmpty())
+        return;
+
+    QStringList files;
+    QDirIterator it(path, QDirIterator::Subdirectories);
+    while(it.hasNext())
+      files << it.next();
+
+//    QList<QString> results = blockingFindInFiles(files,text);
+
+//    foreach(QString str,results)
+//        this->appendFile(str);
+    findInFiles(files,text);
+
+}
+
+
 
 QStringList FindFileModel::mimeTypes() const
 {
@@ -104,7 +125,7 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
     return mimeData;
 }
 
-/*static*/ QStringList FindFileModel::findFiles(const QStringList &files, const QString &text/*, const QString &path*/){
+/*static*/ QStringList FindFileModel::findinFiles0(const QStringList &files, const QString &text/*, const QString &path*/){
 //     QProgressDialog progressDialog(this);
 //     progressDialog.setCancelButtonText(tr("&Cancel"));
 //     progressDialog.setRange(0, files.size());
@@ -146,7 +167,21 @@ QFuture<QString> FindFileModel::findInFiles(const QStringList &files, const QStr
 
     fileContainsFunctor.text = text;
     future = QtConcurrent::filtered(files,fileContainsFunctor);
+
+    futureWatcher.setFuture(future);
     return future;
+}
+
+QList<QString> FindFileModel::blockingFindInFiles(const QStringList &files, const QString &text)
+{
+    fileContainsFunctor.text = text;
+    return QtConcurrent::blockingFiltered(files,fileContainsFunctor);
+}
+
+void FindFileModel::findInFilesFinished()
+{
+    foreach(QString fileName, future.results())
+        this->appendFile(fileName);
 }
 
 
