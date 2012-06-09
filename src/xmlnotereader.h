@@ -50,6 +50,11 @@ public:
     // return the notebook tag, e.g. system:notebook:MyNotebook
     const QString& tag() const { return tag_; }
 
+    int cursorPosition() const { return cursorPosition_; }
+
+    // holds the window size
+    const QSize& size() const { return size_; }
+
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     static QUuid uuid(QString filePath);
 
@@ -71,6 +76,8 @@ private:
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
     QString tag_;
+    int cursorPosition_;
+    QSize size_;
 };
 
 #endif // XMLNOTEREADER_H

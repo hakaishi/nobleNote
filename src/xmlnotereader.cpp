@@ -6,6 +6,8 @@
 XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
 {
     document_ = doc;
+    cursorPosition_ = 0;
+
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly))
     {
@@ -77,6 +79,25 @@ void XmlNoteReader::read()
         {
             tag_ = readElementText();
         }
+        else if(name() == "cursor-position")
+        {
+            bool ok = false;
+            int pos = readElementText().toInt(&ok);
+            cursorPosition_ = ok ? pos : 0;
+        }
+        else if(name() == "width")
+        {
+            bool ok = false;
+            int pos = readElementText().toInt(&ok);
+            size_.setWidth(ok && pos > minimumSize.width() ? pos :  minimumSize.width());
+        }
+        else if(name() == "height")
+        {
+            bool ok = false;
+            int pos = readElementText().toInt(&ok);
+            size_.setHeight(ok && pos > minimumSize.height() ? pos : minimumSize.height());
+        }
+
 
         if (QXmlStreamReader::hasError())
         {

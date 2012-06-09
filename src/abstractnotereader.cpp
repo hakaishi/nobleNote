@@ -1,5 +1,5 @@
 #include "abstractnotereader.h"
 
-AbstractNoteReader::AbstractNoteReader()
+AbstractNoteReader::AbstractNoteReader() : minimumSize(200,125)
 {
 }

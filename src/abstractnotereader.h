@@ -10,6 +10,8 @@ class QDateTime;
 class QString;
 class QIODevice;
 
+#include <QSize>
+
 class AbstractNoteReader
 {
 public:
@@ -17,7 +19,7 @@ public:
 
     virtual QUuid uuid() const = 0; // get the uuid that has been extracted during read()
 
-    virtual const QString& title() const     = 0;
+    virtual const QString& title() const                 = 0;
 
      // get last change date
     virtual const QDateTime& lastChange() const          = 0;
@@ -26,7 +28,11 @@ public:
     virtual const QDateTime& lastMetadataChange() const  = 0;
 
     // get create date
-    virtual const QDateTime& createDate() const         = 0;
+    virtual const QDateTime& createDate() const          = 0;
+
+    virtual int cursorPosition() const                   = 0;
+
+    const QSize minimumSize;
 
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     //virtual static QUuid uuid(QString filePath) = 0;

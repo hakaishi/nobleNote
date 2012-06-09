@@ -37,6 +37,11 @@ public:
     // get create date
     const QDateTime& createDate() const         { return createDate_;}
 
+    int cursorPosition() const { return cursorPosition_; }
+
+    // holds the window size
+    const QSize& size() const { return size_; }
+
 //     // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     static QUuid uuid(QString filePath);
 
@@ -60,6 +65,8 @@ private:
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
+    int cursorPosition_;
+    QSize size_;
 };
 
 #endif // HTMLNOTEREADER_H

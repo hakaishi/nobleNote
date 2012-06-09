@@ -41,6 +41,22 @@ void HtmlNoteReader::read(const QString& filePath)
     createDate_ = QDateTime::fromString(metaContent(content,"create-date"),Qt::ISODate);
     //lastMetadataChange_ = info.lastModified(); // not implemented
 
+    {
+        bool ok = false;
+        int pos = metaContent(content,"cursor-position").toInt(&ok);
+        cursorPosition_ = ok ? pos : 0;
+    }
+    {
+        bool ok = false;
+        int pos = metaContent(content,"width").toInt(&ok);
+        size_.setWidth(ok && pos > minimumSize.width() ? pos :  minimumSize.width());
+    }
+    {
+        bool ok = false;
+        int pos = metaContent(content,"height").toInt(&ok);
+        size_.setHeight(ok && pos > minimumSize.height() ? pos : minimumSize.height());
+    }
+
         QFileInfo info(filePath);
 //    // fallback dates
 //    if(lastChange_.isNull())

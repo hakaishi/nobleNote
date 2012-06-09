@@ -25,22 +25,21 @@ void HtmlNoteWriter::write()
 
     document_->setMetaInformation(QTextDocument::DocumentTitle,title_);
 
-    QString content = document_->toHtml();
+    QString html = document_->toHtml();
 
     // remove { } braces
     QString uuidStr = uuid_.toString().remove(0,1);
     uuidStr.chop(1);
 
-    QString metaUuid("<meta name=\"uuid\" content=\"" + uuidStr + "\"/>");
-
-    QString metaLastChange("<meta name=\"last-change-date\" content=\"" +DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_) + "\"/>");
-    QString metaCreateDate("<meta name=\"create-date\" content=\"" +DateTime::toISO8601(createDate_.isNull()? QDateTime::currentDateTime():createDate_) + "\"/>");
-
     // insert meta elements
-    int headIdx = content.indexOf("<head>");
-    content.insert(headIdx + qstrlen("<head>"), metaCreateDate);
-    content.insert(headIdx + qstrlen("<head>"), metaLastChange);
-    content.insert(headIdx + qstrlen("<head>"), metaUuid);
+    insertMetaElement(&html,"width",QString::number(size_.width()));
+    insertMetaElement(&html,"height",QString::number(size_.width()));
+    insertMetaElement(&html,"cursor-position",QString::number(cursorPosition_));
+    insertMetaElement(&html,"create-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));
+    insertMetaElement(&html,"last-change-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));
+    insertMetaElement(&html,"uuid",uuidStr);
+
+
 
     QFile file(filePath_);
     if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
@@ -50,8 +49,15 @@ void HtmlNoteWriter::write()
     }
 
     QTextStream out(&file);
-    out << content;
+    out << html;
     file.close();
+}
+
+void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const QString &content)
+{
+    QString metaLine("<meta name=\"" + name + "\" content=\"" + content + "\"/>");
+    int headIdx = html->indexOf("<head>");
+    html->insert(headIdx + qstrlen("<head>"),metaLine);
 }
 
 /*static*/ void HtmlNoteWriter::writeXml2Html(const QString &xmlFilePath, const QString &outputPath)

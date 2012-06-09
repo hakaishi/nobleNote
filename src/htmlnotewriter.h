@@ -49,12 +49,22 @@ public:
     void setCreateDate(const QDateTime& dt)     { createDate_ = dt;}
     const QDateTime& createDate() const         { return createDate_;}
 
+    // text cursor position
+    void setCursorPosition(int cursorPosition){ cursorPosition_ = cursorPosition; }
+    int cursorPosition() const { return cursorPosition_; }
+
+    // holds the window size
+    void setSize( const QSize& size){ size_ = size; }
+    const QSize& size() const { return size_; }
+
     // writes the given tomboy xml note as a html note. if creatFolder is true, the file will be created
     // inside a folder. The name of the folder is determined by the <tag> element
     // outputPath is a directory
     static void writeXml2Html(const QString &xmlFilePath, const QString & outputPath);
 
-    // TODO clear statement?
+protected:
+    // insert a meta element after the <head>
+    static void insertMetaElement(QString *html, const QString& name, const QString& content);
 
 private:
     QString title_;
@@ -63,6 +73,8 @@ private:
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
+    int cursorPosition_;
+    QSize size_;
 
     QString filePath_;
 };
