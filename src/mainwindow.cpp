@@ -190,7 +190,6 @@ NobleNote::NobleNote()
      connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
      connect(showHideAdvancedSearchButton, SIGNAL(clicked(bool)), this,
        SLOT(showHideAdvancedSearch()));
-     connect(actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
 }
 
