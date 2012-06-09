@@ -49,12 +49,12 @@ void HtmlNoteReader::read(const QString& filePath)
     {
         bool ok = false;
         int pos = metaContent(content,"width").toInt(&ok);
-        size_.setWidth(ok && pos > minimumSize.width() ? pos :  minimumSize.width());
+        size_.setWidth(ok && pos > sizeHint.width() ? pos :  sizeHint.width());
     }
     {
         bool ok = false;
         int pos = metaContent(content,"height").toInt(&ok);
-        size_.setHeight(ok && pos > minimumSize.height() ? pos : minimumSize.height());
+        size_.setHeight(ok && pos > sizeHint.height() ? pos : sizeHint.height());
     }
 
         QFileInfo info(filePath);

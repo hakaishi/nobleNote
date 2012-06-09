@@ -89,13 +89,13 @@ void XmlNoteReader::read()
         {
             bool ok = false;
             int pos = readElementText().toInt(&ok);
-            size_.setWidth(ok && pos > minimumSize.width() ? pos :  minimumSize.width());
+            size_.setWidth(ok && pos > sizeHint.width() ? pos :  sizeHint.width());
         }
         else if(name() == "height")
         {
             bool ok = false;
             int pos = readElementText().toInt(&ok);
-            size_.setHeight(ok && pos > minimumSize.height() ? pos : minimumSize.height());
+            size_.setHeight(ok && pos > sizeHint.height() ? pos : sizeHint.height());
         }
 
 

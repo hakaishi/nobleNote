@@ -33,7 +33,7 @@ void HtmlNoteWriter::write()
 
     // insert meta elements
     insertMetaElement(&html,"width",QString::number(size_.width()));
-    insertMetaElement(&html,"height",QString::number(size_.width()));
+    insertMetaElement(&html,"height",QString::number(size_.height()));
     insertMetaElement(&html,"cursor-position",QString::number(cursorPosition_));
     insertMetaElement(&html,"create-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));
     insertMetaElement(&html,"last-change-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));

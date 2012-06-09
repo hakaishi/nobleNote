@@ -10,13 +10,14 @@
 #include <QScopedPointer>
 #include <QDebug>
 
-NoteDescriptor::NoteDescriptor(QString filePath, TextDocument *document, QWidget *noteWidget) :
+NoteDescriptor::NoteDescriptor(QString filePath,QTextEdit * textEdit, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
 {
     initialLock = new Lock; // this will block focusInEvent from the textEdit from signalling stateChange() if this object is constructed
 
     noteWidget_ = noteWidget;
     document_ = document;
+    textEdit_ = textEdit;
     filePath_ = filePath;
     load(filePath_);
     connect(document_,SIGNAL(delayedModificationChanged()),this,SLOT(stateChange()));
@@ -132,6 +133,9 @@ void NoteDescriptor::write(const QString &filePath, QUuid uuid)
     //writer.setLastMetadataChange(lastMetadataChange_);
     writer.setCreateDate(createDate_);
     writer.setTitle(title_);
+    writer.setCursorPosition(textEdit_->textCursor().position());
+    if(noteWidget_)
+        writer.setSize(noteWidget_->size());
     writer.write();
 }
 
@@ -154,16 +158,25 @@ void NoteDescriptor::load(const QString& filePath)
         title_ = QFileInfo(filePath).baseName();
     }
 
-    // TODO automatically write html notes with missing uuid/datetimes or xml notes to html into the same filename
-    // Important: must destroy reader objects before writing
 
     if(noteWidget_)
+    {
         noteWidget_->setWindowTitle(title_);
+        noteWidget_->resize(reader->size());
+    }
+
+    QTextCursor cursor(document_);
+    cursor.setPosition(reader->cursorPosition());
+    textEdit_->setTextCursor(cursor);
 
     // dates can be null, HtmlNoteWriter will generate non null dates
     lastChange_ = reader->lastChange();
     createDate_ = reader->createDate();
     uuid_ = reader->uuid(); // can be null
+
+
+    delete reader;
+    reader = 0;
 
      // incomplete note, overwrite with html format
     if(isXmlNote || lastChange_.isNull() /*|| createDate_.isNull()*/ || uuid_.isNull())
@@ -180,7 +193,7 @@ void NoteDescriptor::load(const QString& filePath)
     //lastMetadataChange_ = reader->lastMetadataChange().isNull() ? QFileInfo(filePath).lastModified() : reader->lastMetadataChange();
 
     document_->setModified(false); // avoid emit of delayedModificationChanged()
-    delete reader;
+
 }
 
 
