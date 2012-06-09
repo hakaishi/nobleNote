@@ -6,6 +6,9 @@
 #include "preferences.h"
 #include "lineedit.h"
 #include "findfilesystemmodel.h"
+#include "highlighter.h"
+#include "notedescriptor.h"
+#include "htmlnotewriter.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -14,14 +17,10 @@
 #include <QDesktopServices>
 #include <QSettings>
 #include <QMessageBox>
-#include <QDebug>
 #include <QFileIconProvider>
 #include <QList>
 #include <QFileDialog>
 #include <QPushButton>
-#include "highlighter.h"
-#include "notedescriptor.h"
-#include "htmlnotewriter.h"
 
 NobleNote::NobleNote()
 {

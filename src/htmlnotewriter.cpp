@@ -1,9 +1,9 @@
 #include "htmlnotewriter.h"
+#include "datetime.h"
+#include "xmlnotereader.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDateTime>
-#include "datetime.h"
-#include "xmlnotereader.h"
 #include <QDir>
 
 

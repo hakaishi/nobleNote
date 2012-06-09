@@ -1,7 +1,7 @@
 #include "xmlnotewriter.h"
+#include "datetime.h"
 #include <QTextDocument>
-#include <qtextcursor.h>
-#include <datetime.h>
+#include <QTextCursor>
 #include <QApplication>
 #include <QFile>
 #include <QDebug>

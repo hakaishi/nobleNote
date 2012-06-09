@@ -4,14 +4,14 @@
 #include "textedit.h"
 #include "textsearchtoolbar.h"
 #include "highlighter.h"
+#include "textdocument.h"
+#include "notedescriptor.h"
 #include <QFile>
 #include <QPushButton>
 #include <QDir>
 #include <QToolBar>
 #include <QColorDialog>
 #include <QSettings>
-#include <textdocument.h>
-#include "notedescriptor.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
@@ -21,6 +21,10 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      //notePath = filePath;
 
      searchbarVisible = false; //initializing
+
+     buttonBox = new QDialogButtonBox(this);
+     buttonBox->setStandardButtons(QDialogButtonBox::Reset);
+     gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
      textEdit = new TextEdit(this);
      textDocument = new TextDocument(this);
@@ -50,6 +54,8 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      searchB->setVisible(false);
 
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
+     connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
+       this, SLOT(undoAll()));
      connect(textEdit,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
 
@@ -87,6 +93,11 @@ void Note::keyPressEvent(QKeyEvent *k){
          searchB->setVisible(true);
          searchB->searchLine->setFocus();
      }
+}
+
+void Note::undoAll(){
+     while(textEdit->document()->availableUndoSteps() > 0)
+       textEdit->undo();
 }
 
 void Note::selectNextExpression(){
