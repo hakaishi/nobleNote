@@ -112,5 +112,7 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
     writer.setLastMetadataChange(reader.lastMetadataChange());
     writer.setCreateDate(reader.createDate());
     writer.setUuid(reader.uuid());
+    writer.setSize(reader.size());
+    writer.setCursorPosition(reader.cursorPosition());
     writer.write();
 }
