@@ -8,13 +8,13 @@
 #include <QComboBox>
 #include <QKeyEvent>
 #include <QDateTime>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QDialogButtonBox>
 
 class TextFormattingToolbar;
 class TextSearchToolbar;
 class NewNoteName;
-class TextEdit;
+class TextBrowser;
 class Highlighter;
 class NoteDescriptor;
 
@@ -29,7 +29,7 @@ class Note : public QMainWindow, public Ui::Note {
 
      private:
       QDialogButtonBox *buttonBox;
-      TextEdit *textEdit;
+      TextBrowser *textBrowser;
       TextDocument *textDocument;
 
       QMenu     *menu;
