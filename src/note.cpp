@@ -4,7 +4,6 @@
 #include "textedit.h"
 #include "textsearchtoolbar.h"
 #include "highlighter.h"
-#include "linkhighlighter.h"
 #include "textdocument.h"
 #include "notedescriptor.h"
 #include <QFile>
@@ -38,7 +37,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      gridLayout->addWidget(textEdit, 0, 0, 1, 1);
      textEdit->setFocus();
 
-     linkHighlighter = new LinkHighlighter(textEdit->document());
+     highlighter = new Highlighter(textEdit->document());
 
      alreadyAsked = false;
 

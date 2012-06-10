@@ -1,17 +1,29 @@
 #include "highlighter.h"
 
-Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){ }
-
-void Highlighter::highlightBlock(const QString &text){
-    if(expression.isEmpty())return;
-
+Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){
      HighlightingRule rule;
 
-     keywordFormat.setBackground(Qt::yellow);
+     linkFormat.setForeground(Qt::blue);
+     linkFormat.setFontUnderline(true);
 
-     rule.pattern = QRegExp(expression, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
-     rule.format = keywordFormat;
-     highlightingRules.append(rule);
+     QStringList keywordPatterns;
+     keywordPatterns << "((https?|ftp)://\\S+)" << "((\\S+)(@)(\\S+)(\\.)(\\S+))";
+
+     foreach (const QString &pattern, keywordPatterns) {
+         rule.pattern = QRegExp(pattern);
+         rule.format = linkFormat;
+         highlightingRules.append(rule);
+     }
+}
+
+void Highlighter::highlightBlock(const QString &text){
+     HighlightingRule rule;
+     keywordFormat.setBackground(Qt::yellow);
+     if(!expression.isEmpty()){
+       rule.pattern = QRegExp(expression, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+       rule.format = keywordFormat;
+       highlightingRules.append(rule);
+     }
 
      foreach(const HighlightingRule &rule, highlightingRules){
        QRegExp expression(rule.pattern);
