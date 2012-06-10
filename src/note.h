@@ -16,6 +16,7 @@ class TextSearchToolbar;
 class NewNoteName;
 class TextEdit;
 class Highlighter;
+class LinkHighlighter;
 class NoteDescriptor;
 
 class Note : public QMainWindow, public Ui::Note {
@@ -39,6 +40,7 @@ class Note : public QMainWindow, public Ui::Note {
       bool      alreadyAsked;
       NewNoteName *newNote;
       Highlighter *highlighter;
+      LinkHighlighter *linkHighlighter;
 
       NoteDescriptor * noteDescriptor_;
 

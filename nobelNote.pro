@@ -18,7 +18,7 @@ HEADERS = src/mainwindow.h src/note.h src/welcome.h \
     src/xorcipher.h \
     src/textformattingtoolbar.h \
     src/newnotename.h \
-    src/highlighter.h src/textsearchtoolbar.h \
+    src/linkhighlighter.h src/highlighter.h src/textsearchtoolbar.h \
     src/xmlnotewriter.h \
     src/xmlnotereader.h \
     src/datetime.h \
@@ -36,7 +36,7 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
     src/xorcipher.cpp \
     src/textformattingtoolbar.cpp \
     src/newnotename.cpp \
-    src/highlighter.cpp src/textsearchtoolbar.cpp \
+    src/linkhighlighter.cpp src/highlighter.cpp src/textsearchtoolbar.cpp \
     src/xmlnotewriter.cpp \
     src/xmlnotereader.cpp \
     src/textdocument.cpp \
