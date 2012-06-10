@@ -25,6 +25,7 @@ class Highlighter : public QSyntaxHighlighter{
       };
       QVector<HighlightingRule> highlightingRules;
 
+      QTextCharFormat linkFormat;
       QTextCharFormat keywordFormat;
 };
 
