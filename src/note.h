@@ -2,13 +2,14 @@
 #define NOTE_H
 
 #include "ui_note.h"
+#include "textdocument.h"
 #include <QTimer>
 #include <QFontComboBox>
 #include <QComboBox>
 #include <QKeyEvent>
 #include <QDateTime>
 #include <QTextEdit>
-#include "textdocument.h"
+#include <QDialogButtonBox>
 
 class TextFormattingToolbar;
 class TextSearchToolbar;
@@ -27,6 +28,7 @@ class Note : public QMainWindow, public Ui::Note {
       bool    searchbarVisible;
 
      private:
+      QDialogButtonBox *buttonBox;
       TextEdit *textEdit;
       TextDocument *textDocument;
 
@@ -41,7 +43,7 @@ class Note : public QMainWindow, public Ui::Note {
       NoteDescriptor * noteDescriptor_;
 
      public slots:
-
+      void undoAll();
       void selectNextExpression();
       void selectPreviousExpression();
       void highlightText(QString str);

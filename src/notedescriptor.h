@@ -1,11 +1,11 @@
 #ifndef NOTEDESCRIPTOR_H
 #define NOTEDESCRIPTOR_H
 
-#include <QObject>
 #include "xmlnotereader.h"
 #include "xmlnotewriter.h"
-#include <QTextDocument>
 #include "textdocument.h"
+#include <QObject>
+#include <QTextDocument>
 #include <QTextEdit>
 
 /**

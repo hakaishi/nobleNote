@@ -1,14 +1,13 @@
 #include "notedescriptor.h"
+#include "htmlnotereader.h"
+#include "htmlnotewriter.h"
 #include <QFile>
 #include <QTimer>
 #include <QSettings>
-#include "htmlnotereader.h"
-#include "htmlnotewriter.h"
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QTextDocument>
 #include <QScopedPointer>
-#include <QDebug>
 
 NoteDescriptor::NoteDescriptor(QString filePath,QTextEdit * textEdit, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
@@ -193,9 +192,7 @@ void NoteDescriptor::load(const QString& filePath)
     //lastMetadataChange_ = reader->lastMetadataChange().isNull() ? QFileInfo(filePath).lastModified() : reader->lastMetadataChange();
 
     document_->setModified(false); // avoid emit of delayedModificationChanged()
-
 }
-
 
 bool NoteDescriptor::Lock::isLocked()
 {

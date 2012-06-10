@@ -1,5 +1,5 @@
 #include "xmlnotereader.h"
-#include <qtextcursor.h>
+#include <QTextCursor>
 #include <QDirIterator>
 
 

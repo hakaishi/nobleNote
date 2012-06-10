@@ -1,12 +1,12 @@
 #ifndef XMLNOTEREADER_H
 #define XMLNOTEREADER_H
 
+#include "abstractnotereader.h"
 #include <QXmlStreamReader>
 #include <QTextFrame>
 #include <QUuid>
 #include <QDateTime>
 #include <QFile>
-#include "abstractnotereader.h"
 #include <QTextDocument>
 
 /**

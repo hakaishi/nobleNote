@@ -1,12 +1,12 @@
 #ifndef TEXTSEARCHTOOLBAR_H
 #define TEXTSEARCHTOOLBAR_H
 
+#include "lineedit.h"
 #include <QToolBar>
 #include <QCheckBox>
 #include <QToolButton>
 #include <QTextEdit>
 #include <QLineEdit>
-#include "lineedit.h"
 
 class LineEdit;
 
