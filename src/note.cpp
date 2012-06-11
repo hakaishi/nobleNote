@@ -29,6 +29,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textBrowser = new TextBrowser(this);
      textDocument = new TextDocument(this);
      textBrowser->setDocument(textDocument);
+     textBrowser->setOpenExternalLinks(true);
      textBrowser->ensureCursorVisible();
 
      noteDescriptor_ = new NoteDescriptor(filePath,textBrowser, textDocument,this); // must be constructed after TextDocument

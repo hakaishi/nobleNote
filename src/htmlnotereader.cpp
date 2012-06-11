@@ -24,36 +24,36 @@ void HtmlNoteReader::read(const QString& filePath)
     }
 
 
-    QString content;
+    QString html;
 
     QTextStream in(&file);
-    content = in.readAll();
+    html = in.readAll();
     file.close();
 
-    if(!Qt::mightBeRichText(content))
-        content = Qt::convertFromPlainText(content);
+    if(!Qt::mightBeRichText(html))
+        html = Qt::convertFromPlainText(html);
 
-    if(content.isEmpty())
+    if(html.isEmpty())
         return;
 
-    uuid_ = uuidFromHtml(content);
-    lastChange_ = QDateTime::fromString(metaContent(content,"last-change-date"),Qt::ISODate);
-    createDate_ = QDateTime::fromString(metaContent(content,"create-date"),Qt::ISODate);
+    uuid_ = uuidFromHtml(html);
+    lastChange_ = QDateTime::fromString(metaContent(html,"last-change-date"),Qt::ISODate);
+    createDate_ = QDateTime::fromString(metaContent(html,"create-date"),Qt::ISODate);
     //lastMetadataChange_ = info.lastModified(); // not implemented
 
     {
         bool ok = false;
-        int pos = metaContent(content,"cursor-position").toInt(&ok);
+        int pos = metaContent(html,"cursor-position").toInt(&ok);
         cursorPosition_ = ok ? pos : 0;
     }
     {
         bool ok = false;
-        int pos = metaContent(content,"width").toInt(&ok);
+        int pos = metaContent(html,"width").toInt(&ok);
         size_.setWidth(ok && pos > sizeHint.width() ? pos :  sizeHint.width());
     }
     {
         bool ok = false;
-        int pos = metaContent(content,"height").toInt(&ok);
+        int pos = metaContent(html,"height").toInt(&ok);
         size_.setHeight(ok && pos > sizeHint.height() ? pos : sizeHint.height());
     }
 
@@ -67,7 +67,7 @@ void HtmlNoteReader::read(const QString& filePath)
 
      if(document_)
      {
-         document_->setHtml(content);
+         document_->setHtml(html);
          title_ = document_->metaInformation(QTextDocument::DocumentTitle);
          if(title_.isEmpty())
              title_ = info.baseName();  // fallback title
