@@ -1,7 +1,7 @@
 #include "note.h"
 #include "textformattingtoolbar.h"
 #include "newnotename.h"
-#include "textedit.h"
+#include "textbrowser.h"
 #include "textsearchtoolbar.h"
 #include "highlighter.h"
 #include "textdocument.h"
@@ -26,28 +26,28 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      buttonBox->setStandardButtons(QDialogButtonBox::Reset);
      gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
-     textEdit = new TextEdit(this);
+     textBrowser = new TextBrowser(this);
      textDocument = new TextDocument(this);
-     textEdit->setDocument(textDocument);
-     textEdit->ensureCursorVisible();
+     textBrowser->setDocument(textDocument);
+     textBrowser->ensureCursorVisible();
 
-     noteDescriptor_ = new NoteDescriptor(filePath,textEdit, textDocument,this); // must be constructed after TextDocument
-     textEdit->setReadOnly(noteDescriptor_->readOnly());
+     noteDescriptor_ = new NoteDescriptor(filePath,textBrowser, textDocument,this); // must be constructed after TextDocument
+     textBrowser->setReadOnly(noteDescriptor_->readOnly());
 
-     gridLayout->addWidget(textEdit, 0, 0, 1, 1);
-     textEdit->setFocus();
+     gridLayout->addWidget(textBrowser, 0, 0, 1, 1);
+     textBrowser->setFocus();
 
-     highlighter = new Highlighter(textEdit->document());
+     highlighter = new Highlighter(textBrowser->document());
 
      alreadyAsked = false;
 
-     toolbar = new TextFormattingToolbar(textEdit,this);
+     toolbar = new TextFormattingToolbar(textBrowser,this);
      toolbar->setFocusPolicy(Qt::TabFocus);
      addToolBar(toolbar);
 
      addToolBarBreak(Qt::TopToolBarArea);
 
-     searchB = new TextSearchToolbar(textEdit,this);
+     searchB = new TextSearchToolbar(textBrowser,this);
      searchB->setFocusPolicy(Qt::TabFocus);
      addToolBar(searchB);
 
@@ -58,7 +58,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
        this, SLOT(undoAll()));
-     connect(textEdit,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
+     connect(textBrowser,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
 
      connect(searchB->searchLine, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
@@ -87,9 +87,9 @@ void Note::closeEvent(QCloseEvent* close_Note){
 
 void Note::keyPressEvent(QKeyEvent *k){
      if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
-       if(textEdit->textCursor().hasSelection()){
-         searchB->searchLine->setText(textEdit->textCursor().selectedText());
-         highlightText(textEdit->textCursor().selectedText());
+       if(textBrowser->textCursor().hasSelection()){
+         searchB->searchLine->setText(textBrowser->textCursor().selectedText());
+         highlightText(textBrowser->textCursor().selectedText());
        }
        if(!searchB->isVisible())
          searchB->setVisible(true);
@@ -98,21 +98,21 @@ void Note::keyPressEvent(QKeyEvent *k){
 }
 
 void Note::undoAll(){
-     while(textEdit->document()->availableUndoSteps() > 0)
-       textEdit->undo();
+     while(textBrowser->document()->availableUndoSteps() > 0)
+       textBrowser->undo();
 }
 
 void Note::selectNextExpression(){
      if(searchB->caseSensitiveBox->isChecked()){
-       if(!textEdit->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively)){
-         textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-         textEdit->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively);
+       if(!textBrowser->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively)){
+         textBrowser->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textBrowser->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively);
        }
      }
      else{
-       if(!textEdit->find(searchB->searchLine->text())){
-         textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-         textEdit->find(searchB->searchLine->text());
+       if(!textBrowser->find(searchB->searchLine->text())){
+         textBrowser->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textBrowser->find(searchB->searchLine->text());
        }
      }
      highlightText(searchB->searchLine->text());
@@ -120,31 +120,31 @@ void Note::selectNextExpression(){
 
 void Note::selectPreviousExpression(){
      if(searchB->caseSensitiveBox->isChecked()){
-       if(!textEdit->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively |
+       if(!textBrowser->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively |
            QTextDocument::FindBackward)){
-         textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-         textEdit->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively |
+         textBrowser->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textBrowser->find(searchB->searchLine->text(), QTextDocument::FindCaseSensitively |
            QTextDocument::FindBackward);
        }
      }
      else{
-       if(!textEdit->find(searchB->searchLine->text(), QTextDocument::FindBackward)){
-         textEdit->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
-         textEdit->find(searchB->searchLine->text(), QTextDocument::FindBackward);
+       if(!textBrowser->find(searchB->searchLine->text(), QTextDocument::FindBackward)){
+         textBrowser->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textBrowser->find(searchB->searchLine->text(), QTextDocument::FindBackward);
        }
      }
      highlightText(searchB->searchLine->text());
 }
 
 void Note::highlightText(QString str){
-     highlighter = new Highlighter(textEdit->document());
+     highlighter = new Highlighter(textBrowser->document());
      highlighter->expression = str;
      if(searchB->caseSensitiveBox->isChecked())
        highlighter->caseSensitive = true;
      else
        highlighter->caseSensitive = false;
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
-     connect(searchB->closeSearch, SIGNAL(clicked(bool)), textEdit, SLOT(setFocus()));
+     connect(searchB->closeSearch, SIGNAL(clicked(bool)), textBrowser, SLOT(setFocus()));
      connect(searchB->closeSearch, SIGNAL(clicked(bool)), searchB->searchLine, SLOT(clear()));
 }
 

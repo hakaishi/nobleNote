@@ -17,9 +17,9 @@ Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){
 }
 
 void Highlighter::highlightBlock(const QString &text){
-     HighlightingRule rule;
-     keywordFormat.setBackground(Qt::yellow);
      if(!expression.isEmpty()){
+       HighlightingRule rule;
+       keywordFormat.setBackground(Qt::yellow);
        rule.pattern = QRegExp(expression, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
        rule.format = keywordFormat;
        highlightingRules.append(rule);

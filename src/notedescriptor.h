@@ -6,7 +6,7 @@
 #include "textdocument.h"
 #include <QObject>
 #include <QTextDocument>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 /**
  * @brief The NoteDescriptor class provides an abstraction layer to the underlying note
@@ -19,7 +19,7 @@ class NoteDescriptor : public QObject
 {
     Q_OBJECT
 public:
-    explicit NoteDescriptor(QString filePath, QTextEdit * textEdit, TextDocument *document, QWidget *noteWidget = 0);
+    explicit NoteDescriptor(QString filePath, QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget = 0);
     const QString& filePath() const { return filePath_; } // return the current filePath
     bool readOnly() const { return readOnly_; }
     
@@ -42,7 +42,7 @@ private:
     QWidget * noteWidget_;
     QString filePath_;
     TextDocument * document_;
-    QTextEdit  * textEdit_;
+    QTextBrowser  * textBrowser_;
     QDateTime lastChange_;
     QDateTime createDate_;
     //QDateTime lastMetadataChange_;

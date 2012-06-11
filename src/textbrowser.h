@@ -1,18 +1,18 @@
-#ifndef LINEEDIT_H
-#define LINEEDIT_H
+#ifndef TEXTBROWSER_H
+#define TEXTBROWSER_H
 
-#include <QTextEdit>
+#include <QTextBrowser>
 
 /**
   * a text edit with a custom focus in event
   *
   */
 
-class TextEdit : public QTextEdit{
+class TextBrowser : public QTextBrowser{
      Q_OBJECT
 
      public:
-      TextEdit(QWidget *parent = 0);
+      TextBrowser(QWidget *parent = 0);
 
      signals:
       void signalFocusInEvent();

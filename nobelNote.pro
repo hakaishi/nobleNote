@@ -14,7 +14,7 @@ HEADERS = src/mainwindow.h src/note.h src/welcome.h \
     src/findfilesystemmodel.h \
     src/findfilemodel.h \
     src/lineedit.h \
-    src/textedit.h \
+    src/textbrowser.h \
     src/xorcipher.h \
     src/textformattingtoolbar.h \
     src/newnotename.h \
@@ -32,7 +32,7 @@ FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
     src/preferences.cpp \
     src/findfilemodel.cpp \
-    src/findfilesystemmodel.cpp src/lineedit.cpp src/textedit.cpp \
+    src/findfilesystemmodel.cpp src/lineedit.cpp src/textbrowser.cpp \
     src/xorcipher.cpp \
     src/textformattingtoolbar.cpp \
     src/newnotename.cpp \

@@ -9,14 +9,14 @@
 #include <QTextDocument>
 #include <QScopedPointer>
 
-NoteDescriptor::NoteDescriptor(QString filePath,QTextEdit * textEdit, TextDocument *document, QWidget *noteWidget) :
+NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
 {
     initialLock = new Lock; // this will block focusInEvent from the textEdit from signalling stateChange() if this object is constructed
 
     noteWidget_ = noteWidget;
     document_ = document;
-    textEdit_ = textEdit;
+    textBrowser_ = textBrowser;
     filePath_ = filePath;
     load(filePath_);
     connect(document_,SIGNAL(delayedModificationChanged()),this,SLOT(stateChange()));
@@ -132,7 +132,7 @@ void NoteDescriptor::write(const QString &filePath, QUuid uuid)
     //writer.setLastMetadataChange(lastMetadataChange_);
     writer.setCreateDate(createDate_);
     writer.setTitle(title_);
-    writer.setCursorPosition(textEdit_->textCursor().position());
+    writer.setCursorPosition(textBrowser_->textCursor().position());
     if(noteWidget_)
         writer.setSize(noteWidget_->size());
     writer.write();
@@ -166,7 +166,7 @@ void NoteDescriptor::load(const QString& filePath)
 
     QTextCursor cursor(document_);
     cursor.setPosition(reader->cursorPosition());
-    textEdit_->setTextCursor(cursor);
+    textBrowser_->setTextCursor(cursor);
 
     // dates can be null, HtmlNoteWriter will generate non null dates
     lastChange_ = reader->lastChange();
