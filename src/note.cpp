@@ -34,6 +34,8 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
      noteDescriptor_ = new NoteDescriptor(filePath,textBrowser, textDocument,this); // must be constructed after TextDocument
      textBrowser->setReadOnly(noteDescriptor_->readOnly());
+     textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
+                                             Qt::LinksAccessibleByMouse);
 
      gridLayout->addWidget(textBrowser, 0, 0, 1, 1);
      textBrowser->setFocus();
