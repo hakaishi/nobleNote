@@ -89,6 +89,12 @@ void Note::closeEvent(QCloseEvent* close_Note){
 }
 
 void Note::keyPressEvent(QKeyEvent *k){
+     if(k->modifiers() == Qt::ControlModifier){
+       textBrowser->setTextInteractionFlags(Qt::LinksAccessibleByMouse |
+                                              Qt::LinksAccessibleByKeyboard);
+       textBrowser->setReadOnly(noteDescriptor_->readOnly());
+     }
+
      if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_F)){
        if(textBrowser->textCursor().hasSelection()){
          searchB->searchLine->setText(textBrowser->textCursor().selectedText());
@@ -98,6 +104,12 @@ void Note::keyPressEvent(QKeyEvent *k){
          searchB->setVisible(true);
          searchB->searchLine->setFocus();
      }
+}
+
+void Note::keyReleaseEvent(QKeyEvent *k){
+     textBrowser->setReadOnly(noteDescriptor_->readOnly());
+     textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
+                                            Qt::LinksAccessibleByMouse);
 }
 
 void Note::undoAll(){
