@@ -1,20 +1,6 @@
 #include "highlighter.h"
 
-Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){
-     HighlightingRule rule;
-
-     linkFormat.setForeground(Qt::blue);
-     linkFormat.setFontUnderline(true);
-
-     QStringList keywordPatterns;
-     keywordPatterns << "((https?|ftp)://\\S+)" << "((\\S+)(@)(\\S+)(\\.)(\\S+))";
-
-     foreach (const QString &pattern, keywordPatterns) {
-         rule.pattern = QRegExp(pattern);
-         rule.format = linkFormat;
-         highlightingRules.append(rule);
-     }
-}
+Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){ }
 
 void Highlighter::highlightBlock(const QString &text){
      if(!expression.isEmpty()){
@@ -23,15 +9,15 @@ void Highlighter::highlightBlock(const QString &text){
        rule.pattern = QRegExp(expression, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
        rule.format = keywordFormat;
        highlightingRules.append(rule);
-     }
 
-     foreach(const HighlightingRule &rule, highlightingRules){
-       QRegExp expression(rule.pattern);
-       int index = expression.indexIn(text);
-       while(index >= 0){
-         int length = expression.matchedLength();
-         setFormat(index, length, rule.format);
-         index = expression.indexIn(text, index + length);
+       foreach(const HighlightingRule &rule, highlightingRules){
+         QRegExp expression(rule.pattern);
+         int index = expression.indexIn(text);
+         while(index >= 0){
+           int length = expression.matchedLength();
+           setFormat(index, length, rule.format);
+           index = expression.indexIn(text, index + length);
+         }
        }
      }
 }

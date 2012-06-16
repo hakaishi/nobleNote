@@ -40,8 +40,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      gridLayout->addWidget(textBrowser, 0, 0, 1, 1);
      textBrowser->setFocus();
 
-     highlighter = new Highlighter(textBrowser->document());
-
      alreadyAsked = false;
 
      toolbar = new TextFormattingToolbar(textBrowser,this);
