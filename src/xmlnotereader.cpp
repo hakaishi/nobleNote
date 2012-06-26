@@ -120,6 +120,9 @@ void XmlNoteReader::readContent()
         // read the text between the formatting elements
         case Characters:
         {
+            // this commented out code does not work with formatted text and multiple links
+            // TODO a QTextDocumentFragment must be created via QTextCursor::selected, the fragment must be exported to html
+            // the link applied and reinserted via QTextCursor::insertHtml
 //            if(linkFormat)
 //            {
 //                qDebug("link inserted");
