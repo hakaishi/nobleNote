@@ -145,6 +145,7 @@ void NoteDescriptor::load(const QString& filePath)
 
     bool isXmlNote = false;
 
+
     if(XmlNoteReader::mightBeXmlNote(filePath))
     {
         reader = new XmlNoteReader(filePath,document_);
@@ -156,6 +157,7 @@ void NoteDescriptor::load(const QString& filePath)
         reader = new HtmlNoteReader(filePath,document_);
         title_ = QFileInfo(filePath).baseName();
     }
+
 
 
     if(noteWidget_)

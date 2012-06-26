@@ -98,7 +98,6 @@ void XmlNoteReader::read()
             size_.setHeight(ok && pos > sizeHint.height() ? pos : sizeHint.height());
         }
 
-
         if (QXmlStreamReader::hasError())
         {
             qDebug("XmlNoteReader::read failed: Error reading xml content");
@@ -111,6 +110,7 @@ void XmlNoteReader::readContent()
 {
     QTextCursor cursor(document_->rootFrame());
     QTextCharFormat format;
+    bool linkFormat = false;
     while (!atEnd())
     {
         TokenType token = readNext();
@@ -120,7 +120,13 @@ void XmlNoteReader::readContent()
         // read the text between the formatting elements
         case Characters:
         {
-            cursor.insertText(text().toString(),format);
+//            if(linkFormat)
+//            {
+//                qDebug("link inserted");
+//                cursor.insertHtml("<a href=\"" + text().toString() + "\">" + text().toString() + "</a>");
+//            }
+//            else
+                cursor.insertText(text().toString(),format);
             break;
         }
 
@@ -138,6 +144,9 @@ void XmlNoteReader::readContent()
 
             if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(true);
+
+            if(qualifiedName() == "link:url")
+                linkFormat = true;
 
                 break;
         }
@@ -158,6 +167,9 @@ void XmlNoteReader::readContent()
 
             if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(false);
+
+            if(name() == "link:url")
+                linkFormat = false;
 
             // ignore id
 

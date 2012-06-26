@@ -40,7 +40,9 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       NobleNote();
       ~NobleNote();
 
-     private:
+public slots:
+    void quit();
+private:
       Welcome         *welcome;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;

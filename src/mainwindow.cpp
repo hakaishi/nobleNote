@@ -169,13 +169,13 @@ NobleNote::NobleNote()
      //connect(noteList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(noteRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
      connect(action_Import,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
-     connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+     connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
     #ifndef NO_SYSTEM_TRAY_ICON
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
        this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol     
      connect(minimize_restore_action, SIGNAL(triggered()), this, SLOT(tray_actions()));
       #endif
-     connect(quit_action, SIGNAL(triggered()), qApp, SLOT(quit())); //contextmenu "Quit" for the systray
+     connect(quit_action, SIGNAL(triggered()), this, SLOT(quit())); //contextmenu "Quit" for the systray
      connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
        SLOT(setCurrentFolder(const QModelIndex &)));
      connect(folderList,SIGNAL(activated(QModelIndex)), this,
@@ -300,12 +300,20 @@ void NobleNote::hideEvent(QHideEvent* window_hide){
 
 void NobleNote::closeEvent(QCloseEvent* window_close){
      if(pref->dontQuit->isChecked())
+     {
        hide();
+     }
      else{
        QSettings().setValue("mainwindow_size", saveGeometry());
        qApp->quit();
      }
      QMainWindow::closeEvent(window_close);
+}
+
+void NobleNote::quit()
+{
+    QSettings().setValue("mainwindow_size", saveGeometry());
+    qApp->quit();
 }
 
 void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
