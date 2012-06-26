@@ -111,6 +111,7 @@ void XmlNoteReader::readContent()
     QTextCursor cursor(document_->rootFrame());
     QTextCharFormat format;
     bool linkFormat = false;
+    Q_UNUSED(linkFormat);
     while (!atEnd())
     {
         TokenType token = readNext();

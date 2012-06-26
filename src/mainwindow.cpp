@@ -287,7 +287,7 @@ void NobleNote::tray_actions(){
 #endif
 
 void NobleNote::showEvent(QShowEvent* show_window){
-     minimize_restore_action->setText(tr("&Minimize"));
+
      if(QSettings().contains("mainwindow_size"))
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
      QMainWindow::showEvent(show_window);

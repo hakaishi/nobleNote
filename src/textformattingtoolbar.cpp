@@ -66,6 +66,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     addAction(actionTextBColor);
 
     fontComboBox = new QFontComboBox(this);
+    fontComboBox->setFocusPolicy(Qt::TabFocus);
     addWidget(fontComboBox);
     connect(fontComboBox, SIGNAL(activated(QString)), this, SLOT(fontOfText(QString)));
 
