@@ -340,9 +340,9 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      openNotes+= note;
      note->setObjectName(notePath);
      if(noteModel->sourceModel() == findNoteModel){
-       note->highlightText(searchTextStr);
+       note->highlightText(searchText->text());
        note->searchbarVisible = true;
-       note->setSearchBarText(searchTextStr);
+       note->setSearchBarText(searchText->text());
      }
      note->show();
 }

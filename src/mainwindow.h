@@ -46,7 +46,6 @@ private:
       Welcome         *welcome;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
-      QString         searchTextStr;
       FileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
       FindFileSystemModel * noteModel;
