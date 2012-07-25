@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QTextDocumentFragment>
 #include <QtDebug>
+#include <QApplication>
 
 
 FindFileModel::FindFileModel(QObject *parent) :
@@ -79,6 +80,7 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
     return mimeData;
 }
 
+ // this method may be called multiple times if the user is typing a search word
 void FindFileModel::findInFiles(const QString& fileName, const QString &content,const QString &path)
 {
 
@@ -96,6 +98,8 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
 
     if(future.isRunning())
         future.cancel();
+    else
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     fileContainsFunctor.content = content;
     fileContainsFunctor.fileName = fileName;
@@ -103,12 +107,14 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
     future = QtConcurrent::filtered(files,fileContainsFunctor);
 
     futureWatcher.setFuture(future);
+
 }
 
 void FindFileModel::findInFilesFinished()
 {
     foreach(QString fileName, future.results())
         this->appendFile(fileName);
+    QApplication::restoreOverrideCursor();
 }
 
 bool FindFileModel::FileContains::operator ()(const QString& htmlFilePath)
