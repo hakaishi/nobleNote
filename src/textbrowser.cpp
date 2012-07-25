@@ -1,7 +1,10 @@
 #include "textbrowser.h"
 #include <QTextBrowser>
 
-TextBrowser::TextBrowser(QWidget *parent) : QTextBrowser(parent){ }
+TextBrowser::TextBrowser(QWidget *parent) : QTextBrowser(parent)
+{
+    this->viewport()->setCursor(Qt::IBeamCursor);
+}
 
 void TextBrowser::focusInEvent(QFocusEvent *event){
      emit signalFocusInEvent();
