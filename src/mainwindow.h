@@ -40,6 +40,7 @@ class NobleNote : public QMainWindow, public Ui::NobleNote {
       NobleNote();
       ~NobleNote();
 
+
 public slots:
     void quit();
 private:
@@ -95,7 +96,7 @@ private:
       void selectFirstFolder(QString path); // select first folder
       void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder
       void noteRenameFinished(const QString &path, const QString &oldName, const QString &newName); // updates window title
-
+      void about();
 
      protected:
       void keyPressEvent(QKeyEvent *k);
