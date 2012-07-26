@@ -30,11 +30,11 @@ void HtmlNoteReader::read(const QString& filePath)
     html = in.readAll();
     file.close();
 
-    if(!Qt::mightBeRichText(html))
-        html = Qt::convertFromPlainText(html);
+    if(!html.isEmpty() && !Qt::mightBeRichText(html))
+       html = Qt::convertFromPlainText(html); // this qt method creates unwanted paragraphs if empty Strings are converted
 
-    if(html.isEmpty())
-        return;
+    //if(html.isEmpty())
+    //    return;
 
     uuid_ = uuidFromHtml(html);
     lastChange_ = QDateTime::fromString(metaContent(html,"last-change-date"),Qt::ISODate);
@@ -110,12 +110,14 @@ void HtmlNoteReader::read(const QString& filePath)
 
 QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
 {
-    QString content = html;
+    if(html.isEmpty())
+        return QString();
 
+    QString content = html;
+    QTime time; // avoid forever loop
+    time.start();
     int metaIdx = 0;
     int endIdx = 0;
-    QTime time;
-    time.start();
     // find the meta elements in the html files and read the uuid
     while(metaIdx != -1 || time.elapsed() > 500)
     {

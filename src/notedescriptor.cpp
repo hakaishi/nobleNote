@@ -62,6 +62,9 @@ void NoteDescriptor::stateChange()
             return;
         }
         filePath_ = newFilePath; // old filePath_ not longer needed
+        title_ = QFileInfo(filePath_).baseName();
+        if(noteWidget_)
+            noteWidget_->setWindowTitle(title_); // update window title
     }
 
      HtmlNoteReader reader(filePath_);
