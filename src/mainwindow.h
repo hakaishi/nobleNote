@@ -57,10 +57,6 @@ private:
       Preferences     *pref;
       QAction         *minimize_restore_action;
       QHBoxLayout     *hBoxLayout;
-      QToolButton     *showHideAdvancedSearchButton;
-      QLabel          *findLabel;
-      QFrame          *hLine;
-      bool            searchBoolean;
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> >     openNotes; // every access to openNotes must check for null pointers
       Highlighter *highlighter;
@@ -82,7 +78,6 @@ private:
 #endif
 
       void find();
-      void showHideAdvancedSearch();
       void openNote(const QModelIndex &ind = QModelIndex());
       void showContextMenuF(const QPoint &pos);
       void showContextMenuN(const QPoint &pos);

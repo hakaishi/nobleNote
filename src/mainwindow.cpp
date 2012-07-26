@@ -72,34 +72,14 @@ NobleNote::NobleNote()
      hBoxLayout = new QHBoxLayout();
      gridLayout->addLayout(hBoxLayout, 0, 0);
 
-     showHideAdvancedSearchButton = new QToolButton(this);
-     showHideAdvancedSearchButton->setText("+");
-     showHideAdvancedSearchButton->setMinimumSize(25, 20);
-     hBoxLayout->addWidget(showHideAdvancedSearchButton);
-
-     findLabel = new QLabel(this);
-     findLabel->setText(tr("Search"));
-     hBoxLayout->addWidget(findLabel);
-     QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-     sizePolicy.setHeightForWidth(findLabel->sizePolicy().hasHeightForWidth());
-     findLabel->setSizePolicy(sizePolicy);
-
-     hLine = new QFrame(this);
-     hLine->setFrameStyle(QFrame::HLine);
-     hBoxLayout->addWidget(hLine);
-
-     searchBoolean = false;
-
    //Search line edits
      searchName = new LineEdit(this);
      searchName->setPlaceholderText(tr("Search for note"));
      gridLayout->addWidget(searchName, 1, 0);
-     searchName->setHidden(true);
 
      searchText = new LineEdit(this);
      searchText->setPlaceholderText(tr("Search for content"));
      gridLayout->addWidget(searchText, 2, 0);
-     searchText->setHidden(true);
 
 
      splitter = new QSplitter(centralwidget);
@@ -187,28 +167,11 @@ NobleNote::NobleNote()
      connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
        this, SLOT(showContextMenuN(const QPoint &)));
      connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
-     connect(showHideAdvancedSearchButton, SIGNAL(clicked(bool)), this,
-       SLOT(showHideAdvancedSearch()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
 }
 
 NobleNote::~NobleNote(){}
-
-void NobleNote::showHideAdvancedSearch(){
-     if(!searchBoolean){
-       searchName->show();
-       searchText->show();
-       showHideAdvancedSearchButton->setText("-");
-       searchBoolean = true;
-     }
-     else{
-       searchName->hide();
-       searchText->hide();
-       showHideAdvancedSearchButton->setText("+");
-       searchBoolean = false;
-     }
-}
 
 void NobleNote::find(){
          noteModel->setSourceModel(findNoteModel);
