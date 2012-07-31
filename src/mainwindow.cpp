@@ -217,6 +217,9 @@ void NobleNote::noteRenameFinished(const QString & path, const QString & oldName
 }
 
 void NobleNote::setCurrentFolder(const QModelIndex &ind){
+    // clear search line edits
+    searchName->clear();
+    searchText->clear();
      noteModel->setSourceModel(noteFSModel);
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
 }
