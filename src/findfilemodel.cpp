@@ -134,7 +134,7 @@ bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePat
       QTextStream in(&file);
       QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
       QString noteText = doc.toPlainText();
-      return noteText.contains(content);
+      return noteText.contains(content, Qt::CaseInsensitive);
     }
     return false;
 }
