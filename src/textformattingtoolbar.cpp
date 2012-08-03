@@ -173,9 +173,6 @@ void TextFormattingToolbar::insertHyperlink()
 
     QString selectedText = cursor.selectedText();
 
-    if(selectedText.isEmpty())
-      return;
-
     bool ok;
     QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Adr&ess:"),QLineEdit::Normal,selectedText,&ok);
     if(!ok)
@@ -190,6 +187,9 @@ void TextFormattingToolbar::insertHyperlink()
 QRegExp(">\\b((((https?|ftp)://)|(www\\.))[a-zA-Z0-9_\\.\\-\\?]+)\\b(<?)" , Qt::CaseInsensitive)
 QRegExp(">\\b([a-zA-Z0-9_\\.\\-]+@[a-zA-Z0-9_\\.\\-]+)\\b(<?)", Qt::CaseInsensitive)
 */
+    if(selectedText.isEmpty())
+        selectedText = link;
+
     if(link.contains("@"))
       cursor.insertHtml("<a href=mailto:"+link+"\">"+selectedText+"</a>");
     else
