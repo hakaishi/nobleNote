@@ -29,15 +29,20 @@ private slots:
     void strikedOutText();
     void coloredText();
     void markedText();
+    void insertHyperlink();
     void fontOfText(const QString &f);
     void pointSizeOfText(const QString &p);
 
 private:
     QFontComboBox *fontComboBox;
     QComboBox *comboSize;
-    QAction   *actionTextBold, *actionTextItalic,
-              *actionTextUnderline, *actionTextColor,
-              *actionTextBColor, *actionTextStrikeOut;
+    QAction   *actionTextBold;
+    QAction *actionTextItalic;
+    QAction *actionTextUnderline;
+    QAction *actionTextColor;
+    QAction *actionTextBColor;
+    QAction *actionTextStrikeOut;
+    QAction *actionInsertHyperlink;
     QTextEdit * textEdit_;
     
 };

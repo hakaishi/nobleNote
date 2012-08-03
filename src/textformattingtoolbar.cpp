@@ -2,6 +2,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QColorDialog>
+#include <QInputDialog>
 
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
     QToolBar(parent), textEdit_(textEdit)
@@ -52,6 +53,13 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionTextStrikeOut, SIGNAL(triggered()), this, SLOT(strikedOutText()));
     addAction(actionTextStrikeOut);
     actionTextStrikeOut->setCheckable(true);
+
+    actionInsertHyperlink = new QAction(QIcon::fromTheme("hyperlink",QIcon(":hyperlink")),tr("&Hyperlink"),this);
+    actionInsertHyperlink->setShortcut(Qt::CTRL + Qt::Key_K); // word shortcut
+    actionInsertHyperlink->setPriority(QAction::LowPriority);
+    connect(actionInsertHyperlink,SIGNAL(triggered()),this,SLOT(insertHyperlink()));
+    addAction(actionInsertHyperlink);
+
 
     QPixmap textPix(16, 16);
     textPix.fill(Qt::black);
@@ -156,6 +164,17 @@ void TextFormattingToolbar::markedText(){
      QPixmap pix(16, 16);
      pix.fill(col);
      actionTextColor->setIcon(pix);
+}
+
+void TextFormattingToolbar::insertHyperlink()
+{
+    QTextCursor cursor = textEdit_->textCursor();
+    bool ok;
+    QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Adr&ess:"),QLineEdit::Normal,QString(),&ok);
+    if(!ok)
+        return;
+
+    cursor.insertHtml("<a href=\""+link+"\">"+link+"</a>");
 }
 
 void TextFormattingToolbar::fontOfText(const QString &f){
