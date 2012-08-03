@@ -3,7 +3,6 @@
 #include <QApplication>
 #include <QColorDialog>
 #include <QInputDialog>
-#include <QDebug>
 
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
     QToolBar(parent), textEdit_(textEdit)

@@ -2,7 +2,6 @@
 #include <QTextBrowser>
 #include <QDesktopServices>
 
-
 TextBrowser::TextBrowser(QWidget *parent) : QTextBrowser(parent)
 {
     this->viewport()->setCursor(Qt::IBeamCursor);
