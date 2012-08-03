@@ -24,6 +24,9 @@ public slots:
      protected:
       virtual void focusInEvent(QFocusEvent *fe);
       virtual void focusOutEvent(QFocusEvent *e);
+
+private slots:
+      void openLinkInBrowser(const QUrl link);
 };
 
 #endif // TEXTEDIT_H

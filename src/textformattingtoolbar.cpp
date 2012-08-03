@@ -169,8 +169,22 @@ void TextFormattingToolbar::markedText(){
 void TextFormattingToolbar::insertHyperlink()
 {
     QTextCursor cursor = textEdit_->textCursor();
+
+    // see textbrowser.cpp for link opening mechanism
+
+    QRegExpValidator validator;
+    QRegExp regex(">\\b((((https?|ftp)://)|(www\\.))[a-zA-Z0-9_\\.\\-\\?]+)\\b(<?)" , Qt::CaseInsensitive); // url detection regexp
+    validator.setRegExp(regex);
+    QString defaultLink;
+    QString selectedText = cursor.selectedText();
+    int length = selectedText.length();
+
+    // check if a url is selected
+    if(cursor.hasSelection() && validator.validate(selectedText,length) == QValidator::Acceptable)
+        defaultLink = cursor.selectedText();
+
     bool ok;
-    QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Adr&ess:"),QLineEdit::Normal,QString(),&ok);
+    QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Adr&ess:"),QLineEdit::Normal,defaultLink,&ok);
     if(!ok)
         return;
 
