@@ -1,0 +1,25 @@
+nobleNote
+
+
+INSTALL:
+========
+
+Dependencies: libqt4-dev, build-essential
+
+If you want to install from source, open a terminal and change into this folder.
+To install type:
+
+qmake
+sudo make install distclean
+
+
+UNINSTALL:
+==========
+
+To uninstall type:
+
+qmake     (if the Makefile has been removed)
+sudo make deinstall
+
+(note that ~/.config/nobleNote.conf and
+ the notes at their location won't be removed)

@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="nobleNote">src/icons/nobleNote_64x64.png</file>
-        <file alias="bold">src/icons/format-text-bold.png</file>
-        <file alias="italic">src/icons/format-text-italic.png</file>
-        <file alias="strikedout">src/icons/format-text-strikethrough.png</file>
-        <file alias="underlined">src/icons/format-text-underline.png</file>
-        <file alias="closeB">src/icons/fileclose.png</file>
-        <file alias="hyperlink">src/icons/emblem-web.png</file>
+        <file alias="nobleNote">src/noblenote-icons/noblenote_64x64.png</file>
+        <file alias="bold">src/noblenote-icons/format-text-bold.png</file>
+        <file alias="italic">src/noblenote-icons/format-text-italic.png</file>
+        <file alias="strikedout">src/noblenote-icons/format-text-strikethrough.png</file>
+        <file alias="underlined">src/noblenote-icons/format-text-underline.png</file>
+        <file alias="closeB">src/noblenote-icons/fileclose.png</file>
+        <file alias="hyperlink">src/noblenote-icons/emblem-web.png</file>
     </qresource>
 </RCC>

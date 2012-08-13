@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=nobleNote
+Name[de_DE]=nobleNote
+Exec=noblenote
+Terminal=false
+Type=Application
+Icon=noblenote
+Categories=Utility;

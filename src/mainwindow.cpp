@@ -1,3 +1,28 @@
+/* nobleNote, a note taking application
+ * Copyright (C) 2012 Christian Metscher <hakaishi@web.de>,
+                      Fabian Deuchler <Taiko000@gmail.com>
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+
+ * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
+ */
+
 #include "mainwindow.h"
 #include "welcome.h"
 #include "note.h"
@@ -445,9 +470,9 @@ void NobleNote::importXmlNotes()
 {
     QStringList files = QFileDialog::getOpenFileNames(
                             this,
-                            "Select one or more files to open",
+                            tr("Select one or more files to open"),
                             "/home",
-                "Notes (*.note)");
+                tr("Notes ")+"(*.note)");
     if(files.isEmpty())
         return;
 
@@ -519,7 +544,7 @@ void NobleNote::about()
 {
    QMessageBox::about(this, tr("About ") + QApplication::applicationName(),
                       tr("<p><b>%1</b> is a note taking application</p>"
-                   "<p>Copyright (C) 2009 Christian Metscher, Fabian Deuchler</p>"
+                   "<p>Copyright (C) 2012 Christian Metscher, Fabian Deuchler</p>"
 
                    "<p>Permission is hereby granted, free of charge,"
                    " to any person obtaining a copy of this software and associated documentation files (the \"Software\"),"

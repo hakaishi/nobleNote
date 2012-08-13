@@ -1,11 +1,15 @@
 TEMPLATE = app
-TARGET = bin/nobleNote
+TARGET = bin/noblenote
 DEPENDPATH = . src
 INCLUDEPATH = . src
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
 RCC_DIR = build
+
+system(lrelease nobleNote.pro)
+
+QMAKE_DISTCLEAN = src/translations/*.qm
 
 # Input
 HEADERS = src/mainwindow.h src/note.h src/welcome.h \
@@ -46,3 +50,21 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
     src/htmlnotewriter.cpp \
     src/datetime.cpp
 RESOURCES = nobleNote.qrc
+TRANSLATIONS = src/translations/noblenote_de.ts
+
+!win32{
+# install
+target.path = /usr/bin
+icons.files = src/noblenote-icons/*
+icons.path = /usr/share/pixmaps/noblenote-icons
+translation.files = src/translations/*.qm
+translation.path = /usr/share/noblenote/translations
+autostart.files = autostart/noblenote.desktop
+autostart.path = /usr/share/applications
+
+INSTALLS = target icons translation autostart
+
+deinstall.depends = uninstall FORCE
+deinstall.commands = rm -R /usr/share/noblenote
+QMAKE_EXTRA_TARGETS = deinstall
+}
