@@ -411,7 +411,7 @@ void NobleNote::removeFolder(){
      // remove empty folders without prompt else show a yes/abort message box
      if(!folderModel->rmdir(idx)) // folder not empty
      {
-         if(QMessageBox::warning(this,tr("Remove Folder"),
+         if(QMessageBox::warning(this,tr("Delete Folder"),
                                 tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
@@ -427,14 +427,14 @@ void NobleNote::removeFolder(){
             name = QDir::toNativeSeparators(QString("%1/%2").arg(path).arg(name));
             if(!folderModel->remove(folderModel->index(name)))
             {
-                qWarning(qPrintable(QString("could not remove ") + name));
+                qWarning(qPrintable(QString("could not delete ") + name));
             }
         }
 
         // try to remove the (now empty?) folder again
         if(!folderModel->rmdir(idx))
         {
-            QMessageBox::warning(this,tr("Folder could not be removed"), tr("The folder could not be removed because one or more files inside the folder could not be removed"));
+            QMessageBox::warning(this,tr("Folder could not be deleted"), tr("The folder could not be deleted because one or more files inside the folder could not be deleted"));
             return;
         }
      }
@@ -498,7 +498,7 @@ void NobleNote::showContextMenuF(const QPoint &pos){
      if(folderList->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* renameF = new QAction(tr("R&ename folder"), &menu);
-         QAction* removeFolder = new QAction(tr("&Remove folder"), &menu);
+         QAction* removeFolder = new QAction(tr("&Delete folder"), &menu);
          connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
          connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
          menu.addAction(renameF);
@@ -522,7 +522,7 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      if(noteList->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
-         QAction* removeNote = new QAction(tr("Re&move note"), &menu);
+         QAction* removeNote = new QAction(tr("&Delete note"), &menu);
          connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
          connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
          menu.addAction(renameN);
