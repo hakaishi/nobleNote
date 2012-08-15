@@ -31,8 +31,8 @@
     <name>NobleNote</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation>Hauptfenster</translation>
+        <source>nobleNote</source>
+        <translation>nobleNote</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="34"/>
@@ -88,11 +88,6 @@
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="96"/>
-        <source>About &amp;Qt</source>
-        <translation>Über &amp;Qt</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="101"/>
         <source>about</source>
         <translation>über</translation>
     </message>
@@ -159,7 +154,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="378"/>
         <source>new note (%1)</source>
-        <translation>neue Notiz (%1)</translation>
+        <translation>Neue Notiz (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="405"/>
@@ -173,23 +168,63 @@
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="414"/>
-        <source>Remove Folder</source>
+        <source>Delete Folder</source>
         <translation>Verzeichnis löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="437"/>
+        <source>Folder could not be deleted</source>
+        <translation>Das Verzeichnis konnte nicht gelöscht werden</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="437"/>
+        <source>The folder could not be deleted because one or more files inside the folder could not be deleted</source>
+        <translation>Das Verzeichnis konnte nicht gelöscht werden, weil ein oder mehrere Dateien darin nicht gelöscht werden konnten</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="475"/>
+        <source>Notes</source>
+        <translation>Notizen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="494"/>
+        <source>&amp;New folder</source>
+        <translation>&amp;Neues Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="500"/>
+        <source>&amp;Rename folder</source>
+        <translation>Verzeichnis &amp;umbennenen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="501"/>
+        <source>&amp;Delete folder</source>
+        <translation>Verzeichnis &amp;löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="518"/>
+        <source>&amp;New note</source>
+        <translation>&amp;Neue Notiz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="524"/>
+        <source>&amp;Rename note</source>
+        <translation>Notiz &amp;umbenennen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="525"/>
+        <source>&amp;Delete note</source>
+        <translation>Notiz &amp;löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="546"/>
+        <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;),to deal in the Software without restriction,including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="415"/>
         <source>Do you really want to delete the notebook &quot;%1&quot;? All contained notes will be lost?</source>
-        <translation>Möchten sie wirklich das Notizbuch &quot;%1&quot; löschen? Alle beinhalteten Notizen werden verloren gehen?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="437"/>
-        <source>Folder could not be removed</source>
-        <translation>Verzeichnis konnte nicht gelöscht werden</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="437"/>
-        <source>The folder could not be removed because one or more files inside the folder could not be removed</source>
-        <translation>Das Verzeichnis konnte nicht gelöscht werden, weil ein oder mehrere Dateien darin nicht gelöscht werden konnten</translation>
+        <translation>Möchten sie das Notizbuch &quot;%1&quot; wirklich löschen? Alle beinhalteten Notizen werden verloren gehen!</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="462"/>
@@ -199,57 +234,17 @@
     <message>
         <location filename="../mainwindow.cpp" line="463"/>
         <source>Do you really want to delete the note &quot;%1&quot;?</source>
-        <translation>Möchten sie wirklich die Notiz &quot;%1&quot; löschen?</translation>
+        <translation>Möchten sie die Notiz &quot;%1&quot; wirklich löschen?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="473"/>
         <source>Select one or more files to open</source>
-        <translation>Selektiren sie eine oder mehrere Datein zum Öffnen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="475"/>
-        <source>Notes </source>
-        <translation>Notizen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="494"/>
-        <source>New &amp;folder</source>
-        <translation>Neues &amp;Verzeichnis</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="500"/>
-        <source>R&amp;ename folder</source>
-        <translation>Verzeichnis &amp;umbennenen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="501"/>
-        <source>&amp;Remove folder</source>
-        <translation>Verzeichnis &amp;löschen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="518"/>
-        <source>New &amp;note</source>
-        <translation>Neue &amp;Notiz</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="524"/>
-        <source>Ren&amp;ame note</source>
-        <translation>Notiz &amp;umbenennen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="525"/>
-        <source>Re&amp;move note</source>
-        <translation>Notiz &amp;löschen</translation>
+        <translation>Selektieren sie eine oder mehrere Dateien zum Öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="545"/>
         <source>About </source>
         <translation>Über </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="546"/>
-        <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2009 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;),to deal in the Software without restriction,including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -264,13 +259,13 @@
     <name>NoteDescriptor</name>
     <message>
         <location filename="../notedescriptor.cpp" line="68"/>
-        <source>Note does not longer exist</source>
+        <source>Note does no longer exist</source>
         <translation>Die Notiz existiert nicht mehr</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="69"/>
         <source>The note has been removed by another program. Should the note be kept open?</source>
-        <translation>Die Notiz wurde von einem anderen Programm gelöscht. Soll die Notiz offen gehalten werden?</translation>
+        <translation>Die Notiz wurde von einem anderen Programm entfernt. Soll die Notiz offen bleiben?</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="99"/>
@@ -280,7 +275,7 @@
     <message>
         <location filename="../notedescriptor.cpp" line="100"/>
         <source>The note has been modified by another program. Should the note be saved under a different name? Else the note will be reloaded.</source>
-        <translation>Die Notiz wurde durch ein anderes Programm verändert. Soll die Notiz under einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
+        <translation>Die Notiz wurde durch ein anderes Programm verändert. Soll die Notiz unter einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
     </message>
 </context>
 <context>
@@ -298,12 +293,12 @@
     <message>
         <location filename="../ui/preferences.ui" line="49"/>
         <source>&amp;Auto convert tomboy and pure html notes to native notes</source>
-        <translation>&amp;Automatische Umwandlung von tomboy und reinen html notizen in eigene Notizen</translation>
+        <translation>&amp;Automatische Umwandlung von tomboy und reinen html Notizen in eigene Notizen</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="56"/>
         <source>&amp;Don&apos;t quit when closing main window</source>
-        <translation>&amp;Beim schließen des Hauptfensters das Programm nicht beenden</translation>
+        <translation>&amp;Beim Schließen des Hauptfensters das Programm nicht beenden</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="71"/>
@@ -342,7 +337,7 @@
     <message>
         <location filename="../textformattingtoolbar.cpp" line="35"/>
         <source>Format actions</source>
-        <translation>Formatierungs Aktionen</translation>
+        <translation>Formatierungs-Aktionen</translation>
     </message>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="36"/>
@@ -391,7 +386,7 @@
     </message>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="201"/>
-        <source>Adr&amp;ess:</source>
+        <source>Addr&amp;ess:</source>
         <translation>&amp;Adresse:</translation>
     </message>
 </context>

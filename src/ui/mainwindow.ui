@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>nobleNote</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../nobleNote.qrc">
@@ -26,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>280</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -89,11 +89,6 @@
   <action name="action_Configure">
    <property name="text">
     <string>&amp;Configure...</string>
-   </property>
-  </action>
-  <action name="actionAbout_Qt">
-   <property name="text">
-    <string>About &amp;Qt</string>
    </property>
   </action>
   <action name="actionAbout">

@@ -198,7 +198,7 @@ void TextFormattingToolbar::insertHyperlink()
     QString selectedText = cursor.selectedText();
 
     bool ok;
-    QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Adr&ess:"),QLineEdit::Normal,selectedText,&ok);
+    QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Addr&ess:"),QLineEdit::Normal,selectedText,&ok);
     if(!ok)
         return;
 /*TODO: de-formatting

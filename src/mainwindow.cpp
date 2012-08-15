@@ -472,7 +472,7 @@ void NobleNote::importXmlNotes()
                             this,
                             tr("Select one or more files to open"),
                             "/home",
-                tr("Notes ")+"(*.note)");
+                tr("Notes")+"(*.note)");
     if(files.isEmpty())
         return;
 
@@ -491,13 +491,13 @@ void NobleNote::showContextMenuF(const QPoint &pos){
 
      if(!folderList->indexAt(pos).isValid()) // if index doesn't exists at position
      {
-         QAction* addNewF = new QAction(tr("New &folder"), &menu);
+         QAction* addNewF = new QAction(tr("&New folder"), &menu);
          connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
          menu.addAction(addNewF);
      }
      if(folderList->indexAt(pos).isValid()) // if index exists at position
      {
-         QAction* renameF = new QAction(tr("R&ename folder"), &menu);
+         QAction* renameF = new QAction(tr("&Rename folder"), &menu);
          QAction* removeFolder = new QAction(tr("&Delete folder"), &menu);
          connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
          connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
@@ -515,13 +515,13 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      if(!noteList->indexAt(pos).isValid() &&
         !(noteModel->sourceModel() == findNoteModel)) // if index doesn't exists at position
      {
-         QAction* addNewN = new QAction(tr("New &note"), &menu);
+         QAction* addNewN = new QAction(tr("&New note"), &menu);
          connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
          menu.addAction(addNewN);
      }
      if(noteList->indexAt(pos).isValid()) // if index exists at position
      {
-         QAction* renameN = new QAction(tr("Ren&ame note"), &menu);
+         QAction* renameN = new QAction(tr("&Rename note"), &menu);
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
          connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
          connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));

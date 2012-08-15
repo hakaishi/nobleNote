@@ -65,7 +65,7 @@ void NoteDescriptor::stateChange()
 
         if(newFilePath.isEmpty())
         {
-            if(QMessageBox::warning(noteWidget_,tr("Note does not longer exist"),
+            if(QMessageBox::warning(noteWidget_,tr("Note does no longer exist"),
                                     tr("The note has been removed by another program. Should the note be kept open?"),
                                     QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
             {
