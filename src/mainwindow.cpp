@@ -206,6 +206,7 @@ void NobleNote::find(){
 
 void NobleNote::selectFirstFolder(QString path)
 {
+    Q_UNUSED(path);
      // this slot gets (probably) called by the QFileSystemModel gatherer thread
      // due to some race conditions:
      // disconnecting this slot will not work button disconnect() will return true
@@ -228,6 +229,7 @@ void NobleNote::selectFirstFolder(QString path)
 
 void NobleNote::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
+    Q_UNUSED(editor);
     if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
         setCurrentFolder(folderList->currentIndex());
 }
