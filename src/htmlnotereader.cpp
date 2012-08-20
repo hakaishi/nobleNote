@@ -155,7 +155,7 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
 #if QT_VERSION >= 0x040800 // Qt Version > 4.8
         QStringRef metaLine = content.midRef(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
 #else
-        QString metaLine = content.midRef(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
+        QString metaLine = content.mid(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
 #endif
         if(metaLine.contains(name))
         {
