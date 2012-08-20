@@ -32,13 +32,13 @@ MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
     setToolButtonStyle(Qt::ToolButtonIconOnly);
 
     newFolderAction = new QAction(QIcon::fromTheme("folder-new",
-      QIcon(":folder")), tr("Create new &folder"), this);
+      QIcon(":newFolder")), tr("Create new &folder"), this);
     newFolderAction->setPriority(QAction::LowPriority);
     newFolderAction->setShortcut(Qt::CTRL + Qt::Key_F);
     addAction(newFolderAction);
 
     newNoteAction = new QAction(QIcon::fromTheme("filenew",
-      QIcon(":note")), tr("Create new &note"), this);
+      QIcon(":newNote")), tr("Create new &note"), this);
     newNoteAction->setPriority(QAction::LowPriority);
     newNoteAction->setShortcut(Qt::CTRL + Qt::Key_N);
     addAction(newNoteAction);

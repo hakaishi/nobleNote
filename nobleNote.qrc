@@ -7,5 +7,7 @@
         <file alias="underlined">src/noblenote-icons/format-text-underline.png</file>
         <file alias="closeB">src/noblenote-icons/fileclose.png</file>
         <file alias="hyperlink">src/noblenote-icons/emblem-web.png</file>
+        <file alias="newFolder">src/noblenote-icons/folder-new.png</file>
+        <file alias="newNote">src/noblenote-icons/filenew.png</file>
     </qresource>
 </RCC>
