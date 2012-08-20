@@ -74,6 +74,8 @@ NobleNote::NobleNote()
    //Toolbar
      toolbar = new MainWindowToolbar(this);
      addToolBar(toolbar);
+     action_Show_toolbar->setChecked(QSettings().value("mainwindow_toolbar_visible", true).toBool());
+     toolbar->setVisible(QSettings().value("mainwindow_toolbar_visible", true).toBool());
 
    //Configuration file
      QSettings settings; // ini format does save but in the executables directory, use native format
@@ -315,6 +317,7 @@ void NobleNote::closeEvent(QCloseEvent* window_close){
 void NobleNote::quit()
 {
     QSettings().setValue("mainwindow_size", saveGeometry());
+    QSettings().setValue("mainwindow_toolbar_visible", action_Show_toolbar->isChecked());
     qApp->quit();
 }
 
