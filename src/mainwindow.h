@@ -50,6 +50,7 @@
 //#define NO_SYSTEM_TRAY_ICON
 
 class Welcome;
+class MainWindowToolbar;
 class Preferences;
 class FindFileModel;
 class FindFileSystemModel;
@@ -70,6 +71,7 @@ public slots:
     void quit();
 private:
       Welcome         *welcome;
+      MainWindowToolbar         *toolbar;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
       FileSystemModel *folderModel;

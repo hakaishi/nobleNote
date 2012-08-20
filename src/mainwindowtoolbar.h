@@ -23,36 +23,18 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#include "textsearchtoolbar.h"
-#include "lineedit.h"
+#ifndef MAINWINDOWTOOLBAR_H
+#define MAINWINDOWTOOLBAR_H
 
-TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
-       QToolBar(parent), textEdit_(textEdit){
+#include <QToolBar>
+#include <QAction>
 
-     setWindowTitle(tr("Search bar"));
-     setObjectName(tr("Searchtoolbar"));
+class MainWindowToolbar : public QToolBar
+{
+    Q_OBJECT
+public:
+     explicit MainWindowToolbar(QMainWindow *parent = 0);
+     QAction *newFolderAction, *newNoteAction;
+};
 
-     closeSearch = new QToolButton(this);
-     closeSearch->setText("X");
-     closeSearch->setShortcut(Qt::Key_Escape);
-     addWidget(closeSearch);
-
-     searchLine = new LineEdit(this);
-     searchLine->setPlaceholderText(tr("Enter search argument"));
-     addWidget(searchLine);
-
-     findPrevious = new QToolButton(this);
-     findPrevious->setText(tr("Find &previous"));
-     addWidget(findPrevious);
-
-     findNext = new QToolButton(this);
-     findNext->setText(tr("Find &next"));
-     addWidget(findNext);
-
-     caseSensitiveBox = new QCheckBox(this);
-     caseSensitiveBox->setText(tr("&Case sensitive"));
-     addWidget(caseSensitiveBox);
-
-
-     connect(closeSearch, SIGNAL(clicked(bool)), this, SLOT(hide()));
-}
+#endif // MAINWINDOWTOOLBAR_H

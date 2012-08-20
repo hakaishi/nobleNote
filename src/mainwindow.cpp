@@ -25,6 +25,7 @@
 
 #include "mainwindow.h"
 #include "welcome.h"
+#include "mainwindowtoolbar.h"
 #include "note.h"
 #include "findfilemodel.h"
 #include "filesystemmodel.h"
@@ -69,6 +70,10 @@ NobleNote::NobleNote()
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
 #endif
+
+   //Toolbar
+     toolbar = new MainWindowToolbar(this);
+     addToolBar(toolbar);
 
    //Configuration file
      QSettings settings; // ini format does save but in the executables directory, use native format
@@ -194,8 +199,9 @@ NobleNote::NobleNote()
      connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
-     connect(actionCreate_new_note_book, SIGNAL(triggered()), this, SLOT(newFolder()));
-     connect(actionCreate_new_note, SIGNAL(triggered()), this, SLOT(newNote()));
+     connect(action_Show_toolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
+     connect(toolbar->newFolderAction, SIGNAL(triggered()), this, SLOT(newFolder()));
+     connect(toolbar->newNoteAction, SIGNAL(triggered()), this, SLOT(newNote()));
 }
 
 NobleNote::~NobleNote(){}

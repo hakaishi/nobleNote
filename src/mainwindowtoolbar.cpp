@@ -23,36 +23,23 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#include "textsearchtoolbar.h"
-#include "lineedit.h"
+#include "mainwindowtoolbar.h"
 
-TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
-       QToolBar(parent), textEdit_(textEdit){
+MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
 
-     setWindowTitle(tr("Search bar"));
-     setObjectName(tr("Searchtoolbar"));
+    setWindowTitle(tr("Main window toolbar"));
+    setObjectName(tr("Mainwindowtoolbar"));
+    setToolButtonStyle(Qt::ToolButtonIconOnly);
 
-     closeSearch = new QToolButton(this);
-     closeSearch->setText("X");
-     closeSearch->setShortcut(Qt::Key_Escape);
-     addWidget(closeSearch);
+    newFolderAction = new QAction(QIcon::fromTheme("folder-new",
+      QIcon(":folder")), tr("Create new &folder"), this);
+    newFolderAction->setPriority(QAction::LowPriority);
+    newFolderAction->setShortcut(Qt::CTRL + Qt::Key_F);
+    addAction(newFolderAction);
 
-     searchLine = new LineEdit(this);
-     searchLine->setPlaceholderText(tr("Enter search argument"));
-     addWidget(searchLine);
-
-     findPrevious = new QToolButton(this);
-     findPrevious->setText(tr("Find &previous"));
-     addWidget(findPrevious);
-
-     findNext = new QToolButton(this);
-     findNext->setText(tr("Find &next"));
-     addWidget(findNext);
-
-     caseSensitiveBox = new QCheckBox(this);
-     caseSensitiveBox->setText(tr("&Case sensitive"));
-     addWidget(caseSensitiveBox);
-
-
-     connect(closeSearch, SIGNAL(clicked(bool)), this, SLOT(hide()));
+    newNoteAction = new QAction(QIcon::fromTheme("filenew",
+      QIcon(":note")), tr("Create new &note"), this);
+    newNoteAction->setPriority(QAction::LowPriority);
+    newNoteAction->setShortcut(Qt::CTRL + Qt::Key_N);
+    addAction(newNoteAction);
 }
