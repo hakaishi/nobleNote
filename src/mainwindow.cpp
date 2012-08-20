@@ -194,6 +194,8 @@ NobleNote::NobleNote()
      connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
+     connect(actionCreate_new_note_book, SIGNAL(triggered()), this, SLOT(newFolder()));
+     connect(actionCreate_new_note, SIGNAL(triggered()), this, SLOT(newNote()));
 }
 
 NobleNote::~NobleNote(){}
@@ -384,6 +386,11 @@ void NobleNote::newNote(){
      if(!file.open(QIODevice::WriteOnly))
        return;
      file.close();
+
+     Note* note=new Note(name);
+     openNotes+= note;
+     note->setObjectName(name);
+     note->show();
 }
 
 void NobleNote::renameFolder(){

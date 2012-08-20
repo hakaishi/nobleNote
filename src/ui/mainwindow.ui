@@ -17,9 +17,13 @@
    <iconset resource="../../nobleNote.qrc">
     <normaloff>:/nobleNote</normaloff>:/nobleNote</iconset>
   </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -48,11 +52,18 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionCreate_new_note_book"/>
+    <addaction name="actionCreate_new_note"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menu_Edit"/>
    <addaction name="menu_Settings"/>
    <addaction name="menu_Help"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
     <string>&amp;Open</string>
@@ -94,6 +105,16 @@
   <action name="actionAbout">
    <property name="text">
     <string>about</string>
+   </property>
+  </action>
+  <action name="actionCreate_new_note">
+   <property name="text">
+    <string>Create new &amp;note</string>
+   </property>
+  </action>
+  <action name="actionCreate_new_note_book">
+   <property name="text">
+    <string>Create new note &amp;book</string>
    </property>
   </action>
  </widget>
