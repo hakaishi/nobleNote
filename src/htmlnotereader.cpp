@@ -163,7 +163,11 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
             int beforeIdx = metaLine.lastIndexOf('\"',idx-1);
             if(idx != -1 || beforeIdx != -1)
             {
+                #if QT_VERSION >= 0x040800 // Qt Version > 4.8
                 return metaLine.toString().mid(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
+                #else
+                return metaLine.mid(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
+                #endif
             }
         }
     }
