@@ -380,26 +380,29 @@ void NobleNote::newFolder(){
          path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
      folderModel->mkdir(folderList->rootIndex(),QDir(path).dirName());
+
+     QModelIndex idx = folderModel->index(path);
+     if(idx.isValid())
+         folderList->edit(idx); // 'open' for rename
 }
 
 void NobleNote::newNote(){
-    QString name = noteModel->rootPath() + "/" + tr("new note");
+    QString filePath = noteModel->rootPath() + "/" + tr("new note");
     int counter = 0;
-    while(QFile::exists(name))
+    while(QFile::exists(filePath))
     {
         ++counter;
-        name = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
+        filePath = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
     }
 
-     QFile file(name);
+     QFile file(filePath);
      if(!file.open(QIODevice::WriteOnly))
        return;
      file.close();
 
-     Note* note=new Note(name);
-     openNotes+= note;
-     note->setObjectName(name);
-     note->show();
+    QModelIndex idx = noteModel->index(filePath);
+    if(idx.isValid())
+        noteList->edit(idx); // 'open' for rename
 }
 
 void NobleNote::renameFolder(){
