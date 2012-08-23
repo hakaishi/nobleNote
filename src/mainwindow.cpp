@@ -153,7 +153,7 @@ NobleNote::NobleNote()
      folderList->setDragEnabled(false);
 
      folderList->setModel(folderModel);
-     folderList->setRootIndex(folderModel->index(settings.value("noteDirPath").toString()));
+     folderList->setRootIndex(folderModel->setRootPath(settings.value("noteDirPath").toString()));
      noteList->setEditTriggers(QListView::EditKeyPressed);
      noteList->setModel(noteModel);
 
@@ -476,7 +476,7 @@ void NobleNote::removeFolder(){
     // gives error QFileSystemWatcher: FindNextChangeNotification failed!! (Zugriff verweigert)
     // and dir deletion is delayed until another dir has been selected or the application is closed
 
-     folderList->setRowHidden(idx.row(),true);
+     //folderList->setRowHidden(idx.row(),true);
      QModelIndex idxAt = folderList->indexAt(QPoint(0,0));
      if(!idxAt.isValid())
      return;
