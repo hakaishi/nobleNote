@@ -59,12 +59,12 @@ class LineEdit;
 class Note;
 class Highlighter;
 
-class NobleNote : public QMainWindow, public Ui::NobleNote {
+class MainWindow : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
  
      public:
-      NobleNote();
-      ~NobleNote();
+      MainWindow();
+      ~MainWindow();
 
 
 public slots:
@@ -77,12 +77,12 @@ private:
       FileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
       FindFileSystemModel * noteModel;
-      QListView       *folderList;
-      QListView         *noteList;
+      QListView       *folderView;
+      QListView         *noteView;
       QAction         *quit_action;
       QIcon           icon;
       Preferences     *pref;
-      QAction         *minimize_restore_action;
+      QAction         *minimizeRestoreAction;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> >     openNotes; // every access to openNotes must check for null pointers

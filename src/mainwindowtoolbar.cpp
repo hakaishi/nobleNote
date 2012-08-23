@@ -38,18 +38,18 @@ MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
     newFolderAction->setShortcut(Qt::CTRL + Qt::Key_F);
     addAction(newFolderAction);
 
-    delFolderAction = new QAction(QIcon(":deleteFolder"),
+    removeFolderAction = new QAction(QIcon(":deleteFolder"),
       tr("Delete folder"), this);
     newFolderAction->setPriority(QAction::LowPriority);
     newFolderAction->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_F);
-    addAction(delFolderAction);
+    addAction(removeFolderAction);
 
     renameFolderAction = new QAction(QIcon(":renameFolder"),
       tr("Rename folder"), this);
     newFolderAction->setPriority(QAction::LowPriority);
     addAction(renameFolderAction);
 
-    folderActions << newFolderAction << delFolderAction << renameFolderAction;
+    folderActions << newFolderAction << removeFolderAction << renameFolderAction;
 
     addSeparator();
 
@@ -59,18 +59,18 @@ MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
     newNoteAction->setShortcut(Qt::CTRL + Qt::Key_N);
     addAction(newNoteAction);
 
-    delNoteAction = new QAction(QIcon(":deleteNote"),
+    removeNoteAction = new QAction(QIcon(":deleteNote"),
       tr("Delete note"), this);
     newNoteAction->setPriority(QAction::LowPriority);
     newNoteAction->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_N);
-    addAction(delNoteAction);
+    addAction(removeNoteAction);
 
     renameNoteAction = new QAction(QIcon(":renameNote"),
       tr("Rename note"), this);
     newNoteAction->setPriority(QAction::LowPriority);
     addAction(renameNoteAction);
 
-    noteActions << newNoteAction << delNoteAction << renameNoteAction;
+    noteActions << removeNoteAction << renameNoteAction;
 }
 
 void MainWindowToolbar::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)

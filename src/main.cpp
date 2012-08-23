@@ -48,7 +48,7 @@ int main (int argc, char *argv[]){
 
      app.setQuitOnLastWindowClosed(false);
 
-     NobleNote window;
+     MainWindow window;
      window.show();
      return app.exec();
 }

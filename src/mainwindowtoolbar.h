@@ -35,8 +35,8 @@ class MainWindowToolbar : public QToolBar
     Q_OBJECT
 public:
      explicit MainWindowToolbar(QMainWindow *parent = 0);
-     QAction *newFolderAction, *newNoteAction, *delFolderAction,
-             *delNoteAction, *renameFolderAction, *renameNoteAction;
+     QAction *newFolderAction, *newNoteAction, *removeFolderAction,
+             *removeNoteAction, *renameFolderAction, *renameNoteAction;
 public slots:
      void onFolderSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
      void onNoteSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );

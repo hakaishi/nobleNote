@@ -48,14 +48,14 @@
 #include <QFileDialog>
 #include <QPushButton>
 
-NobleNote::NobleNote()
+MainWindow::MainWindow()
 {
      setupUi(this);
 
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
 
-     minimize_restore_action = new QAction(tr("&Minimize"),this);
+     minimizeRestoreAction = new QAction(tr("&Minimize"),this);
      quit_action = new QAction(tr("&Quit"),this);
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -65,7 +65,7 @@ NobleNote::NobleNote()
 
    //TrayIconContextMenu
      iMenu = new QMenu(this);
-     iMenu->addAction(minimize_restore_action);
+     iMenu->addAction(minimizeRestoreAction);
      iMenu->addAction(quit_action);
 
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
@@ -74,7 +74,7 @@ NobleNote::NobleNote()
    //Toolbar
      toolbar = new MainWindowToolbar(this);
      addToolBar(toolbar);
-     action_Show_toolbar->setChecked(QSettings().value("mainwindow_toolbar_visible", true).toBool());
+     actionShowToolbar->setChecked(QSettings().value("mainwindow_toolbar_visible", true).toBool());
      toolbar->setVisible(QSettings().value("mainwindow_toolbar_visible", true).toBool());
 
    //Configuration file
@@ -135,11 +135,11 @@ NobleNote::NobleNote()
      noteModel = new FindFileSystemModel(this);
      noteModel->setSourceModel(noteFSModel);
 
-     folderList = new QListView(splitter);
-     noteList = new QListView(splitter);
+     folderView = new QListView(splitter);
+     noteView = new QListView(splitter);
 
      QList<QListView*> listViews;
-     listViews << folderList << noteList;
+     listViews << folderView << noteView;
      foreach(QListView* list, listViews) // add drag drop options
      {
         list->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -149,13 +149,13 @@ NobleNote::NobleNote()
         list->setDropIndicatorShown(true);
         list->setDefaultDropAction(Qt::MoveAction);
      }
-     noteList->setDragEnabled(true);
-     folderList->setDragEnabled(false);
+     noteView->setDragEnabled(true);
+     folderView->setDragEnabled(false);
 
-     folderList->setModel(folderModel);
-     folderList->setRootIndex(folderModel->setRootPath(settings.value("noteDirPath").toString()));
-     noteList->setEditTriggers(QListView::EditKeyPressed);
-     noteList->setModel(noteModel);
+     folderView->setModel(folderModel);
+     folderView->setRootIndex(folderModel->setRootPath(settings.value("noteDirPath").toString()));
+     noteView->setEditTriggers(QListView::EditKeyPressed);
+     noteView->setModel(noteModel);
 
      // make sure there's at least one folder
      QStringList dirList = QDir(settings.value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
@@ -163,10 +163,10 @@ NobleNote::NobleNote()
      {
          QString defaultDirName = tr("default");
          QDir(settings.value("noteDirPath").toString()).mkdir(defaultDirName);
-         noteList->setRootIndex(noteModel->setRootPath(settings.value("noteDirPath").toString() + "/" + defaultDirName)); // set default dir as current note folder
+         noteView->setRootIndex(noteModel->setRootPath(settings.value("noteDirPath").toString() + "/" + defaultDirName)); // set default dir as current note folder
      }
      else
-         noteList->setRootIndex(noteModel->setRootPath(settings.value("noteDirPath").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
+         noteView->setRootIndex(noteModel->setRootPath(settings.value("noteDirPath").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
 
 //TODO: make it possible to import notes from some other folder or even another program
 
@@ -174,50 +174,54 @@ NobleNote::NobleNote()
 //     // "single shot" slot
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
              SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
-     connect(folderList->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
+     connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
-     connect(folderList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
+     connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      //connect(noteList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(noteRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
-     connect(action_Import,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
+     connect(actionImport,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
      connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
 #ifndef NO_SYSTEM_TRAY_ICON
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
              this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
-     connect(minimize_restore_action, SIGNAL(triggered()), this, SLOT(tray_actions()));
+     connect(minimizeRestoreAction, SIGNAL(triggered()), this, SLOT(tray_actions()));
 #endif
      connect(quit_action, SIGNAL(triggered()), this, SLOT(quit())); //contextmenu "Quit" for the systray
      //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
      //       SLOT(setCurrentFolder(const QModelIndex &)));
      //     connect(folderList,SIGNAL(activated(QModelIndex)), this,
      //       SLOT(setCurrentFolder(QModelIndex)));
-     connect(noteList,SIGNAL(activated(QModelIndex)), this,
+     connect(noteView,SIGNAL(activated(QModelIndex)), this,
              SLOT(openNote(QModelIndex)));
-     connect(folderList, SIGNAL(customContextMenuRequested(const QPoint &)),
+     connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)),
              this, SLOT(showContextMenuF(const QPoint &)));
-     connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
+     connect(noteView, SIGNAL(customContextMenuRequested(const QPoint &)),
              this, SLOT(showContextMenuN(const QPoint &)));
-     connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
+     connect(actionConfigure, SIGNAL(triggered()), pref, SLOT(show()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
-     connect(action_Show_toolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
-     connect(toolbar, SIGNAL(visibilityChanged(bool)), action_Show_toolbar, SLOT(setChecked(bool)));
+     connect(actionShowToolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
+     connect(toolbar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
      connect(toolbar->newFolderAction, SIGNAL(triggered()), this, SLOT(newFolder()));
      connect(toolbar->newNoteAction, SIGNAL(triggered()), this, SLOT(newNote()));
-     connect(folderList->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
-     connect(noteList->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onNoteSelectionChanged(QItemSelection,QItemSelection)));
+     connect(toolbar->removeFolderAction,SIGNAL(triggered()),this,SLOT(removeFolder()));
+     connect(toolbar->removeNoteAction,SIGNAL(triggered()),this,SLOT(removeNote()));
+     connect(toolbar->renameFolderAction,SIGNAL(triggered()),this,SLOT(renameFolder()));
+     connect(toolbar->renameNoteAction,SIGNAL(triggered()),this,SLOT(renameNote()));
+     connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
+     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onNoteSelectionChanged(QItemSelection,QItemSelection)));
 }
 
-NobleNote::~NobleNote(){}
+MainWindow::~MainWindow(){}
 
-void NobleNote::find(){
+void MainWindow::find(){
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
 }
 
-void NobleNote::selectFirstFolder(QString path)
+void MainWindow::selectFirstFolder(QString path)
 {
     Q_UNUSED(path);
      // this slot gets (probably) called by the QFileSystemModel gatherer thread
@@ -231,48 +235,49 @@ void NobleNote::selectFirstFolder(QString path)
      if(thisMethodHasBeenCalled)
        return;
 
-     QModelIndex idx = folderList->indexAt(QPoint(0,0));
+     QModelIndex idx = folderView->indexAt(QPoint(0,0));
      if(!idx.isValid())
        return;
 
-     folderList->selectionModel()->select(idx,QItemSelectionModel::Select);
+     folderView->setCurrentIndex(idx);
+     //folderView->selectionModel()->select(idx,QItemSelectionModel::Select);
 
      thisMethodHasBeenCalled = true;
 }
 
-void NobleNote::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
+void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
     Q_UNUSED(editor);
     if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
-        setCurrentFolder(folderList->currentIndex());
+        setCurrentFolder(folderView->currentIndex());
 }
 
-void NobleNote::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
+void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
 {
 
-    QString filePath = noteModel->filePath(noteList->currentIndex());
+    QString filePath = noteModel->filePath(noteView->currentIndex());
     Note * w = noteWindow(path + "/" + oldName);
     if(w)
         w->setWindowTitle(QFileInfo(path + "/" + newName).baseName());
 }
 
-void NobleNote::setCurrentFolder(const QModelIndex &ind){
+void MainWindow::setCurrentFolder(const QModelIndex &ind){
     // clear search line edits
     searchName->clear();
     searchText->clear();
      noteModel->setSourceModel(noteFSModel);
-     noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
+     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
      //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
 }
 
-void NobleNote::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     setCurrentFolder(selected.indexes().first());
     QItemSelection selection;
     toolbar->onNoteSelectionChanged(selection,selection); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
-void NobleNote::changeRootIndex(){
+void MainWindow::changeRootIndex(){
     if(!openNotes.isEmpty()){
         foreach(Note *note, openNotes)
             if(note)
@@ -280,20 +285,20 @@ void NobleNote::changeRootIndex(){
         openNotes.clear();
     }
      QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-     noteList->setRootIndex(noteModel->setRootPath(QSettings().value("noteDirPath").toString() +
+     noteView->setRootIndex(noteModel->setRootPath(QSettings().value("noteDirPath").toString() +
                                                    "/" + dirList.first()));
-     folderList->setRootIndex(folderModel->index(QSettings().value("noteDirPath").toString()));
+     folderView->setRootIndex(folderModel->index(QSettings().value("noteDirPath").toString()));
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON
-void NobleNote::iconActivated(QSystemTrayIcon::ActivationReason reason){
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason){
      if(reason == QSystemTrayIcon::Trigger)
        tray_actions();
 }
 #endif
 
 #ifndef NO_SYSTEM_TRAY_ICON
-void NobleNote::tray_actions(){
+void MainWindow::tray_actions(){
      if(isMinimized() || isHidden())  //in case that the window is minimized or hidden
        showNormal();
      else
@@ -301,19 +306,19 @@ void NobleNote::tray_actions(){
 }
 #endif
 
-void NobleNote::showEvent(QShowEvent* show_window){
+void MainWindow::showEvent(QShowEvent* show_window){
 
      if(QSettings().contains("mainwindow_size"))
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
      QMainWindow::showEvent(show_window);
 }
 
-void NobleNote::hideEvent(QHideEvent* window_hide){
-     minimize_restore_action->setText(tr("&Restore"));
+void MainWindow::hideEvent(QHideEvent* window_hide){
+     minimizeRestoreAction->setText(tr("&Restore"));
      QMainWindow::hideEvent(window_hide);
 }
 
-void NobleNote::closeEvent(QCloseEvent* window_close){
+void MainWindow::closeEvent(QCloseEvent* window_close){
      if(pref->dontQuit->isChecked())
      {
        hide();
@@ -325,17 +330,17 @@ void NobleNote::closeEvent(QCloseEvent* window_close){
      QMainWindow::closeEvent(window_close);
 }
 
-void NobleNote::quit()
+void MainWindow::quit()
 {
     QSettings().setValue("mainwindow_size", saveGeometry());
-    QSettings().setValue("mainwindow_toolbar_visible", action_Show_toolbar->isChecked());
+    QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
     qApp->quit();
 }
 
-void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
+void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
      QModelIndex ind = index;
      if(!ind.isValid()) // default constructed model index
-       ind = noteList->currentIndex();
+       ind = noteView->currentIndex();
 
      QString notePath = noteModel->filePath(ind);
      if(!QFileInfo(notePath).exists())
@@ -363,7 +368,7 @@ void NobleNote::openNote(const QModelIndex &index /* = new QModelIndex*/){
      note->show();
 }
 
-Note *NobleNote::noteWindow(const QString &filePath)
+Note *MainWindow::noteWindow(const QString &filePath)
 {
     for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
     {
@@ -382,7 +387,7 @@ Note *NobleNote::noteWindow(const QString &filePath)
     return 0;
 }
 
-void NobleNote::newFolder(){
+void MainWindow::newFolder(){
      QString path = folderModel->rootPath() + "/" + tr("new folder");
      int counter = 0;
      while(QDir(path).exists())
@@ -390,14 +395,14 @@ void NobleNote::newFolder(){
          ++counter;
          path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
-     folderModel->mkdir(folderList->rootIndex(),QDir(path).dirName());
+     folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
 
      QModelIndex idx = folderModel->index(path);
      if(idx.isValid())
-         folderList->edit(idx); // 'open' for rename
+         folderView->edit(idx); // 'open' for rename
 }
 
-void NobleNote::newNote(){
+void MainWindow::newNote(){
     QString filePath = noteModel->rootPath() + "/" + tr("new note");
     int counter = 0;
     while(QFile::exists(filePath))
@@ -413,18 +418,18 @@ void NobleNote::newNote(){
 
     QModelIndex idx = noteModel->index(filePath);
     if(idx.isValid())
-        noteList->edit(idx); // 'open' for rename
+        noteView->edit(idx); // 'open' for rename
 }
 
-void NobleNote::renameFolder(){
-     folderList->edit(folderList->currentIndex());
+void MainWindow::renameFolder(){
+     folderView->edit(folderView->currentIndex());
 }
 
-void NobleNote::renameNote(){
-     noteList->edit(noteList->currentIndex());
+void MainWindow::renameNote(){
+     noteView->edit(noteView->currentIndex());
 }
 
-void NobleNote::removeFolder(){
+void MainWindow::removeFolder(){
 
      QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
@@ -438,7 +443,7 @@ void NobleNote::removeFolder(){
         return;
      }
 
-     QModelIndex idx = folderList->currentIndex();
+     QModelIndex idx = folderView->currentIndex();
 
      // remove empty folders without prompt else show a yes/abort message box
      if(!folderModel->rmdir(idx)) // folder not empty
@@ -477,11 +482,11 @@ void NobleNote::removeFolder(){
     // and dir deletion is delayed until another dir has been selected or the application is closed
 
      //folderList->setRowHidden(idx.row(),true);
-     QModelIndex idxAt = folderList->indexAt(QPoint(0,0));
+     QModelIndex idxAt = folderView->indexAt(QPoint(0,0));
      if(!idxAt.isValid())
      return;
 
-     folderList->selectionModel()->select(idxAt,QItemSelectionModel::Select);
+     folderView->selectionModel()->select(idxAt,QItemSelectionModel::Select);
      setCurrentFolder(idxAt);
 #endif
 
@@ -490,15 +495,15 @@ void NobleNote::removeFolder(){
 //QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
 }
 
-void NobleNote::removeNote(){
+void MainWindow::removeNote(){
      if(QMessageBox::warning(this,tr("Delete note"),
-         tr("Do you really want to delete the note \"%1\"?").arg(noteModel->fileName(noteList->currentIndex())),
+         tr("Do you really want to delete the note \"%1\"?").arg(noteModel->fileName(noteView->currentIndex())),
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
-     noteModel->remove(noteList->currentIndex());
+     noteModel->remove(noteView->currentIndex());
 }
 
-void NobleNote::importXmlNotes()
+void MainWindow::importXmlNotes()
 {
     QStringList files = QFileDialog::getOpenFileNames(
                             this,
@@ -516,18 +521,18 @@ void NobleNote::importXmlNotes()
     }
 }
 
-void NobleNote::showContextMenuF(const QPoint &pos){
-     QPoint globalPos = folderList->mapToGlobal(pos);
+void MainWindow::showContextMenuF(const QPoint &pos){
+     QPoint globalPos = folderView->mapToGlobal(pos);
 
      QMenu menu;
 
-     if(!folderList->indexAt(pos).isValid()) // if index doesn't exists at position
+     if(!folderView->indexAt(pos).isValid()) // if index doesn't exists at position
      {
          QAction* addNewF = new QAction(tr("&New folder"), &menu);
          connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
          menu.addAction(addNewF);
      }
-     if(folderList->indexAt(pos).isValid()) // if index exists at position
+     if(folderView->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* renameF = new QAction(tr("&Rename folder"), &menu);
          QAction* removeFolder = new QAction(tr("&Delete folder"), &menu);
@@ -539,19 +544,19 @@ void NobleNote::showContextMenuF(const QPoint &pos){
      menu.exec(globalPos);
 }
 
-void NobleNote::showContextMenuN(const QPoint &pos){
-     QPoint globalPos = noteList->mapToGlobal(pos);
+void MainWindow::showContextMenuN(const QPoint &pos){
+     QPoint globalPos = noteView->mapToGlobal(pos);
 
      QMenu menu;
 
-     if(!noteList->indexAt(pos).isValid() &&
+     if(!noteView->indexAt(pos).isValid() &&
         !(noteModel->sourceModel() == findNoteModel)) // if index doesn't exists at position
      {
          QAction* addNewN = new QAction(tr("&New note"), &menu);
          connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
          menu.addAction(addNewN);
      }
-     if(noteList->indexAt(pos).isValid()) // if index exists at position
+     if(noteView->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* renameN = new QAction(tr("&Rename note"), &menu);
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
@@ -563,16 +568,16 @@ void NobleNote::showContextMenuN(const QPoint &pos){
      menu.exec(globalPos);
 }
 
-void NobleNote::keyPressEvent(QKeyEvent *k){
+void MainWindow::keyPressEvent(QKeyEvent *k){
      if(k->key() == Qt::Key_Delete){
-       if(noteList->hasFocus())
+       if(noteView->hasFocus())
          removeNote();
-       if(folderList->hasFocus())
+       if(folderView->hasFocus())
          removeFolder();
      }
 }
 
-void NobleNote::about()
+void MainWindow::about()
 {
    QMessageBox::about(this, tr("About ") + QApplication::applicationName(),
                       tr("<p><b>%1</b> is a note taking application</p>"
