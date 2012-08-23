@@ -30,21 +30,21 @@
      <x>0</x>
      <y>0</y>
      <width>280</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Import"/>
+    <addaction name="actionImport"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">
      <string>&amp;Settings</string>
     </property>
-    <addaction name="action_Configure"/>
+    <addaction name="actionConfigure"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -56,7 +56,7 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="action_Show_toolbar"/>
+    <addaction name="actionShowToolbar"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_View"/>
@@ -91,12 +91,12 @@
     <string>&amp;Open</string>
    </property>
   </action>
-  <action name="action_Import">
+  <action name="actionImport">
    <property name="text">
     <string>&amp;Import</string>
    </property>
   </action>
-  <action name="action_Configure">
+  <action name="actionConfigure">
    <property name="text">
     <string>&amp;Configure...</string>
    </property>
@@ -106,7 +106,7 @@
     <string>about</string>
    </property>
   </action>
-  <action name="action_Show_toolbar">
+  <action name="actionShowToolbar">
    <property name="checkable">
     <bool>true</bool>
    </property>

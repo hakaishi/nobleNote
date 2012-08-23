@@ -100,10 +100,6 @@ MainWindow::MainWindow()
    //Setup preferences
      pref = new Preferences(this);
 
-   //Collabsable search
-     hBoxLayout = new QHBoxLayout();
-     gridLayout->addLayout(hBoxLayout, 0, 0);
-
    //Search line edits
      searchName = new LineEdit(this);
      searchName->setPlaceholderText(tr("Search for note"));
@@ -195,9 +191,9 @@ MainWindow::MainWindow()
      connect(noteView,SIGNAL(activated(QModelIndex)), this,
              SLOT(openNote(QModelIndex)));
      connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)),
-             this, SLOT(showContextMenuF(const QPoint &)));
+             this, SLOT(showContextMenuFolder(const QPoint &)));
      connect(noteView, SIGNAL(customContextMenuRequested(const QPoint &)),
-             this, SLOT(showContextMenuN(const QPoint &)));
+             this, SLOT(showContextMenuNote(const QPoint &)));
      connect(actionConfigure, SIGNAL(triggered()), pref, SLOT(show()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
@@ -521,7 +517,7 @@ void MainWindow::importXmlNotes()
     }
 }
 
-void MainWindow::showContextMenuF(const QPoint &pos){
+void MainWindow::showContextMenuFolder(const QPoint &pos){
      QPoint globalPos = folderView->mapToGlobal(pos);
 
      QMenu menu;
@@ -544,7 +540,7 @@ void MainWindow::showContextMenuF(const QPoint &pos){
      menu.exec(globalPos);
 }
 
-void MainWindow::showContextMenuN(const QPoint &pos){
+void MainWindow::showContextMenuNote(const QPoint &pos){
      QPoint globalPos = noteView->mapToGlobal(pos);
 
      QMenu menu;

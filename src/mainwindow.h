@@ -108,8 +108,8 @@ private:
 
       void find();
       void openNote(const QModelIndex &ind = QModelIndex());
-      void showContextMenuF(const QPoint &pos);
-      void showContextMenuN(const QPoint &pos);
+      void showContextMenuFolder(const QPoint &pos);
+      void showContextMenuNote(const QPoint &pos);
       void newFolder();
       void newNote();
       void renameFolder();
