@@ -99,6 +99,8 @@ private:
       void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
 
+      void onFolderSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
+
 #ifndef NO_SYSTEM_TRAY_ICON
       void iconActivated(QSystemTrayIcon::ActivationReason reason);
       void tray_actions();

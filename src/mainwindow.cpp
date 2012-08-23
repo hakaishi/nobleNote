@@ -173,8 +173,8 @@ NobleNote::NobleNote()
 //     // selects first folder as soon as the folderModel has populated its first folder
 //     // "single shot" slot
      connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
-       SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
-
+             SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
+     connect(folderList->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(folderList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
@@ -182,22 +182,22 @@ NobleNote::NobleNote()
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
      connect(action_Import,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
      connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
-    #ifndef NO_SYSTEM_TRAY_ICON
+#ifndef NO_SYSTEM_TRAY_ICON
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-       this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol     
+             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
      connect(minimize_restore_action, SIGNAL(triggered()), this, SLOT(tray_actions()));
-      #endif
+#endif
      connect(quit_action, SIGNAL(triggered()), this, SLOT(quit())); //contextmenu "Quit" for the systray
-     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
-       SLOT(setCurrentFolder(const QModelIndex &)));
-     connect(folderList,SIGNAL(activated(QModelIndex)), this,
-       SLOT(setCurrentFolder(QModelIndex)));
+     //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
+     //       SLOT(setCurrentFolder(const QModelIndex &)));
+     //     connect(folderList,SIGNAL(activated(QModelIndex)), this,
+     //       SLOT(setCurrentFolder(QModelIndex)));
      connect(noteList,SIGNAL(activated(QModelIndex)), this,
-       SLOT(openNote(QModelIndex)));
+             SLOT(openNote(QModelIndex)));
      connect(folderList, SIGNAL(customContextMenuRequested(const QPoint &)),
-       this, SLOT(showContextMenuF(const QPoint &)));
+             this, SLOT(showContextMenuF(const QPoint &)));
      connect(noteList, SIGNAL(customContextMenuRequested(const QPoint &)),
-       this, SLOT(showContextMenuN(const QPoint &)));
+             this, SLOT(showContextMenuN(const QPoint &)));
      connect(action_Configure, SIGNAL(triggered()), pref, SLOT(show()));
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
@@ -205,6 +205,8 @@ NobleNote::NobleNote()
      connect(toolbar, SIGNAL(visibilityChanged(bool)), action_Show_toolbar, SLOT(setChecked(bool)));
      connect(toolbar->newFolderAction, SIGNAL(triggered()), this, SLOT(newFolder()));
      connect(toolbar->newNoteAction, SIGNAL(triggered()), this, SLOT(newNote()));
+     connect(folderList->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
+     connect(noteList->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onNoteSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 NobleNote::~NobleNote(){}
@@ -260,6 +262,14 @@ void NobleNote::setCurrentFolder(const QModelIndex &ind){
     searchText->clear();
      noteModel->setSourceModel(noteFSModel);
      noteList->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
+     //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
+}
+
+void NobleNote::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    setCurrentFolder(selected.indexes().first());
+    QItemSelection selection;
+    toolbar->onNoteSelectionChanged(selection,selection); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
 void NobleNote::changeRootIndex(){

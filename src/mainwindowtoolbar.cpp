@@ -24,6 +24,7 @@
  */
 
 #include "mainwindowtoolbar.h"
+#include <QItemSelection>
 
 MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
 
@@ -48,6 +49,8 @@ MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
     newFolderAction->setPriority(QAction::LowPriority);
     addAction(renameFolderAction);
 
+    folderActions << newFolderAction << delFolderAction << renameFolderAction;
+
     addSeparator();
 
     newNoteAction = new QAction(QIcon(":newNote"),
@@ -66,4 +69,18 @@ MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
       tr("Rename note"), this);
     newNoteAction->setPriority(QAction::LowPriority);
     addAction(renameNoteAction);
+
+    noteActions << newNoteAction << delNoteAction << renameNoteAction;
+}
+
+void MainWindowToolbar::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+        foreach(QAction * action, folderActions)
+            action->setEnabled(!selected.isEmpty());
+}
+
+void MainWindowToolbar::onNoteSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    foreach(QAction * action, noteActions)
+        action->setEnabled(!selected.isEmpty());
 }

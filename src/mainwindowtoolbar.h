@@ -28,6 +28,7 @@
 
 #include <QToolBar>
 #include <QAction>
+#include <QItemSelection>
 
 class MainWindowToolbar : public QToolBar
 {
@@ -36,6 +37,13 @@ public:
      explicit MainWindowToolbar(QMainWindow *parent = 0);
      QAction *newFolderAction, *newNoteAction, *delFolderAction,
              *delNoteAction, *renameFolderAction, *renameNoteAction;
+public slots:
+     void onFolderSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
+     void onNoteSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
+
+private:
+     QList<QAction*> folderActions;
+     QList<QAction*> noteActions;
 };
 
 #endif // MAINWINDOWTOOLBAR_H
