@@ -9,5 +9,9 @@
         <file alias="hyperlink">src/noblenote-icons/emblem-web.png</file>
         <file alias="newFolder">src/noblenote-icons/folder-new.png</file>
         <file alias="newNote">src/noblenote-icons/filenew.png</file>
+        <file alias="deleteFolder">src/noblenote-icons/folder-remove.png</file>
+        <file alias="deleteNote">src/noblenote-icons/fileremove.png</file>
+        <file alias="renameFolder">src/noblenote-icons/folder-rename.png</file>
+        <file alias="renameNote">src/noblenote-icons/filerename.png</file>
     </qresource>
 </RCC>

@@ -34,7 +34,8 @@ class MainWindowToolbar : public QToolBar
     Q_OBJECT
 public:
      explicit MainWindowToolbar(QMainWindow *parent = 0);
-     QAction *newFolderAction, *newNoteAction;
+     QAction *newFolderAction, *newNoteAction, *delFolderAction,
+             *delNoteAction, *renameFolderAction, *renameNoteAction;
 };
 
 #endif // MAINWINDOWTOOLBAR_H
