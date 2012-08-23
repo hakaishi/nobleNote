@@ -83,4 +83,5 @@ void MainWindowToolbar::onNoteSelectionChanged(const QItemSelection &selected, c
 {
     foreach(QAction * action, noteActions)
         action->setEnabled(!selected.isEmpty());
+    qDebug("called");
 }

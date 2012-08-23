@@ -246,6 +246,10 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
     Q_UNUSED(editor);
     if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
         setCurrentFolder(folderView->currentIndex());
+
+ // disable note toolbar buttons if selection is cleared after the folder has been renamed
+    if(!noteView->selectionModel()->hasSelection())
+        toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection());
 }
 
 void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
@@ -261,16 +265,15 @@ void MainWindow::setCurrentFolder(const QModelIndex &ind){
     // clear search line edits
     searchName->clear();
     searchText->clear();
-     noteModel->setSourceModel(noteFSModel);
-     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
-     //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
+    noteModel->setSourceModel(noteFSModel);
+    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
+    //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
 }
 
 void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     setCurrentFolder(selected.indexes().first());
-    QItemSelection selection;
-    toolbar->onNoteSelectionChanged(selection,selection); // call the slot with an empty selection, this will disable the note toolbar buttons
+    toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
 void MainWindow::changeRootIndex(){
