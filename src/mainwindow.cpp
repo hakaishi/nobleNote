@@ -202,6 +202,7 @@ NobleNote::NobleNote()
      connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
      connect(action_Show_toolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
+     connect(toolbar, SIGNAL(visibilityChanged(bool)), action_Show_toolbar, SLOT(setChecked(bool)));
      connect(toolbar->newFolderAction, SIGNAL(triggered()), this, SLOT(newFolder()));
      connect(toolbar->newNoteAction, SIGNAL(triggered()), this, SLOT(newNote()));
 }
