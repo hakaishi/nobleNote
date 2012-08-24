@@ -306,126 +306,6 @@
         <source>&amp;Show toolbar</source>
         <translation>&amp;Zeige Werkzeugleiste</translation>
     </message>
-    <message>
-        <source>&amp;Minimize</source>
-        <translation type="obsolete">&amp;Minimieren</translation>
-    </message>
-    <message>
-        <source>Settings not writable</source>
-        <translation type="obsolete">Einstellungen können nicht gespeichert werden</translation>
-    </message>
-    <message>
-        <source>W: nobelNote settings not writable!</source>
-        <translation type="obsolete">W: Die nobleNote Einstellungen sind nicht beschreibbar!</translation>
-    </message>
-    <message>
-        <source>Search for note</source>
-        <translation type="obsolete">Suche nach einer Notiz</translation>
-    </message>
-    <message>
-        <source>Search for content</source>
-        <translation type="obsolete">Suche nach Inhalt</translation>
-    </message>
-    <message>
-        <source>default</source>
-        <translation type="obsolete">Standard</translation>
-    </message>
-    <message>
-        <source>&amp;Restore</source>
-        <translation type="obsolete">&amp;Wiederherstellen</translation>
-    </message>
-    <message>
-        <source>Note does not exist</source>
-        <translation type="obsolete">Die Notiz existiert nicht</translation>
-    </message>
-    <message>
-        <source>The selected note cannot be opened because it has been moved or renamed</source>
-        <translation type="obsolete">Die ausgewählte Notiz kann nicht geöffnet werden, weil sie verschoben oder umbenannt wurde</translation>
-    </message>
-    <message>
-        <source>new folder</source>
-        <translation type="obsolete">Neues Verzeichnis</translation>
-    </message>
-    <message>
-        <source>new folder (%1)</source>
-        <translation type="obsolete">Neues Verzeichnis (%1)</translation>
-    </message>
-    <message>
-        <source>new note</source>
-        <translation type="obsolete">Neue Notiz</translation>
-    </message>
-    <message>
-        <source>new note (%1)</source>
-        <translation type="obsolete">Neue Notiz (%1)</translation>
-    </message>
-    <message>
-        <source>One notebook must remain</source>
-        <translation type="obsolete">Ein Notizbuch muss erhalten bleiben</translation>
-    </message>
-    <message>
-        <source>At least one notebook must remain.</source>
-        <translation type="obsolete">Es muss mindestens ein Notizbuch vorhanden sein.</translation>
-    </message>
-    <message>
-        <source>Delete Folder</source>
-        <translation type="obsolete">Verzeichnis löschen</translation>
-    </message>
-    <message>
-        <source>Folder could not be deleted</source>
-        <translation type="obsolete">Das Verzeichnis konnte nicht gelöscht werden</translation>
-    </message>
-    <message>
-        <source>The folder could not be deleted because one or more files inside the folder could not be deleted</source>
-        <translation type="obsolete">Das Verzeichnis konnte nicht gelöscht werden, weil ein oder mehrere Dateien darin nicht gelöscht werden konnten</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation type="obsolete">Notizen</translation>
-    </message>
-    <message>
-        <source>&amp;New folder</source>
-        <translation type="obsolete">&amp;Neues Verzeichnis</translation>
-    </message>
-    <message>
-        <source>&amp;Rename folder</source>
-        <translation type="obsolete">Verzeichnis &amp;umbennenen</translation>
-    </message>
-    <message>
-        <source>&amp;Delete folder</source>
-        <translation type="obsolete">Verzeichnis &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;New note</source>
-        <translation type="obsolete">&amp;Neue Notiz</translation>
-    </message>
-    <message>
-        <source>&amp;Rename note</source>
-        <translation type="obsolete">Notiz &amp;umbenennen</translation>
-    </message>
-    <message>
-        <source>&amp;Delete note</source>
-        <translation type="obsolete">Notiz &amp;löschen</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the notebook &quot;%1&quot;? All contained notes will be lost?</source>
-        <translation type="obsolete">Möchten sie das Notizbuch &quot;%1&quot; wirklich löschen? Alle beinhalteten Notizen werden verloren gehen!</translation>
-    </message>
-    <message>
-        <source>Delete note</source>
-        <translation type="obsolete">Notiz löschen</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the note &quot;%1&quot;?</source>
-        <translation type="obsolete">Möchten sie die Notiz &quot;%1&quot; wirklich löschen?</translation>
-    </message>
-    <message>
-        <source>Select one or more files to open</source>
-        <translation type="obsolete">Selektieren sie eine oder mehrere Dateien zum Öffnen</translation>
-    </message>
-    <message>
-        <source>About </source>
-        <translation type="obsolete">Über </translation>
-    </message>
 </context>
 <context>
     <name>Note</name>
@@ -437,14 +317,6 @@
 </context>
 <context>
     <name>NoteDescriptor</name>
-    <message>
-        <source>Note does no longer exist</source>
-        <translation type="obsolete">Die Notiz existiert nicht mehr</translation>
-    </message>
-    <message>
-        <source>The note has been removed by another program. Should the note be kept open?</source>
-        <translation type="obsolete">Die Notiz wurde von einem anderen Programm entfernt. Soll die Notiz offen bleiben?</translation>
-    </message>
     <message>
         <location filename="../notedescriptor.cpp" line="68"/>
         <source>Keep non existing note</source>
@@ -464,10 +336,6 @@
         <location filename="../notedescriptor.cpp" line="100"/>
         <source>This note has been modified by another instance of %1. Should the note be saved under a different name? Else the note will be reloaded.</source>
         <translation>Diese Notiz wurde durch eine andere Sitzung von %1 modifiziert. Soll die Notiz unter einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
-    </message>
-    <message>
-        <source>The note has been modified by another program. Should the note be saved under a different name? Else the note will be reloaded.</source>
-        <translation type="obsolete">Die Notiz wurde durch ein anderes Programm verändert. Soll die Notiz unter einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
     </message>
 </context>
 <context>
@@ -584,10 +452,6 @@
 </context>
 <context>
     <name>TextSearchToolbar</name>
-    <message>
-        <source>Searchbar</source>
-        <translation type="obsolete">Suchleiste</translation>
-    </message>
     <message>
         <location filename="../textsearchtoolbar.cpp" line="32"/>
         <source>Search bar</source>
