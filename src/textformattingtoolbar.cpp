@@ -79,7 +79,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     addAction(actionTextStrikeOut);
     actionTextStrikeOut->setCheckable(true);
 
-    actionInsertHyperlink = new QAction(QIcon::fromTheme("hyperlink",QIcon(":hyperlink")),tr("&Hyperlink"),this);
+    actionInsertHyperlink = new QAction(QIcon::fromTheme("emblem-web",QIcon(":hyperlink")),tr("&Hyperlink"),this);
     actionInsertHyperlink->setShortcut(Qt::CTRL + Qt::Key_K); // word shortcut
     actionInsertHyperlink->setPriority(QAction::LowPriority);
     connect(actionInsertHyperlink,SIGNAL(triggered()),this,SLOT(insertHyperlink()));
