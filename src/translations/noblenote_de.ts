@@ -15,6 +15,212 @@
     </message>
 </context>
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.cpp" line="58"/>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Minimieren</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="59"/>
+        <source>&amp;Quit</source>
+        <translation>&amp;Beenden</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="83"/>
+        <source>Settings not writable</source>
+        <translation>Einstellungen können nicht gespeichert werden</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="83"/>
+        <source>W: nobelNote settings not writable!</source>
+        <translation>W: Die nobleNote Einstellungen sind nicht beschreibbar!</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="105"/>
+        <source>Search for note</source>
+        <translation>Suche nach einer Notiz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="109"/>
+        <source>Search for content</source>
+        <translation>Suche nach Inhalt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="160"/>
+        <source>default</source>
+        <translation>Vorgabeordner</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="316"/>
+        <source>&amp;Restore</source>
+        <translation>&amp;Wiederherstellen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="347"/>
+        <source>Note does not exist</source>
+        <translation>Die Notiz existiert nicht</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="347"/>
+        <source>The selected note cannot be opened because it has been moved or renamed</source>
+        <translation>Die ausgewählte Notiz kann nicht geöffnet werden, weil sie verschoben oder umbenannt wurde</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="390"/>
+        <source>new folder</source>
+        <translation>Neues Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="395"/>
+        <source>new folder (%1)</source>
+        <translation>Neues Verzeichnis (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="405"/>
+        <source>new note</source>
+        <translation>Neue Notiz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="410"/>
+        <source>new note (%1)</source>
+        <translation>Neue Notiz (%1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="441"/>
+        <source>One notebook must remain</source>
+        <translation>Ein Notizbuch muss erhalten bleiben</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="441"/>
+        <source>At least one notebook must remain.</source>
+        <translation>Es muss mindestens ein Notizbuch vorhanden sein.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="450"/>
+        <source>Delete Folder</source>
+        <translation>Verzeichnis löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="451"/>
+        <source>Do you really want to delete the notebook &quot;%1&quot;? All contained notes will be lost?</source>
+        <translation>Möchten sie das Notizbuch &quot;%1&quot; wirklich löschen? Alle beinhalteten Notizen werden verloren gehen!</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="473"/>
+        <source>Folder could not be deleted</source>
+        <translation>Das Verzeichnis konnte nicht gelöscht werden</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="473"/>
+        <source>The folder could not be deleted because one or more files inside the folder could not be deleted</source>
+        <translation>Das Verzeichnis konnte nicht gelöscht werden, weil ein oder mehrere Dateien darin nicht gelöscht werden konnten</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="498"/>
+        <source>Delete note</source>
+        <translation>Notiz löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="499"/>
+        <source>Do you really want to delete the note &quot;%1&quot;?</source>
+        <translation>Möchten sie die Notiz &quot;%1&quot; wirklich löschen?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="509"/>
+        <source>Select one or more files to open</source>
+        <translation>Selektieren sie eine oder mehrere Dateien zum Öffnen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="511"/>
+        <source>Notes</source>
+        <translation>Notizen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="530"/>
+        <source>&amp;New folder</source>
+        <translation>&amp;Neues Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="536"/>
+        <source>&amp;Rename folder</source>
+        <translation>Verzeichnis &amp;umbennenen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="537"/>
+        <source>&amp;Delete folder</source>
+        <translation>Verzeichnis &amp;löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="554"/>
+        <source>&amp;New note</source>
+        <translation>&amp;Neue Notiz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="560"/>
+        <source>&amp;Rename note</source>
+        <translation>Notiz &amp;umbenennen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="561"/>
+        <source>&amp;Delete note</source>
+        <translation>Notiz &amp;löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="581"/>
+        <source>About </source>
+        <translation>Über </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="582"/>
+        <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;),to deal in the Software without restriction,including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MainWindowToolbar</name>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="31"/>
+        <source>Main window toolbar</source>
+        <translation>Werkzeugleiste des Haupfensters</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="32"/>
+        <source>Mainwindowtoolbar</source>
+        <translation>Werkzeugleiste des Haupfensters</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="36"/>
+        <source>Create new folder</source>
+        <translation>Erstelle neues Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="42"/>
+        <source>Delete folder</source>
+        <translation>Lösche Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="48"/>
+        <source>Rename folder</source>
+        <translation>Verzeichnis umbenennen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="57"/>
+        <source>Create new note</source>
+        <translation>Erstelle neue Notiz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="63"/>
+        <source>Delete note</source>
+        <translation>Lösche Notiz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindowtoolbar.cpp" line="69"/>
+        <source>Rename note</source>
+        <translation>Notiz umbenennen</translation>
+    </message>
+</context>
+<context>
     <name>NewNoteName</name>
     <message>
         <location filename="../ui/newnotename.ui" line="14"/>
@@ -35,216 +241,190 @@
         <translation>nobleNote</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="34"/>
+        <location filename="../ui/mainwindow.ui" line="38"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="41"/>
+        <location filename="../ui/mainwindow.ui" line="45"/>
         <source>&amp;Settings</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="47"/>
+        <location filename="../ui/mainwindow.ui" line="51"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="58"/>
-        <location filename="../ui/mainwindow.ui" line="81"/>
+        <location filename="../ui/mainwindow.ui" line="57"/>
+        <source>&amp;View</source>
+        <translation>&amp;Ansicht</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="68"/>
+        <location filename="../ui/mainwindow.ui" line="91"/>
         <source>&amp;Open</source>
         <translation>&amp;Öffnen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="63"/>
+        <location filename="../ui/mainwindow.ui" line="73"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="68"/>
+        <location filename="../ui/mainwindow.ui" line="78"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="73"/>
-        <location filename="../mainwindow.cpp" line="58"/>
+        <location filename="../ui/mainwindow.ui" line="83"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="76"/>
+        <location filename="../ui/mainwindow.ui" line="86"/>
         <source>Ctrl+Q</source>
         <translation>Strg+Q</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="86"/>
+        <location filename="../ui/mainwindow.ui" line="96"/>
         <source>&amp;Import</source>
         <translation>&amp;Importieren</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="91"/>
+        <location filename="../ui/mainwindow.ui" line="101"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Konfigurieren...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="96"/>
+        <location filename="../ui/mainwindow.ui" line="106"/>
         <source>about</source>
         <translation>über</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="57"/>
+        <location filename="../ui/mainwindow.ui" line="117"/>
+        <source>&amp;Show toolbar</source>
+        <translation>&amp;Zeige Werkzeugleiste</translation>
+    </message>
+    <message>
         <source>&amp;Minimize</source>
-        <translation>&amp;Minimieren</translation>
+        <translation type="obsolete">&amp;Minimieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="76"/>
         <source>Settings not writable</source>
-        <translation>Einstellungen können nicht gespeichert werden</translation>
+        <translation type="obsolete">Einstellungen können nicht gespeichert werden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="76"/>
         <source>W: nobelNote settings not writable!</source>
-        <translation>W: Die nobleNote Einstellungen sind nicht beschreibbar!</translation>
+        <translation type="obsolete">W: Die nobleNote Einstellungen sind nicht beschreibbar!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="102"/>
         <source>Search for note</source>
-        <translation>Suche nach einer Notiz</translation>
+        <translation type="obsolete">Suche nach einer Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="106"/>
         <source>Search for content</source>
-        <translation>Suche nach Inhalt</translation>
+        <translation type="obsolete">Suche nach Inhalt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="157"/>
         <source>default</source>
-        <translation>Standard</translation>
+        <translation type="obsolete">Standard</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="289"/>
         <source>&amp;Restore</source>
-        <translation>&amp;Wiederherstellen</translation>
+        <translation type="obsolete">&amp;Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="319"/>
         <source>Note does not exist</source>
-        <translation>Die Notiz existiert nicht</translation>
+        <translation type="obsolete">Die Notiz existiert nicht</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="319"/>
         <source>The selected note cannot be opened because it has been moved or renamed</source>
-        <translation>Die ausgewählte Notiz kann nicht geöffnet werden, weil sie verschoben oder umbenannt wurde</translation>
+        <translation type="obsolete">Die ausgewählte Notiz kann nicht geöffnet werden, weil sie verschoben oder umbenannt wurde</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="362"/>
         <source>new folder</source>
-        <translation>Neues Verzeichnis</translation>
+        <translation type="obsolete">Neues Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="367"/>
         <source>new folder (%1)</source>
-        <translation>Neues Verzeichnis (%1)</translation>
+        <translation type="obsolete">Neues Verzeichnis (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="373"/>
         <source>new note</source>
-        <translation>Neue Notiz</translation>
+        <translation type="obsolete">Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="378"/>
         <source>new note (%1)</source>
-        <translation>Neue Notiz (%1)</translation>
+        <translation type="obsolete">Neue Notiz (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="405"/>
         <source>One notebook must remain</source>
-        <translation>Ein Notizbuch muss erhalten bleiben</translation>
+        <translation type="obsolete">Ein Notizbuch muss erhalten bleiben</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="405"/>
         <source>At least one notebook must remain.</source>
-        <translation>Es muss mindestens ein Notizbuch vorhanden sein.</translation>
+        <translation type="obsolete">Es muss mindestens ein Notizbuch vorhanden sein.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="414"/>
         <source>Delete Folder</source>
-        <translation>Verzeichnis löschen</translation>
+        <translation type="obsolete">Verzeichnis löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="437"/>
         <source>Folder could not be deleted</source>
-        <translation>Das Verzeichnis konnte nicht gelöscht werden</translation>
+        <translation type="obsolete">Das Verzeichnis konnte nicht gelöscht werden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="437"/>
         <source>The folder could not be deleted because one or more files inside the folder could not be deleted</source>
-        <translation>Das Verzeichnis konnte nicht gelöscht werden, weil ein oder mehrere Dateien darin nicht gelöscht werden konnten</translation>
+        <translation type="obsolete">Das Verzeichnis konnte nicht gelöscht werden, weil ein oder mehrere Dateien darin nicht gelöscht werden konnten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="475"/>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation type="obsolete">Notizen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="494"/>
         <source>&amp;New folder</source>
-        <translation>&amp;Neues Verzeichnis</translation>
+        <translation type="obsolete">&amp;Neues Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="500"/>
         <source>&amp;Rename folder</source>
-        <translation>Verzeichnis &amp;umbennenen</translation>
+        <translation type="obsolete">Verzeichnis &amp;umbennenen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="501"/>
         <source>&amp;Delete folder</source>
-        <translation>Verzeichnis &amp;löschen</translation>
+        <translation type="obsolete">Verzeichnis &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="518"/>
         <source>&amp;New note</source>
-        <translation>&amp;Neue Notiz</translation>
+        <translation type="obsolete">&amp;Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="524"/>
         <source>&amp;Rename note</source>
-        <translation>Notiz &amp;umbenennen</translation>
+        <translation type="obsolete">Notiz &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="525"/>
         <source>&amp;Delete note</source>
-        <translation>Notiz &amp;löschen</translation>
+        <translation type="obsolete">Notiz &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="546"/>
-        <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;),to deal in the Software without restriction,including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="415"/>
         <source>Do you really want to delete the notebook &quot;%1&quot;? All contained notes will be lost?</source>
-        <translation>Möchten sie das Notizbuch &quot;%1&quot; wirklich löschen? Alle beinhalteten Notizen werden verloren gehen!</translation>
+        <translation type="obsolete">Möchten sie das Notizbuch &quot;%1&quot; wirklich löschen? Alle beinhalteten Notizen werden verloren gehen!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="462"/>
         <source>Delete note</source>
-        <translation>Notiz löschen</translation>
+        <translation type="obsolete">Notiz löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="463"/>
         <source>Do you really want to delete the note &quot;%1&quot;?</source>
-        <translation>Möchten sie die Notiz &quot;%1&quot; wirklich löschen?</translation>
+        <translation type="obsolete">Möchten sie die Notiz &quot;%1&quot; wirklich löschen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="473"/>
         <source>Select one or more files to open</source>
-        <translation>Selektieren sie eine oder mehrere Dateien zum Öffnen</translation>
+        <translation type="obsolete">Selektieren sie eine oder mehrere Dateien zum Öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="545"/>
         <source>About </source>
-        <translation>Über </translation>
+        <translation type="obsolete">Über </translation>
     </message>
 </context>
 <context>
@@ -258,14 +438,22 @@
 <context>
     <name>NoteDescriptor</name>
     <message>
-        <location filename="../notedescriptor.cpp" line="68"/>
         <source>Note does no longer exist</source>
-        <translation>Die Notiz existiert nicht mehr</translation>
+        <translation type="obsolete">Die Notiz existiert nicht mehr</translation>
+    </message>
+    <message>
+        <source>The note has been removed by another program. Should the note be kept open?</source>
+        <translation type="obsolete">Die Notiz wurde von einem anderen Programm entfernt. Soll die Notiz offen bleiben?</translation>
+    </message>
+    <message>
+        <location filename="../notedescriptor.cpp" line="68"/>
+        <source>Keep non existing note</source>
+        <translation>Behalte nicht existente Notiz</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="69"/>
-        <source>The note has been removed by another program. Should the note be kept open?</source>
-        <translation>Die Notiz wurde von einem anderen Programm entfernt. Soll die Notiz offen bleiben?</translation>
+        <source>This note doesn&apos;t exist anymore. Keep this file open?</source>
+        <translation>Diese Notiz existiert nicht mehr. Datei geöffnet lassen?</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="99"/>
@@ -274,8 +462,12 @@
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="100"/>
+        <source>This note has been modified by another instance of %1. Should the note be saved under a different name? Else the note will be reloaded.</source>
+        <translation>Diese Notiz wurde durch eine andere Sitzung von %1 modifiziert. Soll die Notiz unter einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
+    </message>
+    <message>
         <source>The note has been modified by another program. Should the note be saved under a different name? Else the note will be reloaded.</source>
-        <translation>Die Notiz wurde durch ein anderes Programm verändert. Soll die Notiz unter einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
+        <translation type="obsolete">Die Notiz wurde durch ein anderes Programm verändert. Soll die Notiz unter einem anderen Namen gespeichert werden? Andernfalls wird die Notiz neu geladen.</translation>
     </message>
 </context>
 <context>
@@ -393,8 +585,12 @@
 <context>
     <name>TextSearchToolbar</name>
     <message>
-        <location filename="../textsearchtoolbar.cpp" line="32"/>
         <source>Searchbar</source>
+        <translation type="obsolete">Suchleiste</translation>
+    </message>
+    <message>
+        <location filename="../textsearchtoolbar.cpp" line="32"/>
+        <source>Search bar</source>
         <translation>Suchleiste</translation>
     </message>
     <message>

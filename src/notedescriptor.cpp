@@ -97,9 +97,9 @@ void NoteDescriptor::stateChange()
     if(lastChange_ < reader.lastChange() && !reader.lastChange().isNull()) // modified elsewhere, lastChange can be null for html files not created with this software
     {
         if(document_->isModified() && QMessageBox::warning(noteWidget_,tr("Note modified"),
-                                                           tr("This note has been modified by another instance of ")+ qApp->applicationName() + ". Should the note be saved under a different name?"
-                                                              " Else the note will be reloaded.",
-                                                           QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+               tr("This note has been modified by another instance of %1. Should the"
+                 " note be saved under a different name? Else the note will be reloaded.").arg(
+                 qApp->applicationName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
         {
             uuid_ = QUuid::createUuid();
             title_ = QFileInfo(filePath_).baseName();
