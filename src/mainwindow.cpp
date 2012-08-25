@@ -215,6 +215,7 @@ void MainWindow::find(){
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
+
 }
 
 void MainWindow::selectFirstFolder(QString path)

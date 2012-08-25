@@ -53,7 +53,6 @@ class Note : public QMainWindow, public Ui::Note {
       bool    searchbarVisible;
 
      private:
-      QDialogButtonBox *buttonBox;
       TextBrowser *textBrowser;
       TextDocument *textDocument;
 
@@ -68,7 +67,6 @@ class Note : public QMainWindow, public Ui::Note {
       NoteDescriptor * noteDescriptor_;
 
      public slots:
-      void undoAll();
       void selectNextExpression();
       void selectPreviousExpression();
       void highlightText(QString str);

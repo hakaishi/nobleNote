@@ -43,13 +43,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setAttribute(Qt::WA_DeleteOnClose);
 
-     //notePath = filePath;
-
      searchbarVisible = false; //initializing
-
-     buttonBox = new QDialogButtonBox(this);
-     buttonBox->setStandardButtons(QDialogButtonBox::Reset);
-     gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
      textBrowser = new TextBrowser(this);
      textDocument = new TextDocument(this);
@@ -81,8 +75,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      searchB->setVisible(false);
 
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
-     connect(buttonBox->button(QDialogButtonBox::Reset), SIGNAL(clicked(bool)),
-       this, SLOT(undoAll()));
      connect(textBrowser,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
 
@@ -132,11 +124,6 @@ void Note::keyReleaseEvent(QKeyEvent *k){
      textBrowser->setReadOnly(noteDescriptor_->readOnly());
      textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
                                             Qt::LinksAccessibleByMouse);
-}
-
-void Note::undoAll(){
-     while(textBrowser->document()->availableUndoSteps() > 0)
-       textBrowser->undo();
 }
 
 void Note::selectNextExpression(){
