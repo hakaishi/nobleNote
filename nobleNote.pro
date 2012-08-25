@@ -31,7 +31,8 @@ HEADERS = src/mainwindow.h src/note.h src/welcome.h \
     src/notedescriptor.h \
     src/abstractnotereader.h \
     src/htmlnotereader.h \
-    src/htmlnotewriter.h
+    src/htmlnotewriter.h \
+    src/fileiconprovider.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
         src/ui/preferences.ui src/ui/newnotename.ui
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
@@ -50,7 +51,8 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
     src/abstractnotereader.cpp \
     src/htmlnotereader.cpp \
     src/htmlnotewriter.cpp \
-    src/datetime.cpp
+    src/datetime.cpp \
+    src/fileiconprovider.cpp
 RESOURCES = nobleNote.qrc
 TRANSLATIONS = src/translations/noblenote_de.ts
 

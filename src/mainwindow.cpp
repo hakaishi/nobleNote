@@ -47,6 +47,7 @@
 #include <QList>
 #include <QFileDialog>
 #include <QPushButton>
+#include "fileiconprovider.h"
 
 MainWindow::MainWindow()
 {
@@ -118,6 +119,7 @@ MainWindow::MainWindow()
      folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderModel->setReadOnly(false);
      folderModel->setOnlyOnItemDrops(true);
+     folderModel->setIconProvider(new FileIconProvider());
 
      noteFSModel = new FileSystemModel(this);
      noteFSModel->setFilter(QDir::Files);

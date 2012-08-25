@@ -13,5 +13,7 @@
         <file alias="deleteNote">src/noblenote-icons/fileremove.png</file>
         <file alias="renameFolder">src/noblenote-icons/folder-rename.png</file>
         <file alias="renameNote">src/noblenote-icons/filerename.png</file>
+        <file alias="file">src/noblenote-icons/file.png</file>
+        <file alias="folder">src/noblenote-icons/folder.png</file>
     </qresource>
 </RCC>
