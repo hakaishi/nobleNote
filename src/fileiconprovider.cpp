@@ -6,7 +6,6 @@ FileIconProvider::FileIconProvider()
 
 QIcon FileIconProvider::icon(QFileIconProvider::IconType type) const
 {
-    qDebug("called");
     if(type == QFileIconProvider::Folder)
         return QIcon(":folder");
     else if(type == QFileIconProvider::File)
