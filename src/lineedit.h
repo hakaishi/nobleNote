@@ -29,7 +29,7 @@
 #include <QLineEdit>
 
 /**
-  * a line edit with a clear button
+  * a line edit with a clear text button
   *
   */
 
