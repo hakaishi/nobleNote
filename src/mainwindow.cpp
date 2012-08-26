@@ -35,6 +35,7 @@
 #include "highlighter.h"
 #include "notedescriptor.h"
 #include "htmlnotewriter.h"
+#include "fileiconprovider.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -47,7 +48,6 @@
 #include <QList>
 #include <QFileDialog>
 #include <QPushButton>
-#include "fileiconprovider.h"
 
 MainWindow::MainWindow()
 {
@@ -247,45 +247,45 @@ void MainWindow::selectFirstFolder(QString path)
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
     Q_UNUSED(editor);
-    if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
+     if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
         setCurrentFolder(folderView->currentIndex());
 
  // disable note toolbar buttons if selection is cleared after the folder has been renamed
-    if(!noteView->selectionModel()->hasSelection())
+     if(!noteView->selectionModel()->hasSelection())
         toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection());
 }
 
 void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
 {
 
-    QString filePath = noteModel->filePath(noteView->currentIndex());
-    Note * w = noteWindow(path + "/" + oldName);
-    if(w)
+     QString filePath = noteModel->filePath(noteView->currentIndex());
+     Note * w = noteWindow(path + "/" + oldName);
+     if(w)
         w->setWindowTitle(QFileInfo(path + "/" + newName).baseName());
 }
 
 void MainWindow::setCurrentFolder(const QModelIndex &ind){
-    // clear search line edits
-    searchName->clear();
-    searchText->clear();
-    noteModel->setSourceModel(noteFSModel);
-    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
-    //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
+     // clear search line edits
+     searchName->clear();
+     searchText->clear();
+     noteModel->setSourceModel(noteFSModel);
+     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
+     //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
 }
 
 void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    setCurrentFolder(selected.indexes().first());
-    toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
+     setCurrentFolder(selected.indexes().first());
+     toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
 void MainWindow::changeRootIndex(){
-    if(!openNotes.isEmpty()){
+     if(!openNotes.isEmpty()){
         foreach(Note *note, openNotes)
             if(note)
                 note->close();
         openNotes.clear();
-    }
+     }
      QStringList dirList = QDir(QSettings().value("noteDirPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
      noteView->setRootIndex(noteModel->setRootPath(QSettings().value("noteDirPath").toString() +
                                                    "/" + dirList.first()));
@@ -334,9 +334,9 @@ void MainWindow::closeEvent(QCloseEvent* window_close){
 
 void MainWindow::quit()
 {
-    QSettings().setValue("mainwindow_size", saveGeometry());
-    QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
-    qApp->quit();
+     QSettings().setValue("mainwindow_size", saveGeometry());
+     QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
+     qApp->quit();
 }
 
 void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
@@ -372,8 +372,8 @@ void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
 
 Note *MainWindow::noteWindow(const QString &filePath)
 {
-    for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
-    {
+     for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
+     {
         // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
         if(!(*it))
         {
@@ -385,8 +385,8 @@ Note *MainWindow::noteWindow(const QString &filePath)
         {
             return (*it);
         }
-    }
-    return 0;
+     }
+     return 0;
 }
 
 void MainWindow::newFolder(){
@@ -402,25 +402,27 @@ void MainWindow::newFolder(){
      QModelIndex idx = folderModel->index(path);
      if(idx.isValid())
          folderView->edit(idx); // 'open' for rename
+     folderView->scrollTo(idx, QAbstractItemView::EnsureVisible);
 }
 
 void MainWindow::newNote(){
-    QString filePath = noteModel->rootPath() + "/" + tr("new note");
-    int counter = 0;
-    while(QFile::exists(filePath))
-    {
-        ++counter;
-        filePath = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
-    }
+     QString filePath = noteModel->rootPath() + "/" + tr("new note");
+     int counter = 0;
+     while(QFile::exists(filePath))
+     {
+         ++counter;
+         filePath = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
+     }
 
      QFile file(filePath);
      if(!file.open(QIODevice::WriteOnly))
        return;
      file.close();
 
-    QModelIndex idx = noteModel->index(filePath);
-    if(idx.isValid())
-        noteView->edit(idx); // 'open' for rename
+     QModelIndex idx = noteModel->index(filePath);
+     if(idx.isValid())
+       noteView->edit(idx); // 'open' for rename
+     noteView->scrollTo(idx, QAbstractItemView::EnsureVisible);
 }
 
 void MainWindow::renameFolder(){
@@ -507,20 +509,20 @@ void MainWindow::removeNote(){
 
 void MainWindow::importXmlNotes()
 {
-    QStringList files = QFileDialog::getOpenFileNames(
+     QStringList files = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
                             "/home",
                 tr("Notes")+"(*.note)");
-    if(files.isEmpty())
+     if(files.isEmpty())
         return;
 
-    // TODO save last selected path
+     // TODO save last selected path
 
-    foreach(QString filePath, files)
-    {
+     foreach(QString filePath, files)
+     {
         HtmlNoteWriter::writeXml2Html(filePath,QSettings().value("noteDirPath").toString());
-    }
+     }
 }
 
 void MainWindow::showContextMenuFolder(const QPoint &pos){
@@ -581,7 +583,7 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
 
 void MainWindow::about()
 {
-   QMessageBox::about(this, tr("About ") + QApplication::applicationName(),
+     QMessageBox::about(this, tr("About ") + QApplication::applicationName(),
                       tr("<p><b>%1</b> is a note taking application</p>"
                    "<p>Copyright (C) 2012 Christian Metscher, Fabian Deuchler</p>"
 
