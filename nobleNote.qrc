@@ -7,11 +7,11 @@
         <file alias="underlined">src/noblenote-icons/format-text-underline.png</file>
         <file alias="closeB">src/noblenote-icons/fileclose.png</file>
         <file alias="hyperlink">src/noblenote-icons/emblem-web.png</file>
-        <file alias="newFolder">src/noblenote-icons/folder-new.png</file>
+        <file alias="newFolder">src/noblenote-icons/foldernew.png</file>
         <file alias="newNote">src/noblenote-icons/filenew.png</file>
-        <file alias="deleteFolder">src/noblenote-icons/folder-remove.png</file>
+        <file alias="deleteFolder">src/noblenote-icons/folderremove.png</file>
         <file alias="deleteNote">src/noblenote-icons/fileremove.png</file>
-        <file alias="renameFolder">src/noblenote-icons/folder-rename.png</file>
+        <file alias="renameFolder">src/noblenote-icons/folderrename.png</file>
         <file alias="renameNote">src/noblenote-icons/filerename.png</file>
         <file alias="file">src/noblenote-icons/file.png</file>
         <file alias="folder">src/noblenote-icons/folder.png</file>
