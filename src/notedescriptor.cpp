@@ -160,9 +160,7 @@ void NoteDescriptor::write(const QString &filePath, QUuid uuid)
     //writer.setLastMetadataChange(lastMetadataChange_);
     writer.setCreateDate(createDate_);
     writer.setTitle(title_);
-    writer.setCursorPosition(textBrowser_->textCursor().position());
-    if(noteWidget_)
-        writer.setSize(noteWidget_->size());
+
     writer.write();
 }
 
@@ -187,22 +185,17 @@ void NoteDescriptor::load(const QString& filePath)
     }
 
 
-
     if(noteWidget_)
-    {
         noteWidget_->setWindowTitle(title_);
-        noteWidget_->resize(reader->size());
-    }
-
-    QTextCursor cursor(document_);
-    cursor.setPosition(reader->cursorPosition());
-    textBrowser_->setTextCursor(cursor);
 
     // dates can be null, HtmlNoteWriter will generate non null dates
     lastChange_ = reader->lastChange();
     createDate_ = reader->createDate();
     uuid_ = reader->uuid(); // can be null
 
+    QTextCursor cursor(document_);
+    cursor.setPosition(QSettings().value(uuid_+"_cursor_position").toInt());
+    textBrowser_->setTextCursor(cursor);
 
     delete reader;
     reader = 0;

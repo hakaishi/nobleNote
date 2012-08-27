@@ -25,6 +25,6 @@
 
 #include "abstractnotereader.h"
 
-AbstractNoteReader::AbstractNoteReader() : sizeHint(450,360)
+AbstractNoteReader::AbstractNoteReader()
 {
 }
