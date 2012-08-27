@@ -55,12 +55,6 @@ public:
     // get create date
     virtual const QDateTime& createDate() const          = 0;
 
-    virtual int cursorPosition() const                   = 0;
-
-    virtual const QSize& size() const                           = 0;
-
-    const QSize sizeHint;
-
      // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     //virtual static QUuid uuid(QString filePath) = 0;
 

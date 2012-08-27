@@ -57,9 +57,6 @@ void HtmlNoteWriter::write()
     uuidStr.chop(1);
 
     // insert meta elements
-    insertMetaElement(&html,"width",QString::number(size_.width()));
-    insertMetaElement(&html,"height",QString::number(size_.height()));
-    insertMetaElement(&html,"cursor-position",QString::number(cursorPosition_));
     insertMetaElement(&html,"create-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));
     insertMetaElement(&html,"last-change-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));
     insertMetaElement(&html,"uuid",uuidStr);
@@ -137,7 +134,5 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
     writer.setLastMetadataChange(reader.lastMetadataChange());
     writer.setCreateDate(reader.createDate());
     writer.setUuid(reader.uuid());
-    writer.setSize(reader.size());
-    writer.setCursorPosition(reader.cursorPosition());
     writer.write();
 }

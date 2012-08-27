@@ -79,7 +79,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(textBrowser,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
 
-
      connect(searchB->searchLine, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
      connect(searchB->findNext, SIGNAL(clicked(bool)), SLOT(selectNextExpression()));
      connect(searchB->findPrevious, SIGNAL(clicked(bool)), SLOT(selectPreviousExpression()));
@@ -88,7 +87,8 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 Note::~Note(){ /*save_or_not(); */}
 
 void Note::showEvent(QShowEvent* show_Note){
-//     load();
+     resize(QSettings().value(noteDescriptor_->uuid_+"_size", QSize(500,400)).toSize());
+
      if(searchbarVisible)
        searchB->setVisible(true);
 
@@ -96,7 +96,10 @@ void Note::showEvent(QShowEvent* show_Note){
 }
 
 void Note::closeEvent(QCloseEvent* close_Note){
+     QSettings().setValue(noteDescriptor_->uuid_+"_size", size());
      QSettings().setValue("Toolbars/state", saveState());
+     QSettings().setValue(noteDescriptor_->uuid_+"_cursor_Position",
+        textBrowser->textCursor().position());
 
       if(textDocument->isModified())
         noteDescriptor_->stateChange();

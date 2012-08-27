@@ -47,6 +47,7 @@ public:
     explicit NoteDescriptor(QString filePath, QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget = 0);
     const QString& filePath() const { return filePath_; } // return the current filePath
     bool readOnly() const { return readOnly_; }
+    QUuid uuid_;
     
 signals:
     void close(); // emitted if the user wants to close the note via a message box
@@ -71,7 +72,6 @@ private:
     QDateTime lastChange_;
     QDateTime createDate_;
     //QDateTime lastMetadataChange_;
-    QUuid uuid_;
     QString title_;
     bool readOnly_;
 
