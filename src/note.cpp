@@ -98,7 +98,7 @@ void Note::showEvent(QShowEvent* show_Note){
 void Note::closeEvent(QCloseEvent* close_Note){
      QSettings().setValue(noteDescriptor_->uuid_+"_size", size());
      QSettings().setValue("Toolbars/state", saveState());
-     QSettings().setValue(noteDescriptor_->uuid_+"_cursor_Position",
+     QSettings().setValue(noteDescriptor_->uuid_+"_cursor_position",
         textBrowser->textCursor().position());
 
       if(textDocument->isModified())
