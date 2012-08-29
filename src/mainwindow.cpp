@@ -275,6 +275,7 @@ void MainWindow::setCurrentFolder(const QModelIndex &ind){
 
 void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
+    Q_UNUSED(deselected);
      setCurrentFolder(selected.indexes().first());
      toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
