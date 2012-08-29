@@ -43,7 +43,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setAttribute(Qt::WA_DeleteOnClose);
 
-     setFont(QFont("DejaVu Sans", 10)); //setting standard for initializing
+     ; //setting standard for initializing
 
      searchbarVisible = false; //initializing
 
