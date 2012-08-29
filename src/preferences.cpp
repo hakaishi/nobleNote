@@ -24,10 +24,15 @@
  */
 
 #include "preferences.h"
+#include "htmlnotereader.h"
 #include <QDir>
 #include <QMessageBox>
 #include <QTimer>
 #include <QFileDialog>
+#include <QProgressDialog>
+#include <QFutureWatcher>
+#include <QtConcurrentFilter>
+#include <QDirIterator>
 
 Preferences::Preferences(QWidget *parent): QDialog(parent){
      setupUi(this);
@@ -38,6 +43,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
+     connect(pushButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
 }
 
 Preferences::~Preferences(){}
@@ -96,3 +102,120 @@ void Preferences::openDir(){
      }
 
 }
+
+void Preferences::deleteOldBackupsAndFileEntries(){
+     if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
+           tr("Do you really want to delete the backups and entries? You "
+              "won't be able to restore them!"),
+           QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+        return;
+
+     //get notes
+     QStringList notes;
+     QDirIterator itFiles(QSettings().value("noteDirPath").toString(), QDirIterator::Subdirectories);
+     while(itFiles.hasNext()){
+        QString filePath = itFiles.next();
+        if(itFiles.fileInfo().isFile())
+            notes << filePath;
+     }
+     getFilesFunctor.notes = notes;
+
+     //get backup files
+     QStringList backups;
+     QDirIterator itBackup(settings->value("backupDirPath").toString(), QDirIterator::Subdirectories);
+     while(itBackup.hasNext()){
+        QString filePath = itBackup.next();
+        if(itBackup.fileInfo().isFile())
+            backups << filePath;
+     }
+
+     //get QSettings Uuids and backups
+     QStringList backupsAndUuids = backups + QSettings().allKeys().filter("Notes/");
+
+     QProgressDialog dialog;
+     dialog.setLabelText(QString(tr("Progressing files...")));
+
+     // Create a QFutureWatcher and connect signals and slots.
+     QFutureWatcher<QString> futureWatcher;
+     QObject::connect(&futureWatcher, SIGNAL(finished()), &dialog, SLOT(reset()));
+     QObject::connect(&dialog, SIGNAL(canceled()), &futureWatcher, SLOT(cancel()));
+     QObject::connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), &dialog, SLOT(setRange(int,int)));
+     QObject::connect(&futureWatcher, SIGNAL(progressValueChanged(int)), &dialog, SLOT(setValue(int)));
+
+     // Start the computation.
+     futureWatcher.setFuture(QtConcurrent::filtered(backupsAndUuids, getFilesFunctor));
+
+     dialog.exec();
+
+     futureWatcher.waitForFinished();
+}
+
+bool Preferences::getFiles::operator()(const QString& backupAndUuid){
+     if(removeBackup(backupAndUuid) ^ removeSettingsUuid(backupAndUuid))
+       return true;
+     else
+       return false;
+}
+
+bool Preferences::getFiles::removeBackup(const QString& backupAndUuid){
+     bool a = false;
+     if(!backupAndUuid.contains("Notes/")){
+       foreach(QString file, notes)
+         if(!(HtmlNoteReader::uuid(file) == HtmlNoteReader::uuid(backupAndUuid)))
+           if(QFile::remove(backupAndUuid))
+             a = true;
+     }
+     return a;
+}
+
+bool Preferences::getFiles::removeSettingsUuid(const QString& backupAndUuid){
+     bool a = false;
+     if(backupAndUuid.contains("Notes/")){
+       foreach(QString uuid, notes){
+         QString uuidSize = "Notes/"+HtmlNoteReader::uuid(uuid)+"_size";
+         QString uuidCursorPosition = "Notes/"+HtmlNoteReader::uuid(uuid)+"_cursor_position";
+         if((backupAndUuid != uuidSize) && (backupAndUuid != uuidCursorPosition)){
+           QSettings().remove(backupAndUuid);
+           a = true;
+         }
+       }
+     }
+     return a;
+}
+
+/*bool Preferences::processFiles(QStringList files){
+     //get uuid form files
+     QStringList uuidList;
+     foreach(QString uuid, files)
+       uuidList << HtmlNoteReader::uuid(uuid);
+
+     //get backup files that are to be removed
+     QStringList uuidToBeRemoved;
+     foreach(QString uuidFileName, backups)
+       if(!uuidList.contains("{"+QFileInfo(uuidFileName).fileName()+"}"))
+         uuidToBeRemoved << uuidFileName;
+
+     //create a QString of backups that are to be removed for a message box
+     QString listOfUuidToBeRemoved;
+     foreach(QString str, uuidToBeRemoved)
+       listOfUuidToBeRemoved += QFileInfo(str).fileName()+"\n";
+     if(uuidToBeRemoved.isEmpty()){
+       QMessageBox::information(this,tr("Clean"), tr("No redundant backups present."));
+       return;
+     }
+     if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
+           tr("Do you really want to delete the backups and entries for the "
+              "following files?\n\n%1\nYou won't be able to restore them!").arg(
+           listOfUuidToBeRemoved),
+           QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+        return;
+
+     //removing entries/backups
+     QString removeUuid;
+     foreach(removeUuid, uuidToBeRemoved){
+         QFile::remove(removeUuid);
+         QSettings().remove("{"+QFileInfo(removeUuid).fileName()+"}_size");
+         QSettings().remove("{"+QFileInfo(removeUuid).fileName()+"}_cursor_position");
+     }
+
+}*/

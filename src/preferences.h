@@ -40,10 +40,20 @@ class Preferences : public QDialog, public Ui::Preferences {
      private:
       QSettings *settings;
       QString    originalRootPath;
+      struct getFiles
+      {
+        QStringList notes;
+        bool operator()(const QString& backupAndUuid);
+      private:
+        bool removeBackup(const QString& backupAndUuid);
+        bool removeSettingsUuid(const QString& backupAndUuid);
+      };
+      getFiles getFilesFunctor;
 
      private slots:
       void saveSettings();
       void openDir();
+      void deleteOldBackupsAndFileEntries();
 
      signals:
       void sendPathChanged();
