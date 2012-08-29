@@ -28,6 +28,8 @@
 
 #include "ui_preferences.h"
 #include <QSettings>
+#include <QProgressDialog>
+#include <QFutureWatcher>
 
 class Preferences : public QDialog, public Ui::Preferences {
      Q_OBJECT
@@ -40,9 +42,12 @@ class Preferences : public QDialog, public Ui::Preferences {
      private:
       QSettings *settings;
       QString    originalRootPath;
+      QProgressDialog *dialog;
+      QFutureWatcher<QString> *futureWatcher;
       struct getFiles
       {
         QStringList notes;
+        QStringList notesUuids;
         bool operator()(const QString& backupAndUuid);
       private:
         bool removeBackup(const QString& backupAndUuid);
