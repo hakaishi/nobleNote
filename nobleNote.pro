@@ -7,6 +7,10 @@ MOC_DIR = build
 UI_DIR = build
 RCC_DIR = build
 
+# use these for windows builds because debugging symbols wont be linked if only release is specified
+#CONFIG -= debug_and_release
+#CONFIG += release
+
 system(lrelease nobleNote.pro)
 
 QMAKE_DISTCLEAN = src/translations/*.qm
