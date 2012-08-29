@@ -85,6 +85,11 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionInsertHyperlink,SIGNAL(triggered()),this,SLOT(insertHyperlink()));
     addAction(actionInsertHyperlink);
 
+    actionClearFormatting = new QAction(QIcon::fromTheme("TODO",QIcon(":clearFormatting")),tr("&Clear Formatting"),this);
+    actionClearFormatting->setPriority(QAction::LowPriority);
+    actionClearFormatting->setShortcut(Qt::CTRL + Qt::Key_Space); // ms word clear font formatting shortcut
+    connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
+    addAction(actionClearFormatting);
 
     QPixmap textPix(16, 16);
     textPix.fill(Qt::black);
@@ -123,9 +128,20 @@ void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &
      QTextCursor cursor = textEdit_->textCursor();
      if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
        cursor.select(QTextCursor::WordUnderCursor);
-     cursor.mergeCharFormat(format);
-     textEdit_->mergeCurrentCharFormat(format);
+        cursor.mergeCharFormat(format);
+        textEdit_->mergeCurrentCharFormat(format);
+
 }
+
+void TextFormattingToolbar::clearCharFormat()
+{
+    QTextCursor cursor = textEdit_->textCursor();
+    if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
+      cursor.select(QTextCursor::WordUnderCursor);
+    cursor.setCharFormat(QTextCharFormat());
+}
+
+
 
 void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &format){
      QFont f = format.font();

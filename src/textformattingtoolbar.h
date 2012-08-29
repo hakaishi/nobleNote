@@ -48,6 +48,7 @@ public slots:
 
 private slots:
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+    void clearCharFormat(); // sets a default QTextCharFormat()
     void boldText();
     void italicText();
     void underlinedText();
@@ -57,6 +58,7 @@ private slots:
     void insertHyperlink();
     void fontOfText(const QString &f);
     void pointSizeOfText(const QString &p);
+
 
 private:
     QFontComboBox *fontComboBox;
@@ -68,6 +70,7 @@ private:
     QAction *actionTextBColor;
     QAction *actionTextStrikeOut;
     QAction *actionInsertHyperlink;
+    QAction *actionClearFormatting;
     QTextEdit * textEdit_;
     
 };

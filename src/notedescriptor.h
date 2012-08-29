@@ -47,7 +47,7 @@ public:
     explicit NoteDescriptor(QString filePath, QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget = 0);
     const QString& filePath() const { return filePath_; } // return the current filePath
     bool readOnly() const { return readOnly_; }
-    QUuid uuid_;
+    QUuid uuid() const { return uuid_;}
     
 signals:
     void close(); // emitted if the user wants to close the note via a message box
@@ -64,7 +64,7 @@ private:
     void write(const QString &filePath, QUuid uuid); // write note file to disc
     void load(const QString& filePath); // load a note file into the document
 
-
+    QUuid uuid_;
     QWidget * noteWidget_;
     QString filePath_;
     TextDocument * document_;
