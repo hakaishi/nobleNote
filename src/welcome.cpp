@@ -28,11 +28,18 @@
 #include <QFileDialog>
 #include <QSettings>
 
+#ifdef Q_OS_WIN32
+const QString defaultPath = QDir::homePath() + "/nobleNote";
+#else
+const QString defaultPath = QDir::homePath() + "/.nobleNote";
+#endif
+
 Welcome::Welcome(QWidget *parent): QDialog(parent){
      setupUi(this);
 
      path = new LineEdit(this);
-     path->setText(QDir::homePath() + "/.nobleNote");
+     path->setText(defaultPath);
+
      gridLayout->addWidget(path, 3, 0, 1, 1);
 
      connect(browse, SIGNAL(clicked(bool)), this, SLOT(openDir()));
@@ -47,12 +54,12 @@ void Welcome::openDir(){
      if(str != "")
        path->setText(str);
      else
-       path->setText(QDir::homePath() + "/.nobleNote");
+       path->setText(defaultPath);
 }
 
 void Welcome::setRootDir(){
      if(path->text() == "")
-       QSettings().setValue("rootPath", QDir::homePath() + "/.nobleNote");
+       QSettings().setValue("rootPath", defaultPath);
      else
        QSettings().setValue("rootPath", path->text());
 }
