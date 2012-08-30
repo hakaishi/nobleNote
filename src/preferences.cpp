@@ -29,7 +29,7 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QFileDialog>
-#include <QtConcurrentFilter>
+#include <QtConcurrentMap>
 #include <QDirIterator>
 
 Preferences::Preferences(QWidget *parent): QDialog(parent){
@@ -101,84 +101,106 @@ void Preferences::openDir(){
 
 }
 
+QUuid getNotesUuids(const QString& notePath){
+     return HtmlNoteReader::uuid(notePath);
+}
+
+void Preferences::getUuidList(){
+     QFutureIterator<QUuid> it(future1->future());
+     while(it.hasNext())
+       notesUuids << it.next();
+}
+
 void Preferences::deleteOldBackupsAndFileEntries(){
-     if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
-           tr("Do you really want to delete the backups and entries? You "
-              "won't be able to restore them!"),
-           QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
-        return;
+     notesUuids.clear(); //make sure that it's empty
 
-     //get notes
-     QStringList notes;
-     QDirIterator itFiles(QSettings().value("noteDirPath").toString(), QDirIterator::Subdirectories);
+     //searching for existing Notes
+     QDirIterator itFiles(QSettings().value("noteDirPath").toString(),
+                                              QDirIterator::Subdirectories);
+     QStringList noteFiles;
      while(itFiles.hasNext()){
-        QString filePath = itFiles.next();
-        if(itFiles.fileInfo().isFile())
-            notes << filePath;
+       QString filePath = itFiles.next();
+       if(itFiles.fileInfo().isFile())
+         noteFiles << filePath;
      }
-     getFilesFunctor.notes = notes;
 
+     future1 = new QFutureWatcher<QUuid>(this);
+     future1->setFuture(QtConcurrent::mapped(noteFiles, getNotesUuids));
+
+     indexDialog = new QProgressDialog(this);
+     indexDialog->setLabelText(QString(tr("Indexing notes...")));
+
+     QObject::connect(future1, SIGNAL(finished()), this, SLOT(getUuidList()));
+     QObject::connect(future1, SIGNAL(finished()), this, SLOT(progressChanges()));
+     QObject::connect(future1, SIGNAL(finished()), indexDialog, SLOT(reset()));
+     QObject::connect(indexDialog, SIGNAL(canceled()), future1, SLOT(cancel()));
+     QObject::connect(future1, SIGNAL(progressRangeChanged(int,int)),
+                indexDialog, SLOT(setRange(int,int)));
+     QObject::connect(future1, SIGNAL(progressValueChanged(int)), indexDialog,
+                SLOT(setValue(int)));
+
+     indexDialog->exec();
+}
+
+void actualRemoval(const QString& backupAndUuid){
+     if(!backupAndUuid.contains("Notes/"))
+       QFile::remove(backupAndUuid);
+     else
+       QSettings().remove(backupAndUuid);
+}
+
+void Preferences::progressChanges(){
      //get backup files
+     QDirIterator itBackup(settings->value("backupDirPath").toString(),
+                                              QDirIterator::Subdirectories);
      QStringList backups;
-     QDirIterator itBackup(settings->value("backupDirPath").toString(), QDirIterator::Subdirectories);
      while(itBackup.hasNext()){
-        QString filePath = itBackup.next();
-        if(itBackup.fileInfo().isFile())
-            backups << filePath;
+       QString filePath = itBackup.next();
+       if(itBackup.fileInfo().isFile())
+         backups << filePath;
      }
 
-     //get QSettings Uuids and backups
+     //add QSettings Uuids to the backups
      QStringList backupsAndUuids = backups + QSettings().allKeys().filter("Notes/");
 
-     dialog = new QProgressDialog(this);
-     dialog->setLabelText(QString(tr("Progressing files...")));
-
-     // Create a QFutureWatcher and connect signals and slots.
-     futureWatcher = new QFutureWatcher<QString>;
-     QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(reset()));
-     QObject::connect(dialog, SIGNAL(canceled()), futureWatcher, SLOT(cancel()));
-     QObject::connect(futureWatcher, SIGNAL(progressRangeChanged(int,int)), dialog, SLOT(setRange(int,int)));
-     QObject::connect(futureWatcher, SIGNAL(progressValueChanged(int)), dialog, SLOT(setValue(int)));
-
-     // Start the computation.
-     futureWatcher->setFuture(QtConcurrent::filtered(backupsAndUuids, getFilesFunctor));
-
-     dialog->exec();
-}
-
-bool Preferences::getFiles::operator()(const QString& backupAndUuid){
-     bool a = false;
-     if(!backupAndUuid.contains("Notes/")){
-       foreach(QString file, notes)
-         notesUuids << HtmlNoteReader::uuid(file);
-       if(removeBackup(backupAndUuid))
-         a = true;
+     //We only need the redundant backups and Uuids
+     foreach(QString str, backupsAndUuids){
+       if(!str.contains("Notes/") && notesUuids.contains(QFileInfo(str).fileName()))
+         backupsAndUuids.removeOne(str);
+       if(str.contains("Notes/")){
+         QString settings = str;
+         settings.remove("Notes/");
+         settings.remove("_size");
+         settings.remove("_cursor_position");         
+         if(notesUuids.contains(settings))
+           backupsAndUuids.removeOne(str);
+       }
      }
-     else
-       if(removeSettingsUuid(backupAndUuid))
-         a = true;
-     return a;
-}
 
-bool Preferences::getFiles::removeBackup(const QString& backupAndUuid){
-     bool a = false;
-     if(!notesUuids.contains("{"+QFileInfo(backupAndUuid).fileName()+"}"))
-       if(QFile::remove(backupAndUuid))
-         a = true;
+     QString redundantBackupList;
+     foreach(QString str, backupsAndUuids)
+       if(!str.contains("Notes/"))
+         redundantBackupList += (str+"\n");
 
-     return a;
-}
+     if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
+         tr("Do you really want to delete the backups and entries for the "
+            "following files?\n\n%1\nYou won't be able to restore them!").arg(
+         redundantBackupList),
+         QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+       return;
 
-bool Preferences::getFiles::removeSettingsUuid(const QString& backupAndUuid){
-     bool a = false;
-     QString str = backupAndUuid;
-     str.remove("Notes/");
-     str.remove("_size");
-     str.remove("_cursor_position");
-     if(!notesUuids.contains(str)){
-       QSettings().remove("Notes/"+str+"_size");
-       QSettings().remove("Notes/"+str+"_cursor_position");
-       a = true;
-     }
-     return a;
+     progressDialog = new QProgressDialog(this);
+     progressDialog->setLabelText(QString(tr("Progressing files...")));
+
+     future2 = new QFutureWatcher<void>(this);
+     future2->setFuture(QtConcurrent::map(backupsAndUuids, actualRemoval));
+
+     QObject::connect(future2, SIGNAL(finished()), progressDialog, SLOT(reset()));
+     QObject::connect(progressDialog, SIGNAL(canceled()), future2, SLOT(cancel()));
+     QObject::connect(future2, SIGNAL(progressRangeChanged(int,int)), progressDialog,
+                                                                SLOT(setRange(int,int)));
+     QObject::connect(future2, SIGNAL(progressValueChanged(int)), progressDialog,
+                                                                SLOT(setValue(int)));
+
+     progressDialog->exec();
 }

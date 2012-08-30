@@ -30,6 +30,7 @@
 #include <QSettings>
 #include <QProgressDialog>
 #include <QFutureWatcher>
+#include <QUuid>
 
 class Preferences : public QDialog, public Ui::Preferences {
      Q_OBJECT
@@ -42,23 +43,17 @@ class Preferences : public QDialog, public Ui::Preferences {
      private:
       QSettings *settings;
       QString    originalRootPath;
-      QProgressDialog *dialog;
-      QFutureWatcher<QString> *futureWatcher;
-      struct getFiles
-      {
-        QStringList notes;
-        QStringList notesUuids;
-        bool operator()(const QString& backupAndUuid);
-      private:
-        bool removeBackup(const QString& backupAndUuid);
-        bool removeSettingsUuid(const QString& backupAndUuid);
-      };
-      getFiles getFilesFunctor;
+      QProgressDialog *indexDialog, *progressDialog;
+      QFutureWatcher<QUuid> *future1;
+      QFutureWatcher<void> *future2;
+      QList<QUuid> notesUuids;
 
      private slots:
       void saveSettings();
       void openDir();
       void deleteOldBackupsAndFileEntries();
+      void getUuidList();
+      void progressChanges();
 
      signals:
       void sendPathChanged();
