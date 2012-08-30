@@ -45,6 +45,8 @@ public:
     explicit FindFileSystemModel(QObject *parent = 0);
     QString fileName(const QModelIndex & index) const;
     QString filePath(const QModelIndex & index) const;
+    bool	rmdir ( const QModelIndex & index ) const;
+    QModelIndex	mkdir ( const QModelIndex & parent, const QString & name );
     bool remove(const QModelIndex & index ) const;
     QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString filePath); // append file with full path
@@ -53,6 +55,7 @@ public:
     void clear();
     void findInFiles(const QString& fileName, const QString &content, const QString &path);
     QModelIndex index ( const QString & path, int column = 0 ) const; // wrapper method for the corresponding QFileSystemModel method
+
 
     // TODO signal file changed
 };

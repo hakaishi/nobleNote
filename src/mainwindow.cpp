@@ -109,11 +109,14 @@ MainWindow::MainWindow()
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 3, 0);
 
-     folderModel = new FileSystemModel(this);
-     folderModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
-     folderModel->setReadOnly(false);
-     folderModel->setOnlyOnItemDrops(true);
-     folderModel->setIconProvider(new FileIconProvider());
+
+     folderModel = new FindFileSystemModel(this);
+     FileSystemModel *folderFSModel = new FileSystemModel(this);
+     folderFSModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+     folderFSModel->setReadOnly(false);
+     folderFSModel->setOnlyOnItemDrops(true);
+     folderFSModel->setIconProvider(new FileIconProvider());
+     folderModel->setSourceModel(folderFSModel);
 
      noteFSModel = new FileSystemModel(this);
      noteFSModel->setFilter(QDir::Files);
@@ -234,7 +237,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
      {
          QString currFolderPath = folderModel->filePath(folderView->currentIndex());
-         //folderModel->sort(0); does not work with indices 0 -3
+         folderModel->sort(1);// does not work with indices 0 -3
          folderView->setCurrentIndex(folderModel->index(currFolderPath));
      }
 
@@ -251,6 +254,8 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      Note * w = noteWindow(path + "/" + oldName);
      if(w)
         w->setWindowTitle(QFileInfo(path + "/" + newName).baseName());
+
+     noteView->model()->sort(1);
 }
 
 void MainWindow::setCurrentFolder(const QModelIndex &ind){

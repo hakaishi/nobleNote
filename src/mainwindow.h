@@ -74,7 +74,7 @@ private:
       MainWindowToolbar         *toolbar;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
-      FileSystemModel *folderModel;
+      FindFileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
       FindFileSystemModel * noteModel;
       QListView       *folderView;

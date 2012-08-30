@@ -50,7 +50,23 @@ QString FindFileSystemModel::filePath(const QModelIndex &index) const
     else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
       return ffm->filePath(mapToSource(index));
      qDebug("FindFileSystemModel::filePath failed: cast failed");
-    return QString();
+     return QString();
+}
+
+bool FindFileSystemModel::rmdir(const QModelIndex &index) const
+{
+    if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
+      return fsm->rmdir(mapToSource(index));
+    qDebug("FindFileSystemModel::rmdir failed: cast failed. This method is only implemented for QFileSystemModel");
+    return false;
+}
+
+QModelIndex FindFileSystemModel::mkdir(const QModelIndex &parent, const QString &name)
+{
+    if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
+      return mapFromSource(fsm->mkdir(mapToSource(parent),name));
+    qDebug("FindFileSystemModel::mkdir failed: cast failed. This method is only implemented for QFileSystemModel");
+    return QModelIndex();
 }
 
 bool FindFileSystemModel::remove(const QModelIndex &index) const
