@@ -325,6 +325,8 @@ void MainWindow::showEvent(QShowEvent* show_window){
 
      if(QSettings().contains("mainwindow_size"))
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
+     if(QSettings().contains("Splitter"))
+       splitter->restoreState(QSettings().value("Splitter").toByteArray());
      QMainWindow::showEvent(show_window);
 }
 
@@ -340,6 +342,7 @@ void MainWindow::closeEvent(QCloseEvent* window_close){
      }
      else{
        QSettings().setValue("mainwindow_size", saveGeometry());
+       QSettings().setValue("Splitter", splitter->saveState());
        qApp->quit();
      }
      QMainWindow::closeEvent(window_close);
