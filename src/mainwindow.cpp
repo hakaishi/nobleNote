@@ -157,7 +157,7 @@ MainWindow::MainWindow()
 
 //     // selects first folder as soon as the folderModel has populated its first folder
 //     // "single shot" slot
-     connect(folderModel,SIGNAL(directoryLoaded(QString)), this,
+     connect(folderFSModel,SIGNAL(directoryLoaded(QString)), this,
              SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
      connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
@@ -237,7 +237,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
      {
          QString currFolderPath = folderModel->filePath(folderView->currentIndex());
-         folderModel->sort(1);// does not work with indices 0 -3
+         //folderModel->sort(1);// does not work with indices 0 -3
          folderView->setCurrentIndex(folderModel->index(currFolderPath));
      }
 
@@ -249,13 +249,13 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 
 void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
 {
-
      QString filePath = noteModel->filePath(noteView->currentIndex());
      Note * w = noteWindow(path + "/" + oldName);
      if(w)
         w->setWindowTitle(QFileInfo(path + "/" + newName).baseName());
 
-     noteView->model()->sort(1);
+     //noteView->model()->sort(1); // does not work
+     noteView->setCurrentIndex(noteModel->index(filePath));
 }
 
 void MainWindow::setCurrentFolder(const QModelIndex &ind){
@@ -437,8 +437,11 @@ void MainWindow::newNote(){
 
      QModelIndex idx = noteModel->index(filePath);
      if(idx.isValid())
+     {
+         noteView->setCurrentIndex(idx);
        noteView->edit(idx); // 'open' for rename
-     noteView->scrollTo(idx, QAbstractItemView::EnsureVisible);
+        noteView->scrollTo(idx, QAbstractItemView::EnsureVisible);
+     }
 }
 
 void MainWindow::renameFolder(){

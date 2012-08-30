@@ -55,9 +55,6 @@ public:
     void clear();
     void findInFiles(const QString& fileName, const QString &content, const QString &path);
     QModelIndex index ( const QString & path, int column = 0 ) const; // wrapper method for the corresponding QFileSystemModel method
-
-
-    // TODO signal file changed
 };
 
 #endif // FINDFILESYSTEMMODEL_H
