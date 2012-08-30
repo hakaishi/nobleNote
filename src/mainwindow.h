@@ -96,6 +96,7 @@ private:
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
 
      private slots:
+      void checkAndSetFolders();
       void changeRootIndex();
       void setCurrentFolder(const QModelIndex &ind);
 
