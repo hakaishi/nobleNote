@@ -232,7 +232,12 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 {
     Q_UNUSED(editor);
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
-        setCurrentFolder(folderView->currentIndex());
+     {
+         QString currFolderPath = folderModel->filePath(folderView->currentIndex());
+         //folderModel->sort(0); does not work with indices 0 -3
+         folderView->setCurrentIndex(folderModel->index(currFolderPath));
+     }
+
 
  // disable note toolbar buttons if selection is cleared after the folder has been renamed
      if(!noteView->selectionModel()->hasSelection())
@@ -401,12 +406,14 @@ void MainWindow::newFolder(){
          ++counter;
          path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
-     folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
+     QModelIndex idx = folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
 
-     QModelIndex idx = folderModel->index(path);
      if(idx.isValid())
+     {
+         folderView->setCurrentIndex(idx);
          folderView->edit(idx); // 'open' for rename
-     folderView->scrollTo(idx, QAbstractItemView::EnsureVisible);
+         folderView->scrollTo(idx, QAbstractItemView::EnsureVisible);
+     }
 }
 
 void MainWindow::newNote(){
