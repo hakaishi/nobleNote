@@ -101,10 +101,6 @@ void Preferences::openDir(){
 
 }
 
-QUuid getNotesUuids(const QString& notePath){
-     return HtmlNoteReader::uuid(notePath);
-}
-
 void Preferences::getUuidList(){
      QFutureIterator<QUuid> it(future1->future());
      while(it.hasNext())
@@ -124,8 +120,11 @@ void Preferences::deleteOldBackupsAndFileEntries(){
          noteFiles << filePath;
      }
 
+
      future1 = new QFutureWatcher<QUuid>(this);
-     future1->setFuture(QtConcurrent::mapped(noteFiles, getNotesUuids));
+
+     QUuid (*uuidPtr)(QString) = & HtmlNoteReader::uuid; // function pointer, because uuid method is overloaded
+     future1->setFuture(QtConcurrent::mapped(noteFiles, uuidPtr));
 
      indexDialog = new QProgressDialog(this);
      indexDialog->setLabelText(QString(tr("Indexing notes...")));
