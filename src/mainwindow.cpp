@@ -35,6 +35,7 @@
 #include "highlighter.h"
 #include "notedescriptor.h"
 #include "htmlnotewriter.h"
+#include "htmlnotereader.h"
 #include "fileiconprovider.h"
 #include <QTextStream>
 #include <QFile>
@@ -374,6 +375,7 @@ void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
 
 Note *MainWindow::noteWindow(const QString &filePath)
 {
+     QString uuid = HtmlNoteReader::uuid(filePath);
      for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
         // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
@@ -383,7 +385,7 @@ Note *MainWindow::noteWindow(const QString &filePath)
             continue;
         }
 
-        if((*it) && (*it)->noteDescriptor()->filePath() == filePath)
+        if((*it) && (*it)->noteDescriptor()->uuid() == uuid)
         {
             return (*it);
         }
