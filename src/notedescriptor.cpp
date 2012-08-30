@@ -78,6 +78,9 @@ void NoteDescriptor::stateChange()
                     ++counter;
                     filePath_ = origPath +  QString(" (%1)").arg(counter);
                 }
+                title_ = QFileInfo(filePath_).baseName();
+                if(noteWidget_)
+                    noteWidget_->setWindowTitle(title_); // update window title
                 save(filePath_,uuid_); // save under old path with new uuid
             }
             else
