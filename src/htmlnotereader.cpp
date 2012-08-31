@@ -128,7 +128,7 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
     int metaIdx = 0;
     int endIdx = 0;
     // find the meta elements in the html files and read the uuid
-    while(metaIdx != -1 || time.elapsed() > 500)
+    while(metaIdx != -1 && time.elapsed() < 1500)
     {
         metaIdx = content.indexOf("<meta",endIdx+1);
 

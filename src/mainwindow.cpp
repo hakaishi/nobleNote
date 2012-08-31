@@ -393,7 +393,7 @@ void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
 
 Note *MainWindow::noteWindow(const QString &filePath)
 {
-     QString uuid = HtmlNoteReader::uuid(filePath);
+     QUuid uuid = HtmlNoteReader::uuid(filePath);
      for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
         // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null

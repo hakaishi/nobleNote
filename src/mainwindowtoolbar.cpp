@@ -26,7 +26,7 @@
 #include "mainwindowtoolbar.h"
 #include <QItemSelection>
 
-MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
+MainWindowToolbar::MainWindowToolbar(QWidget *parent) : QToolBar(parent) {
 
     setWindowTitle(tr("Main window toolbar"));
     setObjectName(tr("Mainwindowtoolbar"));
@@ -75,12 +75,14 @@ MainWindowToolbar::MainWindowToolbar(QMainWindow *parent){
 
 void MainWindowToolbar::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
+    Q_UNUSED(deselected);
         foreach(QAction * action, folderActions)
             action->setEnabled(!selected.isEmpty());
 }
 
 void MainWindowToolbar::onNoteSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
+    Q_UNUSED(deselected);
     foreach(QAction * action, noteActions)
         action->setEnabled(!selected.isEmpty());
 }

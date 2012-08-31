@@ -34,7 +34,7 @@ class MainWindowToolbar : public QToolBar
 {
     Q_OBJECT
 public:
-     explicit MainWindowToolbar(QMainWindow *parent = 0);
+     explicit MainWindowToolbar(QWidget *parent = 0);
      QAction *newFolderAction, *newNoteAction, *removeFolderAction,
              *removeNoteAction, *renameFolderAction, *renameNoteAction;
 public slots:
