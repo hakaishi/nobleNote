@@ -201,6 +201,10 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow(){}
 
 void MainWindow::find(){
+    // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
+        if(!noteView->selectionModel()->hasSelection())
+           toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection());
+
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
