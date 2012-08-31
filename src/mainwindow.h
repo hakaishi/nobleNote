@@ -37,6 +37,8 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QPointer>
+#include <QProgressDialog>
+#include <QFutureWatcher>
 
 
 /**
@@ -87,6 +89,8 @@ private:
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> >     openNotes; // every access to openNotes must check for null pointers
       Highlighter *highlighter;
+      QFutureWatcher<void> *future;
+      QProgressDialog *dialog;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;

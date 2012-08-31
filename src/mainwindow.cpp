@@ -49,6 +49,7 @@
 #include <QList>
 #include <QFileDialog>
 #include <QPushButton>
+#include <QtConcurrentMap>
 
 MainWindow::MainWindow()
 {
@@ -533,6 +534,10 @@ void MainWindow::removeNote(){
      noteModel->remove(noteView->currentIndex());
 }
 
+void acualNoteImport(QString file){
+     HtmlNoteWriter::writeXml2Html(file,QSettings().value("noteDirPath").toString());
+}
+
 void MainWindow::importXmlNotes()
 {
      QStringList files = QFileDialog::getOpenFileNames(
@@ -543,12 +548,23 @@ void MainWindow::importXmlNotes()
      if(files.isEmpty())
         return;
 
-     // TODO save last selected path
+     future = new QFutureWatcher<void>(this);
 
-     foreach(QString filePath, files)
-     {
-        HtmlNoteWriter::writeXml2Html(filePath,QSettings().value("noteDirPath").toString());
-     }
+     future->setFuture(QtConcurrent::map(files, acualNoteImport));
+
+     dialog = new QProgressDialog(this);
+     dialog->setLabelText(QString(tr("Importing notes...")));
+
+     QObject::connect(future, SIGNAL(finished()), dialog, SLOT(reset()));
+     QObject::connect(dialog, SIGNAL(canceled()), future, SLOT(cancel()));
+     QObject::connect(future, SIGNAL(progressRangeChanged(int,int)),
+                dialog, SLOT(setRange(int,int)));
+     QObject::connect(future, SIGNAL(progressValueChanged(int)), dialog,
+                SLOT(setValue(int)));
+
+     dialog->exec();
+
+     // TODO save last selected path
 }
 
 void MainWindow::showContextMenuFolder(const QPoint &pos){
