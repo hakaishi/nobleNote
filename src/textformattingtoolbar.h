@@ -59,7 +59,6 @@ private slots:
     void fontOfText(const QString &f);
     void pointSizeOfText(const QString &p);
 
-
 private:
     QFontComboBox *fontComboBox;
     QComboBox *comboSize;
@@ -72,7 +71,6 @@ private:
     QAction *actionInsertHyperlink;
     QAction *actionClearFormatting;
     QTextEdit * textEdit_;
-    
 };
 
 #endif // TEXTFORMATTINGTOOLBAR_H

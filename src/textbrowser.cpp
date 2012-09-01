@@ -50,7 +50,6 @@ void TextBrowser::openLinkInBrowser(const QUrl link)
     QDesktopServices::openUrl(link);
 }
 
-
 void TextBrowser::slotSetReadOnly(bool ro)
 {
     this->setReadOnly(ro);

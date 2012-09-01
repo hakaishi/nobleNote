@@ -52,6 +52,11 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textBrowser->setDocument(textDocument);
      textBrowser->ensureCursorVisible();
 
+     toolbar = new TextFormattingToolbar(textBrowser,this);
+     toolbar->setFocusPolicy(Qt::TabFocus);
+     addToolBar(toolbar);
+     addToolBarBreak(Qt::TopToolBarArea);
+
      noteDescriptor_ = new NoteDescriptor(filePath,textBrowser, textDocument,this); // must be constructed after TextDocument
      textBrowser->setReadOnly(noteDescriptor_->readOnly());
      textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
@@ -61,12 +66,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textBrowser->setFocus();
 
      alreadyAsked = false;
-
-     toolbar = new TextFormattingToolbar(textBrowser,this);
-     toolbar->setFocusPolicy(Qt::TabFocus);
-     addToolBar(toolbar);
-
-     addToolBarBreak(Qt::TopToolBarArea);
 
      searchB = new TextSearchToolbar(textBrowser,this);
      searchB->setFocusPolicy(Qt::TabFocus);

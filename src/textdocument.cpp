@@ -37,8 +37,6 @@ TextDocument::TextDocument(QObject *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(sendDelayedModificationChanged()));
 }
 
-
-
 void TextDocument::startStopTimer(bool b)
 {
     if(b)

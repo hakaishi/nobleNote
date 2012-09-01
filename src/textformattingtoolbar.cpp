@@ -130,7 +130,6 @@ void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &
        cursor.select(QTextCursor::WordUnderCursor);
         cursor.mergeCharFormat(format);
         textEdit_->mergeCurrentCharFormat(format);
-
 }
 
 void TextFormattingToolbar::clearCharFormat()
@@ -140,8 +139,6 @@ void TextFormattingToolbar::clearCharFormat()
       cursor.select(QTextCursor::WordUnderCursor);
     cursor.setCharFormat(QTextCharFormat());
 }
-
-
 
 void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &format){
      QFont f = format.font();
