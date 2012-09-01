@@ -26,6 +26,7 @@
 #include "xmlnotereader.h"
 #include <QTextCursor>
 #include <QDirIterator>
+#include <QApplication>
 
 
 XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
@@ -155,6 +156,21 @@ void XmlNoteReader::readContent()
             if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(true);
 
+            if(name() == "highlight")
+                format.setBackground(QColor(255,255,0));
+
+            if(qualifiedName() == "size:small")
+                format.setFontPointSize(QApplication::font().pointSize()* 0.8f);
+
+            if(qualifiedName() == "size:large")
+                format.setFontPointSize(QApplication::font().pointSize()*1.4f);
+
+            if(qualifiedName() == "size:huge")
+                format.setFontPointSize(QApplication::font().pointSize()*1.6f);
+
+            if(name() == "monospace")
+                format.setFontFamily("Monospace");
+
             if(qualifiedName() == "link:url")
                 linkFormat = true;
 
@@ -177,6 +193,15 @@ void XmlNoteReader::readContent()
 
             if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(false);
+
+            if(name() == "highlight")
+                format.clearBackground();
+
+            if(qualifiedName() == "size:small" || qualifiedName() == "size:large" || qualifiedName() == "size:huge") // mutual exclusive options
+                format.setFontPointSize(QApplication::font().pointSizeF());
+
+            if(name() == "monospace")
+                format.setFontFamily(QApplication::font().family());
 
             if(name() == "link:url")
                 linkFormat = false;
