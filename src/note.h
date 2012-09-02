@@ -60,7 +60,6 @@ class Note : public QMainWindow, public Ui::Note {
 
       TextFormattingToolbar * toolbar;
       TextSearchToolbar *searchB;
-      bool      alreadyAsked;
       NewNoteName *newNote;
       Highlighter *highlighter;
 

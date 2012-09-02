@@ -65,8 +65,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      gridLayout->addWidget(textBrowser, 0, 0, 1, 1);
      textBrowser->setFocus();
 
-     alreadyAsked = false;
-
      searchB = new TextSearchToolbar(textBrowser,this);
      searchB->setFocusPolicy(Qt::TabFocus);
      addToolBar(searchB);
