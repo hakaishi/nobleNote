@@ -102,7 +102,6 @@ private:
      private slots:
       void checkAndSetFolders();
       void changeRootIndex();
-      void setCurrentFolder(const QModelIndex &ind);
 
       void onFolderSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
 

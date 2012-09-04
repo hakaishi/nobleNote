@@ -244,6 +244,10 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
          QString currFolderPath = folderModel->filePath(folderView->currentIndex());
          //folderModel->sort(1);// does not work with indices 0 -3
          folderView->setCurrentIndex(folderModel->index(currFolderPath));
+
+         // set current folder
+         noteModel->setSourceModel(noteFSModel);
+         noteView->setRootIndex(noteModel->setRootPath(currFolderPath));
      }
 
 
@@ -263,19 +267,14 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      noteView->setCurrentIndex(noteModel->index(filePath));
 }
 
-void MainWindow::setCurrentFolder(const QModelIndex &ind){
-     // clear search line edits
-     searchName->clear();
-     searchText->clear();
-     noteModel->setSourceModel(noteFSModel);
-     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(ind)));
-     //noteList->setRootIndex(noteModel->index(folderModel->filePath(ind)));
-}
-
 void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(deselected);
-     setCurrentFolder(selected.indexes().first());
+    // clear search line edits
+    searchName->clear();
+    searchText->clear();
+    noteModel->setSourceModel(noteFSModel);
+    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected.indexes().first())));
      toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
