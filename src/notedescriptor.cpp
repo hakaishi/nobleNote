@@ -32,7 +32,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QTextDocument>
-#include <QScopedPointer>
+#include <QDir>
 
 NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
@@ -140,6 +140,9 @@ void NoteDescriptor::unlockStateChange()
 
 void NoteDescriptor::save(const QString& filePath,QUuid uuid)
 {
+    if(!QDir(QFileInfo(filePath).absolutePath()).exists())
+        QDir().mkpath(QFileInfo(filePath).absolutePath());
+
     write(filePath,uuid); // write note
     QString backupDirPath = QSettings().value("backupDirPath").toString();
     QString uuidStr = uuid.toString();
