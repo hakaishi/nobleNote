@@ -15,5 +15,6 @@
         <file alias="renameNote">src/noblenote-icons/filerename.png</file>
         <file alias="file">src/noblenote-icons/file.png</file>
         <file alias="folder">src/noblenote-icons/folder.png</file>
+        <file alias="clearFormatting">src/noblenote-icons/clearFormatting.png</file>
     </qresource>
 </RCC>
