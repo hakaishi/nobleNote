@@ -40,7 +40,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
      dontQuit->setChecked(settings->value("Dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      sizeSpinHeight->setValue(settings->value("Standard_height_for_all_notes",250).toInt());
-     sizeSpinHeight->setValue(settings->value("Standard_width_for_all_notes",335).toInt());
+     sizeSpinWidth->setValue(settings->value("Standard_width_for_all_notes",335).toInt());
 
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
