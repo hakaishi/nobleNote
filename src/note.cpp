@@ -84,8 +84,11 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 Note::~Note(){ /*save_or_not(); */}
 
 void Note::showEvent(QShowEvent* show_Note){
-     resize(QSettings().value("Notes/"+noteDescriptor_->uuid()+"_size", QSize(700,460)).toSize());
-
+     if(QSettings().contains("Notes/"+noteDescriptor_->uuid()+"_size"))
+       resize(QSettings().value("Notes/"+noteDescriptor_->uuid()+"_size").toSize());
+     else
+       resize(QSettings().value("Standard_width_for_all_notes",335).toInt(),
+              QSettings().value("Standard_height_for_all_notes",250).toInt());
      if(searchbarVisible)
        searchB->setVisible(true);
 
