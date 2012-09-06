@@ -56,13 +56,7 @@ void Preferences::showEvent(QShowEvent* show_pref){
 
 void Preferences::saveSettings(){
      if(!settings->isWritable()){
-       QMessageBox msgBox;
-       msgBox.setWindowTitle(tr("Warning"));
-       msgBox.setIcon(QMessageBox::Critical);
-       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
-       QTimer::singleShot(6000, &msgBox, SLOT(close()));
-       msgBox.setInformativeText(tr("nobleNote.conf is not writable!"));
-       msgBox.exec();
+       QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
      }
 
      if(rootPath != originalRootPath){
