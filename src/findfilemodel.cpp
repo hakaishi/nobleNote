@@ -37,6 +37,7 @@ FindFileModel::FindFileModel(QObject *parent) :
     QStandardItemModel(parent)
 {
     connect(&futureWatcher,SIGNAL(finished()),this,SLOT(findInFilesFinished()));
+    connect(&futureWatcher, SIGNAL(canceled()), this, SLOT(findInFilesCanceled()));
 }
 
 QString FindFileModel::fileName(const QModelIndex &index) const
@@ -132,13 +133,17 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
     future = QtConcurrent::filtered(files,fileContainsFunctor);
 
     futureWatcher.setFuture(future);
-
 }
 
 void FindFileModel::findInFilesFinished()
 {
     foreach(QString fileName, future.results())
         this->appendFile(fileName);
+    QApplication::restoreOverrideCursor();
+}
+
+void FindFileModel::findInFilesCanceled()
+{
     QApplication::restoreOverrideCursor();
 }
 
@@ -163,4 +168,3 @@ bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePat
     }
     return false;
 }
-

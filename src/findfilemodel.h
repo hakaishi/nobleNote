@@ -75,6 +75,7 @@ private:
 
 private slots:
     void findInFilesFinished(); // populate model with find results
+    void findInFilesCanceled();
 };
 
 #endif // FINDFILEMODEL_H
