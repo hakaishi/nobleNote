@@ -50,6 +50,7 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QtConcurrentMap>
+#include <textsearchtoolbar.h>
 
 MainWindow::MainWindow()
 {
@@ -390,6 +391,27 @@ void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
      note->show();
 }
 
+void MainWindow::openNoteSource()
+{
+     QModelIndex ind = noteView->currentIndex();
+
+    QFile file(noteModel->filePath(ind));
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+           return;
+
+    QMainWindow * w = new QMainWindow();
+    QTextEdit * textEdit = new QTextEdit(w);
+    textEdit->setReadOnly(true);
+    textEdit->setPlainText(QTextStream(&file).readAll());
+    w->setCentralWidget(textEdit);
+    TextSearchToolbar * searchBar = new TextSearchToolbar(textEdit,w);
+    w->addToolBar(searchBar);
+    w->resize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
+//    searchBar->searchLine()->setFocus();
+//    searchBar->setFocusPolicy(Qt::TabFocus);
+    w->show();
+}
+
 Note *MainWindow::noteWindow(const QString &filePath)
 {
      QUuid uuid = HtmlNoteReader::uuid(filePath);
@@ -609,6 +631,13 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
          menu.addAction(renameN);
          menu.addAction(removeNote);
+
+         if(1) // developer option setting
+         {
+             QAction* showSourceAction = new QAction(tr("Show &Source"), &menu);
+             connect(showSourceAction,SIGNAL(triggered()),this,SLOT(openNoteSource()));
+             menu.addAction(showSourceAction);
+         }
      }
      menu.exec(globalPos);
 }

@@ -111,7 +111,8 @@ private:
 #endif
 
       void find();
-      void openNote(const QModelIndex &ind = QModelIndex());
+      void openNote(const QModelIndex &ind);
+      void openNoteSource();
       void showContextMenuFolder(const QPoint &pos);
       void showContextMenuNote(const QPoint &pos);
       void newFolder();

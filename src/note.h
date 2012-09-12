@@ -68,7 +68,7 @@ class Note : public QMainWindow, public Ui::Note {
      protected:
       void keyPressEvent(QKeyEvent *k);
       void keyReleaseEvent(QKeyEvent *k);
-      virtual void showEvent(QShowEvent* show_Note);
+      virtual void showEvent(QShowEvent* event);
       virtual void closeEvent(QCloseEvent* close_Note);
 };
 

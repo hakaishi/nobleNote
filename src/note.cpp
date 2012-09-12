@@ -82,7 +82,7 @@ void Note::highlightText(const QString &str)
     searchBar->highlightText(str);
 }
 
-void Note::showEvent(QShowEvent* show_Note){
+void Note::showEvent(QShowEvent* event){
        QSize defaultSize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
        QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid()+"_size", defaultSize).toSize();
        resize(size);
@@ -90,7 +90,7 @@ void Note::showEvent(QShowEvent* show_Note){
      if(searchbarVisible)
        searchBar->setVisible(true);
 
-     QMainWindow::showEvent(show_Note);
+     QMainWindow::showEvent(event);
 }
 
 void Note::closeEvent(QCloseEvent* close_Note){
