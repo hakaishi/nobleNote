@@ -33,6 +33,7 @@
 #include <QFileInfo>
 #include <QTextDocument>
 #include <QDir>
+#include <QTextStream>
 
 NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
@@ -222,6 +223,25 @@ void NoteDescriptor::load(const QString& filePath)
 
     document_->setModified(false); // avoid emit of delayedModificationChanged()
 }
+
+//void NoteDescriptor::showSource()
+//{
+//    stateChange(); // save current state
+//    QFile file(filePath_);
+//    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+//    {
+//        qDebug("NoteDescriptor::toggleSource failed : could not open filepath");
+//           return;
+//    }
+//    QString html;
+//    QTextStream in(&file);
+//    html = in.readAll();
+//    file.close();
+//    document_->setPlainText(html);
+//    document_->setModified(false);
+//}
+
+
 
 bool NoteDescriptor::Lock::isLocked()
 {

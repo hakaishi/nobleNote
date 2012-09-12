@@ -48,27 +48,21 @@ class Note : public QMainWindow, public Ui::Note {
  
      public:
       Note(QString filePath, QWidget *parent = 0);
-      ~Note();
       NoteDescriptor* noteDescriptor() const { return noteDescriptor_; }
+
+      void highlightText(const QString & str);
       bool    searchbarVisible;
 
      private:
       TextBrowser *textBrowser;
       TextDocument *textDocument;
 
-      QMenu     *menu;
-
       TextFormattingToolbar * toolbar;
-      TextSearchToolbar *searchB;
-      NewNoteName *newNote;
-      Highlighter *highlighter;
+      TextSearchToolbar *searchBar;
 
       NoteDescriptor * noteDescriptor_;
 
      public slots:
-      void selectNextExpression();
-      void selectPreviousExpression();
-      void highlightText(QString str);
       void setSearchBarText(QString str);
 
      protected:

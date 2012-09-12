@@ -55,6 +55,9 @@ signals:
 public slots:
     void stateChange();
 
+    // show html source code, for debugging purposes
+    //void showSource();
+
 private slots:
     void unlockStateChange();
 
@@ -63,6 +66,8 @@ private:
     void save(const QString &filePath, QUuid uuid); // calls write with note and backup
     void write(const QString &filePath, QUuid uuid); // write note file to disc
     void load(const QString& filePath); // load a note file into the document
+
+
 
     QUuid uuid_;
     QWidget * noteWidget_;

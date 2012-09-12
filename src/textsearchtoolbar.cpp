@@ -25,6 +25,7 @@
 
 #include "textsearchtoolbar.h"
 #include "lineedit.h"
+#include "highlighter.h"
 
 TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
        QToolBar(parent), textEdit_(textEdit){
@@ -37,9 +38,9 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
      closeSearch->setShortcut(Qt::Key_Escape);
      addWidget(closeSearch);
 
-     searchLine = new LineEdit(this);
-     searchLine->setPlaceholderText(tr("Enter search argument"));
-     addWidget(searchLine);
+     searchLine_ = new LineEdit(this);
+     searchLine_->setPlaceholderText(tr("Enter search argument"));
+     addWidget(searchLine_);
 
      findPrevious = new QToolButton(this);
      findPrevious->setText(tr("Find &previous"));
@@ -55,4 +56,60 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
 
 
      connect(closeSearch, SIGNAL(clicked(bool)), this, SLOT(hide()));
+
+     connect(searchLine_, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
+     connect(findNext, SIGNAL(clicked(bool)), SLOT(selectNextExpression()));
+     connect(findPrevious, SIGNAL(clicked(bool)), SLOT(selectPreviousExpression()));
+}
+
+void TextSearchToolbar::selectNextExpression(){
+     if(this->caseSensitiveBox->isChecked()){
+       if(!textEdit_->find(this->searchLine_->text(), QTextDocument::FindCaseSensitively)){
+         textEdit_->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit_->find(this->searchLine_->text(), QTextDocument::FindCaseSensitively);
+       }
+     }
+     else{
+       if(!textEdit_->find(this->searchLine_->text())){
+         textEdit_->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit_->find(this->searchLine_->text());
+       }
+     }
+     highlightText(this->searchLine_->text());
+}
+
+void TextSearchToolbar::setText(const QString &text)
+{
+    searchLine_->setText(text);
+    highlightText(textEdit_->textCursor().selectedText());
+}
+
+void TextSearchToolbar::selectPreviousExpression(){
+     if(this->caseSensitiveBox->isChecked()){
+       if(!textEdit_->find(this->searchLine_->text(), QTextDocument::FindCaseSensitively |
+           QTextDocument::FindBackward)){
+         textEdit_->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit_->find(this->searchLine_->text(), QTextDocument::FindCaseSensitively |
+           QTextDocument::FindBackward);
+       }
+     }
+     else{
+       if(!textEdit_->find(this->searchLine_->text(), QTextDocument::FindBackward)){
+         textEdit_->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit_->find(this->searchLine_->text(), QTextDocument::FindBackward);
+       }
+     }
+     highlightText(this->searchLine_->text());
+}
+
+void TextSearchToolbar::highlightText(QString str){
+     highlighter = new Highlighter(textEdit_->document());
+     highlighter->expression = str;
+     if(this->caseSensitiveBox->isChecked())
+       highlighter->caseSensitive = true;
+     else
+       highlighter->caseSensitive = false;
+     connect(this->closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
+     connect(this->closeSearch, SIGNAL(clicked(bool)), textEdit_, SLOT(setFocus()));
+     connect(this->closeSearch, SIGNAL(clicked(bool)), this->searchLine_, SLOT(clear()));
 }

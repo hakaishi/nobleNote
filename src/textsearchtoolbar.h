@@ -34,16 +34,29 @@
 #include <QLineEdit>
 
 class LineEdit;
+class Highlighter;
 
 class TextSearchToolbar : public QToolBar
 {
     Q_OBJECT
 public:
      explicit TextSearchToolbar(QTextEdit* textEdit,QWidget *parent = 0);
-     QLineEdit    *searchLine;
+
+     QLineEdit* searchLine() { return searchLine_;}
+
+public slots:
+     void selectPreviousExpression();
+     void highlightText(QString str);
+     void selectNextExpression();
+
+     void setText(const QString & text);
+
+private:
+     QLineEdit    *searchLine_;
      QToolButton *findNext, *findPrevious, *closeSearch;
-     QCheckBox   *caseSensitiveBox;  
-     QTextEdit   *textEdit_;  
+     QCheckBox   *caseSensitiveBox;
+     QTextEdit   *textEdit_;
+     Highlighter *highlighter;
 };
 
 #endif // TEXTSEARCHTOOLBAR_H
