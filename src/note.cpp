@@ -51,6 +51,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textDocument = new TextDocument(this);
      textBrowser->setDocument(textDocument);
      textBrowser->ensureCursorVisible();
+     textBrowser->setTabStopWidth( fontMetrics().width(" ") * 4); // set tab size to 4 for android compatibility
 
      toolbar = new TextFormattingToolbar(textBrowser,this);
      toolbar->setFocusPolicy(Qt::TabFocus);

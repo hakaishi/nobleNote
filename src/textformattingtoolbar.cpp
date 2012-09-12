@@ -108,16 +108,17 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     addWidget(fontComboBox);
     connect(fontComboBox, SIGNAL(activated(QString)), this, SLOT(fontOfText(QString)));
 
-    comboSize = new QComboBox(this);
-    comboSize->setObjectName("comboSize");
-    addWidget(comboSize);
-    comboSize->setEditable(true);
-    connect(comboSize, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
+    fontSizeComboBox = new QComboBox(this);
+    fontSizeComboBox->setFocusPolicy(Qt::TabFocus);
+    fontSizeComboBox->setObjectName("comboSize");
+    addWidget(fontSizeComboBox);
+    fontSizeComboBox->setEditable(true);
+    connect(fontSizeComboBox, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
 
     QFontDatabase db;
     foreach(int size, db.standardSizes())
-      comboSize->addItem(QString::number(size));
-    comboSize->setCurrentIndex(comboSize->findText(QString::number(
+      fontSizeComboBox->addItem(QString::number(size));
+    fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number(
       QApplication::font().pointSize())));
 
     connect(textEdit_, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
@@ -143,7 +144,7 @@ void TextFormattingToolbar::clearCharFormat()
 void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &format){
      QFont f = format.font();
      fontComboBox->setCurrentIndex(fontComboBox->findText(QFontInfo(f).family()));
-     comboSize->setCurrentIndex(comboSize->findText(QString::number(f.pointSize())));
+     fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number(f.pointSize())));
      actionTextBold->setChecked(f.bold());
      actionTextItalic->setChecked(f.italic());
      actionTextUnderline->setChecked(f.underline());

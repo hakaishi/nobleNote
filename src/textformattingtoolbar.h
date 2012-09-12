@@ -61,7 +61,7 @@ private slots:
 
 private:
     QFontComboBox *fontComboBox;
-    QComboBox *comboSize;
+    QComboBox *fontSizeComboBox;
     QAction   *actionTextBold;
     QAction *actionTextItalic;
     QAction *actionTextUnderline;
