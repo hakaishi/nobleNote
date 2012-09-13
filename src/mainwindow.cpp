@@ -37,6 +37,7 @@
 #include "htmlnotewriter.h"
 #include "htmlnotereader.h"
 #include "fileiconprovider.h"
+#include <textsearchtoolbar.h>
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -50,7 +51,6 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QtConcurrentMap>
-#include <textsearchtoolbar.h>
 
 MainWindow::MainWindow()
 {
@@ -632,7 +632,7 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          menu.addAction(renameN);
          menu.addAction(removeNote);
 
-         if(1) // developer option setting
+         if(pref->showSource->isChecked()) // developer option setting
          {
              QAction* showSourceAction = new QAction(tr("Show &Source"), &menu);
              connect(showSourceAction,SIGNAL(triggered()),this,SLOT(openNoteSource()));

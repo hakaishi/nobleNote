@@ -129,8 +129,8 @@ void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &
      QTextCursor cursor = textEdit_->textCursor();
      if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
        cursor.select(QTextCursor::WordUnderCursor);
-        cursor.mergeCharFormat(format);
-        textEdit_->mergeCurrentCharFormat(format);
+     cursor.mergeCharFormat(format);
+     textEdit_->mergeCurrentCharFormat(format);
 }
 
 void TextFormattingToolbar::clearCharFormat()
