@@ -23,47 +23,9 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#ifndef PREFERENCES_H
-#define PREFERENCES_H
+#include "backup.h"
 
-#include "ui_preferences.h"
-#include <QSettings>
-#include <QProgressDialog>
-#include <QFutureWatcher>
-#include <QUuid>
-
-class Backup;
-
-class Preferences : public QDialog, public Ui::Preferences {
-     Q_OBJECT
- 
-     public:
-      Preferences(QWidget *parent = 0);
-      ~Preferences();
-      QString rootPath;
-
-     private:
-      QSettings *settings;
-      QString    originalRootPath;
-      QProgressDialog *indexDialog, *progressDialog;
-      QFutureWatcher<QUuid> *future1;
-      QFutureWatcher<void> *future2;
-      QList<QUuid> notesUuids;
-      Backup    *backup;
-
-     private slots:
-      void saveSettings();
-      void openDir();
-      void deleteOldBackupsAndFileEntries();
-      void getUuidList();
-      void progressChanges();
-      void showBackupWindow();
-
-     signals:
-      void sendPathChanged();
-
-     protected:
-      virtual void showEvent(QShowEvent* show_pref);
-};
-
-#endif //PREFERENCES_H
+Backup::Backup(QWidget *parent): QDialog(parent){
+     setupUi(this);
+     header = new QHeaderView(Qt::Horizontal, this);
+}

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>292</height>
+    <height>361</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,22 @@
    <property name="horizontalSpacing">
     <number>10</number>
    </property>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="browseButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>&amp;browse ...</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="3" column="0">
@@ -100,16 +116,20 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item row="5" column="0" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="deleteOldButton">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
      <property name="text">
-      <string>Path to note folders:</string>
+      <string>delete all old backups and file entries</string>
      </property>
     </widget>
    </item>
@@ -123,18 +143,8 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="browseButton">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -142,14 +152,14 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&amp;browse ...</string>
+      <string>Path to note folders:</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="restoreBackupsButton">
      <property name="text">
-      <string>delete all old backups and file entries</string>
+      <string>restore backups</string>
      </property>
     </widget>
    </item>
