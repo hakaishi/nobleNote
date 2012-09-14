@@ -7,9 +7,16 @@ MOC_DIR = build
 UI_DIR = build
 RCC_DIR = build
 
-# use these for windows builds because debugging symbols wont be linked if only release is specified
-#CONFIG -= debug_and_release
-#CONFIG += release
+
+
+win32 {
+QMAKE_LFLAGS += -static-libgcc
+
+# use these for windows builds release builds only because debugging 
+#symbols wont be linked if only release is specified
+CONFIG -= debug_and_release
+CONFIG += release
+}
 
 system(lrelease nobleNote.pro)
 
