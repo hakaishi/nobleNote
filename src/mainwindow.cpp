@@ -539,7 +539,7 @@ void MainWindow::removeFolder(){
      return;
 
      folderView->selectionModel()->select(idxAt,QItemSelectionModel::Select);
-     setCurrentFolder(idxAt);
+     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(idxAt)));
 #endif
 
 //TODO: check why:
