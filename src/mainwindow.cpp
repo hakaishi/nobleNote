@@ -113,6 +113,7 @@ MainWindow::MainWindow()
 
 
      folderModel = new FindFileSystemModel(this);
+     folderModel->setSortCaseSensitivity(Qt::CaseInsensitive);
      FileSystemModel *folderFSModel = new FileSystemModel(this);
      folderFSModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderFSModel->setReadOnly(false);
@@ -130,6 +131,7 @@ MainWindow::MainWindow()
      findNoteModel = new FindFileModel(this);
 
      noteModel = new FindFileSystemModel(this);
+     noteModel->setSortCaseSensitivity(Qt::CaseInsensitive);
      noteModel->setSourceModel(noteFSModel);
 
      folderView = new QListView(splitter);
@@ -243,7 +245,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
      {
          QString currFolderPath = folderModel->filePath(folderView->currentIndex());
-         //folderModel->sort(1);// does not work with indices 0 -3
+         folderModel->sort(0);
          folderView->setCurrentIndex(folderModel->index(currFolderPath));
 
          // set current folder
@@ -264,7 +266,7 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      if(w)
         w->setWindowTitle(QFileInfo(path + "/" + newName).baseName());
 
-     //noteView->model()->sort(1); // does not work
+     noteView->model()->sort(0);
      noteView->setCurrentIndex(noteModel->index(filePath));
 }
 

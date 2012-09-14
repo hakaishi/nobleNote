@@ -25,6 +25,7 @@
 
 #include "preferences.h"
 #include "htmlnotereader.h"
+#include "backup.h"
 #include <QDir>
 #include <QMessageBox>
 #include <QTimer>
@@ -45,7 +46,8 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
-     connect(pushButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
+     connect(deleteOldButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
+     connect(restoreBackupsButton, SIGNAL(clicked(bool)), this, SLOT(showBackupWindow()));
 }
 
 Preferences::~Preferences(){}
@@ -202,4 +204,9 @@ void Preferences::progressChanges(){
                                                                 SLOT(setValue(int)));
 
      progressDialog->exec();
+}
+
+void Preferences::showBackupWindow(){
+     backup = new Backup(this);
+     backup->show();
 }
