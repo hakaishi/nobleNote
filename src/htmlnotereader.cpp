@@ -78,9 +78,9 @@ void HtmlNoteReader::read(const QString& filePath)
      {
          document_->setHtml(html);
          title_ = document_->metaInformation(QTextDocument::DocumentTitle);
-         if(title_.isEmpty())
-             title_ = info.baseName();  // fallback title
      }
+     if(title_.isEmpty())
+       title_ = info.baseName();  // fallback title
 }
 
 /*QUuid*/ QUuid HtmlNoteReader::uuid(QString filePath)

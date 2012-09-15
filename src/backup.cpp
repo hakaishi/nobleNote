@@ -24,8 +24,50 @@
  */
 
 #include "backup.h"
+#include "treemodel.h"
+#include <QFile>
+#include <QDirIterator>
 
 Backup::Backup(QWidget *parent): QDialog(parent){
      setupUi(this);
-     header = new QHeaderView(Qt::Horizontal, this);
+
+     splitter = new QSplitter(groupBox);
+     gridLayout_2->addWidget(splitter);
+     treeView = new QTreeView(splitter);
+     frame = new QFrame(splitter);
+     gridLayout3 = new QGridLayout(frame);
+     label = new QLabel(frame);
+     label->setText(tr("Preview of the selected backup"));
+     gridLayout3->addWidget(label, 0, 0, 1, 1);
+     textEdit = new QTextEdit(this);
+     textEdit->setDisabled(frame);
+     gridLayout3->addWidget(textEdit, 1, 0, 1, 1);
+
+     QStringList headers;
+     headers << tr("Backups") << tr("Date");
+
+     QString path = "/home/hakaishi/.nobleNote/backups";
+     QStringList files;
+     QDirIterator it(path, QDirIterator::Subdirectories);
+     while(it.hasNext())
+     {
+         QString filePath = it.next();
+         if(it.fileInfo().isFile())
+            files << filePath;
+     }
+
+     textDocument = new QTextDocument(this);
+     textEdit->setDocument(textDocument);
+
+     TreeModel *model = new TreeModel(headers, files, textDocument);
+     treeView->setModel(model);
+
+     for(int column = 0; column < model->columnCount(); ++column)
+        treeView->resizeColumnToContents(column);
+
+     treeView->setAlternatingRowColors(true);
+     treeView->setSelectionBehavior(QAbstractItemView::SelectItems);
+     treeView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+     treeView->setAnimated(false);
+     treeView->setAllColumnsShowFocus(true);
 }

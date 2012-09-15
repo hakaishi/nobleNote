@@ -23,30 +23,47 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#ifndef BACKUP_H
-#define BACKUP_H
+#ifndef TREEMODEL_H
+#define TREEMODEL_H
 
-#include "ui_backup.h"
-#include <QSplitter>
-#include <QTreeView>
-#include <QTextEdit>
+#include <QAbstractItemModel>
+#include <QModelIndex>
+#include <QVariant>
 #include <QTextDocument>
-#include <QLabel>
 
-class Backup : public QDialog, public Ui::Backup {
-     Q_OBJECT
- 
-     public:
-      Backup(QWidget *parent = 0);
+class TreeItem;
+class AbstractNoteReader;
 
-     private:
-      QSplitter     *splitter;
-      QFrame        *frame;
-      QGridLayout   *gridLayout3;
-      QTreeView     *treeView;
-      QLabel        *label;
-      QTextDocument *textDocument;
-      QTextEdit     *textEdit;
+class TreeModel : public QAbstractItemModel
+{
+    Q_OBJECT
+
+public:
+    TreeModel(const QStringList &headers, const QStringList &files, QTextDocument *&document_,
+              QObject *parent = 0);
+    ~TreeModel();
+
+    QVariant data(const QModelIndex &index, int role) const;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const;
+
+    QModelIndex index(int row, int column,
+                      const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex &index) const;
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+    bool setData(const QModelIndex &index, const QVariant &value,
+                 int role = Qt::EditRole);
+
+private:
+    AbstractNoteReader *reader;
+    void setupModelData(const QStringList &lines, TreeItem *parent);
+    TreeItem *getItem(const QModelIndex &index) const;
+
+    TreeItem *rootItem;
 };
 
-#endif //BACKUP_H
+#endif

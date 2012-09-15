@@ -126,7 +126,7 @@
    <item row="4" column="0">
     <widget class="QPushButton" name="deleteOldButton">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="text">
       <string>delete all old backups and file entries</string>

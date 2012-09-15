@@ -23,30 +23,35 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#ifndef BACKUP_H
-#define BACKUP_H
+#ifndef TREEITEM_H
+#define TREEITEM_H
 
-#include "ui_backup.h"
-#include <QSplitter>
-#include <QTreeView>
-#include <QTextEdit>
-#include <QTextDocument>
-#include <QLabel>
+#include <QList>
+#include <QVariant>
+#include <QVector>
 
-class Backup : public QDialog, public Ui::Backup {
-     Q_OBJECT
- 
-     public:
-      Backup(QWidget *parent = 0);
+class TreeItem
+{
+public:
+    TreeItem(const QVector<QVariant> &data, TreeItem *parent = 0);
+    ~TreeItem();
 
-     private:
-      QSplitter     *splitter;
-      QFrame        *frame;
-      QGridLayout   *gridLayout3;
-      QTreeView     *treeView;
-      QLabel        *label;
-      QTextDocument *textDocument;
-      QTextEdit     *textEdit;
+    TreeItem *child(int number);
+    int childCount() const;
+    int columnCount() const;
+    QVariant data(int column) const;
+    bool insertChildren(int position, int count, int columns);
+    bool insertColumns(int position, int columns);
+    TreeItem *parent();
+    bool removeChildren(int position, int count);
+    bool removeColumns(int position, int columns);
+    int childNumber() const;
+    bool setData(int column, const QVariant &value);
+
+private:
+    QList<TreeItem*> childItems;
+    QVector<QVariant> itemData;
+    TreeItem *parentItem;
 };
 
-#endif //BACKUP_H
+#endif
