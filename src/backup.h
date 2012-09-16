@@ -33,6 +33,8 @@
 #include <QTextDocument>
 #include <QLabel>
 
+class TreeModel;
+
 class Backup : public QDialog, public Ui::Backup {
      Q_OBJECT
  
@@ -47,6 +49,10 @@ class Backup : public QDialog, public Ui::Backup {
       QLabel        *label;
       QTextDocument *textDocument;
       QTextEdit     *textEdit;
+      TreeModel     *model;
+
+     private slots:
+      void showPreview(const QModelIndex &idx);
 };
 
 #endif //BACKUP_H

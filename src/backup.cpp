@@ -59,7 +59,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      textDocument = new QTextDocument(this);
      textEdit->setDocument(textDocument);
 
-     TreeModel *model = new TreeModel(headers, files, textDocument);
+     model = new TreeModel(headers, files, textDocument);
      treeView->setModel(model);
 
      for(int column = 0; column < model->columnCount(); ++column)
@@ -68,6 +68,17 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      treeView->setAlternatingRowColors(true);
      treeView->setSelectionBehavior(QAbstractItemView::SelectItems);
      treeView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-     treeView->setAnimated(false);
-     treeView->setAllColumnsShowFocus(true);
+     treeView->setSortingEnabled(true);
+
+     //TODO: should be selectionChanged instead of activated...
+     connect(treeView, SIGNAL(activated(QModelIndex)), this, SLOT(showPreview(QModelIndex)));
+}
+
+void Backup::showPreview(const QModelIndex &idx){
+     QString str = idx.data().toString();
+     QString text;
+     foreach(QString s, model->contents)
+       if(s.contains(str + "\t"))
+         text = s.remove(str + "\t");
+     textEdit->setText(text);
 }

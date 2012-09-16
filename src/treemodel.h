@@ -30,40 +30,41 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QTextDocument>
+#include <QStringList>
 
 class TreeItem;
 class AbstractNoteReader;
 
 class TreeModel : public QAbstractItemModel
 {
-    Q_OBJECT
+     Q_OBJECT
 
 public:
-    TreeModel(const QStringList &headers, const QStringList &files, QTextDocument *&document_,
+     TreeModel(const QStringList &headers, const QStringList &files, QTextDocument *&document_,
               QObject *parent = 0);
-    ~TreeModel();
+     ~TreeModel();
 
-    QVariant data(const QModelIndex &index, int role) const;
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
+     QVariant data(const QModelIndex &index, int role) const;
+     QVariant headerData(int section, Qt::Orientation orientation,
+                         int role = Qt::DisplayRole) const;
 
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex &index) const;
+     QModelIndex index(int row, int column,
+                       const QModelIndex &parent = QModelIndex()) const;
+     QModelIndex parent(const QModelIndex &index) const;
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+     int rowCount(const QModelIndex &parent = QModelIndex()) const;
+     int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole);
+     bool setData(const QModelIndex &index, const QVariant &value,
+                  int role = Qt::EditRole);
+     QStringList contents;
 
 private:
-    AbstractNoteReader *reader;
-    void setupModelData(const QStringList &lines, TreeItem *parent);
-    TreeItem *getItem(const QModelIndex &index) const;
+     AbstractNoteReader *reader;
+     void setupModelData(const QStringList &lines, TreeItem *parent);
+     TreeItem *getItem(const QModelIndex &index) const;
 
-    TreeItem *rootItem;
+     TreeItem *rootItem;
 };
 
 #endif
