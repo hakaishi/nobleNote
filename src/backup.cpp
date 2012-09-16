@@ -27,6 +27,7 @@
 #include "treemodel.h"
 #include <QFile>
 #include <QDirIterator>
+#include <QSettings>
 
 Backup::Backup(QWidget *parent): QDialog(parent){
      setupUi(this);
