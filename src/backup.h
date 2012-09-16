@@ -32,6 +32,10 @@
 #include <QTextEdit>
 #include <QTextDocument>
 #include <QLabel>
+#include <QPushButton>
+#include <QProgressDialog>
+#include <QFutureWatcher>
+#include <QUuid>
 
 class TreeModel;
 
@@ -50,9 +54,22 @@ class Backup : public QDialog, public Ui::Backup {
       QTextDocument *textDocument;
       QTextEdit     *textEdit;
       TreeModel     *model;
+      QPushButton   *deleteOldButton;
+      QProgressDialog *indexDialog, *progressDialog;
+      QFutureWatcher<QUuid> *future1;
+      QFutureWatcher<void> *future2;
+      QList<QUuid> notesUuids;
 
      private slots:
       void showPreview(const QModelIndex &idx);
+      void deleteOldBackupsAndFileEntries();
+      void getUuidList();
+      void progressChanges();
+      void restoreBackup();
+      void handleBackups();
+
+     signals:
+      void handleBackupsSignal();
 };
 
 #endif //BACKUP_H

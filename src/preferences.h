@@ -28,9 +28,6 @@
 
 #include "ui_preferences.h"
 #include <QSettings>
-#include <QProgressDialog>
-#include <QFutureWatcher>
-#include <QUuid>
 
 class Backup;
 
@@ -45,18 +42,11 @@ class Preferences : public QDialog, public Ui::Preferences {
      private:
       QSettings *settings;
       QString    originalRootPath;
-      QProgressDialog *indexDialog, *progressDialog;
-      QFutureWatcher<QUuid> *future1;
-      QFutureWatcher<void> *future2;
-      QList<QUuid> notesUuids;
       Backup    *backup;
 
      private slots:
       void saveSettings();
       void openDir();
-      void deleteOldBackupsAndFileEntries();
-      void getUuidList();
-      void progressChanges();
       void showBackupWindow();
 
      signals:
