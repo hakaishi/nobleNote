@@ -46,7 +46,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      QStringList headers;
      headers << tr("Backups") << tr("Date");
 
-     QString path = "/home/hakaishi/.nobleNote/backups";
+     QString path = QSettings().value("backupDirPath").toString();
      QStringList files;
      QDirIterator it(path, QDirIterator::Subdirectories);
      while(it.hasNext())
