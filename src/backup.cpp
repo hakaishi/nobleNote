@@ -202,6 +202,8 @@ QList<QVariant> Backup::getFileData(const QString &file)
 void Backup::showPreview(const QModelIndex &idx)
 {
      QStringList dataList = idx.data(Qt::UserRole).toStringList();
+     if(dataList.isEmpty())
+       return;
      textEdit->setText(dataList.last());
 }
 
