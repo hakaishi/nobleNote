@@ -28,7 +28,7 @@
 
 #include "ui_backup.h"
 #include <QSplitter>
-#include <QTreeView>
+#include <QTreeWidget>
 #include <QTextEdit>
 #include <QTextDocument>
 #include <QLabel>
@@ -36,8 +36,6 @@
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QUuid>
-
-class TreeModel;
 
 class Backup : public QDialog, public Ui::Backup {
      Q_OBJECT
@@ -49,11 +47,10 @@ class Backup : public QDialog, public Ui::Backup {
       QSplitter     *splitter;
       QFrame        *frame;
       QGridLayout   *gridLayout3;
-      QTreeView     *treeView;
+      QTreeWidget   *treeWidget;
       QLabel        *label;
-      QTextDocument *textDocument;
+      QTextDocument *document;
       QTextEdit     *textEdit;
-      TreeModel     *model;
       QPushButton   *deleteOldButton;
       QProgressDialog *indexDialog, *progressDialog;
       QFutureWatcher<QUuid> *future1;
@@ -63,10 +60,12 @@ class Backup : public QDialog, public Ui::Backup {
      private slots:
       void showPreview(const QModelIndex &idx);
       void deleteOldBackupsAndFileEntries();
-      void getUuidList();
+      void getNoteUuidList();
       void progressChanges();
       void restoreBackup();
       void handleBackups();
+      void setupTreeData();
+      QList<QVariant> getFileData(const QString &file);
 
      signals:
       void handleBackupsSignal();

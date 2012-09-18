@@ -24,20 +24,23 @@
  */
 
 #include "backup.h"
-#include "treemodel.h"
 #include "htmlnotereader.h"
-#include <QFile>
+#include "abstractnotereader.h"
 #include <QDirIterator>
 #include <QMessageBox>
 #include <QSettings>
 #include <QtConcurrentMap>
+#include <QAbstractItemModel>
 
 Backup::Backup(QWidget *parent): QDialog(parent){
      setupUi(this);
 
      splitter = new QSplitter(groupBox);
      gridLayout_2->addWidget(splitter);
-     treeView = new QTreeView(splitter);
+     treeWidget = new QTreeWidget(splitter);
+     treeWidget->setAlternatingRowColors(true);
+     treeWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+     treeWidget->setSortingEnabled(true);
      frame = new QFrame(splitter);
      gridLayout3 = new QGridLayout(frame);
      label = new QLabel(frame);
@@ -47,61 +50,169 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      textEdit->setDisabled(frame);
      gridLayout3->addWidget(textEdit, 1, 0, 1, 1);
 
-     QStringList headers;
-     headers << tr("Backups") << tr("Date");
+     document = new QTextDocument(this);
+     textEdit->setDocument(document);
 
-     QString path = QSettings().value("backupDirPath").toString();
-     QStringList files;
-     QDirIterator it(path, QDirIterator::Subdirectories);
-     while(it.hasNext())
-     {
-         QString filePath = it.next();
-         if(it.fileInfo().isFile())
-            files << filePath;
-     }
+     QStringList header;
+     header << tr("Backups") << tr("Titels");
+     treeWidget->setHeaderLabels(header);
 
-     textDocument = new QTextDocument(this);
-     textEdit->setDocument(textDocument);
-
-     model = new TreeModel(headers, files, textDocument);
-     treeView->setModel(model);
-
-     for(int column = 0; column < model->columnCount(); ++column)
-        treeView->resizeColumnToContents(column);
-
-     treeView->setAlternatingRowColors(true);
-     treeView->setSelectionBehavior(QAbstractItemView::SelectItems);
-     treeView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-     treeView->setSortingEnabled(true);
+     setupTreeData();
 
      deleteOldButton = new QPushButton(tr("&delete all old backups and file entries"),this);
      buttonBox->addButton(deleteOldButton ,QDialogButtonBox::ActionRole);
 
      //TODO: should be selectionChanged instead of activated...
-     connect(treeView, SIGNAL(activated(QModelIndex)), this, SLOT(showPreview(QModelIndex)));
+     connect(treeWidget, SIGNAL(activated(QModelIndex)), this, SLOT(showPreview(QModelIndex)));
      connect(this, SIGNAL(handleBackupsSignal()), this, SLOT(handleBackups()));
      connect(this, SIGNAL(accepted()), this, SLOT(restoreBackup()));
      connect(deleteOldButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
 }
 
+void Backup::setupTreeData()
+{
+     treeWidget->clear(); //if there already is any data
+
+     //Load backup data
+     QMap<QString,QList<QVariant> > backupMap;
+     QDir backupDir(QSettings().value("backupDirPath").toString());
+     QList<QFileInfo> backupList = backupDir.entryInfoList(QDir::Files, QDir::Name);
+     foreach(QFileInfo backup, backupList)
+     {
+          QList<QVariant> data = getFileData(backup.absoluteFilePath());
+          data.takeFirst();
+          backupMap.insert(backup.absoluteFilePath(), data);
+     }
+
+     //Load note data
+     QMap<QString,QList<QVariant> > noteMap;
+     QDirIterator itFiles(QSettings().value("noteDirPath").toString(),
+                                              QDirIterator::Subdirectories);
+     QStringList noteFiles;
+     while(itFiles.hasNext()){
+       QString filePath = itFiles.next();
+       if(itFiles.fileInfo().isFile())
+         noteFiles << filePath;
+     }
+     QStringList notebookNameList; //Get notebook names
+     foreach(QString note, noteFiles)
+     {
+          QList<QVariant> data = getFileData(note);
+          QString uuid = data.takeFirst().toString();
+          QString title = data.takeFirst().toString();
+          data.clear(); //We don't need more than that
+          QString notebook = note;
+          notebook.remove("/" + QFileInfo(note).fileName());
+          notebook.remove(QSettings().value("noteDirPath").toString() + "/");
+          notebookNameList << notebook;
+          QList<QVariant> list;
+          list << notebook << title;
+          noteMap.insert(uuid, list);
+     }
+     notebookNameList.removeDuplicates();
+
+     foreach(QString notebookName, notebookNameList)
+     {
+          //Create tree toplevel items for notebooks
+          QTreeWidgetItem *notebookItem = new QTreeWidgetItem(treeWidget);
+          notebookItem->setText(0,notebookName);
+
+          //Get note titles and create a child for the notebook
+          foreach(QString noteUuid, noteMap.keys())
+          {
+               if(noteMap[noteUuid].first() == notebookName)
+               {
+                    //Create a child with the note title
+                    noteMap[noteUuid].takeFirst(); //removing notebook name to get the title
+                    QTreeWidgetItem *noteItem = new QTreeWidgetItem(notebookItem);
+                    noteItem->setText(0,noteMap[noteUuid].first().toString());
+
+                    foreach(QString backupFile, backupMap.keys())
+                    {
+                         QString backupUuid = "{" + backupFile + "}";
+                         backupUuid.remove(QSettings().value("backupDirPath").toString() + "/");
+                         backupUuid.remove(QRegExp("_\\d+\\-\\d+\\-\\d+T\\d+\\-\\d+\\-\\d+"));
+
+                         //Create for each backup of the note a child with date and title
+                         if(noteUuid == backupUuid)
+                         {
+                              QList<QVariant> list = backupMap[backupFile];
+                              backupMap.remove(backupFile);
+                              QString title = list.takeFirst().toString();
+                              QDateTime date = list.takeFirst().toDateTime();
+                              QStringList content;
+                              content<< backupFile << list.takeFirst().toString();
+                              QTreeWidgetItem *backupItem = new QTreeWidgetItem(noteItem);
+                              backupItem->setText(0, date.toString("yyyy-MM-dd hh-mm-ss"));
+                              backupItem->setData(0,Qt::UserRole,content);
+                              backupItem->setText(1, title);
+                         }
+                    }
+               }
+          }
+     }
+
+     //Create toplevel item for backups of deleted notes
+     QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
+     item->setText(0,tr("Backups of deleted notes"));
+
+     //Get remaining backups
+     QStringList backupFiles = backupMap.keys();
+     QStringList deletedTitles;
+     foreach(QString path, backupFiles)
+     {
+          QString str = path;
+          str.remove(QRegExp("_\\d+\\-\\d+\\-\\d+T\\d+\\-\\d+\\-\\d+"));
+          deletedTitles << str;
+     }
+     deletedTitles.removeDuplicates();
+
+     foreach(QString backupPath, deletedTitles)
+     {
+          QTreeWidgetItem *childItem = new QTreeWidgetItem(item);
+          childItem->setText(0,backupMap[backupPath].first().toString());
+
+          foreach(QString backupFile, backupMap.keys())
+          {
+               QList<QVariant> list = backupMap[backupFile];
+               backupMap.remove(backupFile);
+               QString title = list.takeFirst().toString();
+               QDateTime date = list.takeFirst().toDateTime();
+               QStringList content;
+               content << backupFile << list.takeFirst().toString();
+               QTreeWidgetItem *backupItem = new QTreeWidgetItem(childItem);
+               backupItem->setText(0,date.toString("yyyy-MM-dd hh-mm-ss"));
+               backupItem->setData(0,Qt::UserRole,content);
+               backupItem->setText(1,title);
+          }
+     }
+
+     treeWidget->resizeColumnToContents(0);
+}
+
+QList<QVariant> Backup::getFileData(const QString &file)
+{
+     AbstractNoteReader *reader = new HtmlNoteReader(file,document);
+     QList<QVariant> list;
+     QString uuid = reader->uuid();
+     list << uuid << reader->title() << reader->lastChange() << document->toHtml();
+     return list;
+}
+
 void Backup::showPreview(const QModelIndex &idx)
 {
-     QString str = idx.data().toString();
-     QString text;
-     foreach(QString s, model->contents)
-       if(s.contains(str + "\t"))
-         text = s.remove(str + "\t");
-     textEdit->setText(text);
+     QStringList dataList = idx.data(Qt::UserRole).toStringList();
+     textEdit->setText(dataList.last());
 }
 
 void Backup::restoreBackup()
 {
-     QString fileName = treeView->selectionModel()->currentIndex().data().toString();
-     if(!QFile(QSettings().value("backupDirPath").toString() + fileName).exists())
+     QStringList dataList = treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList();
+     if(!QFile(dataList.first()).exists())
        return;
      else
      {
-        ;//TODO:Remove or Override Note
+        qDebug()<<dataList.first();//TODO:Remove or Override Note
      }
 }
 
@@ -110,7 +221,7 @@ void Backup::handleBackups()
 //TODO: Create and handle Backups here
 }
 
-void Backup::getUuidList(){
+void Backup::getNoteUuidList(){
      QFutureIterator<QUuid> it(future1->future());
      while(it.hasNext())
        notesUuids << it.next();
@@ -129,7 +240,6 @@ void Backup::deleteOldBackupsAndFileEntries(){
          noteFiles << filePath;
      }
 
-
      future1 = new QFutureWatcher<QUuid>(this);
 
      QUuid (*uuidPtr)(QString) = & HtmlNoteReader::uuid; // function pointer, because uuid method is overloaded
@@ -138,7 +248,7 @@ void Backup::deleteOldBackupsAndFileEntries(){
      indexDialog = new QProgressDialog(this);
      indexDialog->setLabelText(QString(tr("Indexing notes...")));
 
-     QObject::connect(future1, SIGNAL(finished()), this, SLOT(getUuidList()));
+     QObject::connect(future1, SIGNAL(finished()), this, SLOT(getNoteUuidList()));
      QObject::connect(future1, SIGNAL(finished()), this, SLOT(progressChanges()));
      QObject::connect(future1, SIGNAL(finished()), indexDialog, SLOT(reset()));
      QObject::connect(indexDialog, SIGNAL(canceled()), future1, SLOT(cancel()));
@@ -159,14 +269,11 @@ void actualRemoval(const QString& backupAndUuid){
 
 void Backup::progressChanges(){
      //get backup files
-     QDirIterator itBackup(QSettings().value("backupDirPath").toString(),
-                                              QDirIterator::Subdirectories);
      QStringList backups;
-     while(itBackup.hasNext()){
-       QString filePath = itBackup.next();
-       if(itBackup.fileInfo().isFile())
-         backups << filePath;
-     }
+     QDir backupDir(QSettings().value("backupDirPath").toString());
+     QList<QFileInfo> backupList = backupDir.entryInfoList(QDir::Files, QDir::Name);
+     foreach(QFileInfo backup, backupList)
+          backups << backup.absoluteFilePath();
 
      //add QSettings Uuids to the backups
      QStringList backupsAndUuids = backups + QSettings().allKeys().filter("Notes/");
@@ -190,12 +297,19 @@ void Backup::progressChanges(){
        if(!str.contains("Notes/"))
          redundantBackupList += (str+"\n");
 
-     if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
-         tr("Do you really want to delete the backups and entries for the "
-            "following files?\n\n%1\nYou won't be able to restore them!").arg(
-         redundantBackupList),
-         QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
-       return;
+     if(backupsAndUuids.isEmpty()){
+          QMessageBox::information(this, tr("No redundant data!"), tr("no redundant"
+                                   " Everything is clean! No redundant data!"));
+          return;
+     }
+     else{
+       if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
+           tr("Do you really want to delete the backups and entries for the "
+              "following files?\n\n%1\nYou won't be able to restore them!").arg(
+           redundantBackupList),
+           QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+         return;
+     }
 
      progressDialog = new QProgressDialog(this);
      progressDialog->setLabelText(QString(tr("Progressing files...")));
@@ -204,6 +318,7 @@ void Backup::progressChanges(){
      future2->setFuture(QtConcurrent::map(backupsAndUuids, actualRemoval));
 
      QObject::connect(future2, SIGNAL(finished()), progressDialog, SLOT(reset()));
+     QObject::connect(future2, SIGNAL(finished()), this, SLOT(setupTreeData()));
      QObject::connect(progressDialog, SIGNAL(canceled()), future2, SLOT(cancel()));
      QObject::connect(future2, SIGNAL(progressRangeChanged(int,int)), progressDialog,
                                                                 SLOT(setRange(int,int)));
