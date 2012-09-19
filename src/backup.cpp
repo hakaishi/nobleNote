@@ -42,8 +42,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      treeWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
      treeWidget->setSortingEnabled(true);
      treeWidget->setHeaderLabel(tr("Backups of deleted notes"));
-     treeWidget->setSelectionMode(QAbstractItemView::MultiSelection);
-     treeWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+     treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
      frame = new QFrame(splitter);
      gridLayout3 = new QGridLayout(frame);
@@ -115,6 +114,8 @@ void Backup::setupTreeData()
           item->setText(0,backupHash[key].first());
           item->setData(0,Qt::UserRole,backupHash[key]);
      }
+
+     textEdit->clear();
 }
 
 QStringList Backup::getFileData(const QString &file)
@@ -129,12 +130,15 @@ QStringList Backup::getFileData(const QString &file)
 void Backup::showPreview()
 {
 //TODO:Even with no backup a preview is shown...
-     if(treeWidget->selectedItems().isEmpty())
-       return;
-     QStringList data = treeWidget->selectedItems().last()->data(0,Qt::UserRole).toStringList();
-     if(data.isEmpty())
-       return;
-     textEdit->setText(data.last());
+     if(!treeWidget->currentItem()->isSelected())
+          textEdit->clear();
+     else
+     {
+          QStringList data = treeWidget->currentItem()->data(0,Qt::UserRole).toStringList();
+          if(data.isEmpty())
+            return;
+          textEdit->setText(data.last());
+     }
 }
 
 void Backup::restoreBackup()
