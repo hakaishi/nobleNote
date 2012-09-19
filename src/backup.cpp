@@ -57,7 +57,8 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      header << tr("Backups") << tr("Titels");
      treeWidget->setHeaderLabels(header);
 
-     setupTreeData();
+     //setupTreeData();
+     treeWidget->setDisabled(true);
 
      deleteOldButton = new QPushButton(tr("&Delete all old backups and file entries"),this);
      buttonBox->addButton(deleteOldButton ,QDialogButtonBox::ActionRole);
