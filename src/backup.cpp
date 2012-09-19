@@ -133,18 +133,12 @@ void Backup::showPreview()
      if(!treeWidget->currentItem()->isSelected())
      {
           if(treeWidget->selectedItems().count() != 1)
-               textEdit->clear();
+             textEdit->clear();
           else
-               textEdit->setText(treeWidget->selectedItems().first()->data(0,Qt::UserRole).toStringList().last());
-               
+             textEdit->setText(treeWidget->selectedItems().first()->data(0,Qt::UserRole).toStringList().last());
      }
      else
-     {
-          QStringList data = treeWidget->currentItem()->data(0,Qt::UserRole).toStringList();
-          if(data.isEmpty())
-               return;
-          textEdit->setText(data.last());
-     }
+        textEdit->setText(treeWidget->currentItem()->data(0,Qt::UserRole).toStringList().last());
 }
 
 void Backup::restoreBackup()
