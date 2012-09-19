@@ -64,15 +64,11 @@ void HtmlNoteReader::read(const QString& filePath)
     uuid_ = uuidFromHtml(html);
     lastChange_ = QDateTime::fromString(metaContent(html,"last-change-date"),Qt::ISODate);
     createDate_ = QDateTime::fromString(metaContent(html,"create-date"),Qt::ISODate);
-    //lastMetadataChange_ = info.lastModified(); // not implemented
 
-        QFileInfo info(filePath);
+    QFileInfo info(filePath);
 //    // fallback dates
 //    if(lastChange_.isNull())
 //        lastChange_ = info.lastModified();
-
-//     if(createDate_.isNull())
-//        createDate_ = info.created();
 
      if(document_)
      {

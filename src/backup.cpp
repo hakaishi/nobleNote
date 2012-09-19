@@ -59,7 +59,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
 
      setupTreeData();
 
-     deleteOldButton = new QPushButton(tr("&delete all old backups and file entries"),this);
+     deleteOldButton = new QPushButton(tr("&Delete all old backups and file entries"),this);
      buttonBox->addButton(deleteOldButton ,QDialogButtonBox::ActionRole);
 
      //TODO: should be selectionChanged instead of activated...
@@ -174,16 +174,19 @@ void Backup::setupTreeData()
 
           foreach(QString backupFile, backupMap.keys())
           {
-               QList<QVariant> list = backupMap[backupFile];
-               backupMap.remove(backupFile);
-               QString title = list.takeFirst().toString();
-               QDateTime date = list.takeFirst().toDateTime();
-               QStringList content;
-               content << backupFile << list.takeFirst().toString();
-               QTreeWidgetItem *backupItem = new QTreeWidgetItem(childItem);
-               backupItem->setText(0,date.toString("yyyy-MM-dd hh-mm-ss"));
-               backupItem->setData(0,Qt::UserRole,content);
-               backupItem->setText(1,title);
+               if(backupFile.contains(backupPath))
+               {
+                    QList<QVariant> list = backupMap[backupFile];
+                    backupMap.remove(backupFile);
+                    QString title = list.takeFirst().toString();
+                    QDateTime date = list.takeFirst().toDateTime();
+                    QStringList content;
+                    content << backupFile << list.takeFirst().toString();
+                    QTreeWidgetItem *backupItem = new QTreeWidgetItem(childItem);
+                    backupItem->setText(0,date.toString("yyyy-MM-dd hh-mm-ss"));
+                    backupItem->setData(0,Qt::UserRole,content);
+                    backupItem->setText(1,title);
+               }
           }
      }
 
@@ -209,12 +212,16 @@ void Backup::showPreview(const QModelIndex &idx)
 
 void Backup::restoreBackup()
 {
+     if(!treeWidget->selectionModel()->currentIndex().isValid())
+       return;
+     if(treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList().isEmpty())
+       return;
      QStringList dataList = treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList();
      if(!QFile(dataList.first()).exists())
        return;
      else
      {
-        qDebug()<<dataList.first();//TODO:Remove or Override Note
+        qDebug()<<dataList.first();//TODO:restore or overwrite note
      }
 }
 

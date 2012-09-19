@@ -49,9 +49,6 @@ public:
      // get last change date
     virtual const QDateTime& lastChange() const          = 0;
 
-    // get last metadata change date
-    virtual const QDateTime& lastMetadataChange() const  = 0;
-
     // get create date
     virtual const QDateTime& createDate() const          = 0;
 

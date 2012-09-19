@@ -157,17 +157,13 @@ MainWindow::MainWindow()
 
      checkAndSetFolders();
 
-//TODO: make it possible to import notes from some other folder or even another program
 
-//     // selects first folder as soon as the folderModel has populated its first folder
-//     // "single shot" slot
      connect(folderFSModel,SIGNAL(directoryLoaded(QString)), this,
              SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
      connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
-     //connect(noteList->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(noteRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
      connect(actionImport,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
      connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
@@ -518,7 +514,7 @@ void MainWindow::removeFolder(){
             name = QDir::toNativeSeparators(QString("%1/%2").arg(path).arg(name));
             if(!folderModel->remove(folderModel->index(name)))
             {
-                qWarning(qPrintable(QString("could not delete ") + name));
+                qWarning(qPrintable(QString("Could not delete ") + name));
             }
         }
 

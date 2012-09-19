@@ -85,7 +85,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionInsertHyperlink,SIGNAL(triggered()),this,SLOT(insertHyperlink()));
     addAction(actionInsertHyperlink);
 
-    actionClearFormatting = new QAction(QIcon::fromTheme("TODO",QIcon(":clearFormatting")),tr("&Clear Formatting"),this);
+    actionClearFormatting = new QAction(QIcon::fromTheme("TODO",QIcon(":clearFormatting")),tr("&Clear formatting"),this);
     actionClearFormatting->setPriority(QAction::LowPriority);
     actionClearFormatting->setShortcut(Qt::CTRL + Qt::Key_Space); // ms word clear font formatting shortcut
     connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
@@ -212,7 +212,7 @@ void TextFormattingToolbar::insertHyperlink()
     QString selectedText = cursor.selectedText();
 
     bool ok;
-    QString link = QInputDialog::getText(textEdit_,tr("Insert Hyperlink"),tr("Addr&ess:"),QLineEdit::Normal,selectedText,&ok);
+    QString link = QInputDialog::getText(textEdit_,tr("Insert hyperlink"),tr("Addr&ess:"),QLineEdit::Normal,selectedText,&ok);
     if(!ok)
         return;
 /*TODO: de-formatting

@@ -46,7 +46,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&amp;browse ...</string>
+      <string>&amp;Browse ...</string>
      </property>
     </widget>
    </item>
@@ -60,7 +60,7 @@
    <item row="3" column="0">
     <widget class="QPushButton" name="restoreBackupsButton">
      <property name="text">
-      <string>show backup menu</string>
+      <string>Show backup &amp;menu</string>
      </property>
     </widget>
    </item>
@@ -156,6 +156,13 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>browseButton</tabstop>
+  <tabstop>dontQuit</tabstop>
+  <tabstop>convertNotes</tabstop>
+  <tabstop>showSource</tabstop>
+  <tabstop>sizeSpinWidth</tabstop>
+  <tabstop>sizeSpinHeight</tabstop>
+  <tabstop>restoreBackupsButton</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
