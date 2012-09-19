@@ -59,8 +59,8 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      deleteOldButton = new QPushButton(tr("&Delete all old backups and file entries"),this);
      buttonBox->addButton(deleteOldButton ,QDialogButtonBox::ActionRole);
 
-     //TODO: should be selectionChanged instead of activated...
-     connect(treeWidget, SIGNAL(activated(QModelIndex)), this, SLOT(showPreview(QModelIndex)));
+     connect(treeWidget->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+          this,SLOT(showPreview(QItemSelection,QItemSelection)));
      connect(this, SIGNAL(accepted()), this, SLOT(restoreBackup()));
      connect(deleteOldButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
 }
@@ -110,7 +110,7 @@ void Backup::setupTreeData()
      foreach(QString key, backupHash.keys())
      {
           QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-          item->setText(0,backupHash[key].takeFirst());
+          item->setText(0,backupHash[key].first());
           item->setData(0,Qt::UserRole,backupHash[key]);
      }
 }
@@ -124,9 +124,10 @@ QStringList Backup::getFileData(const QString &file)
      return list;
 }
 
-void Backup::showPreview(const QModelIndex &idx)
+void Backup::showPreview(const QItemSelection & selected, const QItemSelection & deselected)
 {
-     QStringList data = idx.data(Qt::UserRole).toStringList();
+     Q_UNUSED(deselected);
+     QStringList data = selected.indexes().first().data(Qt::UserRole).toStringList();
      if(data.isEmpty())
        return;
      textEdit->setText(data.last());
@@ -139,11 +140,14 @@ void Backup::restoreBackup()
      if(treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList().isEmpty())
        return;
      QStringList dataList = treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList();
+     QString title = dataList.takeFirst();
      if(!QFile(dataList.first()).exists())
        return;
      else
      {
-        qDebug()<<dataList.first();//TODO:restore or overwrite note
+        if(!QDir(QSettings().value("rootPath").toString()+"/restored notes").exists())
+          QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
+        QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
      }
 }
 

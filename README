@@ -21,5 +21,6 @@ To uninstall type:
 qmake     (if the Makefile has been removed)
 sudo make deinstall
 
-(note that ~/.config/nobleNote.conf and
- the notes at their location won't be removed)
+(Note that ~/.config/nobleNote.conf and
+ the notes at their location won't be removed.
+Backups are in their default data location.)

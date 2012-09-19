@@ -58,7 +58,7 @@ class Backup : public QDialog, public Ui::Backup {
       QList<QUuid> notesUuids;
 
      private slots:
-      void showPreview(const QModelIndex &idx);
+      void showPreview(const QItemSelection & selected, const QItemSelection & deselected);
       void deleteOldBackupsAndFileEntries();
       void getNoteUuidList();
       void progressChanges();
