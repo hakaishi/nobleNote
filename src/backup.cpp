@@ -42,6 +42,9 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      treeWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
      treeWidget->setSortingEnabled(true);
      treeWidget->setHeaderLabel(tr("Backups of deleted notes"));
+     treeWidget->setSelectionMode(QAbstractItemView::MultiSelection);
+     treeWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+
      frame = new QFrame(splitter);
      gridLayout3 = new QGridLayout(frame);
      label = new QLabel(frame);
@@ -59,8 +62,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      deleteOldButton = new QPushButton(tr("&Delete all old backups and file entries"),this);
      buttonBox->addButton(deleteOldButton ,QDialogButtonBox::ActionRole);
 
-     connect(treeWidget->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-          this,SLOT(showPreview(QItemSelection,QItemSelection)));
+     connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(showPreview()));
      connect(this, SIGNAL(accepted()), this, SLOT(restoreBackup()));
      connect(deleteOldButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
 }
@@ -124,10 +126,12 @@ QStringList Backup::getFileData(const QString &file)
      return list;
 }
 
-void Backup::showPreview(const QItemSelection & selected, const QItemSelection & deselected)
+void Backup::showPreview()
 {
-     Q_UNUSED(deselected);
-     QStringList data = selected.indexes().first().data(Qt::UserRole).toStringList();
+//TODO:Even with no backup a preview is shown...
+     if(treeWidget->selectedItems().isEmpty())
+       return;
+     QStringList data = treeWidget->selectedItems().first()->data(0,Qt::UserRole).toStringList();
      if(data.isEmpty())
        return;
      textEdit->setText(data.last());
@@ -135,7 +139,8 @@ void Backup::showPreview(const QItemSelection & selected, const QItemSelection &
 
 void Backup::restoreBackup()
 {
-     if(!treeWidget->selectionModel()->currentIndex().isValid())
+//TODO: enable restore and deletion for multiple backups
+/*     if(!treeWidget->selectionModel()->currentIndex().isValid())
        return;
      if(treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList().isEmpty())
        return;
@@ -148,7 +153,7 @@ void Backup::restoreBackup()
         if(!QDir(QSettings().value("rootPath").toString()+"/restored notes").exists())
           QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
         QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
-     }
+     }*/
 }
 
 void Backup::getNoteUuidList(){
