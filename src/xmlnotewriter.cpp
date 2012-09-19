@@ -29,7 +29,6 @@
 #include <QTextCursor>
 #include <QApplication>
 #include <QFile>
-#include <QDebug>
 
 XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {

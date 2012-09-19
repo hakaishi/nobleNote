@@ -92,7 +92,7 @@ MainWindow::MainWindow()
      }
 #ifdef Q_OS_WIN32
      if(!settings.value("backupDirPath").isValid())
-       settings.setValue("backupDirPath",%APPDATA% + "/nobleNote/backups");
+       settings.setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #else
      if(!settings.value("backupDirPath").isValid())
        settings.setValue("backupDirPath",QDir::homePath() + "/.local/share/nobleNote/backups");

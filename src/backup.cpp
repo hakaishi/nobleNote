@@ -113,8 +113,6 @@ void Backup::setupTreeData()
           item->setText(0,backupHash[key].takeFirst());
           item->setData(0,Qt::UserRole,backupHash[key]);
      }
-
-     //treeWidget->resizeColumnToContents(0);
 }
 
 QStringList Backup::getFileData(const QString &file)

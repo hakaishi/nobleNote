@@ -8,7 +8,6 @@ UI_DIR = build
 RCC_DIR = build
 
 
-
 win32 {
 QMAKE_LFLAGS += -static-libgcc
 
