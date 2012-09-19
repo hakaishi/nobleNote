@@ -131,7 +131,7 @@ void Backup::showPreview()
 //TODO:Even with no backup a preview is shown...
      if(treeWidget->selectedItems().isEmpty())
        return;
-     QStringList data = treeWidget->selectedItems().first()->data(0,Qt::UserRole).toStringList();
+     QStringList data = treeWidget->selectedItems().last()->data(0,Qt::UserRole).toStringList();
      if(data.isEmpty())
        return;
      textEdit->setText(data.last());
