@@ -63,10 +63,10 @@ void Preferences::saveSettings(){
 
      if(rootPath != originalRootPath){
        settings->setValue("rootPath",rootPath);
-#ifdef Q_OS_WIN32
-       settings->setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
-#else
+#ifdef Q_WS_X11
        settings->setValue("backupDirPath",QDir::homePath() + "/.local/share/nobleNote/backups");
+#else
+       settings->setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #endif
        sendPathChanged();
      }

@@ -90,12 +90,12 @@ MainWindow::MainWindow()
        welcome = new Welcome(this);
        welcome->exec();
      }
-#ifdef Q_OS_WIN32
-     if(!settings.value("backupDirPath").isValid())
-       settings.setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
-#else
+#ifdef Q_WS_X11
      if(!settings.value("backupDirPath").isValid())
        settings.setValue("backupDirPath",QDir::homePath() + "/.local/share/nobleNote/backups");
+#else
+     if(!settings.value("backupDirPath").isValid())
+       settings.setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #endif
 
    //Setup preferences
