@@ -30,7 +30,7 @@ void ProgressReceiver::postProgressEvent()
 
 bool ProgressReceiver::event(QEvent *e)
 {
-     ProgressEvent * me = nullptr; // new nullpointer constant in c++11
+     ProgressEvent * me = 0; // new nullpointer constant in c++11
 
     // is MyEvent type?
     if(e->type() == QEvent::User +1)

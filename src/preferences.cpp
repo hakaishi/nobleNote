@@ -63,8 +63,11 @@ void Preferences::saveSettings(){
 
      if(rootPath != originalRootPath){
        settings->setValue("rootPath",rootPath);
-       settings->setValue("noteDirPath",rootPath + "/notes");
-       settings->setValue("backupDirPath",rootPath + "/backups");
+#ifdef Q_OS_WIN32
+       settings->setValue("backupDirPath",%APPDATA% + "/nobleNote/backups");
+#else
+       settings->setValue("backupDirPath",QDir::homePath() + "/.local/share/nobleNote/backups");
+#endif
        sendPathChanged();
      }
 
