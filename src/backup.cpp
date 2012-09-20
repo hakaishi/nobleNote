@@ -58,12 +58,9 @@ Backup::Backup(QWidget *parent): QDialog(parent){
 
      setupTreeData();
 
-     deleteOldButton = new QPushButton(tr("&Delete all old backups and file entries"),this);
-     buttonBox->addButton(deleteOldButton ,QDialogButtonBox::ActionRole);
-
      connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(showPreview()));
-     connect(this, SIGNAL(accepted()), this, SLOT(restoreBackup()));
-     connect(deleteOldButton, SIGNAL(clicked(bool)), this, SLOT(deleteOldBackupsAndFileEntries()));
+     connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteBackup()));
+     connect(restoreButton, SIGNAL(clicked(bool)), this, SLOT(restoreBackup()));
 }
 
 void Backup::setupTreeData()
@@ -129,7 +126,6 @@ QStringList Backup::getFileData(const QString &file)
 
 void Backup::showPreview()
 {
-//TODO:Even with no backup a preview is shown...
      if(!treeWidget->currentItem()->isSelected())
      {
           if(treeWidget->selectedItems().count() != 1)
@@ -143,21 +139,58 @@ void Backup::showPreview()
 
 void Backup::restoreBackup()
 {
-//TODO: enable restore and deletion for multiple backups
-/*     if(!treeWidget->selectionModel()->currentIndex().isValid())
+     if(treeWidget->selectedItems().isEmpty())
        return;
-     if(treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList().isEmpty())
-       return;
-     QStringList dataList = treeWidget->selectionModel()->currentIndex().data(Qt::UserRole).toStringList();
-     QString title = dataList.takeFirst();
-     if(!QFile(dataList.first()).exists())
-       return;
-     else
+     foreach(QTreeWidgetItem *item, treeWidget->selectedItems())
      {
-        if(!QDir(QSettings().value("rootPath").toString()+"/restored notes").exists())
-          QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
-        QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
-     }*/
+          QStringList dataList = item->data(0,Qt::UserRole).toStringList();
+          QString title = dataList.takeFirst();
+          if(!QFile(dataList.first()).exists())
+            return;
+          else
+          {
+             if(!QDir(QSettings().value("rootPath").toString()+"/restored notes").exists())
+               QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
+             QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
+          }
+     }
+     setupTreeData(); //actualizing Tree
+}
+
+void Backup::deleteBackup()
+{
+     if(treeWidget->selectedItems().isEmpty())
+        return;
+
+     QStringList files;
+     foreach(QTreeWidgetItem *item, treeWidget->selectedItems())
+     {
+          QStringList dataList = item->data(0,Qt::UserRole).toStringList();
+          dataList.takeFirst(); //removing title
+          files << dataList.first();
+     }
+
+     QString backupsToBeDeleted;
+     foreach(QString str, files)
+         backupsToBeDeleted += (str+"\n");
+
+     if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
+          tr("Do you really want to delete the backups and entries for the "
+             "following files?\n\n%1\nYou won't be able to restore them!").arg(
+          backupsToBeDeleted),QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+        return;
+
+     foreach(QString file, files)
+     {
+          if(QFile(file).exists())
+            QFile(file).remove();
+
+          QString uuid = file;
+          uuid.remove(QSettings().value("backupDirPath").toString() + "/");
+          QSettings().remove("Notes/{" + uuid + "}_size");
+          QSettings().remove("Notes/{" + uuid + "}_cursor_position");
+     }
+     setupTreeData(); //actualizing Tree
 }
 
 void Backup::getNoteUuidList(){

@@ -63,6 +63,7 @@ class Backup : public QDialog, public Ui::Backup {
       void getNoteUuidList();
       void progressChanges();
       void restoreBackup();
+      void deleteBackup();
       void setupTreeData();
       QStringList getFileData(const QString &file);
 };
