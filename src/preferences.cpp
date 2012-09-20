@@ -50,8 +50,8 @@ Preferences::~Preferences(){}
 
 void Preferences::showEvent(QShowEvent* show_pref){
      pathLabel->setText(settings->value("root_path").toString());
-     root_path = settings->value("root_path").toString();
-     originalroot_path = root_path;
+     rootPath = settings->value("root_path").toString();
+     originalRootPath = rootPath;
 
      QWidget::showEvent(show_pref);
 }
@@ -61,8 +61,8 @@ void Preferences::saveSettings(){
        QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
      }
 
-     if(root_path != originalroot_path){
-       settings->setValue("root_path",root_path);
+     if(rootPath != originalRootPath){
+       settings->setValue("root_path",rootPath);
 #ifdef Q_WS_X11
        settings->setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups");
 #else
@@ -82,7 +82,7 @@ void Preferences::saveSettings(){
 void Preferences::openDir(){
      QString path;
      path = QFileDialog::getExistingDirectory(this,
-                  tr("Open Directory"), root_path, QFileDialog::ShowDirsOnly
+                  tr("Open Directory"), rootPath, QFileDialog::ShowDirsOnly
                   | QFileDialog::DontResolveSymlinks);
      QFileInfo file(path);
      if(!file.isWritable() && !path.isEmpty()){
@@ -96,8 +96,8 @@ void Preferences::openDir(){
        return;
      }
      if(!path.isEmpty()){
-       root_path = path;
-       pathLabel->setText(root_path);
+       rootPath = path;
+       pathLabel->setText(rootPath);
      }
 
 }

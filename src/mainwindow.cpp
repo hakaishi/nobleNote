@@ -216,7 +216,7 @@ void MainWindow::find(){
 
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
-         noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->root_path());
+         noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
 
 }
 
@@ -255,7 +255,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 
          // set current folder
          noteModel->setSourceModel(noteFSModel);
-         noteView->setRootIndex(noteModel->setroot_path(currFolderPath));
+         noteView->setRootIndex(noteModel->setRootPath(currFolderPath));
      }
 
 
@@ -282,7 +282,7 @@ void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const 
     searchName->clear();
     searchText->clear();
     noteModel->setSourceModel(noteFSModel);
-    noteView->setRootIndex(noteModel->setroot_path(folderModel->filePath(selected.indexes().first())));
+    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected.indexes().first())));
      toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
@@ -303,7 +303,7 @@ void MainWindow::checkAndSetFolders(){
      if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
        QDir().mkpath(QSettings().value("backup_dir_path").toString());
 
-     folderView->setRootIndex(folderModel->setroot_path(QSettings().value("root_path").toString()));
+     folderView->setRootIndex(folderModel->setRootPath(QSettings().value("root_path").toString()));
 
      // make sure there's at least one folder
      QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
@@ -311,10 +311,10 @@ void MainWindow::checkAndSetFolders(){
      {
          QString defaultDirName = tr("default");
          QDir(QSettings().value("root_path").toString()).mkdir(defaultDirName);
-         noteView->setRootIndex(noteModel->setroot_path(QSettings().value("root_path").toString() + "/" + defaultDirName)); // set default dir as current note folder
+         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + defaultDirName)); // set default dir as current note folder
      }
      else
-         noteView->setRootIndex(noteModel->setroot_path(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
+         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -440,12 +440,12 @@ Note *MainWindow::noteWindow(const QString &filePath)
 }
 
 void MainWindow::newFolder(){
-     QString path = folderModel->root_path() + "/" + tr("new folder");
+     QString path = folderModel->rootPath() + "/" + tr("new folder");
      int counter = 0;
      while(QDir(path).exists())
      {
          ++counter;
-         path = folderModel->root_path() + "/" + tr("new folder (%1)").arg(QString::number(counter));
+         path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
      QModelIndex idx = folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
 
@@ -458,12 +458,12 @@ void MainWindow::newFolder(){
 }
 
 void MainWindow::newNote(){
-     QString filePath = noteModel->root_path() + "/" + tr("new note");
+     QString filePath = noteModel->rootPath() + "/" + tr("new note");
      int counter = 0;
      while(QFile::exists(filePath))
      {
          ++counter;
-         filePath = noteModel->root_path() + "/" + tr("new note (%1)").arg(QString::number(counter));
+         filePath = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
      }
 
      QFile file(filePath);
@@ -546,7 +546,7 @@ void MainWindow::removeFolder(){
      return;
 
      folderView->selectionModel()->select(idxAt,QItemSelectionModel::Select);
-     noteView->setRootIndex(noteModel->setroot_path(folderModel->filePath(idxAt)));
+     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(idxAt)));
 #endif
 
 //TODO: check why:
