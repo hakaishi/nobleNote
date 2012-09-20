@@ -83,9 +83,10 @@ MainWindow::MainWindow()
 
    //Configuration file
      QSettings settings; // ini format does save but in the executables directory, use native format
-     if(!settings.isWritable()){
+     if(!settings.isWritable())
        QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
-     }
+     if(!settings.value("importPath").isValid())
+       settings.setValue("importPath", QDir::homePath());
      if(!settings.value("rootPath").isValid()){ // root path has not been set before
        welcome = new Welcome(this);
        welcome->exec();
@@ -97,9 +98,6 @@ MainWindow::MainWindow()
      if(!settings.value("backupDirPath").isValid())
        settings.setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #endif
-
-   //Setup preferences
-     pref = new Preferences(this);
 
    //Search line edits
      searchName = new LineEdit(this);
@@ -186,8 +184,7 @@ MainWindow::MainWindow()
              this, SLOT(showContextMenuFolder(const QPoint &)));
      connect(noteView, SIGNAL(customContextMenuRequested(const QPoint &)),
              this, SLOT(showContextMenuNote(const QPoint &)));
-     connect(actionConfigure, SIGNAL(triggered()), pref, SLOT(show()));
-     connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
+     connect(actionConfigure, SIGNAL(triggered()), this, SLOT(showPreferences()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
      connect(actionShowToolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
      connect(toolbar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
@@ -202,6 +199,15 @@ MainWindow::MainWindow()
 }
 
 MainWindow::~MainWindow(){}
+
+void MainWindow::showPreferences(){
+     if(!pref)
+     {
+          pref = new Preferences(this);
+          connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
+     }
+     pref->show();
+}
 
 void MainWindow::find(){
     // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
@@ -331,8 +337,8 @@ void MainWindow::showEvent(QShowEvent* show_window){
 
      if(QSettings().contains("mainwindow_size"))
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
-     if(QSettings().contains("Splitter"))
-       splitter->restoreState(QSettings().value("Splitter").toByteArray());
+     if(QSettings().contains("splitter"))
+       splitter->restoreState(QSettings().value("splitter").toByteArray());
      QMainWindow::showEvent(show_window);
 }
 
@@ -342,13 +348,13 @@ void MainWindow::hideEvent(QHideEvent* window_hide){
 }
 
 void MainWindow::closeEvent(QCloseEvent* window_close){
-     if(pref->dontQuit->isChecked())
+     if(QSettings().value("dont_quit_on_close").toBool())
      {
        hide();
      }
      else{
        QSettings().setValue("mainwindow_size", saveGeometry());
-       QSettings().setValue("Splitter", splitter->saveState());
+       QSettings().setValue("splitter", splitter->saveState());
        qApp->quit();
      }
      QMainWindow::closeEvent(window_close);
@@ -565,10 +571,12 @@ void MainWindow::importXmlNotes()
      QStringList files = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
-                            "/home",
+                            QSettings().value("importPath").toString(),
                 tr("Notes")+"(*.note)");
      if(files.isEmpty())
         return;
+
+     QSettings().setValue("importPath",QFileInfo(files.last()).absolutePath());
 
      future = new QFutureWatcher<void>(this);
 
@@ -585,8 +593,6 @@ void MainWindow::importXmlNotes()
                 SLOT(setValue(int)));
 
      dialog->exec();
-
-     // TODO save last selected path
 }
 
 void MainWindow::showContextMenuFolder(const QPoint &pos){
@@ -633,7 +639,7 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          menu.addAction(renameN);
          menu.addAction(removeNote);
 
-         if(pref->showSource->isChecked()) // developer option setting
+         if(QSettings().value("show_source").toBool()) // developer option setting
          {
              QAction* showSourceAction = new QAction(tr("Show &Source"), &menu);
              connect(showSourceAction,SIGNAL(triggered()),this,SLOT(openNoteSource()));

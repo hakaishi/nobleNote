@@ -28,6 +28,7 @@
 
 #include "ui_preferences.h"
 #include <QSettings>
+#include <QPointer>
 
 class Backup;
 
@@ -42,7 +43,7 @@ class Preferences : public QDialog, public Ui::Preferences {
      private:
       QSettings *settings;
       QString    originalRootPath;
-      Backup    *backup;
+      QPointer<Backup> backup;
 
      private slots:
       void saveSettings();

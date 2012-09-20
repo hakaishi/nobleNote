@@ -35,9 +35,9 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 
      settings = new QSettings(this);
 
-     dontQuit->setChecked(settings->value("Dont_quit_on_close",false).toBool());
+     dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
-     showSource->setChecked(settings->value("Show_source", false).toBool());
+     showSource->setChecked(settings->value("show_source", false).toBool());
      sizeSpinHeight->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().height());
      sizeSpinWidth->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().width());
 
@@ -71,10 +71,10 @@ void Preferences::saveSettings(){
        sendPathChanged();
      }
 
-     settings->setValue("Dont_quit_on_close", dontQuit->isChecked());
+     settings->setValue("dont_quit_on_close", dontQuit->isChecked());
      settings->setValue("convert_notes", convertNotes->isChecked());
      settings->setValue("note_editor_default_size", QSize(sizeSpinWidth->value(),sizeSpinHeight->value()));
-     settings->setValue("Show_source", showSource->isChecked());
+     settings->setValue("show_source", showSource->isChecked());
 
      accept();
 }
@@ -103,6 +103,7 @@ void Preferences::openDir(){
 }
 
 void Preferences::showBackupWindow(){
-     backup = new Backup(this);
+     if(!backup)
+       backup = new Backup(this);
      backup->show();
 }

@@ -83,7 +83,7 @@ private:
       QListView         *noteView;
       QAction         *quit_action;
       QIcon           icon;
-      Preferences     *pref;
+      QPointer<Preferences> pref;
       QAction         *minimizeRestoreAction;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
@@ -100,6 +100,7 @@ private:
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
 
      private slots:
+      void showPreferences();
       void checkAndSetFolders();
       void changeRootIndex();
 
