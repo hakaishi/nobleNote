@@ -68,14 +68,14 @@ void Backup::setupTreeData()
      treeWidget->clear(); //if there already is any data
 
      //get backup uuids
-     QDir backupDir(QSettings().value("backupDirPath").toString());
+     QDir backupDir(QSettings().value("backup_dir_path").toString());
      QList<QFileInfo> backupList = backupDir.entryInfoList(QDir::Files, QDir::Name);
      QStringList backupUuids;
      foreach(QFileInfo backup, backupList)
           backupUuids << "{" + backup.fileName() + "}";
 
      //get note files
-     QDirIterator itFiles(QSettings().value("rootPath").toString(),
+     QDirIterator itFiles(QSettings().value("root_path").toString(),
                                               QDirIterator::Subdirectories);
      QStringList noteFiles;
      while(itFiles.hasNext()){
@@ -102,7 +102,7 @@ void Backup::setupTreeData()
      {
           str.remove("{");
           str.remove("}");
-          QStringList data = getFileData(QSettings().value("backupDirPath").toString()
+          QStringList data = getFileData(QSettings().value("backup_dir_path").toString()
                                    + "/" + str);
           QString uuid = data.takeFirst();
           backupHash.insert(uuid, data);
@@ -158,9 +158,9 @@ void Backup::restoreBackup()
             return;
           else
           {
-             if(!QDir(QSettings().value("rootPath").toString()+"/restored notes").exists())
-               QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
-             QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
+             if(!QDir(QSettings().value("root_path").toString()+"/restored notes").exists())
+               QDir().mkpath(QSettings().value("root_path").toString()+"/restored notes");
+             QFile(dataList.first()).copy(QSettings().value("root_path").toString()+"/restored notes/"+title);
           }
           delete item;
      }
@@ -196,7 +196,7 @@ void Backup::deleteBackup()
             QFile(file).remove();
 
           QString uuid = file;
-          uuid.remove(QSettings().value("backupDirPath").toString() + "/");
+          uuid.remove(QSettings().value("backup_dir_path").toString() + "/");
           QSettings().remove("Notes/{" + uuid + "}_size");
           QSettings().remove("Notes/{" + uuid + "}_cursor_position");
      }

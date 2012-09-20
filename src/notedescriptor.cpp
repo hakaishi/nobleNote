@@ -62,7 +62,7 @@ void NoteDescriptor::stateChange()
     if(!QFile::exists(filePath_) || uuid_ != HtmlNoteReader::uuid(filePath_))
     {
         // search the moved or renamed file by its uuid
-        QString newFilePath = HtmlNoteReader::findUuid(uuid_, QSettings().value("rootPath").toString());
+        QString newFilePath = HtmlNoteReader::findUuid(uuid_, QSettings().value("root_path").toString());
 
         if(newFilePath.isEmpty())
         {
@@ -145,11 +145,11 @@ void NoteDescriptor::save(const QString& filePath,QUuid uuid)
         QDir().mkpath(QFileInfo(filePath).absolutePath());
 
     write(filePath,uuid); // write note
-    QString backupDirPath = QSettings().value("backupDirPath").toString();
+    QString backup_dir_path = QSettings().value("backup_dir_path").toString();
     QString uuidStr = uuid.toString();
     uuidStr.chop(1); // }
     uuidStr = uuidStr.remove(0,1); // {
-    QString backupFilePath = backupDirPath + "/" + uuidStr;
+    QString backupFilePath = backup_dir_path + "/" + uuidStr;
     write(backupFilePath,uuid); // write backup
 
      if(noteWidget_)

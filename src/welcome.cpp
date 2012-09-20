@@ -59,7 +59,7 @@ void Welcome::openDir(){
 
 void Welcome::setRootDir(){
      if(path->text() == "")
-       QSettings().setValue("rootPath", defaultPath);
+       QSettings().setValue("root_path", defaultPath);
      else
-       QSettings().setValue("rootPath", path->text());
+       QSettings().setValue("root_path", path->text());
 }

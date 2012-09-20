@@ -85,18 +85,18 @@ MainWindow::MainWindow()
      QSettings settings; // ini format does save but in the executables directory, use native format
      if(!settings.isWritable())
        QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
-     if(!settings.value("importPath").isValid())
-       settings.setValue("importPath", QDir::homePath());
-     if(!settings.value("rootPath").isValid()){ // root path has not been set before
+     if(!settings.value("import_path").isValid())
+       settings.setValue("import_path", QDir::homePath());
+     if(!settings.value("root_path").isValid()){ // root path has not been set before
        welcome = new Welcome(this);
        welcome->exec();
      }
 #ifdef Q_WS_X11
-     if(!settings.value("backupDirPath").isValid())
-       settings.setValue("backupDirPath",QDir::homePath() + "/.local/share/nobleNote/backups");
+     if(!settings.value("backup_dir_path").isValid())
+       settings.setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups");
 #else
-     if(!settings.value("backupDirPath").isValid())
-       settings.setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
+     if(!settings.value("backup_dir_path").isValid())
+       settings.setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #endif
 
    //Search line edits
@@ -216,7 +216,7 @@ void MainWindow::find(){
 
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
-         noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
+         noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->root_path());
 
 }
 
@@ -255,7 +255,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 
          // set current folder
          noteModel->setSourceModel(noteFSModel);
-         noteView->setRootIndex(noteModel->setRootPath(currFolderPath));
+         noteView->setRootIndex(noteModel->setroot_path(currFolderPath));
      }
 
 
@@ -282,7 +282,7 @@ void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const 
     searchName->clear();
     searchText->clear();
     noteModel->setSourceModel(noteFSModel);
-    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected.indexes().first())));
+    noteView->setRootIndex(noteModel->setroot_path(folderModel->filePath(selected.indexes().first())));
      toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
@@ -297,24 +297,24 @@ void MainWindow::changeRootIndex(){
 }
 
 void MainWindow::checkAndSetFolders(){
-     if(!QDir(QSettings().value("rootPath").toString()).exists())
-       QDir().mkpath(QSettings().value("rootPath").toString());
+     if(!QDir(QSettings().value("root_path").toString()).exists())
+       QDir().mkpath(QSettings().value("root_path").toString());
 
-     if(!QDir(QSettings().value("backupDirPath").toString()).exists())
-       QDir().mkpath(QSettings().value("backupDirPath").toString());
+     if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
+       QDir().mkpath(QSettings().value("backup_dir_path").toString());
 
-     folderView->setRootIndex(folderModel->setRootPath(QSettings().value("rootPath").toString()));
+     folderView->setRootIndex(folderModel->setroot_path(QSettings().value("root_path").toString()));
 
      // make sure there's at least one folder
-     QStringList dirList = QDir(QSettings().value("rootPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
      if(dirList.isEmpty())
      {
          QString defaultDirName = tr("default");
-         QDir(QSettings().value("rootPath").toString()).mkdir(defaultDirName);
-         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("rootPath").toString() + "/" + defaultDirName)); // set default dir as current note folder
+         QDir(QSettings().value("root_path").toString()).mkdir(defaultDirName);
+         noteView->setRootIndex(noteModel->setroot_path(QSettings().value("root_path").toString() + "/" + defaultDirName)); // set default dir as current note folder
      }
      else
-         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("rootPath").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
+         noteView->setRootIndex(noteModel->setroot_path(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -440,12 +440,12 @@ Note *MainWindow::noteWindow(const QString &filePath)
 }
 
 void MainWindow::newFolder(){
-     QString path = folderModel->rootPath() + "/" + tr("new folder");
+     QString path = folderModel->root_path() + "/" + tr("new folder");
      int counter = 0;
      while(QDir(path).exists())
      {
          ++counter;
-         path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
+         path = folderModel->root_path() + "/" + tr("new folder (%1)").arg(QString::number(counter));
      }
      QModelIndex idx = folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
 
@@ -458,12 +458,12 @@ void MainWindow::newFolder(){
 }
 
 void MainWindow::newNote(){
-     QString filePath = noteModel->rootPath() + "/" + tr("new note");
+     QString filePath = noteModel->root_path() + "/" + tr("new note");
      int counter = 0;
      while(QFile::exists(filePath))
      {
          ++counter;
-         filePath = noteModel->rootPath() + "/" + tr("new note (%1)").arg(QString::number(counter));
+         filePath = noteModel->root_path() + "/" + tr("new note (%1)").arg(QString::number(counter));
      }
 
      QFile file(filePath);
@@ -490,7 +490,7 @@ void MainWindow::renameNote(){
 
 void MainWindow::removeFolder(){
 
-     QStringList dirList = QDir(QSettings().value("rootPath").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
      // only needed if journal folder resides in the same folder
      //dirList.removeOne(QDir(QSettings().value("journalFolderPath").toString()).dirName());
@@ -546,7 +546,7 @@ void MainWindow::removeFolder(){
      return;
 
      folderView->selectionModel()->select(idxAt,QItemSelectionModel::Select);
-     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(idxAt)));
+     noteView->setRootIndex(noteModel->setroot_path(folderModel->filePath(idxAt)));
 #endif
 
 //TODO: check why:
@@ -563,7 +563,7 @@ void MainWindow::removeNote(){
 }
 
 void acualNoteImport(QString file){
-     HtmlNoteWriter::writeXml2Html(file,QSettings().value("rootPath").toString());
+     HtmlNoteWriter::writeXml2Html(file,QSettings().value("root_path").toString());
 }
 
 void MainWindow::importXmlNotes()
@@ -571,12 +571,12 @@ void MainWindow::importXmlNotes()
      QStringList files = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
-                            QSettings().value("importPath").toString(),
+                            QSettings().value("import_path").toString(),
                 tr("Notes")+"(*.note)");
      if(files.isEmpty())
         return;
 
-     QSettings().setValue("importPath",QFileInfo(files.last()).absolutePath());
+     QSettings().setValue("import_path",QFileInfo(files.last()).absolutePath());
 
      future = new QFutureWatcher<void>(this);
 

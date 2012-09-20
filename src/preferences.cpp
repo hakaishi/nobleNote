@@ -49,9 +49,9 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 Preferences::~Preferences(){}
 
 void Preferences::showEvent(QShowEvent* show_pref){
-     pathLabel->setText(settings->value("rootPath").toString());
-     rootPath = settings->value("rootPath").toString();
-     originalRootPath = rootPath;
+     pathLabel->setText(settings->value("root_path").toString());
+     root_path = settings->value("root_path").toString();
+     originalroot_path = root_path;
 
      QWidget::showEvent(show_pref);
 }
@@ -61,12 +61,12 @@ void Preferences::saveSettings(){
        QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
      }
 
-     if(rootPath != originalRootPath){
-       settings->setValue("rootPath",rootPath);
+     if(root_path != originalroot_path){
+       settings->setValue("root_path",root_path);
 #ifdef Q_WS_X11
-       settings->setValue("backupDirPath",QDir::homePath() + "/.local/share/nobleNote/backups");
+       settings->setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups");
 #else
-       settings->setValue("backupDirPath",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
+       settings->setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #endif
        sendPathChanged();
      }
@@ -82,7 +82,7 @@ void Preferences::saveSettings(){
 void Preferences::openDir(){
      QString path;
      path = QFileDialog::getExistingDirectory(this,
-                  tr("Open Directory"), rootPath, QFileDialog::ShowDirsOnly
+                  tr("Open Directory"), root_path, QFileDialog::ShowDirsOnly
                   | QFileDialog::DontResolveSymlinks);
      QFileInfo file(path);
      if(!file.isWritable() && !path.isEmpty()){
@@ -96,8 +96,8 @@ void Preferences::openDir(){
        return;
      }
      if(!path.isEmpty()){
-       rootPath = path;
-       pathLabel->setText(rootPath);
+       root_path = path;
+       pathLabel->setText(root_path);
      }
 
 }
