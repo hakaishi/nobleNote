@@ -92,7 +92,10 @@ void Backup::setupTreeData()
              backupUuids.removeOne(uuid);
 
      if(backupUuids.isEmpty())
+     {
+          textEdit->clear();
           return;
+     }
 
      QHash<QString,QStringList> backupHash;
      foreach(QString str, backupUuids)
@@ -153,8 +156,12 @@ void Backup::restoreBackup()
                QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
              QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
           }
+
+          //crashes if last one is removed
+          //treeWidget->takeTopLevelItem(treeWidget->indexOfTopLevelItem(item));
      }
-     setupTreeData(); //actualizing Tree
+
+     setupTreeData(); //TODO: remove this
 }
 
 void Backup::deleteBackup()
@@ -163,7 +170,8 @@ void Backup::deleteBackup()
         return;
 
      QStringList files;
-     foreach(QTreeWidgetItem *item, treeWidget->selectedItems())
+     QList<QTreeWidgetItem*> itemList = treeWidget->selectedItems();
+     foreach(QTreeWidgetItem *item, itemList)
      {
           QStringList dataList = item->data(0,Qt::UserRole).toStringList();
           dataList.takeFirst(); //removing title
@@ -189,113 +197,10 @@ void Backup::deleteBackup()
           uuid.remove(QSettings().value("backupDirPath").toString() + "/");
           QSettings().remove("Notes/{" + uuid + "}_size");
           QSettings().remove("Notes/{" + uuid + "}_cursor_position");
-     }
-     setupTreeData(); //actualizing Tree
-}
 
-void Backup::getNoteUuidList(){
-     QFutureIterator<QUuid> it(future1->future());
-     while(it.hasNext())
-       notesUuids << it.next();
-}
-
-void Backup::deleteOldBackupsAndFileEntries(){
-     notesUuids.clear(); //make sure that it's empty
-
-     //searching for existing Notes
-     QDirIterator itFiles(QSettings().value("rootPath").toString(),
-                                              QDirIterator::Subdirectories);
-     QStringList noteFiles;
-     while(itFiles.hasNext()){
-       QString filePath = itFiles.next();
-       if(itFiles.fileInfo().isFile())
-         noteFiles << filePath;
+          //crashes if last one is removed
+          //treeWidget->takeTopLevelItem(treeWidget->indexOfTopLevelItem(itemList.takeFirst()));
      }
 
-     future1 = new QFutureWatcher<QUuid>(this);
-
-     QUuid (*uuidPtr)(QString) = & HtmlNoteReader::uuid; // function pointer, because uuid method is overloaded
-     future1->setFuture(QtConcurrent::mapped(noteFiles, uuidPtr));
-
-     indexDialog = new QProgressDialog(this);
-     indexDialog->setLabelText(QString(tr("Indexing notes...")));
-
-     QObject::connect(future1, SIGNAL(finished()), this, SLOT(getNoteUuidList()));
-     QObject::connect(future1, SIGNAL(finished()), this, SLOT(progressChanges()));
-     QObject::connect(future1, SIGNAL(finished()), indexDialog, SLOT(reset()));
-     QObject::connect(indexDialog, SIGNAL(canceled()), future1, SLOT(cancel()));
-     QObject::connect(future1, SIGNAL(progressRangeChanged(int,int)),
-                indexDialog, SLOT(setRange(int,int)));
-     QObject::connect(future1, SIGNAL(progressValueChanged(int)), indexDialog,
-                SLOT(setValue(int)));
-
-     indexDialog->exec();
-}
-
-void actualRemoval(const QString& backupAndUuid){
-     if(!backupAndUuid.contains("Notes/"))
-       QFile::remove(backupAndUuid);
-     else
-       QSettings().remove(backupAndUuid);
-}
-
-void Backup::progressChanges(){
-     //get backup files
-     QStringList backups;
-     QDir backupDir(QSettings().value("backupDirPath").toString());
-     QList<QFileInfo> backupList = backupDir.entryInfoList(QDir::Files, QDir::Name);
-     foreach(QFileInfo backup, backupList)
-          backups << backup.absoluteFilePath();
-
-     //add QSettings Uuids to the backups
-     QStringList backupsAndUuids = backups + QSettings().allKeys().filter("Notes/");
-
-     //We only need the redundant backups and Uuids
-     foreach(QString str, backupsAndUuids){
-       if(!str.contains("Notes/") && notesUuids.contains(QFileInfo(str).fileName()))
-         backupsAndUuids.removeOne(str);
-       if(str.contains("Notes/")){
-         QString settings = str;
-         settings.remove("Notes/");
-         settings.remove("_size");
-         settings.remove("_cursor_position");         
-         if(notesUuids.contains(settings))
-           backupsAndUuids.removeOne(str);
-       }
-     }
-
-     QString redundantBackupList;
-     foreach(QString str, backupsAndUuids)
-       if(!str.contains("Notes/"))
-         redundantBackupList += (str+"\n");
-
-     if(backupsAndUuids.isEmpty()){
-          QMessageBox::information(this, tr("No redundant data!"), tr("no redundant"
-                                   " Everything is clean! No redundant data!"));
-          return;
-     }
-     else{
-       if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
-           tr("Do you really want to delete the backups and entries for the "
-              "following files?\n\n%1\nYou won't be able to restore them!").arg(
-           redundantBackupList),
-           QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
-         return;
-     }
-
-     progressDialog = new QProgressDialog(this);
-     progressDialog->setLabelText(QString(tr("Progressing files...")));
-
-     future2 = new QFutureWatcher<void>(this);
-     future2->setFuture(QtConcurrent::map(backupsAndUuids, actualRemoval));
-
-     QObject::connect(future2, SIGNAL(finished()), progressDialog, SLOT(reset()));
-     QObject::connect(future2, SIGNAL(finished()), this, SLOT(setupTreeData()));
-     QObject::connect(progressDialog, SIGNAL(canceled()), future2, SLOT(cancel()));
-     QObject::connect(future2, SIGNAL(progressRangeChanged(int,int)), progressDialog,
-                                                                SLOT(setRange(int,int)));
-     QObject::connect(future2, SIGNAL(progressValueChanged(int)), progressDialog,
-                                                                SLOT(setValue(int)));
-
-     progressDialog->exec();
+     setupTreeData(); //TODO: remove this
 }

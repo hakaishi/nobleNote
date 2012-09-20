@@ -52,16 +52,9 @@ class Backup : public QDialog, public Ui::Backup {
       QTextDocument *document;
       QTextEdit     *textEdit;
       QPushButton   *deleteOldButton;
-      QProgressDialog *indexDialog, *progressDialog;
-      QFutureWatcher<QUuid> *future1;
-      QFutureWatcher<void> *future2;
-      QList<QUuid> notesUuids;
 
      private slots:
       void showPreview();
-      void deleteOldBackupsAndFileEntries();
-      void getNoteUuidList();
-      void progressChanges();
       void restoreBackup();
       void deleteBackup();
       void setupTreeData();
