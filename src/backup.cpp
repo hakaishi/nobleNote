@@ -129,6 +129,12 @@ QStringList Backup::getFileData(const QString &file)
 
 void Backup::showPreview()
 {
+     if(treeWidget->currentItem() == NULL) //Prevents program crush
+     {
+          textEdit->clear();
+          return;
+     }
+
      if(!treeWidget->currentItem()->isSelected())
      {
           if(treeWidget->selectedItems().count() != 1)
@@ -156,12 +162,8 @@ void Backup::restoreBackup()
                QDir().mkpath(QSettings().value("rootPath").toString()+"/restored notes");
              QFile(dataList.first()).copy(QSettings().value("rootPath").toString()+"/restored notes/"+title);
           }
-
-          //crashes if last one is removed
-          //treeWidget->takeTopLevelItem(treeWidget->indexOfTopLevelItem(item));
+          delete item;
      }
-
-     setupTreeData(); //TODO: remove this
 }
 
 void Backup::deleteBackup()
@@ -197,10 +199,8 @@ void Backup::deleteBackup()
           uuid.remove(QSettings().value("backupDirPath").toString() + "/");
           QSettings().remove("Notes/{" + uuid + "}_size");
           QSettings().remove("Notes/{" + uuid + "}_cursor_position");
-
-          //crashes if last one is removed
-          //treeWidget->takeTopLevelItem(treeWidget->indexOfTopLevelItem(itemList.takeFirst()));
      }
 
-     setupTreeData(); //TODO: remove this
+     foreach(QTreeWidgetItem *item, itemList)
+          delete item;
 }
