@@ -454,6 +454,7 @@ void MainWindow::newFolder(){
          folderView->edit(idx); // 'open' for rename
          folderView->scrollTo(idx, QAbstractItemView::EnsureVisible);
      }
+     folderModel->sort(0);
 }
 
 void MainWindow::newNote(){
@@ -474,9 +475,10 @@ void MainWindow::newNote(){
      if(idx.isValid())
      {
          noteView->setCurrentIndex(idx);
-       noteView->edit(idx); // 'open' for rename
-        noteView->scrollTo(idx, QAbstractItemView::EnsureVisible);
+         noteView->edit(idx); // 'open' for rename
+         noteView->scrollTo(idx, QAbstractItemView::EnsureVisible);
      }
+     noteView->model()->sort(0);
 }
 
 void MainWindow::renameFolder(){
