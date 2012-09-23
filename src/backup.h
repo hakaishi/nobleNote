@@ -47,6 +47,7 @@ class Backup : public QDialog, public Ui::Backup {
  
      public:
       Backup(QWidget *parent = 0);
+      ~Backup();
 
      private:
       QSplitter     *splitter;
@@ -103,7 +104,6 @@ class Backup : public QDialog, public Ui::Backup {
       void showPreview();
       void restoreBackup();
       void deleteBackup();
-      void setupTreeData();
       void getNoteUuidList();
       void getNotes();
       void setupBackups();

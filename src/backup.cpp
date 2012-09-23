@@ -33,6 +33,8 @@
 Backup::Backup(QWidget *parent): QDialog(parent){
      setupUi(this);
 
+     setAttribute(Qt::WA_DeleteOnClose);
+
      splitter = new QSplitter(groupBox);
      gridLayout_2->addWidget(splitter);
      treeWidget = new QTreeWidget(splitter);
@@ -51,18 +53,14 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      textEdit->setDisabled(frame);
      gridLayout3->addWidget(textEdit, 1, 0, 1, 1);
 
-     setupTreeData();
+     getNotes(); //Searches for notes and backups. For the backups with no notes it will create the trees children.
 
      connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(showPreview()));
      connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteBackup()));
      connect(restoreButton, SIGNAL(clicked(bool)), this, SLOT(restoreBackup()));
 }
 
-void Backup::setupTreeData()
-{
-     treeWidget->clear(); //if there already is any data
-     getNotes();
-}
+Backup::~Backup(){ delete backupDataHash;}
 
 void Backup::getNoteUuidList()
 {
@@ -144,8 +142,8 @@ void Backup::setupChildren()
      foreach(QString key, hash.keys())
      {
           QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-          item->setText(0,hash[key].takeFirst()); //title
-          item->setData(0,Qt::UserRole,hash[key]); //path and content
+          item->setText(0,hash[key].first()); //title
+          item->setData(0,Qt::UserRole,hash[key]); //title, path and content
      }
 }
 
@@ -198,6 +196,7 @@ void Backup::deleteBackup()
      foreach(QTreeWidgetItem *item, itemList)
      {
           QStringList dataList = item->data(0,Qt::UserRole).toStringList();
+          dataList.takeFirst(); //removing title from the list
           files << dataList.first();
      }
 
