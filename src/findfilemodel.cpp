@@ -29,7 +29,7 @@
 #include <QTextStream>
 #include <QUrl>
 #include <QTextDocumentFragment>
-#include <QtDebug>
+#include <QTimer>
 #include <QApplication>
 
 
@@ -37,7 +37,7 @@ FindFileModel::FindFileModel(QObject *parent) :
     QStandardItemModel(parent)
 {
     connect(&futureWatcher,SIGNAL(finished()),this,SLOT(findInFilesFinished()));
-    connect(&futureWatcher, SIGNAL(canceled()), this, SLOT(findInFilesCanceled()));
+    connect(&futureWatcher, SIGNAL(canceled()), this, SLOT(restoreOverrideCursor()));
 }
 
 QString FindFileModel::fileName(const QModelIndex &index) const
@@ -133,6 +133,9 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
     future = QtConcurrent::filtered(files,fileContainsFunctor);
 
     futureWatcher.setFuture(future);
+
+    // sometimes, wait cursor persists, this is a workaround
+    QTimer::singleShot(5000,this,SLOT(restoreOverrideCursor()));
 }
 
 void FindFileModel::findInFilesFinished()
@@ -142,7 +145,7 @@ void FindFileModel::findInFilesFinished()
     QApplication::restoreOverrideCursor();
 }
 
-void FindFileModel::findInFilesCanceled()
+void FindFileModel::restoreOverrideCursor()
 {
     QApplication::restoreOverrideCursor();
 }

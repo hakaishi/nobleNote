@@ -16,7 +16,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="textFormatting.svg">
+   sodipodi:docname="text_formatting.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -279,19 +279,6 @@
          offset="0"
          id="stop4249" />
     </linearGradient>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4038-2"
-       x="-0.15907101"
-       width="1.3181421"
-       y="-0.11283069"
-       height="1.2256614">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3709002"
-         id="feGaussianBlur4040-9" />
-    </filter>
     <linearGradient
        y2="228.90204"
        x2="171.6255"
@@ -1473,19 +1460,6 @@
          offset="1"
          id="stop4174-6-3" />
     </linearGradient>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4930-7-7"
-       x="-0.16915087"
-       width="1.3383018"
-       y="-0.095103979"
-       height="1.190208">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.1315269"
-         id="feGaussianBlur4932-0-8" />
-    </filter>
     <linearGradient
        id="linearGradient5305">
       <stop
@@ -2463,6 +2437,24 @@
        y1="284.78989"
        x2="163.17188"
        y2="284.78989" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4186-7-6-5"
+       id="linearGradient3509"
+       gradientUnits="userSpaceOnUse"
+       x1="142.48828"
+       y1="284.78989"
+       x2="163.17188"
+       y2="284.78989" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4186-7-6-5-9"
+       id="linearGradient3511"
+       gradientUnits="userSpaceOnUse"
+       x1="142.48828"
+       y1="284.78989"
+       x2="163.17188"
+       y2="284.78989" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -2471,17 +2463,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="175.76344"
-     inkscape:cy="808.29941"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="384.43801"
+     inkscape:cy="674.26417"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1002"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1"
+     inkscape:window-width="486"
+     inkscape:window-height="423"
+     inkscape:window-x="896"
+     inkscape:window-y="347"
+     inkscape:window-maximized="0"
      showguides="true"
      inkscape:guide-bbox="true" />
   <metadata
@@ -2504,9 +2496,12 @@
        xml:space="preserve"
        id="flowRoot2985-7-6-0-1"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient5672);fill-opacity:1;stroke:url(#linearGradient5674);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter5676);font-family:Sans;-inkscape-font-specification:Droid Sans"
-       transform="matrix(3.1966941,0,0,2.5500128,-106.0774,-420.18569)"
+       transform="matrix(3.1966941,0,0,2.5500128,-106.58248,-418.16538)"
        inkscape:transform-center-x="-166.77913"
-       inkscape:transform-center-y="4.0723697"><flowRegion
+       inkscape:transform-center-y="4.0723697"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-4-9-1"
          style="fill:url(#linearGradient4642-8-6-3);fill-opacity:1;stroke:url(#linearGradient4644-9-4-2)"><rect
            id="rect2989-3-3-9-8"
@@ -2516,13 +2511,16 @@
            y="259.50504"
            style="font-style:normal;font-weight:normal;fill:url(#linearGradient4638-3-9-3);fill-opacity:1;stroke:url(#linearGradient4640-8-4-8);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:Droid Sans" /></flowRegion><flowPara
          id="flowPara3123-4-47-3-1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:url(#linearGradient5668);fill-opacity:1;stroke:url(#linearGradient6297);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;font-family:Droid Sans;-inkscape-font-specification:Droid Sans">_</flowPara></flowRoot>    <flowRoot
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:url(#linearGradient5668);fill-opacity:1;stroke:url(#linearGradient3511);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;font-family:Droid Sans;-inkscape-font-specification:Droid Sans">_</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot2985-7-6-0"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4176-7-7-9);fill-opacity:1;stroke:url(#linearGradient4650-9-2);stroke-width:0.41096392;stroke-miterlimit:4;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Droid Sans"
-       transform="matrix(3.1528572,0,0,2.5502659,-100.96607,-421.83511)"
+       transform="matrix(3.1528572,0,0,2.5502659,-101.47115,-419.8148)"
        inkscape:transform-center-x="-164.49204"
-       inkscape:transform-center-y="4.0727997"><flowRegion
+       inkscape:transform-center-y="4.0727997"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-4-9"
          style="fill:url(#linearGradient4642-8-6);fill-opacity:1;stroke:url(#linearGradient4644-9-4)"><rect
            id="rect2989-3-3-9"
@@ -2532,11 +2530,14 @@
            y="259.50504"
            style="font-style:normal;font-weight:normal;fill:url(#linearGradient4638-3-9);fill-opacity:1;stroke:url(#linearGradient4640-8-4);stroke-width:0.41096392;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:Droid Sans" /></flowRegion><flowPara
          id="flowPara3123-4-47-3"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:url(#linearGradient4646-1-8);fill-opacity:1;stroke:url(#linearGradient6295);stroke-width:0.41096392;stroke-miterlimit:4;stroke-dasharray:none;font-family:Droid Sans;-inkscape-font-specification:Droid Sans">_</flowPara></flowRoot>    <flowRoot
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:url(#linearGradient4646-1-8);fill-opacity:1;stroke:url(#linearGradient3509);stroke-width:0.41096392;stroke-miterlimit:4;stroke-dasharray:none;font-family:Droid Sans;-inkscape-font-specification:Droid Sans">_</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot2985-7-0"
        style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4948);fill-opacity:1;stroke:none;filter:url(#filter4930);font-family:Cambria;-inkscape-font-specification:Cambria Italic;font-stretch:normal;font-variant:normal"
-       transform="matrix(2.3718239,0,0,2.6108313,-70.661511,-431.9033)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,-70.661511,-431.9033)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-5"
          style="fill:url(#linearGradient4948);fill-opacity:1.0;stroke:url(#linearGradient4644-3)"><rect
            id="rect2989-3-1"
@@ -2564,7 +2565,10 @@
        xml:space="preserve"
        id="flowRoot2985-9"
        style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4767);font-family:Cambria;-inkscape-font-specification:Cambria Bold;font-stretch:normal;font-variant:normal"
-       transform="matrix(2.3718239,0,0,2.6108313,-190.7601,-429.09261)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,-190.7601,-429.09261)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-5"
          style="fill:url(#linearGradient4134);fill-opacity:1"><rect
            id="rect2989-8"
@@ -2578,7 +2582,10 @@
        xml:space="preserve"
        id="flowRoot2985"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4176);fill-opacity:1;stroke:url(#linearGradient4962);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;font-family:Cambria;-inkscape-font-specification:Cambria Bold"
-       transform="matrix(2.3718239,0,0,2.6108313,-193.49403,-432.40529)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,-193.49403,-432.40529)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987"
          style="fill:url(#linearGradient4954);fill-opacity:1;stroke:url(#linearGradient4956)"><rect
            id="rect2989"
@@ -2609,7 +2616,7 @@
            height="52.857143"
            x="250"
            y="288.79074" /></flowRegion><flowPara
-         id="flowPara4056"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4056" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4058"
        style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
@@ -2619,7 +2626,7 @@
            height="115.71429"
            x="239.28572"
            y="268.79074" /></flowRegion><flowPara
-         id="flowPara4064"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4064" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot2985-6"
        style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4176-6);fill-opacity:1;stroke:url(#linearGradient4277);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Sans Italic"
@@ -2643,7 +2650,7 @@
            height="162.12949"
            x="221.72849"
            y="229.08786" /></flowRegion><flowPara
-         id="flowPara4548"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4548" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4550"
        style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
@@ -2653,7 +2660,7 @@
            height="179.80716"
            x="222.23357"
            y="245.25031" /></flowRegion><flowPara
-         id="flowPara4556"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4556" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot2985-9-8"
        style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4038-25);font-family:Sans;-inkscape-font-specification:Sans Italic"
@@ -2671,7 +2678,10 @@
        xml:space="preserve"
        id="flowRoot2985-7"
        style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4176-7);fill-opacity:1;stroke:url(#linearGradient4650);stroke-width:0.48222600999999998;stroke-miterlimit:4;stroke-dasharray:none;font-family:Cambria;-inkscape-font-specification:Cambria Italic;font-stretch:normal;font-variant:normal"
-       transform="matrix(2.3718239,0,0,2.6108313,-75.270285,-433.7472)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,-75.270285,-433.7472)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59"
          style="fill:url(#linearGradient4642);fill-opacity:1;stroke:url(#linearGradient4644)"><rect
            id="rect2989-3"
@@ -2685,7 +2695,10 @@
        xml:space="preserve"
        id="flowRoot2985-7-0-9"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient5078);fill-opacity:1;stroke:none;filter:url(#filter4930-7);font-family:Cambria;-inkscape-font-specification:Cambria"
-       transform="matrix(2.3718239,0,0,2.6108313,4.5948538,-434.93375)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,4.5948538,-434.93375)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-5-6"
          style="fill:url(#linearGradient5074);fill-opacity:1;stroke:url(#linearGradient4644-3-4)"><rect
            id="rect2989-3-1-2"
@@ -2699,7 +2712,10 @@
        xml:space="preserve"
        id="flowRoot2985-7-6"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4176-7-7);fill-opacity:1;stroke:url(#linearGradient4650-9);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;font-family:Cambria;-inkscape-font-specification:Cambria"
-       transform="matrix(2.3718239,0,0,2.6108313,2.0063788,-436.50717)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,2.0063788,-436.50717)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-4"
          style="fill:url(#linearGradient4642-8);fill-opacity:1;stroke:url(#linearGradient4644-9)"><rect
            id="rect2989-3-3"
@@ -2715,7 +2731,10 @@
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient5901);fill-opacity:1;stroke:url(#linearGradient5903);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter5676-1);font-family:Sans;-inkscape-font-specification:Droid Sans"
        transform="matrix(2.4047266,0,0,2.5827846,105.95582,-473.642)"
        inkscape:transform-center-x="-125.4603"
-       inkscape:transform-center-y="4.1247276"><flowRegion
+       inkscape:transform-center-y="4.1247276"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-4-9-1-8"
          style="fill:url(#linearGradient4642-8-6-3-6);fill-opacity:1;stroke:url(#linearGradient4644-9-4-2-4)"><rect
            id="rect2989-3-3-9-8-8"
@@ -2729,7 +2748,10 @@
        xml:space="preserve"
        id="flowRoot2985-7-0-9-8"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient5078-3);fill-opacity:1;stroke:none;filter:url(#filter4930-7-9);font-family:Cambria;-inkscape-font-specification:Cambria"
-       transform="matrix(2.3718239,0,0,2.6108313,107.00102,-436.50578)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,107.00102,-436.50578)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-5-6-9"
          style="fill:url(#linearGradient5074-3);fill-opacity:1;stroke:url(#linearGradient4644-3-4-5)"><rect
            id="rect2989-3-1-2-5"
@@ -2743,7 +2765,10 @@
        xml:space="preserve"
        id="flowRoot2985-7-6-9"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient4176-7-7-5);fill-opacity:1;stroke:url(#linearGradient4650-9-7);stroke-width:0.48222601;stroke-miterlimit:4;stroke-dasharray:none;font-family:Cambria;-inkscape-font-specification:Cambria"
-       transform="matrix(2.3718239,0,0,2.6108313,105.48397,-438.0792)"><flowRegion
+       transform="matrix(2.3718239,0,0,2.6108313,105.48397,-438.0792)"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-4-1"
          style="fill:url(#linearGradient4642-8-9);fill-opacity:1;stroke:url(#linearGradient4644-9-3)"><rect
            id="rect2989-3-3-4"
@@ -2759,7 +2784,10 @@
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient6253);fill-opacity:1;stroke:url(#linearGradient4650-9-2-9);stroke-width:0.32242265;stroke-miterlimit:4;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Droid Sans"
        transform="matrix(2.3114318,0,0,2.6135925,118.44414,-484.59023)"
        inkscape:transform-center-x="-120.59289"
-       inkscape:transform-center-y="4.1739138"><flowRegion
+       inkscape:transform-center-y="4.1739138"
+       inkscape:export-filename="/home/taiko/Desktop/text_formatting.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2987-59-4-9-2"
          style="fill:url(#linearGradient6257);fill-opacity:1;stroke:url(#linearGradient4644-9-4-6)"><rect
            id="rect2989-3-3-9-0"
