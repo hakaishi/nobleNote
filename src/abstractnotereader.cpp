@@ -25,6 +25,5 @@
 
 #include "abstractnotereader.h"
 
-AbstractNoteReader::AbstractNoteReader()
-{
-}
+AbstractNoteReader::AbstractNoteReader(){}
+AbstractNoteReader::~AbstractNoteReader(){}

@@ -27,6 +27,8 @@
 #define NOBLENOTE_H
 
 #include "ui_mainwindow.h"
+#include "htmlnotewriter.h"
+#include "progressreceiver.h"
 #include <QSyntaxHighlighter>
 #include <QSystemTrayIcon>
 #include <QSplitter>
@@ -60,6 +62,7 @@ class FileSystemModel;
 class LineEdit;
 class Note;
 class Highlighter;
+class ProgressReceiver;
 
 class MainWindow : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
@@ -91,6 +94,20 @@ private:
       Highlighter *highlighter;
       QFutureWatcher<void> *future;
       QProgressDialog *dialog;
+      ProgressReceiver *progressReceiver;
+
+      struct NoteImporter
+      {
+           ProgressReceiver *p;
+           QString path;
+           void operator()(QString file)
+           {
+                HtmlNoteWriter::writeXml2Html(file,path);
+                p->postProgressEvent();
+           }
+      };
+
+      NoteImporter noteImporter;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;

@@ -24,8 +24,6 @@
  */
 
 #include "backup.h"
-#include "htmlnotereader.h"
-#include "abstractnotereader.h"
 #include <QDirIterator>
 #include <QMessageBox>
 #include <QSettings>
@@ -53,9 +51,6 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      textEdit->setDisabled(frame);
      gridLayout3->addWidget(textEdit, 1, 0, 1, 1);
 
-     document = new QTextDocument(this);
-     textEdit->setDocument(document);
-
      setupTreeData();
 
      connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(showPreview()));
@@ -66,14 +61,18 @@ Backup::Backup(QWidget *parent): QDialog(parent){
 void Backup::setupTreeData()
 {
      treeWidget->clear(); //if there already is any data
+     getNotes();
+}
 
-     //get backup uuids
-     QDir backupDir(QSettings().value("backup_dir_path").toString());
-     QList<QFileInfo> backupList = backupDir.entryInfoList(QDir::Files, QDir::Name);
-     QStringList backupUuids;
-     foreach(QFileInfo backup, backupList)
-          backupUuids << "{" + backup.fileName() + "}";
+void Backup::getNoteUuidList()
+{
+     QFutureIterator<QString> it(future1->future());
+     while(it.hasNext())
+       noteUuidList << it.next();
+}
 
+void Backup::getNotes()
+{
      //get note files
      QDirIterator itFiles(QSettings().value("root_path").toString(),
                                               QDirIterator::Subdirectories);
@@ -83,48 +82,71 @@ void Backup::setupTreeData()
        if(itFiles.fileInfo().isFile())
          noteFiles << filePath;
      }
-     QStringList noteUuids; //get note uuids
-     foreach(QString note, noteFiles)
-          noteUuids << getFileData(note).first();
 
-     foreach(QString uuid, noteUuids)
-          if(backupUuids.contains(uuid))
-             backupUuids.removeOne(uuid);
+     progressReceiver1 = new ProgressReceiver(this);
+     progressDialog1 = new QProgressDialog(this);
+     progressDialog1->setLabelText(QString(tr("Indexing notes...")));
+     getUuid.p = progressReceiver1;
+     future1 = new QFutureWatcher<QString>(this);
+     future1->setFuture(QtConcurrent::mapped(noteFiles, getUuid));
 
-     if(backupUuids.isEmpty())
+     QObject::connect(progressReceiver1,SIGNAL(valueChanged(int)),progressDialog1, SLOT(setValue(int)));
+     QObject::connect(future1, SIGNAL(finished()), this, SLOT(getNoteUuidList()));
+     QObject::connect(future1, SIGNAL(finished()), this, SLOT(setupBackups()));
+     QObject::connect(future1, SIGNAL(finished()), progressDialog1, SLOT(reset()));
+     QObject::connect(future1, SIGNAL(progressRangeChanged(int,int)),
+                progressDialog1, SLOT(setRange(int,int)));
+     QObject::connect(progressDialog1, SIGNAL(canceled()), future1, SLOT(cancel()));
+
+     progressDialog1->exec();
+}
+
+void Backup::setupBackups()
+{
+     //get backup uuids
+     QDir backupDir(QSettings().value("backup_dir_path").toString());
+     backupFiles = backupDir.entryInfoList(QDir::Files, QDir::Name);
+
+     foreach(QString uuid, noteUuidList)
+     {
+          uuid.remove("{");
+          uuid.remove("}");
+          if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
+                                  + "/" + uuid)))
+             backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
+                                   + "/" + uuid));
+     }
+
+     if(backupFiles.isEmpty())
      {
           textEdit->clear();
           return;
      }
 
-     QHash<QString,QStringList> backupHash;
-     foreach(QString str, backupUuids)
-     {
-          str.remove("{");
-          str.remove("}");
-          QStringList data = getFileData(QSettings().value("backup_dir_path").toString()
-                                   + "/" + str);
-          QString uuid = data.takeFirst();
-          backupHash.insert(uuid, data);
-     }
+     progressReceiver2 = new ProgressReceiver(this);
+     progressDialog2 = new QProgressDialog(this);
+     progressDialog2->setLabelText(QString(tr("Indexing backup data...")));
+     setupBackup.p = progressReceiver2;
+     backupDataHash = new QHash<QString,QStringList>;
+     setupBackup.hash = backupDataHash;
+     future2 = new QFutureWatcher<void>(this);
+     future2->setFuture(QtConcurrent::map(backupFiles, setupBackup));
 
-     foreach(QString key, backupHash.keys())
-     {
-          QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-          item->setText(0,backupHash[key].first());
-          item->setData(0,Qt::UserRole,backupHash[key]);
-     }
-
-     textEdit->clear();
+     QObject::connect(progressReceiver2,SIGNAL(valueChanged(int)),progressDialog2, SLOT(setValue(int)));
+     QObject::connect(future2, SIGNAL(finished()), this, SLOT(setupChildren()));
+     QObject::connect(future2, SIGNAL(finished()), progressDialog2, SLOT(reset()));
+     QObject::connect(progressDialog2, SIGNAL(canceled()), future2, SLOT(cancel()));
 }
 
-QStringList Backup::getFileData(const QString &file)
+void Backup::setupChildren()
 {
-     AbstractNoteReader *reader = new HtmlNoteReader(file,document);
-     QStringList list;
-     QString uuid = reader->uuid();
-     list << uuid << reader->title() << QFileInfo(file).absoluteFilePath() << document->toHtml();
-     return list;
+     QHash<QString,QStringList> hash = *backupDataHash;
+     foreach(QString key, hash.keys())
+     {
+          QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
+          item->setText(0,hash[key].takeFirst()); //title
+          item->setData(0,Qt::UserRole,hash[key]); //path and content
+     }
 }
 
 void Backup::showPreview()
@@ -176,7 +198,6 @@ void Backup::deleteBackup()
      foreach(QTreeWidgetItem *item, itemList)
      {
           QStringList dataList = item->data(0,Qt::UserRole).toStringList();
-          dataList.takeFirst(); //removing title
           files << dataList.first();
      }
 

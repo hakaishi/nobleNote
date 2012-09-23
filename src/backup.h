@@ -27,15 +27,20 @@
 #define BACKUP_H
 
 #include "ui_backup.h"
+#include "htmlnotereader.h"
+#include "abstractnotereader.h"
+#include "progressreceiver.h"
+#include <QFileInfo>
 #include <QSplitter>
 #include <QTreeWidget>
 #include <QTextEdit>
 #include <QTextDocument>
 #include <QLabel>
-#include <QPushButton>
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QUuid>
+
+class ProgressReceiver;
 
 class Backup : public QDialog, public Ui::Backup {
      Q_OBJECT
@@ -52,13 +57,57 @@ class Backup : public QDialog, public Ui::Backup {
       QTextDocument *document;
       QTextEdit     *textEdit;
       QPushButton   *deleteOldButton;
+      QFutureWatcher<QString> *future1;
+      QFutureWatcher<void> *future2;
+      ProgressReceiver *progressReceiver1, *progressReceiver2;
+      QProgressDialog  *progressDialog1, *progressDialog2;
+      QStringList noteUuidList;
+      QList<QFileInfo> backupFiles; //don't ever use a local stack variable
+      QHash<QString,QStringList> *backupDataHash;
+
+      struct GetUuid
+      {
+           ProgressReceiver *p;
+
+           typedef QString result_type;
+
+           QString operator()(QString file)
+           {
+                p->postProgressEvent();
+                return HtmlNoteReader::uuid(file);
+           }
+      };
+
+      struct SetupBackup
+      {
+           ProgressReceiver *p;
+           QHash<QString,QStringList> *hash;
+
+           void operator()(const QFileInfo &file)
+           {
+
+                QTextDocument *d = new QTextDocument;
+                AbstractNoteReader *reader = new HtmlNoteReader(file.absoluteFilePath(),d);
+                QStringList data;
+                data << reader->title() << file.absoluteFilePath() << d->toHtml();
+                hash->insert(file.absoluteFilePath(),data);
+
+                p->postProgressEvent();
+           }
+      };
+
+      GetUuid getUuid;
+      SetupBackup setupBackup;
 
      private slots:
       void showPreview();
       void restoreBackup();
       void deleteBackup();
       void setupTreeData();
-      QStringList getFileData(const QString &file);
+      void getNoteUuidList();
+      void getNotes();
+      void setupBackups();
+      void setupChildren();
 };
 
 #endif //BACKUP_H

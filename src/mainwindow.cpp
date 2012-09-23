@@ -34,10 +34,9 @@
 #include "findfilesystemmodel.h"
 #include "highlighter.h"
 #include "notedescriptor.h"
-#include "htmlnotewriter.h"
 #include "htmlnotereader.h"
 #include "fileiconprovider.h"
-#include <textsearchtoolbar.h>
+#include "textsearchtoolbar.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -562,10 +561,6 @@ void MainWindow::removeNote(){
      noteModel->remove(noteView->currentIndex());
 }
 
-void acualNoteImport(QString file){
-     HtmlNoteWriter::writeXml2Html(file,QSettings().value("root_path").toString());
-}
-
 void MainWindow::importXmlNotes()
 {
      QStringList files = QFileDialog::getOpenFileNames(
@@ -578,13 +573,17 @@ void MainWindow::importXmlNotes()
 
      QSettings().setValue("import_path",QFileInfo(files.last()).absolutePath());
 
-     future = new QFutureWatcher<void>(this);
-
-     future->setFuture(QtConcurrent::map(files, acualNoteImport));
-
      dialog = new QProgressDialog(this);
      dialog->setLabelText(QString(tr("Importing notes...")));
 
+     progressReceiver = new ProgressReceiver(this);
+     noteImporter.path = QSettings().value("root_path").toString();
+     noteImporter.p = progressReceiver;
+
+     future = new QFutureWatcher<void>(this);
+     future->setFuture(QtConcurrent::map(files, noteImporter));
+
+     QObject::connect(progressReceiver,SIGNAL(valueChanged(int)),dialog, SLOT(setValue(int)));
      QObject::connect(future, SIGNAL(finished()), dialog, SLOT(reset()));
      QObject::connect(dialog, SIGNAL(canceled()), future, SLOT(cancel()));
      QObject::connect(future, SIGNAL(progressRangeChanged(int,int)),
