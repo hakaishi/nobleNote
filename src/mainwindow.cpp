@@ -257,10 +257,11 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
          noteView->setRootIndex(noteModel->setRootPath(currFolderPath));
      }
 
-
  // disable note toolbar buttons if selection is cleared after the folder has been renamed
      if(!noteView->selectionModel()->hasSelection())
         toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection());
+
+     folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
 }
 
 void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
@@ -272,6 +273,8 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
 
      noteView->model()->sort(0);
      noteView->setCurrentIndex(noteModel->index(filePath));
+
+     noteView->scrollTo(noteView->selectionModel()->selectedIndexes().first());
 }
 
 void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -452,9 +455,9 @@ void MainWindow::newFolder(){
      {
          folderView->setCurrentIndex(idx);
          folderView->edit(idx); // 'open' for rename
-         folderView->scrollTo(idx, QAbstractItemView::EnsureVisible);
      }
      folderModel->sort(0);
+     folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
 }
 
 void MainWindow::newNote(){
@@ -476,9 +479,9 @@ void MainWindow::newNote(){
      {
          noteView->setCurrentIndex(idx);
          noteView->edit(idx); // 'open' for rename
-         noteView->scrollTo(idx, QAbstractItemView::EnsureVisible);
      }
      noteView->model()->sort(0);
+     noteView->scrollTo(noteView->selectionModel()->selectedIndexes().first());
 }
 
 void MainWindow::renameFolder(){
