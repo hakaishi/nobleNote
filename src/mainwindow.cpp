@@ -154,6 +154,7 @@ MainWindow::MainWindow()
      folderView->setModel(folderModel);
      noteView->setEditTriggers(QListView::EditKeyPressed);
      noteView->setModel(noteModel);
+     noteView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
      checkAndSetFolders();
 
@@ -370,39 +371,47 @@ void MainWindow::quit()
 }
 
 void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
-     QModelIndex ind = index;
-     if(!ind.isValid()) // default constructed model index
-       ind = noteView->currentIndex();
+     Q_UNUSED(index);
+     openAllNotes();
+}
 
-     QString notePath = noteModel->filePath(ind);
-     if(!QFileInfo(notePath).exists())
+void MainWindow::openAllNotes(){
+     QList<QModelIndex> indexes = noteView->selectionModel()->selectedIndexes();
+     foreach(QModelIndex ind, indexes)
      {
-         QMessageBox::warning(this,tr("Note does not exist"), tr("The selected note cannot be opened because it has been moved or renamed"));
-         return;
-     }
+          if(!ind.isValid()) // default constructed model index
+            ind = noteView->currentIndex();
 
-      // check if the notePath is already used in a open note
-     Note* w = noteWindow(notePath);
-     if(w)
-     {
-         w->activateWindow();  // highlight the note window
-         return;
-     }
+          QString notePath = noteModel->filePath(ind);
+          if(!QFileInfo(notePath).exists())
+          {
+              QMessageBox::warning(this,tr("Note does not exist"), tr("The selected note cannot be opened because it has been moved or renamed"));
+              return;
+          }
 
-     Note* note=new Note(notePath);
-     openNotes+= note;
-     note->setObjectName(notePath);
-     if(noteModel->sourceModel() == findNoteModel){
-       note->highlightText(searchText->text());
-       note->searchbarVisible = true;
-       note->setSearchBarText(searchText->text());
+           // check if the notePath is already used in a open note
+          Note* w = noteWindow(notePath);
+          if(w)
+          {
+              w->activateWindow();  // highlight the note window
+              return;
+          }
+
+          Note* note=new Note(notePath);
+          openNotes+= note;
+          note->setObjectName(notePath);
+          if(noteModel->sourceModel() == findNoteModel){
+            note->highlightText(searchText->text());
+            note->searchbarVisible = true;
+            note->setSearchBarText(searchText->text());
+          }
+          note->show();
      }
-     note->show();
 }
 
 void MainWindow::openNoteSource()
 {
-     QModelIndex ind = noteView->currentIndex();
+    QModelIndex ind = noteView->currentIndex();
 
     QFile file(noteModel->filePath(ind));
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -559,11 +568,14 @@ void MainWindow::removeFolder(){
 }
 
 void MainWindow::removeNote(){
+     QString names;
+     foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedIndexes()))
+          names += "\"" + name + "\"\n";
      if(QMessageBox::warning(this,tr("Delete note"),
-         tr("Do you really want to delete the note \"%1\"?").arg(noteModel->fileName(noteView->currentIndex())),
+         tr("Do you really want to delete the following note(s)?\n%1").arg(names),
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
-     noteModel->remove(noteView->currentIndex());
+     noteModel->removeList(noteView->selectionModel()->selectedIndexes());
 }
 
 void MainWindow::importXmlNotes()
@@ -636,18 +648,28 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
      }
      if(noteView->indexAt(pos).isValid()) // if index exists at position
      {
+         QAction* openAll = new QAction(tr("&Open notes"), &menu);
          QAction* renameN = new QAction(tr("&Rename note"), &menu);
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
+         if(noteView->selectionModel()->selectedIndexes().count() == 1)
+           removeNote->setText(tr("&Delete note"));
+         else
+           removeNote->setText(tr("&Delete notes"));
+         connect(openAll, SIGNAL(triggered()), this, SLOT(openAllNotes()));
          connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
          connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
-         menu.addAction(renameN);
+         if(noteView->selectionModel()->selectedIndexes().count() == 1)
+           menu.addAction(renameN);
+         else
+           menu.addAction(openAll);
          menu.addAction(removeNote);
 
          if(QSettings().value("show_source").toBool()) // developer option setting
          {
              QAction* showSourceAction = new QAction(tr("Show &Source"), &menu);
              connect(showSourceAction,SIGNAL(triggered()),this,SLOT(openNoteSource()));
-             menu.addAction(showSourceAction);
+             if(noteView->selectionModel()->selectedIndexes().count() == 1)
+               menu.addAction(showSourceAction);
          }
      }
      menu.exec(globalPos);

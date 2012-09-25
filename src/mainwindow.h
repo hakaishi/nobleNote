@@ -130,6 +130,7 @@ private:
 
       void find();
       void openNote(const QModelIndex &ind);
+      void openAllNotes();
       void openNoteSource();
       void showContextMenuFolder(const QPoint &pos);
       void showContextMenuNote(const QPoint &pos);
