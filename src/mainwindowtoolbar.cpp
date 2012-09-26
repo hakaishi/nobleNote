@@ -71,18 +71,18 @@ MainWindowToolbar::MainWindowToolbar(QWidget *parent) : QToolBar(parent) {
     addAction(renameNoteAction);
 
     noteActions << removeNoteAction << renameNoteAction;
+    foreach(QAction *action, noteActions)
+            action->setDisabled(true); //for initializing
 }
 
-void MainWindowToolbar::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void MainWindowToolbar::folderActivated(const QModelIndex &selected)
 {
-    Q_UNUSED(deselected);
-        foreach(QAction * action, folderActions)
-            action->setEnabled(!selected.isEmpty());
+     foreach(QAction *action, folderActions)
+            action->setEnabled(selected.isValid());
 }
 
-void MainWindowToolbar::onNoteSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void MainWindowToolbar::noteActivated(const QModelIndex &selected)
 {
-    Q_UNUSED(deselected);
-    foreach(QAction * action, noteActions)
-        action->setEnabled(!selected.isEmpty());
+     foreach(QAction *action, noteActions)
+            action->setEnabled(selected.isValid());
 }

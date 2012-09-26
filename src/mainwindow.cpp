@@ -24,6 +24,7 @@
  */
 
 #include "mainwindow.h"
+#include "listview.h"
 #include "welcome.h"
 #include "mainwindowtoolbar.h"
 #include "note.h"
@@ -134,12 +135,12 @@ MainWindow::MainWindow()
      noteModel->setSortCaseSensitivity(Qt::CaseInsensitive);
      noteModel->setSourceModel(noteFSModel);
 
-     folderView = new QListView(splitter);
-     noteView = new QListView(splitter);
+     folderView = new ListView(splitter);
+     noteView = new ListView(splitter);
 
-     QList<QListView*> listViews;
+     QList<ListView*> listViews;
      listViews << folderView << noteView;
-     foreach(QListView* list, listViews) // add drag drop options
+     foreach(ListView* list, listViews) // add drag drop options
      {
         list->setContextMenuPolicy(Qt::CustomContextMenu);
         //list->setSelectionMode(QAbstractItemView::SingleSelection); // single item can be draged or droped
@@ -152,7 +153,8 @@ MainWindow::MainWindow()
      folderView->setDragEnabled(false);
 
      folderView->setModel(folderModel);
-     noteView->setEditTriggers(QListView::EditKeyPressed);
+     folderView->setEditTriggers(ListView::EditKeyPressed);
+     noteView->setEditTriggers(ListView::EditKeyPressed);
      noteView->setModel(noteModel);
      noteView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
@@ -161,7 +163,8 @@ MainWindow::MainWindow()
 
      connect(folderFSModel,SIGNAL(directoryLoaded(QString)), this,
              SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
-     connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
+     connect(folderView,SIGNAL(activated(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
+     connect(folderView,SIGNAL(clicked(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
@@ -194,8 +197,10 @@ MainWindow::MainWindow()
      connect(toolbar->removeNoteAction,SIGNAL(triggered()),this,SLOT(removeNote()));
      connect(toolbar->renameFolderAction,SIGNAL(triggered()),this,SLOT(renameFolder()));
      connect(toolbar->renameNoteAction,SIGNAL(triggered()),this,SLOT(renameNote()));
-     connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onFolderSelectionChanged(QItemSelection,QItemSelection)));
-     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)),toolbar,SLOT(onNoteSelectionChanged(QItemSelection,QItemSelection)));
+     connect(folderView,SIGNAL(activated(QModelIndex)),toolbar,SLOT(folderActivated(QModelIndex)));
+     connect(folderView,SIGNAL(clicked(QModelIndex)),toolbar,SLOT(folderActivated(QModelIndex)));
+     connect(noteView,SIGNAL(activated(QModelIndex)),toolbar,SLOT(noteActivated(QModelIndex)));
+     connect(noteView,SIGNAL(clicked(QModelIndex)),toolbar,SLOT(noteActivated(QModelIndex)));
 }
 
 MainWindow::~MainWindow(){}
@@ -212,7 +217,7 @@ void MainWindow::showPreferences(){
 void MainWindow::find(){
     // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
         if(!noteView->selectionModel()->hasSelection())
-           toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection());
+           toolbar->noteActivated(QModelIndex());
 
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
@@ -246,7 +251,7 @@ void MainWindow::selectFirstFolder(QString path)
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
-    Q_UNUSED(editor);
+     Q_UNUSED(editor);
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
      {
          QString currFolderPath = folderModel->filePath(folderView->currentIndex());
@@ -260,7 +265,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 
  // disable note toolbar buttons if selection is cleared after the folder has been renamed
      if(!noteView->selectionModel()->hasSelection())
-        toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection());
+        toolbar->noteActivated(QModelIndex());
 
      folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
 }
@@ -278,15 +283,14 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      noteView->scrollTo(noteView->selectionModel()->selectedIndexes().first());
 }
 
-void MainWindow::onFolderSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void MainWindow::folderActivated(const QModelIndex &selected)
 {
-    Q_UNUSED(deselected);
     // clear search line edits
     searchName->clear();
     searchText->clear();
     noteModel->setSourceModel(noteFSModel);
-    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected.indexes().first())));
-     toolbar->onNoteSelectionChanged(QItemSelection(),QItemSelection()); // call the slot with an empty selection, this will disable the note toolbar buttons
+    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected)));
+    toolbar->noteActivated(QModelIndex()); // call the slot with an empty selection, this will disable the note toolbar buttons
 }
 
 void MainWindow::changeRootIndex(){

@@ -33,7 +33,6 @@
 #include <QSystemTrayIcon>
 #include <QSplitter>
 #include <QFileSystemModel>
-#include <QListView>
 #include <QAbstractItemModel>
 #include <QToolButton>
 #include <QLabel>
@@ -53,6 +52,7 @@
 
 //#define NO_SYSTEM_TRAY_ICON
 
+class ListView;
 class Welcome;
 class MainWindowToolbar;
 class Preferences;
@@ -76,21 +76,19 @@ public slots:
     void quit();
 private:
       Welcome         *welcome;
-      MainWindowToolbar         *toolbar;
+      MainWindowToolbar *toolbar;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
       FindFileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
-      FindFileSystemModel * noteModel;
-      QListView       *folderView;
-      QListView         *noteView;
-      QAction         *quit_action;
+      FindFileSystemModel *noteModel;
+      ListView        *folderView, *noteView;
+      QAction         *quit_action, *minimizeRestoreAction;
       QIcon           icon;
       QPointer<Preferences> pref;
-      QAction         *minimizeRestoreAction;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
-      QList<QPointer<Note> >     openNotes; // every access to openNotes must check for null pointers
+      QList<QPointer<Note> > openNotes; // every access to openNotes must check for null pointers
       Highlighter *highlighter;
       QFutureWatcher<void> *future;
       QProgressDialog *dialog;
@@ -121,7 +119,7 @@ private:
       void checkAndSetFolders();
       void changeRootIndex();
 
-      void onFolderSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
+      void folderActivated(const QModelIndex &selected);
 
 #ifndef NO_SYSTEM_TRAY_ICON
       void iconActivated(QSystemTrayIcon::ActivationReason reason);

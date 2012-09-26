@@ -123,7 +123,7 @@ void Note::keyPressEvent(QKeyEvent *k){
 }
 
 void Note::keyReleaseEvent(QKeyEvent *k){
-    Q_UNUSED(k);
+     Q_UNUSED(k);
      textBrowser->setReadOnly(noteDescriptor_->readOnly());
      textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
                                             Qt::LinksAccessibleByMouse);

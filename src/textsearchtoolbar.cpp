@@ -60,6 +60,7 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
      connect(searchLine_, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
      connect(findNext, SIGNAL(clicked(bool)), SLOT(selectNextExpression()));
      connect(findPrevious, SIGNAL(clicked(bool)), SLOT(selectPreviousExpression()));
+     connect(searchLine_, SIGNAL(returnPressed()), SLOT(selectNextExpression()));
 }
 
 void TextSearchToolbar::selectNextExpression(){
@@ -88,14 +89,14 @@ void TextSearchToolbar::selectPreviousExpression(){
      if(this->caseSensitiveBox->isChecked()){
        if(!textEdit_->find(this->searchLine_->text(), QTextDocument::FindCaseSensitively |
            QTextDocument::FindBackward)){
-         textEdit_->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit_->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
          textEdit_->find(this->searchLine_->text(), QTextDocument::FindCaseSensitively |
            QTextDocument::FindBackward);
        }
      }
      else{
        if(!textEdit_->find(this->searchLine_->text(), QTextDocument::FindBackward)){
-         textEdit_->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+         textEdit_->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
          textEdit_->find(this->searchLine_->text(), QTextDocument::FindBackward);
        }
      }

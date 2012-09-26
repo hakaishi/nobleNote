@@ -38,8 +38,8 @@ public:
      QAction *newFolderAction, *newNoteAction, *removeFolderAction,
              *removeNoteAction, *renameFolderAction, *renameNoteAction;
 public slots:
-     void onFolderSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
-     void onNoteSelectionChanged( const QItemSelection & selected, const QItemSelection & deselected );
+     void folderActivated(const QModelIndex &selected);
+     void noteActivated(const QModelIndex &selected);
 
 private:
      QList<QAction*> folderActions;

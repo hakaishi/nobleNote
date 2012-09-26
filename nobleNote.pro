@@ -22,7 +22,8 @@ system(lrelease nobleNote.pro)
 QMAKE_DISTCLEAN = src/translations/*.qm
 
 # Input
-HEADERS = src/mainwindow.h src/note.h src/welcome.h \
+HEADERS = src/mainwindow.h src/note.h src/listview.h \
+    src/welcome.h \
     src/filesystemmodel.h \
     src/preferences.h \
     src/findfilesystemmodel.h \
@@ -47,7 +48,8 @@ HEADERS = src/mainwindow.h src/note.h src/welcome.h \
     src/progressreceiver.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
         src/ui/preferences.ui src/ui/newnotename.ui src/ui/backup.ui 
-SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/welcome.cpp\
+SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/listview.cpp \
+    src/welcome.cpp\
     src/preferences.cpp \
     src/findfilemodel.cpp \
     src/findfilesystemmodel.cpp src/lineedit.cpp src/textbrowser.cpp \

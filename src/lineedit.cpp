@@ -59,5 +59,3 @@ void LineEdit::updateCloseButton(const QString& text)
 {
     clearButton->setVisible(!text.isEmpty());
 }
-
-

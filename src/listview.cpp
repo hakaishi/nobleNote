@@ -23,35 +23,16 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#ifndef LINEEDIT_H
-#define LINEEDIT_H
+#include "listview.h"
+#include <QDebug>
 
-#include <QLineEdit>
+ListView::ListView(QWidget *parent): QListView(parent){}
 
-/**
-  * a line edit with a clear text button
-  *
-  */
-
-class QToolButton;
-
-class LineEdit : public QLineEdit
+void ListView::dropEvent(QDropEvent *event)
 {
-    Q_OBJECT
-
-public:
-    LineEdit(QWidget *parent = 0);
-
-protected:
-    void resizeEvent(QResizeEvent *);
-
-private slots:
-    void updateCloseButton(const QString &text);
-signals:
-    void sendCleared();
-
-private:
-    QToolButton *clearButton;
-};
-
-#endif //LINEEDIT_H
+     //TODO: fix: It should only be possible to drop notes or other files into folders.
+     //TODO: filter notes with a title that already exists in that folder and
+     //      open a dialog with the option to rename the note that is to be dropped.
+     //qDebug()<<event->mimeData()->data("text/uri-list");
+     QAbstractItemView::dropEvent(event);
+}

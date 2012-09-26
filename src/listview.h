@@ -23,35 +23,26 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
-#ifndef LINEEDIT_H
-#define LINEEDIT_H
+#ifndef LISTVIEW_H
+#define LISTVIEW_H
 
-#include <QLineEdit>
+#include <QListView>
+#include <QDropEvent>
 
 /**
-  * a line edit with a clear text button
+  * customized dropEvent for the list view
   *
   */
 
-class QToolButton;
-
-class LineEdit : public QLineEdit
+class ListView : public QListView
 {
-    Q_OBJECT
+     Q_OBJECT
 
-public:
-    LineEdit(QWidget *parent = 0);
+     public:
+      ListView(QWidget *parent = 0);
 
-protected:
-    void resizeEvent(QResizeEvent *);
-
-private slots:
-    void updateCloseButton(const QString &text);
-signals:
-    void sendCleared();
-
-private:
-    QToolButton *clearButton;
+     protected:
+      //virtual void dropEvent(QDropEvent *event);
 };
 
-#endif //LINEEDIT_H
+#endif //LISTVIEW_H
