@@ -42,7 +42,7 @@ class ListView : public QListView
       ListView(QWidget *parent = 0);
 
      protected:
-      //virtual void dropEvent(QDropEvent *event);
+      virtual void dropEvent(QDropEvent *event);
 };
 
 #endif //LISTVIEW_H
