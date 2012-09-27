@@ -28,6 +28,8 @@
 
 #include <QFileSystemModel>
 #include <QSettings>
+#include <QMimeData>
+#include <QMessageBox>
 
 /**
  * @brief  overwritten base class that circumvents a bug in QFileSystemodel which causes
@@ -54,7 +56,16 @@ public:
 
         // row == -1 && column == -1 dropped directly on item or on "empty space"
         if((row == -1 && column == -1)  && !isRootFolder)
-            return QFileSystemModel::dropMimeData(data,action,row,column,parent);
+        {
+               bool dropped = QFileSystemModel::dropMimeData(data,action,row,column,parent);
+               if(!dropped)
+               {
+                    QMessageBox::warning(0,tr("Couldn't drop some file(s)"), tr("File(s) of the same name(s) are already existing in this folder."));
+                    return false;
+               }
+               else
+                 return true;
+        }
         return false; // dropped between items
     }
 };
