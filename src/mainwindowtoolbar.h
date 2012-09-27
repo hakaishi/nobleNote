@@ -40,6 +40,7 @@ public:
 public slots:
      void folderActivated(const QModelIndex &selected);
      void noteActivated(const QModelIndex &selected);
+     void noteActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
 
 private:
      QList<QAction*> folderActions;

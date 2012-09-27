@@ -118,9 +118,8 @@ private:
       void showPreferences();
       void checkAndSetFolders();
       void changeRootIndex();
-      void noteActivated_(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
       void folderActivated(const QModelIndex &selected);
-      void folderActivated_(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
+      void folderActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
 
 #ifndef NO_SYSTEM_TRAY_ICON
       void iconActivated(QSystemTrayIcon::ActivationReason reason);

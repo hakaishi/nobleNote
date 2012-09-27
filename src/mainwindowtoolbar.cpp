@@ -86,3 +86,10 @@ void MainWindowToolbar::noteActivated(const QModelIndex &selected)
      foreach(QAction *action, noteActions)
             action->setEnabled(selected.isValid());
 }
+
+void MainWindowToolbar::noteActivated(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
+{
+     Q_UNUSED(deselected);
+     if(!selected.indexes().isEmpty())
+       noteActivated(selected.indexes().first()); //we only need one - anyone is fine
+}
