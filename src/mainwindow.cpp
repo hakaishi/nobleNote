@@ -161,8 +161,6 @@ MainWindow::MainWindow()
      checkAndSetFolders();
 
 
-     connect(folderFSModel,SIGNAL(directoryLoaded(QString)), this,
-             SLOT(selectFirstFolder(QString)),Qt::QueuedConnection);
      connect(folderView,SIGNAL(activated(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(folderView,SIGNAL(clicked(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
@@ -223,30 +221,6 @@ void MainWindow::find(){
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
 
-}
-
-void MainWindow::selectFirstFolder(QString path)
-{
-    Q_UNUSED(path);
-     // this slot gets (probably) called by the QFileSystemModel gatherer thread
-     // due to some race conditions:
-     // disconnecting this slot will not work button disconnect() will return true
-     // qDebug() may work or not work depending how many time has elapsed in this function
-
-     // only call once
-     static bool thisMethodHasBeenCalled = false;
-
-     if(thisMethodHasBeenCalled)
-       return;
-
-     QModelIndex idx = folderView->indexAt(QPoint(0,0));
-     if(!idx.isValid())
-       return;
-
-     folderView->setCurrentIndex(idx);
-     //folderView->selectionModel()->select(idx,QItemSelectionModel::Select);
-
-     thisMethodHasBeenCalled = true;
 }
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
@@ -322,6 +296,10 @@ void MainWindow::checkAndSetFolders(){
      }
      else
          noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
+
+     //Select the first folder
+     folderView->selectionModel()->select(folderModel->index(QSettings().value(
+          "root_path").toString() + "/" + dirList.first()),QItemSelectionModel::Select);
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -341,7 +319,6 @@ void MainWindow::tray_actions(){
 #endif
 
 void MainWindow::showEvent(QShowEvent* show_window){
-
      if(QSettings().contains("mainwindow_size"))
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
      if(QSettings().contains("splitter"))
