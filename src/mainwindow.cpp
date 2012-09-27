@@ -162,6 +162,8 @@ MainWindow::MainWindow()
 
      connect(folderView,SIGNAL(activated(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(folderView,SIGNAL(clicked(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
+     connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
+          QItemSelection)),this,SLOT(folderActivated_(QItemSelection,QItemSelection))); //Wrapper
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
@@ -194,8 +196,8 @@ MainWindow::MainWindow()
      connect(toolbar->removeNoteAction,SIGNAL(triggered()),this,SLOT(removeNote()));
      connect(toolbar->renameFolderAction,SIGNAL(triggered()),this,SLOT(renameFolder()));
      connect(toolbar->renameNoteAction,SIGNAL(triggered()),this,SLOT(renameNote()));
-     connect(folderView,SIGNAL(activated(QModelIndex)),toolbar,SLOT(folderActivated(QModelIndex)));
-     connect(folderView,SIGNAL(clicked(QModelIndex)),toolbar,SLOT(folderActivated(QModelIndex)));
+     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
+          QItemSelection)),this,SLOT(noteActivated_(QItemSelection,QItemSelection))); //Wrapper
      connect(noteView,SIGNAL(activated(QModelIndex)),toolbar,SLOT(noteActivated(QModelIndex)));
      connect(noteView,SIGNAL(clicked(QModelIndex)),toolbar,SLOT(noteActivated(QModelIndex)));
 }
@@ -264,6 +266,18 @@ void MainWindow::folderActivated(const QModelIndex &selected)
     noteModel->setSourceModel(noteFSModel);
     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected)));
     toolbar->noteActivated(QModelIndex()); // call the slot with an empty selection, this will disable the note toolbar buttons
+}
+
+void MainWindow::folderActivated_(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
+{
+     Q_UNUSED(deselected);
+     folderActivated(selected.indexes().first()); //we only need one - anyone is fine
+}
+
+void MainWindow::noteActivated_(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
+{
+     Q_UNUSED(deselected);
+     toolbar->noteActivated(selected.indexes().first()); //we only need one - anyone is fine
 }
 
 void MainWindow::changeRootIndex(){
