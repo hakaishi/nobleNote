@@ -118,7 +118,6 @@ MainWindow::MainWindow()
      FileSystemModel *folderFSModel = new FileSystemModel(this);
      folderFSModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderFSModel->setReadOnly(false);
-     folderFSModel->setOnlyOnItemDrops(true);
      folderFSModel->setIconProvider(new FileIconProvider());
      folderModel->setSourceModel(folderFSModel);
 

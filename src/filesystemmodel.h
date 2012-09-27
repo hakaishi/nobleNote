@@ -27,6 +27,7 @@
 #define FILESYSTEMMODEL_H
 
 #include <QFileSystemModel>
+#include <QSettings>
 
 /**
  * @brief  overwritten base class that circumvents a bug in QFileSystemodel which causes
@@ -39,24 +40,23 @@ class FileSystemModel : public QFileSystemModel
 {
     Q_OBJECT
 public:
-    explicit FileSystemModel(QObject *parent = 0) : QFileSystemModel(parent), onlyOnItemDrops_(false) {}
+    explicit FileSystemModel(QObject *parent = 0) : QFileSystemModel(parent) {}
     Qt::ItemFlags flags(const QModelIndex &index) const
     {
         return QFileSystemModel::flags(index) | Qt::ItemIsEditable;
     }
 
     // disable drops between items and elsewhere in the viewport
-    void setOnlyOnItemDrops(bool b){onlyOnItemDrops_ = b; }
-    bool onlyOnItemDrops() const { return onlyOnItemDrops_;}
-
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
     {
-        if(!onlyOnItemDrops_ || (row == -1 && column == -1)) // dropped directly on parent
+        // is drop into "emtpy space"
+        bool isRootFolder = this->index(QSettings().value("root_path").toString()) == parent;
+
+        // row == -1 && column == -1 dropped directly on item or on "empty space"
+        if((row == -1 && column == -1)  && !isRootFolder)
             return QFileSystemModel::dropMimeData(data,action,row,column,parent);
         return false; // dropped between items
     }
-
-    bool onlyOnItemDrops_;
 };
 
 #endif // FILESYSTEMMODEL_H
