@@ -406,6 +406,7 @@ void MainWindow::openNoteSource()
            return;
 
     QMainWindow * w = new QMainWindow();
+    w->setAttribute(Qt::WA_DeleteOnClose);
     QTextEdit * textEdit = new QTextEdit(w);
     textEdit->setReadOnly(true);
     textEdit->setPlainText(QTextStream(&file).readAll());

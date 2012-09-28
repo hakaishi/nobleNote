@@ -21,7 +21,7 @@ void ProgressReceiver::postProgressEvent()
     // only report periodically
     if(QTime::currentTime() > time_)
     {
-        time_ = time_.addMSecs(20);
+        time_ = time_.addMSecs(interval_);
 
         // ProgressReceiver now receives a event with the current progress
         QCoreApplication::postEvent(this,me);
