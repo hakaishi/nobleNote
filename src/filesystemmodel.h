@@ -29,6 +29,7 @@
 #include <QFileSystemModel>
 #include <QSettings>
 #include <QMimeData>
+#include <QUrl>
 #include <QMessageBox>
 
 /**
@@ -57,14 +58,46 @@ public:
         // row == -1 && column == -1 dropped directly on item or on "empty space"
         if((row == -1 && column == -1)  && !isRootFolder)
         {
-               bool dropped = QFileSystemModel::dropMimeData(data,action,row,column,parent);
-               if(!dropped)
-               {
-                    QMessageBox::warning(0,tr("Couldn't drop some file(s)"), tr("File(s) of the same name(s) are already existing in this folder."));
-                    return false;
-               }
-               else
-                 return true;
+            if(!data->hasFormat("text/uri-list"))
+              return false;
+
+            QStringList files;
+            foreach(QUrl url, data->urls())
+            files << url.toLocalFile();
+
+            if(this->index(QFileInfo(files.first()).absolutePath()) == parent)
+              return false; //dropped in the same folder they are in
+
+            QDir dirs(QSettings().value("root_path").toString());
+            QList<QFileInfo> dirList = dirs.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name);
+
+            //Search for the right dir
+            QString parentPath;
+            foreach(QFileInfo file, dirList)
+                   if(this->index(QFileInfo(file).absoluteFilePath()) == parent)
+                     parentPath = QFileInfo(file).absoluteFilePath();
+
+            //remove all file titles that don't exist in the target folder, because they will be sucessfully dropped
+            foreach(QString file, files)
+            {
+                QString path = parentPath + "/" + QFileInfo(file).fileName();
+                if(!QFileInfo(path).exists())
+                   files.removeOne(file);
+            }
+
+            bool dropped = QFileSystemModel::dropMimeData(data,action,row,column,parent);
+            if(!dropped)
+            {
+                QString existingFiles;
+                foreach(QString file, files)
+                       existingFiles += file + "\n";
+                if(!existingFiles.isEmpty())
+                  QMessageBox::warning(0,tr("Couldn't drop some file(s)"), tr("File(s) of the same name(s) are already existing in this folder:\n%1").arg(existingFiles));
+
+                return false;
+            }
+            else
+               return true; //files sucessfully dropped
         }
         return false; // dropped between items
     }
