@@ -58,12 +58,13 @@ public:
         // row == -1 && column == -1 dropped directly on item or on "empty space"
         if((row == -1 && column == -1)  && !isRootFolder)
         {
-            if(!data->hasFormat("text/uri-list"))
-              return false;
-
             QStringList files;
             foreach(QUrl url, data->urls())
-            files << url.toLocalFile();
+                   if(!url.toLocalFile().isEmpty())
+                     files << url.toLocalFile();
+
+            if(files.isEmpty()) //no local files
+              return false;
 
             if(this->index(QFileInfo(files.first()).absolutePath()) == parent)
               return false; //dropped in the same folder they are in
@@ -86,6 +87,7 @@ public:
             }
 
             bool dropped = QFileSystemModel::dropMimeData(data,action,row,column,parent);
+
             if(!dropped)
             {
                 QString existingFiles;
