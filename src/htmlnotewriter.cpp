@@ -71,6 +71,7 @@ void HtmlNoteWriter::write()
     }
 
     QTextStream out(&file);
+    out.setCodec("UTF-8"); // set to UTF-8 for every platform, else ISO-8859-1 would be used on windows by default
     out << html;
     file.close();
 }

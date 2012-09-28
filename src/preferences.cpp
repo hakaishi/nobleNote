@@ -29,6 +29,7 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QFileDialog>
+#include <QDesktopServices>
 
 Preferences::Preferences(QWidget *parent): QDialog(parent){
      setupUi(this);

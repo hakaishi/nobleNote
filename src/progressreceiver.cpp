@@ -11,11 +11,15 @@ ProgressReceiver::ProgressReceiver(QObject *parent) :
     time_  = QTime::currentTime();
 }
 
+// if the event user type collides with an existing user type, the static_cast in the
+// event method fails
+const int userTypeOffset = 314;
+
 void ProgressReceiver::postProgressEvent()
 {
         value_ = ++value_; // the number of the currently processed item
 
-    ProgressEvent * me = new ProgressEvent(static_cast<QEvent::Type>(QEvent::User + 1));
+    ProgressEvent * me = new ProgressEvent(static_cast<QEvent::Type>(QEvent::User + userTypeOffset));
     me->value = value_;
 
     // only report periodically
@@ -33,15 +37,13 @@ bool ProgressReceiver::event(QEvent *e)
      ProgressEvent * me = 0; // new nullpointer constant in c++11
 
     // is MyEvent type?
-    if(e->type() == QEvent::User +1)
+    if(e->type() == QEvent::User +userTypeOffset)
     {
-         me = dynamic_cast<ProgressEvent*>(e); // downcast
+         me = static_cast<ProgressEvent*>(e); // downcast
 
         // report progress
         if(me)
         {
-           // qDebug() << (QString("Progress at: ") + QString::number(me->value));
-
             emit valueChanged(me->value);
             return true;
         }
