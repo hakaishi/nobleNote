@@ -202,7 +202,7 @@ void TextFormattingToolbar::markedText(){
      mergeFormatOnWordOrSelection(fmt);
      QPixmap pix(16, 16);
      pix.fill(col);
-     actionTextColor->setIcon(pix);
+     actionTextBColor->setIcon(pix);
 }
 
 void TextFormattingToolbar::insertHyperlink()
