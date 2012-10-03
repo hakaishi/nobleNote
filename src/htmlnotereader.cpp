@@ -90,7 +90,7 @@ void HtmlNoteReader::read(const QString& filePath)
     QTextStream in(&file);
     content = in.readAll();
     file.close();
-    return uuidFromHtml(content);
+    return Qt::mightBeRichText(content) ? uuidFromHtml(content) : QUuid();
 }
 
 /*static*/ QString HtmlNoteReader::findUuid(const QUuid uuid, const QString & path)
