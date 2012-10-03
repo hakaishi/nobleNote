@@ -92,13 +92,13 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     addAction(actionClearFormatting);
 
     QPixmap textPix(16, 16);
-    textPix.fill(Qt::black);
+    textPix.fill(textEdit_->palette().windowText().color());
     actionTextColor = new QAction(textPix, tr("&Text color..."), this);
     connect(actionTextColor, SIGNAL(triggered()), this, SLOT(coloredText()));
     addAction(actionTextColor);
 
     QPixmap bPix(16, 16);
-    bPix.fill(Qt::white);
+    bPix.fill(textEdit_->palette().base().color());
     actionTextBColor = new QAction(bPix, tr("&Background color..."), this);
     connect(actionTextBColor, SIGNAL(triggered()), this, SLOT(markedText()));
     addAction(actionTextBColor);
@@ -150,10 +150,16 @@ void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &for
      actionTextUnderline->setChecked(f.underline());
      actionTextStrikeOut->setChecked(f.strikeOut());
      QPixmap textPix(16,16);
-     textPix.fill(format.foreground().color());
+     if(format.foreground().style() == Qt::NoBrush)
+       textPix.fill(textEdit_->palette().windowText().color());
+     else
+       textPix.fill(format.foreground().color());
      actionTextColor->setIcon(textPix);
      QPixmap bPix(16,16);
-     bPix.fill(format.background().color());
+     if(format.background().style() == Qt::NoBrush)
+       bPix.fill(textEdit_->palette().base().color());
+     else
+       bPix.fill(format.background().color());
      actionTextBColor->setIcon(bPix);
 }
 
@@ -186,7 +192,7 @@ void TextFormattingToolbar::coloredText(){
      if(!col.isValid())
        return;
      QTextCharFormat fmt;
-     fmt.setForeground(col);
+     fmt.setForeground(QBrush(col,Qt::SolidPattern));
      mergeFormatOnWordOrSelection(fmt);
      QPixmap pix(16, 16);
      pix.fill(col);
@@ -198,7 +204,7 @@ void TextFormattingToolbar::markedText(){
      if(!col.isValid())
        return;
      QTextCharFormat fmt;
-     fmt.setBackground(col);
+     fmt.setBackground(QBrush(col,Qt::SolidPattern));
      mergeFormatOnWordOrSelection(fmt);
      QPixmap pix(16, 16);
      pix.fill(col);

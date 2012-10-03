@@ -385,8 +385,8 @@ void MainWindow::openAllNotes(){
               return;
           }
 
-          Note* note=new Note(notePath);
-          openNotes+= note;
+          Note* note = new Note(notePath);
+          openNotes += note;
           note->setObjectName(notePath);
           if(noteModel->sourceModel() == findNoteModel){
             note->highlightText(searchText->text());
