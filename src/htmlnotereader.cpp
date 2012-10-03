@@ -37,7 +37,6 @@ HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
    read(filePath);
 }
 
-// TODO note title can be stored via QTextDocument.setMetaInformation
 // TODO fallback file info also for XmlNoteReader
 void HtmlNoteReader::read(const QString& filePath)
 {
