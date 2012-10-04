@@ -69,7 +69,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      searchBar = new TextSearchToolbar(textBrowser,this);
      searchBar->setFocusPolicy(Qt::TabFocus);
      addToolBar(searchBar);
-     searchBar->setVisible(false);
 
      restoreState(QSettings().value("Toolbars/state").toByteArray());
 
@@ -89,6 +88,8 @@ void Note::showEvent(QShowEvent* event){
 
      if(searchbarVisible)
        searchBar->setVisible(true);
+     else
+       searchBar->setVisible(false);
 
      QMainWindow::showEvent(event);
 }
