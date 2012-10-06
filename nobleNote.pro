@@ -45,7 +45,8 @@ HEADERS = src/mainwindow.h src/note.h src/listview.h \
     src/htmlnotewriter.h \
     src/fileiconprovider.h \
     src/backup.h \
-    src/progressreceiver.h
+    src/progressreceiver.h \
+    src/flickcharm.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
         src/ui/preferences.ui src/ui/newnotename.ui src/ui/backup.ui 
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/listview.cpp \
@@ -68,7 +69,8 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/listview.cpp \
     src/datetime.cpp \
     src/fileiconprovider.cpp \
     src/backup.cpp \
-    src/progressreceiver.cpp
+    src/progressreceiver.cpp \
+    src/flickcharm.cpp
 RESOURCES = nobleNote.qrc
 TRANSLATIONS = src/translations/noblenote_de.ts
 

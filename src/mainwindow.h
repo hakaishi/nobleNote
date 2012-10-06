@@ -63,6 +63,7 @@ class LineEdit;
 class Note;
 class Highlighter;
 class ProgressReceiver;
+class FlickCharm;
 
 class MainWindow : public QMainWindow, public Ui::NobleNote {
      Q_OBJECT // important for creating own singals and slots
@@ -84,15 +85,12 @@ private:
       FindFileSystemModel *noteModel;
       ListView        *folderView, *noteView;
       QAction         *quit_action, *minimizeRestoreAction;
-      QIcon           icon;
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> > openNotes; // every access to openNotes must check for null pointers
-      Highlighter *highlighter;
-      QFutureWatcher<void> *future;
-      QProgressDialog *dialog;
-      ProgressReceiver *progressReceiver;
+      FlickCharm * charm[2]; // kinetic scrolling for both list views
+
 
       struct NoteImporter
       {

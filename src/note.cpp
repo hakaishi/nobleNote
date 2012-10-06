@@ -37,6 +37,7 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QSettings>
+//#include "flickcharm.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
@@ -52,6 +53,10 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textBrowser->setDocument(textDocument);
      textBrowser->ensureCursorVisible();
      textBrowser->setTabStopWidth( fontMetrics().width(" ") * 4); // set tab size to 4 for android compatibility
+
+//     FlickCharm * flickCharm = new FlickCharm(this);
+//     flickCharm->activateOn(textBrowser);
+
 
      toolbar = new TextFormattingToolbar(textBrowser,this);
      toolbar->setFocusPolicy(Qt::TabFocus);

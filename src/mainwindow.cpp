@@ -51,6 +51,7 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QtConcurrentMap>
+#include "flickcharm.h"
 
 MainWindow::MainWindow()
 {
@@ -136,6 +137,18 @@ MainWindow::MainWindow()
 
      folderView = new ListView(splitter);
      noteView = new ListView(splitter);
+
+     // FlickCharm needs this mode
+     folderView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+     noteView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+
+     // enable kinetic scrolling for touchscreens
+     charm[0] = new FlickCharm(this);
+     charm[1] = new  FlickCharm(this);
+     charm[0]->activateOn(folderView);
+     charm[1]->activateOn(noteView);
+
 
      QList<ListView*> listViews;
      listViews << folderView << noteView;
@@ -405,18 +418,22 @@ void MainWindow::openNoteSource()
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
            return;
 
-    QMainWindow * w = new QMainWindow();
-    w->setAttribute(Qt::WA_DeleteOnClose);
-    QTextEdit * textEdit = new QTextEdit(w);
+    QMainWindow * mainWindow = new QMainWindow();
+    mainWindow->setAttribute(Qt::WA_DeleteOnClose);
+    QTextEdit * textEdit = new QTextEdit(mainWindow);
     textEdit->setReadOnly(true);
     textEdit->setPlainText(QTextStream(&file).readAll());
-    w->setCentralWidget(textEdit);
-    TextSearchToolbar * searchBar = new TextSearchToolbar(textEdit,w);
-    w->addToolBar(searchBar);
-    w->resize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
+
+    //FlickCharm * flickCharm = new FlickCharm(mainWindow);
+    //flickCharm->activateOn(textEdit);
+
+    mainWindow->setCentralWidget(textEdit);
+    TextSearchToolbar * searchBar = new TextSearchToolbar(textEdit,mainWindow);
+    mainWindow->addToolBar(searchBar);
+    mainWindow->resize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
 //    searchBar->searchLine()->setFocus();
 //    searchBar->setFocusPolicy(Qt::TabFocus);
-    w->show();
+    mainWindow->show();
 }
 
 Note *MainWindow::noteWindow(const QString &filePath)
@@ -579,25 +596,25 @@ void MainWindow::importXmlNotes()
 
      QSettings().setValue("import_path",QFileInfo(files.last()).absolutePath());
 
-     dialog = new QProgressDialog(this);
+     QProgressDialog *dialog = new QProgressDialog(this);
      dialog->setLabelText(QString(tr("Importing notes...")));
 
-     progressReceiver = new ProgressReceiver(this);
+     ProgressReceiver *progressReceiver = new ProgressReceiver(this);
      noteImporter.path = QSettings().value("root_path").toString();
      noteImporter.p = progressReceiver;
 
-     future = new QFutureWatcher<void>(this);
-     future->setFuture(QtConcurrent::map(files, noteImporter));
+     QFutureWatcher<void> *futureWatcher = new QFutureWatcher<void>(this);
+     futureWatcher->setFuture(QtConcurrent::map(files, noteImporter));
 
      QObject::connect(progressReceiver,SIGNAL(valueChanged(int)),dialog, SLOT(setValue(int)));
-     QObject::connect(future, SIGNAL(finished()), dialog, SLOT(reset()));
-     QObject::connect(dialog, SIGNAL(canceled()), future, SLOT(cancel()));
-     QObject::connect(future, SIGNAL(canceled()), future, SLOT(deleteLater()));
-     QObject::connect(future, SIGNAL(finished()), future, SLOT(deleteLater()));
-     QObject::connect(future, SIGNAL(canceled()), dialog, SLOT(deleteLater()));
-     QObject::connect(future, SIGNAL(finished()), dialog, SLOT(deleteLater()));
-     QObject::connect(future, SIGNAL(canceled()), progressReceiver, SLOT(deleteLater()));
-     QObject::connect(future, SIGNAL(finished()), progressReceiver, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(reset()));
+     QObject::connect(dialog, SIGNAL(canceled()), futureWatcher, SLOT(cancel()));
+     QObject::connect(futureWatcher, SIGNAL(canceled()), futureWatcher, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(finished()), futureWatcher, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(canceled()), dialog, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(canceled()), progressReceiver, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(finished()), progressReceiver, SLOT(deleteLater()));
 
      dialog->exec();
 }
