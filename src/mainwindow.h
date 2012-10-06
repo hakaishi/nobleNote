@@ -98,7 +98,7 @@ private:
       {
            ProgressReceiver *p;
            QString path;
-           void operator()(QString file)
+           void operator()(const QString &file)
            {
                 HtmlNoteWriter::writeXml2Html(file,path);
                 p->postProgressEvent();
