@@ -144,6 +144,9 @@ void NoteDescriptor::save(const QString& filePath,QUuid uuid)
     if(!QDir(QFileInfo(filePath).absolutePath()).exists())
         QDir().mkpath(QFileInfo(filePath).absolutePath());
 
+    if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
+        QDir().mkpath(QSettings().value("backup_dir_path").toString());
+
     write(filePath,uuid); // write note
     QString backup_dir_path = QSettings().value("backup_dir_path").toString();
     QString uuidStr = uuid.toString();

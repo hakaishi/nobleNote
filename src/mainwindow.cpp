@@ -592,10 +592,12 @@ void MainWindow::importXmlNotes()
      QObject::connect(progressReceiver,SIGNAL(valueChanged(int)),dialog, SLOT(setValue(int)));
      QObject::connect(future, SIGNAL(finished()), dialog, SLOT(reset()));
      QObject::connect(dialog, SIGNAL(canceled()), future, SLOT(cancel()));
-     QObject::connect(future, SIGNAL(progressRangeChanged(int,int)),
-                dialog, SLOT(setRange(int,int)));
-     QObject::connect(future, SIGNAL(progressValueChanged(int)), dialog,
-                SLOT(setValue(int)));
+     QObject::connect(future, SIGNAL(canceled()), future, SLOT(deleteLater()));
+     QObject::connect(future, SIGNAL(finished()), future, SLOT(deleteLater()));
+     QObject::connect(future, SIGNAL(canceled()), dialog, SLOT(deleteLater()));
+     QObject::connect(future, SIGNAL(finished()), dialog, SLOT(deleteLater()));
+     QObject::connect(future, SIGNAL(canceled()), progressReceiver, SLOT(deleteLater()));
+     QObject::connect(future, SIGNAL(finished()), progressReceiver, SLOT(deleteLater()));
 
      dialog->exec();
 }

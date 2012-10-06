@@ -30,7 +30,7 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <QDir>
-
+#include <QSettings>
 
 HtmlNoteWriter::HtmlNoteWriter(const QString &filePath)
 {
@@ -136,4 +136,13 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
     writer.setCreateDate(reader.createDate());
     writer.setUuid(reader.uuid());
     writer.write();
+
+    if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
+        QDir().mkpath(QSettings().value("backup_dir_path").toString());
+
+    QString uuid = reader.uuid();
+    uuid.chop(1); // }
+    uuid = uuid.remove(0,1); // {
+
+    QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid);
 }
