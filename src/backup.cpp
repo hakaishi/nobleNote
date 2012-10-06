@@ -51,8 +51,8 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      label = new QLabel(frame);
      label->setText(tr("Preview of the selected backup"));
      gridLayout3->addWidget(label, 0, 0, 1, 1);
-     textEdit = new QTextEdit(this);
-     textEdit->setDisabled(frame);
+     textEdit = new QTextEdit(frame);
+     textEdit->setReadOnly(true);
      gridLayout3->addWidget(textEdit, 1, 0, 1, 1);
 
      getNotes(); //Searches for notes and backups. For the backups with no notes it will create the trees children.
@@ -61,8 +61,6 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteBackup()));
      connect(restoreButton, SIGNAL(clicked(bool)), this, SLOT(restoreBackup()));
 }
-
-Backup::~Backup(){ delete backupDataHash;}
 
 void Backup::getNoteUuidList()
 {

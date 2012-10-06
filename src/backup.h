@@ -47,7 +47,6 @@ class Backup : public QDialog, public Ui::Backup {
  
      public:
       Backup(QWidget *parent = 0);
-      ~Backup();
 
      private:
       QSplitter     *splitter;
