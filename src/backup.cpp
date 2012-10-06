@@ -43,6 +43,8 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      treeWidget->setSortingEnabled(true);
      treeWidget->setHeaderLabel(tr("Backups of deleted notes"));
      treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
+     treeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+     // TODO flickcharm here
 
      frame = new QFrame(splitter);
      gridLayout3 = new QGridLayout(frame);
