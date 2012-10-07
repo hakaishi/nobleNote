@@ -31,7 +31,6 @@ HEADERS = src/mainwindow.h src/note.h src/listview.h \
     src/lineedit.h \
     src/textbrowser.h \
     src/xorcipher.h \
-    src/mainwindowtoolbar.h \
     src/textformattingtoolbar.h \
     src/newnotename.h \
     src/highlighter.h src/textsearchtoolbar.h \
@@ -55,7 +54,6 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/listview.cpp \
     src/findfilemodel.cpp \
     src/findfilesystemmodel.cpp src/lineedit.cpp src/textbrowser.cpp \
     src/xorcipher.cpp \
-    src/mainwindowtoolbar.cpp \
     src/textformattingtoolbar.cpp \
     src/newnotename.cpp \
     src/highlighter.cpp src/textsearchtoolbar.cpp \

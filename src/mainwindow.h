@@ -54,7 +54,6 @@
 
 class ListView;
 class Welcome;
-class MainWindowToolbar;
 class Preferences;
 class FindFileModel;
 class FindFileSystemModel;
@@ -78,7 +77,6 @@ public slots:
     void quit();
 private:
       Welcome         *welcome;
-      MainWindowToolbar *toolbar;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
       FindFileSystemModel *folderModel;

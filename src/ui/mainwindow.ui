@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>280</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -78,6 +78,17 @@
    <addaction name="menu_Settings"/>
    <addaction name="menu_Help"/>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
   <action name="actionOpen">
    <property name="text">
     <string>&amp;Open</string>
@@ -112,6 +123,10 @@
    </property>
   </action>
   <action name="actionConfigure">
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/preferences</normaloff>:/preferences</iconset>
+   </property>
    <property name="text">
     <string>&amp;Configure...</string>
    </property>
@@ -139,6 +154,10 @@
    </property>
   </action>
   <action name="actionTrash">
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/trash</normaloff>:/trash</iconset>
+   </property>
    <property name="text">
     <string>&amp;Trash</string>
    </property>
@@ -147,6 +166,10 @@
    </property>
   </action>
   <action name="actionHistory">
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/history</normaloff>:/history</iconset>
+   </property>
    <property name="text">
     <string>&amp;History</string>
    </property>
@@ -155,6 +178,10 @@
    </property>
   </action>
   <action name="actionNew_folder">
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/newFolder</normaloff>:/newFolder</iconset>
+   </property>
    <property name="text">
     <string>&amp;New folder</string>
    </property>
@@ -163,8 +190,9 @@
    </property>
   </action>
   <action name="actionRename_folder">
-   <property name="enabled">
-    <bool>false</bool>
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/renameFolder</normaloff>:/renameFolder</iconset>
    </property>
    <property name="text">
     <string>&amp;Rename folder</string>
@@ -174,8 +202,9 @@
    </property>
   </action>
   <action name="actionDelete_folder">
-   <property name="enabled">
-    <bool>false</bool>
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/deleteFolder</normaloff>:/deleteFolder</iconset>
    </property>
    <property name="text">
     <string>&amp;Delete folder</string>
@@ -185,6 +214,10 @@
    </property>
   </action>
   <action name="actionNew_note">
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/newNote</normaloff>:/newNote</iconset>
+   </property>
    <property name="text">
     <string>&amp;New note</string>
    </property>
@@ -196,6 +229,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/renameNote</normaloff>:/renameNote</iconset>
+   </property>
    <property name="text">
     <string>&amp;Rename note</string>
    </property>
@@ -206,6 +243,10 @@
   <action name="actionDelete_note">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../nobleNote.qrc">
+     <normaloff>:/deleteNote</normaloff>:/deleteNote</iconset>
    </property>
    <property name="text">
     <string>&amp;Delete note</string>

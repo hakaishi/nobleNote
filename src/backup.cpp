@@ -215,8 +215,8 @@ void Backup::deleteBackup()
 
           QString uuid = file;
           uuid.remove(QSettings().value("backup_dir_path").toString() + "/");
-          QSettings().remove("Notes/{" + uuid + "}_size");
-          QSettings().remove("Notes/{" + uuid + "}_cursor_position");
+          QSettings().remove("Notes/" + QUuid(uuid).toString() + "_size");
+          QSettings().remove("Notes/" + QUuid(uuid).toString() + "_cursor_position");
      }
 
      foreach(QTreeWidgetItem *item, itemList)

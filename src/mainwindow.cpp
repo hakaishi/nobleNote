@@ -26,7 +26,6 @@
 #include "mainwindow.h"
 #include "listview.h"
 #include "welcome.h"
-#include "mainwindowtoolbar.h"
 #include "note.h"
 #include "findfilemodel.h"
 #include "filesystemmodel.h"
@@ -78,10 +77,20 @@ MainWindow::MainWindow()
 #endif
 
    //Toolbar
-     toolbar = new MainWindowToolbar(this);
-     addToolBar(toolbar);
+     toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+     toolBar->addAction(actionNew_folder);
+     toolBar->addAction(actionRename_folder);
+     toolBar->addAction(actionDelete_folder);
+     toolBar->addSeparator();
+     toolBar->addAction(actionNew_note);
+     toolBar->addAction(actionRename_note);
+     toolBar->addAction(actionDelete_note);
+     toolBar->addSeparator();
+     toolBar->addAction(actionHistory);
+     toolBar->addAction(actionTrash);
+     toolBar->addAction(actionConfigure);
      actionShowToolbar->setChecked(QSettings().value("mainwindow_toolbar_visible", true).toBool());
-     toolbar->setVisible(QSettings().value("mainwindow_toolbar_visible", true).toBool());
+     toolBar->setVisible(QSettings().value("mainwindow_toolbar_visible", true).toBool());
 
    //Configuration file
      QSettings settings; // ini format does save but in the executables directory, use native format
@@ -218,22 +227,12 @@ MainWindow::MainWindow()
      connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
           QItemSelection)), this, SLOT(enableNoteMenu(QItemSelection,QItemSelection)));
 
-     connect(actionShowToolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
-     connect(toolbar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
+     connect(actionShowToolbar, SIGNAL(toggled(bool)), toolBar, SLOT(setVisible(bool)));
+     connect(toolBar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
      //connect(actionHistory, SIGNAL(triggered()), this, SLOT(showHistory()));
 
      connect(actionConfigure, SIGNAL(triggered()), this, SLOT(showPreferences()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
-
-     connect(toolbar->newFolderAction, SIGNAL(triggered()), this, SLOT(newFolder()));
-     connect(toolbar->newNoteAction, SIGNAL(triggered()), this, SLOT(newNote()));
-     connect(toolbar->removeFolderAction,SIGNAL(triggered()),this,SLOT(removeFolder()));
-     connect(toolbar->removeNoteAction,SIGNAL(triggered()),this,SLOT(removeNote()));
-     connect(toolbar->renameFolderAction,SIGNAL(triggered()),this,SLOT(renameFolder()));
-     connect(toolbar->renameNoteAction,SIGNAL(triggered()),this,SLOT(renameNote()));
-     //connect(toolbar->historyAction,SINGAL(triggered()),this,SLOT(showHistory()));
-     connect(toolbar->backupAction,SIGNAL(triggered()),this,SLOT(showBackupWindow()));
-     connect(toolbar->preferencesAction,SIGNAL(triggered()),this,SLOT(showPreferences()));
 }
 
 MainWindow::~MainWindow(){}
@@ -273,7 +272,6 @@ void MainWindow::find()
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
 
          actionNew_note->setDisabled(true);
-         toolbar->newNoteAction->setDisabled(true);
 }
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
@@ -315,18 +313,9 @@ void MainWindow::folderActivated(const QModelIndex &selected)
      // clear search line edits
      searchName->clear();
      searchText->clear();
-     actionNew_note->setEnabled(true);
-     toolbar->newNoteAction->setEnabled(true);
-
-     actionRename_folder->setEnabled(true);
-     actionDelete_folder->setEnabled(true);
-     toolbar->renameFolderAction->setEnabled(true);
-     toolbar->removeFolderAction->setEnabled(true);
 
      actionRename_note->setDisabled(true);
      actionDelete_note->setDisabled(true);
-     toolbar->renameNoteAction->setDisabled(true);
-     toolbar->removeNoteAction->setDisabled(true);
 
      noteModel->setSourceModel(noteFSModel);
      noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected)));
@@ -345,15 +334,8 @@ void MainWindow::noteActivated(const QModelIndex &selected)
      if(noteView->model() == findNoteModel)
        return;
 
-     actionRename_folder->setDisabled(true);
-     actionDelete_folder->setDisabled(true);
-     toolbar->renameFolderAction->setDisabled(true);
-     toolbar->removeFolderAction->setDisabled(true);
-
      actionRename_note->setEnabled(true);
      actionDelete_note->setEnabled(true);
-     toolbar->renameNoteAction->setEnabled(true);
-     toolbar->removeNoteAction->setEnabled(true);
 }
 
 void MainWindow::noteActivated(const QItemSelection &selected, const QItemSelection &deselected)
