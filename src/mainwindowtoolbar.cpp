@@ -35,61 +35,51 @@ MainWindowToolbar::MainWindowToolbar(QWidget *parent) : QToolBar(parent) {
     newFolderAction = new QAction(QIcon(":newFolder"),
       tr("Create new folder"), this);
     newFolderAction->setPriority(QAction::LowPriority);
-    newFolderAction->setShortcut(Qt::CTRL + Qt::Key_F);
     addAction(newFolderAction);
-
-    removeFolderAction = new QAction(QIcon(":deleteFolder"),
-      tr("Delete folder"), this);
-    newFolderAction->setPriority(QAction::LowPriority);
-    newFolderAction->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_F);
-    addAction(removeFolderAction);
 
     renameFolderAction = new QAction(QIcon(":renameFolder"),
       tr("Rename folder"), this);
-    newFolderAction->setPriority(QAction::LowPriority);
+    renameFolderAction->setPriority(QAction::LowPriority);
     addAction(renameFolderAction);
 
-    //folderActions << newFolderAction << removeFolderAction << renameFolderAction;
+    removeFolderAction = new QAction(QIcon(":deleteFolder"),
+      tr("Delete folder"), this);
+    removeFolderAction->setPriority(QAction::LowPriority);
+    addAction(removeFolderAction);
 
     addSeparator();
 
     newNoteAction = new QAction(QIcon(":newNote"),
       tr("Create new note"), this);
     newNoteAction->setPriority(QAction::LowPriority);
-    newNoteAction->setShortcut(Qt::CTRL + Qt::Key_N);
     addAction(newNoteAction);
-
-    removeNoteAction = new QAction(QIcon(":deleteNote"),
-      tr("Delete note"), this);
-    newNoteAction->setPriority(QAction::LowPriority);
-    newNoteAction->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_N);
-    addAction(removeNoteAction);
 
     renameNoteAction = new QAction(QIcon(":renameNote"),
       tr("Rename note"), this);
-    newNoteAction->setPriority(QAction::LowPriority);
+    renameNoteAction->setPriority(QAction::LowPriority);
+    renameNoteAction->setDisabled(true);    
     addAction(renameNoteAction);
 
-    noteActions << removeNoteAction << renameNoteAction;
-    foreach(QAction *action, noteActions)
-            action->setDisabled(true); //for initializing
-}
+    removeNoteAction = new QAction(QIcon(":deleteNote"),
+      tr("Delete note"), this);
+    removeNoteAction->setPriority(QAction::LowPriority);
+    removeNoteAction->setDisabled(true);
+    addAction(removeNoteAction);
 
-//void MainWindowToolbar::folderActivated(const QModelIndex &selected)
-//{
-//     foreach(QAction *action, folderActions)
-//            action->setEnabled(selected.isValid());
-//}
+    addSeparator();
 
-void MainWindowToolbar::noteActivated(const QModelIndex &selected)
-{
-     foreach(QAction *action, noteActions)
-            action->setEnabled(selected.isValid());
-}
+    historyAction = new QAction(QIcon(":history"),
+      tr("History"), this);
+    historyAction->setPriority(QAction::LowPriority);
+    addAction(historyAction);
 
-void MainWindowToolbar::noteActivated(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
-{
-     Q_UNUSED(deselected);
-     if(!selected.indexes().isEmpty())
-       noteActivated(selected.indexes().first()); //we only need one - anyone is fine
+    backupAction = new QAction(QIcon(":trash"),
+      tr("Trash"), this);
+    backupAction->setPriority(QAction::LowPriority);
+    addAction(backupAction);
+
+    preferencesAction = new QAction(QIcon(":preferences"),
+      tr("Preferences"), this);
+    preferencesAction->setPriority(QAction::LowPriority);
+    addAction(preferencesAction);
 }

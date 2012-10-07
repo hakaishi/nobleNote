@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>361</height>
+    <height>287</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,17 +50,10 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="3">
+   <item row="3" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="restoreBackupsButton">
-     <property name="text">
-      <string>Show backup &amp;menu</string>
      </property>
     </widget>
    </item>
@@ -162,7 +155,6 @@
   <tabstop>showSource</tabstop>
   <tabstop>sizeSpinWidth</tabstop>
   <tabstop>sizeSpinHeight</tabstop>
-  <tabstop>restoreBackupsButton</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>

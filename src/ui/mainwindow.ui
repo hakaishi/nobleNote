@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>280</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -38,6 +38,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionImport"/>
+    <addaction name="actionTrash"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
@@ -57,8 +58,22 @@
      <string>&amp;View</string>
     </property>
     <addaction name="actionShowToolbar"/>
+    <addaction name="actionHistory"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionNew_folder"/>
+    <addaction name="actionRename_folder"/>
+    <addaction name="actionDelete_folder"/>
+    <addaction name="separator"/>
+    <addaction name="actionNew_note"/>
+    <addaction name="actionRename_note"/>
+    <addaction name="actionDelete_note"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menu_Edit"/>
    <addaction name="menu_View"/>
    <addaction name="menu_Settings"/>
    <addaction name="menu_Help"/>
@@ -100,6 +115,9 @@
    <property name="text">
     <string>&amp;Configure...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
@@ -115,6 +133,85 @@
    </property>
    <property name="text">
     <string>&amp;Show toolbar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionTrash">
+   <property name="text">
+    <string>&amp;Trash</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionHistory">
+   <property name="text">
+    <string>&amp;History</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+H</string>
+   </property>
+  </action>
+  <action name="actionNew_folder">
+   <property name="text">
+    <string>&amp;New folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionRename_folder">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Rename folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionDelete_folder">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Delete folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionNew_note">
+   <property name="text">
+    <string>&amp;New note</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
+   </property>
+  </action>
+  <action name="actionRename_note">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Rename note</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionDelete_note">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Delete note</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
    </property>
   </action>
  </widget>

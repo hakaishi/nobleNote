@@ -92,8 +92,6 @@ void Backup::getNotes()
      QObject::connect(future1, SIGNAL(finished()), this, SLOT(getNoteUuidList()));
      QObject::connect(future1, SIGNAL(finished()), this, SLOT(setupBackups()));
      QObject::connect(future1, SIGNAL(finished()), progressDialog1, SLOT(reset()));
-     QObject::connect(future1, SIGNAL(progressRangeChanged(int,int)),
-                progressDialog1, SLOT(setRange(int,int)));
      QObject::connect(progressDialog1, SIGNAL(canceled()), future1, SLOT(cancel()));
 
      progressDialog1->exec();

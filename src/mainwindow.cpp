@@ -38,6 +38,7 @@
 #include "htmlnotereader.h"
 #include "fileiconprovider.h"
 #include "textsearchtoolbar.h"
+#include "backup.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -179,16 +180,9 @@ MainWindow::MainWindow()
           QItemSelection)),this,SLOT(folderActivated(QItemSelection,QItemSelection))); //Wrapper
      connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
-     connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
+     connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),
+             this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
-     connect(actionImport,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
-     connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
-#ifndef NO_SYSTEM_TRAY_ICON
-     connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
-     connect(minimizeRestoreAction, SIGNAL(triggered()), this, SLOT(tray_actions()));
-#endif
-     connect(quit_action, SIGNAL(triggered()), this, SLOT(quit())); //contextmenu "Quit" for the systray
      //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
      //       SLOT(setCurrentFolder(const QModelIndex &)));
      //     connect(folderList,SIGNAL(activated(QModelIndex)), this,
@@ -199,25 +193,60 @@ MainWindow::MainWindow()
              this, SLOT(showContextMenuFolder(const QPoint &)));
      connect(noteView, SIGNAL(customContextMenuRequested(const QPoint &)),
              this, SLOT(showContextMenuNote(const QPoint &)));
-     connect(actionConfigure, SIGNAL(triggered()), this, SLOT(showPreferences()));
-     connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
+     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
+          QItemSelection)),this,SLOT(noteActivated(QItemSelection,QItemSelection))); //Wrapper
+     connect(noteView,SIGNAL(activated(QModelIndex)),this,SLOT(noteActivated(QModelIndex)));
+     connect(noteView,SIGNAL(clicked(QModelIndex)),this,SLOT(noteActivated(QModelIndex)));
+
+#ifndef NO_SYSTEM_TRAY_ICON
+     connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
+     connect(minimizeRestoreAction, SIGNAL(triggered()), this, SLOT(tray_actions()));
+#endif
+
+     connect(actionImport,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
+     connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
+
+     connect(actionTrash, SIGNAL(triggered()), this, SLOT(showBackupWindow()));
+     connect(quit_action, SIGNAL(triggered()), this, SLOT(quit())); //contextmenu "Quit" for the systray
+     connect(actionNew_folder, SIGNAL(triggered()), this, SLOT(newFolder()));
+     connect(actionRename_folder, SIGNAL(triggered()), this, SLOT(renameFolder()));
+     connect(actionDelete_folder, SIGNAL(triggered()), this, SLOT(removeFolder()));
+     connect(actionNew_note, SIGNAL(triggered()), this, SLOT(newNote()));
+     connect(actionRename_note, SIGNAL(triggered()), this, SLOT(renameNote()));
+     connect(actionDelete_note, SIGNAL(triggered()), this, SLOT(removeNote()));
+     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
+          QItemSelection)), this, SLOT(enableNoteMenu(QItemSelection,QItemSelection)));
+
      connect(actionShowToolbar, SIGNAL(toggled(bool)), toolbar, SLOT(setVisible(bool)));
      connect(toolbar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
+     //connect(actionHistory, SIGNAL(triggered()), this, SLOT(showHistory()));
+
+     connect(actionConfigure, SIGNAL(triggered()), this, SLOT(showPreferences()));
+     connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
+
      connect(toolbar->newFolderAction, SIGNAL(triggered()), this, SLOT(newFolder()));
      connect(toolbar->newNoteAction, SIGNAL(triggered()), this, SLOT(newNote()));
      connect(toolbar->removeFolderAction,SIGNAL(triggered()),this,SLOT(removeFolder()));
      connect(toolbar->removeNoteAction,SIGNAL(triggered()),this,SLOT(removeNote()));
      connect(toolbar->renameFolderAction,SIGNAL(triggered()),this,SLOT(renameFolder()));
      connect(toolbar->renameNoteAction,SIGNAL(triggered()),this,SLOT(renameNote()));
-     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
-          QItemSelection)),toolbar,SLOT(noteActivated(QItemSelection,QItemSelection))); //Wrapper
-     connect(noteView,SIGNAL(activated(QModelIndex)),toolbar,SLOT(noteActivated(QModelIndex)));
-     connect(noteView,SIGNAL(clicked(QModelIndex)),toolbar,SLOT(noteActivated(QModelIndex)));
+     //connect(toolbar->historyAction,SINGAL(triggered()),this,SLOT(showHistory()));
+     connect(toolbar->backupAction,SIGNAL(triggered()),this,SLOT(showBackupWindow()));
+     connect(toolbar->preferencesAction,SIGNAL(triggered()),this,SLOT(showPreferences()));
 }
 
 MainWindow::~MainWindow(){}
 
-void MainWindow::showPreferences(){
+void MainWindow::enableNoteMenu(const QItemSelection &selected, const QItemSelection &deselected)
+{
+     Q_UNUSED(deselected);
+     actionRename_note->setDisabled(selected.isEmpty());
+     actionDelete_note->setDisabled(selected.isEmpty());
+}
+
+void MainWindow::showPreferences()
+{
      if(!pref)
      {
           pref = new Preferences(this);
@@ -226,15 +255,25 @@ void MainWindow::showPreferences(){
      pref->show();
 }
 
-void MainWindow::find(){
+void MainWindow::showBackupWindow()
+{
+     if(!backup)
+       backup = new Backup(this);
+     backup->show();
+}
+
+void MainWindow::find()
+{
     // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
         if(!noteView->selectionModel()->hasSelection())
-           toolbar->noteActivated(QModelIndex());
+           noteActivated(QModelIndex());
 
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
 
+         actionNew_note->setDisabled(true);
+         toolbar->newNoteAction->setDisabled(true);
 }
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
@@ -253,7 +292,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 
  // disable note toolbar buttons if selection is cleared after the folder has been renamed
      if(!noteView->selectionModel()->hasSelection())
-        toolbar->noteActivated(QModelIndex());
+        noteActivated(QModelIndex());
 
      folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
 }
@@ -273,18 +312,54 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
 
 void MainWindow::folderActivated(const QModelIndex &selected)
 {
-    // clear search line edits
-    searchName->clear();
-    searchText->clear();
-    noteModel->setSourceModel(noteFSModel);
-    noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected)));
-    toolbar->noteActivated(QModelIndex()); // call the slot with an empty selection, this will disable the note toolbar buttons
+     // clear search line edits
+     searchName->clear();
+     searchText->clear();
+     actionNew_note->setEnabled(true);
+     toolbar->newNoteAction->setEnabled(true);
+
+     actionRename_folder->setEnabled(true);
+     actionDelete_folder->setEnabled(true);
+     toolbar->renameFolderAction->setEnabled(true);
+     toolbar->removeFolderAction->setEnabled(true);
+
+     actionRename_note->setDisabled(true);
+     actionDelete_note->setDisabled(true);
+     toolbar->renameNoteAction->setDisabled(true);
+     toolbar->removeNoteAction->setDisabled(true);
+
+     noteModel->setSourceModel(noteFSModel);
+     noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected)));
 }
 
 void MainWindow::folderActivated(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
 {
      Q_UNUSED(deselected);
      folderActivated(selected.indexes().first()); //we only need one - anyone is fine
+}
+
+void MainWindow::noteActivated(const QModelIndex &selected)
+{
+     Q_UNUSED(selected);
+
+     if(noteView->model() == findNoteModel)
+       return;
+
+     actionRename_folder->setDisabled(true);
+     actionDelete_folder->setDisabled(true);
+     toolbar->renameFolderAction->setDisabled(true);
+     toolbar->removeFolderAction->setDisabled(true);
+
+     actionRename_note->setEnabled(true);
+     actionDelete_note->setEnabled(true);
+     toolbar->renameNoteAction->setEnabled(true);
+     toolbar->removeNoteAction->setEnabled(true);
+}
+
+void MainWindow::noteActivated(const QItemSelection &selected, const QItemSelection &deselected)
+{
+     Q_UNUSED(deselected);
+     noteActivated(selected.indexes().first()); //we only need one - anyone is fine
 }
 
 void MainWindow::changeRootIndex(){

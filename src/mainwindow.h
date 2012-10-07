@@ -63,6 +63,7 @@ class LineEdit;
 class Note;
 class Highlighter;
 class ProgressReceiver;
+class Backup;
 class FlickCharm;
 
 class MainWindow : public QMainWindow, public Ui::NobleNote {
@@ -89,6 +90,7 @@ private:
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
       QList<QPointer<Note> > openNotes; // every access to openNotes must check for null pointers
+      QPointer<Backup> backup;
       FlickCharm * charm[2]; // kinetic scrolling for both list views
 
 
@@ -113,11 +115,15 @@ private:
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
 
      private slots:
+      void enableNoteMenu(const QItemSelection &selected, const QItemSelection &deselected);
       void showPreferences();
+      void showBackupWindow();
       void checkAndSetFolders();
       void changeRootIndex();
       void folderActivated(const QModelIndex &selected);
       void folderActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
+      void noteActivated(const QModelIndex &selected);
+      void noteActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
 
 #ifndef NO_SYSTEM_TRAY_ICON
       void iconActivated(QSystemTrayIcon::ActivationReason reason);

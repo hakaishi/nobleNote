@@ -36,15 +36,8 @@ class MainWindowToolbar : public QToolBar
 public:
      explicit MainWindowToolbar(QWidget *parent = 0);
      QAction *newFolderAction, *newNoteAction, *removeFolderAction,
-             *removeNoteAction, *renameFolderAction, *renameNoteAction;
-public slots:
-     //void folderActivated(const QModelIndex &selected);
-     void noteActivated(const QModelIndex &selected);
-     void noteActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
-
-private:
-     //QList<QAction*> folderActions;
-     QList<QAction*> noteActions;
+             *removeNoteAction, *renameFolderAction, *renameNoteAction,
+             *historyAction, *backupAction, *preferencesAction;
 };
 
 #endif // MAINWINDOWTOOLBAR_H

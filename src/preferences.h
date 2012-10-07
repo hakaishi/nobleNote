@@ -30,25 +30,20 @@
 #include <QSettings>
 #include <QPointer>
 
-class Backup;
-
 class Preferences : public QDialog, public Ui::Preferences {
      Q_OBJECT
  
      public:
       Preferences(QWidget *parent = 0);
-      ~Preferences();
       QString rootPath;
 
      private:
       QSettings *settings;
       QString    originalRootPath;
-      QPointer<Backup> backup;
 
      private slots:
       void saveSettings();
       void openDir();
-      void showBackupWindow();
 
      signals:
       void sendPathChanged();

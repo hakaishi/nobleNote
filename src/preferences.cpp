@@ -24,7 +24,6 @@
  */
 
 #include "preferences.h"
-#include "backup.h"
 #include <QDir>
 #include <QMessageBox>
 #include <QTimer>
@@ -44,10 +43,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
 
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
-     connect(restoreBackupsButton, SIGNAL(clicked(bool)), this, SLOT(showBackupWindow()));
 }
-
-Preferences::~Preferences(){}
 
 void Preferences::showEvent(QShowEvent* show_pref){
      pathLabel->setText(settings->value("root_path").toString());
@@ -100,11 +96,4 @@ void Preferences::openDir(){
        rootPath = path;
        pathLabel->setText(rootPath);
      }
-
-}
-
-void Preferences::showBackupWindow(){
-     if(!backup)
-       backup = new Backup(this);
-     backup->show();
 }
