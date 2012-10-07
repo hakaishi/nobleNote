@@ -49,7 +49,7 @@ MainWindowToolbar::MainWindowToolbar(QWidget *parent) : QToolBar(parent) {
     newFolderAction->setPriority(QAction::LowPriority);
     addAction(renameFolderAction);
 
-    folderActions << newFolderAction << removeFolderAction << renameFolderAction;
+    //folderActions << newFolderAction << removeFolderAction << renameFolderAction;
 
     addSeparator();
 
@@ -75,11 +75,11 @@ MainWindowToolbar::MainWindowToolbar(QWidget *parent) : QToolBar(parent) {
             action->setDisabled(true); //for initializing
 }
 
-void MainWindowToolbar::folderActivated(const QModelIndex &selected)
-{
-     foreach(QAction *action, folderActions)
-            action->setEnabled(selected.isValid());
-}
+//void MainWindowToolbar::folderActivated(const QModelIndex &selected)
+//{
+//     foreach(QAction *action, folderActions)
+//            action->setEnabled(selected.isValid());
+//}
 
 void MainWindowToolbar::noteActivated(const QModelIndex &selected)
 {

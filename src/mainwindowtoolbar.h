@@ -38,12 +38,12 @@ public:
      QAction *newFolderAction, *newNoteAction, *removeFolderAction,
              *removeNoteAction, *renameFolderAction, *renameNoteAction;
 public slots:
-     void folderActivated(const QModelIndex &selected);
+     //void folderActivated(const QModelIndex &selected);
      void noteActivated(const QModelIndex &selected);
      void noteActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
 
 private:
-     QList<QAction*> folderActions;
+     //QList<QAction*> folderActions;
      QList<QAction*> noteActions;
 };
 
