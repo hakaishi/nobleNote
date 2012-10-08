@@ -108,12 +108,12 @@ void Backup::setupBackups()
      {
           if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
                                   + "/" + uuid.mid(1,36))))
+          {
              backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
                                    + "/" + uuid.mid(1,36)));
-          if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
-                                  + "/" + uuid)))
              backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
                                    + "/" + uuid));
+          }
      }
 
      if(backupFiles.isEmpty())
