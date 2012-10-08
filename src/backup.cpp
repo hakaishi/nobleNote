@@ -41,6 +41,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      treeWidget->setAlternatingRowColors(true);
      treeWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
      treeWidget->setSortingEnabled(true);
+     treeWidget->sortByColumn(0,Qt::AscendingOrder);
      treeWidget->setHeaderLabel(tr("Backups of deleted notes"));
      treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
      treeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
@@ -105,8 +106,10 @@ void Backup::setupBackups()
 
      foreach(QString uuid, noteUuidList)
      {
-          uuid.remove("{");
-          uuid.remove("}");
+          if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
+                                  + "/" + uuid.mid(1,36))))
+             backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
+                                   + "/" + uuid.mid(1,36)));
           if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
                                   + "/" + uuid)))
              backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
