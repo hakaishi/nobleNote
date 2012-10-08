@@ -324,6 +324,8 @@ void MainWindow::folderActivated(const QModelIndex &selected)
 void MainWindow::folderActivated(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
 {
      Q_UNUSED(deselected);
+     if(selected.indexes().isEmpty())
+       return;
      folderActivated(selected.indexes().first()); //we only need one - anyone is fine
 }
 
@@ -341,6 +343,8 @@ void MainWindow::noteActivated(const QModelIndex &selected)
 void MainWindow::noteActivated(const QItemSelection &selected, const QItemSelection &deselected)
 {
      Q_UNUSED(deselected);
+     if(selected.indexes().isEmpty())
+       return;
      noteActivated(selected.indexes().first()); //we only need one - anyone is fine
 }
 
@@ -375,8 +379,11 @@ void MainWindow::checkAndSetFolders(){
          noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
 
      //Select the first folder
-     folderView->selectionModel()->select(folderModel->index(QSettings().value(
-          "root_path").toString() + "/" + dirList.first()),QItemSelectionModel::Select);
+     if(!dirList.isEmpty())
+     {
+          folderView->selectionModel()->select(folderModel->index(QSettings().value(
+               "root_path").toString() + "/" + dirList.first()),QItemSelectionModel::Select);
+     }
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON

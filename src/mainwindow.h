@@ -91,7 +91,6 @@ private:
       QPointer<Backup> backup;
       FlickCharm * charm[2]; // kinetic scrolling for both list views
 
-
       struct NoteImporter
       {
            ProgressReceiver *p;
