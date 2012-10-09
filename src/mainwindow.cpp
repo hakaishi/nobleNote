@@ -314,6 +314,7 @@ void MainWindow::folderActivated(const QModelIndex &selected)
      searchName->clear();
      searchText->clear();
 
+     actionNew_note->setEnabled(true);
      actionRename_note->setDisabled(true);
      actionDelete_note->setDisabled(true);
 
