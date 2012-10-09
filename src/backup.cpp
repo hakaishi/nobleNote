@@ -72,10 +72,11 @@ void Backup::getNoteUuidList()
 
 void Backup::getNotes()
 {
+     noteFiles.clear(); //remove old files
+
      //get note files
      QDirIterator itFiles(QSettings().value("root_path").toString(),
                                               QDirIterator::Subdirectories);
-     QStringList noteFiles;
      while(itFiles.hasNext()){
        QString filePath = itFiles.next();
        if(itFiles.fileInfo().isFile())
@@ -95,11 +96,13 @@ void Backup::getNotes()
      QObject::connect(future1, SIGNAL(finished()), progressDialog1, SLOT(reset()));
      QObject::connect(progressDialog1, SIGNAL(canceled()), future1, SLOT(cancel()));
 
-     progressDialog1->exec();
+     progressDialog1->show();
 }
 
 void Backup::setupBackups()
 {
+     backupFiles.clear(); //remove old files
+
      //get backup uuids
      QDir backupDir(QSettings().value("backup_dir_path").toString());
      backupFiles = backupDir.entryInfoList(QDir::Files, QDir::Name);
@@ -135,6 +138,8 @@ void Backup::setupBackups()
      QObject::connect(future2, SIGNAL(finished()), this, SLOT(setupChildren()));
      QObject::connect(future2, SIGNAL(finished()), progressDialog2, SLOT(reset()));
      QObject::connect(progressDialog2, SIGNAL(canceled()), future2, SLOT(cancel()));
+
+     progressDialog2->show();
 }
 
 void Backup::setupChildren()

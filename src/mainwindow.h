@@ -90,12 +90,16 @@ private:
       QList<QPointer<Note> > openNotes; // every access to openNotes must check for null pointers
       QPointer<Backup> backup;
       FlickCharm * charm[2]; // kinetic scrolling for both list views
+      QProgressDialog *dialog;
+      ProgressReceiver *progressReceiver;
+      QFutureWatcher<void> *futureWatcher;
+      QStringList importFiles;
 
       struct NoteImporter
       {
            ProgressReceiver *p;
            QString path;
-           void operator()(QString file)
+           void operator()(const QString &file)
            {
                 HtmlNoteWriter::writeXml2Html(file,path);
                 p->postProgressEvent();

@@ -651,25 +651,27 @@ void MainWindow::removeNote(){
 
 void MainWindow::importXmlNotes()
 {
-     QStringList files = QFileDialog::getOpenFileNames(
+     importFiles.clear(); //remove old files
+
+     importFiles = QFileDialog::getOpenFileNames(
                             this,
                             tr("Select one or more files to open"),
                             QSettings().value("import_path").toString(),
                 tr("Notes")+"(*.note)");
-     if(files.isEmpty())
+     if(importFiles.isEmpty())
         return;
 
-     QSettings().setValue("import_path",QFileInfo(files.last()).absolutePath());
+     QSettings().setValue("import_path",QFileInfo(importFiles.last()).absolutePath());
 
-     QProgressDialog *dialog = new QProgressDialog(this);
+     dialog = new QProgressDialog(this);
      dialog->setLabelText(QString(tr("Importing notes...")));
 
-     ProgressReceiver *progressReceiver = new ProgressReceiver(this);
+     progressReceiver = new ProgressReceiver(this);
      noteImporter.path = QSettings().value("root_path").toString();
      noteImporter.p = progressReceiver;
 
-     QFutureWatcher<void> *futureWatcher = new QFutureWatcher<void>(this);
-     futureWatcher->setFuture(QtConcurrent::map(files, noteImporter));
+     futureWatcher = new QFutureWatcher<void>(this);
+     futureWatcher->setFuture(QtConcurrent::map(importFiles, noteImporter));
 
      QObject::connect(progressReceiver,SIGNAL(valueChanged(int)),dialog, SLOT(setValue(int)));
      QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(reset()));
@@ -681,7 +683,7 @@ void MainWindow::importXmlNotes()
      QObject::connect(futureWatcher, SIGNAL(canceled()), progressReceiver, SLOT(deleteLater()));
      QObject::connect(futureWatcher, SIGNAL(finished()), progressReceiver, SLOT(deleteLater()));
 
-     dialog->exec();
+     dialog->show();
 }
 
 void MainWindow::showContextMenuFolder(const QPoint &pos){

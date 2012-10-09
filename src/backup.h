@@ -57,6 +57,7 @@ class Backup : public QDialog, public Ui::Backup {
       QTextDocument *document;
       QTextEdit     *textEdit;
       QPushButton   *deleteOldButton;
+      QStringList   noteFiles;
       QFutureWatcher<QString> *future1;
       QFutureWatcher<void> *future2;
       ProgressReceiver *progressReceiver1, *progressReceiver2;
