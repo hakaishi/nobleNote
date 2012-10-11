@@ -40,7 +40,7 @@
 #include <QPointer>
 #include <QProgressDialog>
 #include <QFutureWatcher>
-
+#include <QFileDialog>
 
 /**
  * @brief note taking application main window
@@ -94,6 +94,7 @@ private:
       ProgressReceiver *progressReceiver;
       QFutureWatcher<void> *futureWatcher;
       QStringList importFiles;
+      QPointer<QFileDialog> fileDialog;
 
       struct NoteImporter
       {
@@ -143,6 +144,7 @@ private:
       void renameNote();
       void removeFolder();
       void removeNote();
+      void importDialog();
       void importXmlNotes();
       void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder
       void noteRenameFinished(const QString &path, const QString &oldName, const QString &newName); // updates window title

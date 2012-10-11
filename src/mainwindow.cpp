@@ -48,7 +48,6 @@
 #include <QMessageBox>
 #include <QFileIconProvider>
 #include <QList>
-#include <QFileDialog>
 #include <QPushButton>
 #include <QtConcurrentMap>
 #include "flickcharm.h"
@@ -213,7 +212,7 @@ MainWindow::MainWindow()
      connect(minimizeRestoreAction, SIGNAL(triggered()), this, SLOT(tray_actions()));
 #endif
 
-     connect(actionImport,SIGNAL(triggered()),this,SLOT(importXmlNotes()));
+     connect(actionImport,SIGNAL(triggered()),this,SLOT(importDialog()));
      connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
 
      connect(actionTrash, SIGNAL(triggered()), this, SLOT(showBackupWindow()));
@@ -649,15 +648,27 @@ void MainWindow::removeNote(){
      noteModel->removeList(noteView->selectionModel()->selectedIndexes());
 }
 
-void MainWindow::importXmlNotes()
+void MainWindow::importDialog()
 {
+     if(fileDialog)
+       return;
+
      importFiles.clear(); //remove old files
 
-     importFiles = QFileDialog::getOpenFileNames(
-                            this,
-                            tr("Select one or more files to open"),
-                            QSettings().value("import_path").toString(),
-                tr("Notes")+"(*.note)");
+     fileDialog = new QFileDialog(this, tr("Select one or more files to open"),
+                      QSettings().value("import_path").toString(), tr("Notes")+"(*.note)");
+     fileDialog->setViewMode(QFileDialog::Detail);
+     fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
+     fileDialog->setFileMode(QFileDialog::ExistingFiles);
+     fileDialog->setOption(QFileDialog::ReadOnly);
+     fileDialog->show();
+     QObject::connect(fileDialog, SIGNAL(accepted()), this, SLOT(importXmlNotes()));
+     QObject::connect(fileDialog, SIGNAL(rejected()), fileDialog, SLOT(deleteLater()));
+}
+
+void MainWindow::importXmlNotes()
+{
+     importFiles = fileDialog->selectedFiles();
      if(importFiles.isEmpty())
         return;
 
@@ -682,6 +693,8 @@ void MainWindow::importXmlNotes()
      QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(deleteLater()));
      QObject::connect(futureWatcher, SIGNAL(canceled()), progressReceiver, SLOT(deleteLater()));
      QObject::connect(futureWatcher, SIGNAL(finished()), progressReceiver, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(canceled()), fileDialog, SLOT(deleteLater()));
+     QObject::connect(futureWatcher, SIGNAL(finished()), fileDialog, SLOT(deleteLater()));
 
      dialog->show();
 }
