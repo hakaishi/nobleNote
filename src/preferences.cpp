@@ -38,11 +38,14 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
      dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      showSource->setChecked(settings->value("show_source", false).toBool());
+     kineticScrolling->setChecked(settings->value("kinetic_scrolling", false).toBool());
      sizeSpinHeight->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().height());
      sizeSpinWidth->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().width());
 
+
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
+     connect(kineticScrolling,SIGNAL(toggled(bool)),this,SIGNAL(kineticScrollingEnabledChanged(bool)));
 }
 
 void Preferences::showEvent(QShowEvent* show_pref){
@@ -65,13 +68,14 @@ void Preferences::saveSettings(){
 #else
        settings->setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
 #endif
-       sendPathChanged();
+       pathChanged();
      }
 
      settings->setValue("dont_quit_on_close", dontQuit->isChecked());
      settings->setValue("convert_notes", convertNotes->isChecked());
      settings->setValue("note_editor_default_size", QSize(sizeSpinWidth->value(),sizeSpinHeight->value()));
      settings->setValue("show_source", showSource->isChecked());
+     settings->setValue("kinetic_scrolling",kineticScrolling->isChecked());
 
      accept();
 }
@@ -83,13 +87,7 @@ void Preferences::openDir(){
                   | QFileDialog::DontResolveSymlinks);
      QFileInfo file(path);
      if(!file.isWritable() && !path.isEmpty()){
-       QMessageBox msgBox;
-       msgBox.setWindowTitle(tr("Warning"));
-       msgBox.setIcon(QMessageBox::Critical);
-       msgBox.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Window);
-       QTimer::singleShot(6000, &msgBox, SLOT(close()));
-       msgBox.setInformativeText(tr("The path \"%1\" is not writable!").arg(file.filePath()));
-       msgBox.exec();
+         QMessageBox::warning(this,"No Write Access", QString("The path \"%1\" is not writable!").arg(file.filePath()));
        return;
      }
      if(!path.isEmpty()){

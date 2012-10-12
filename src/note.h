@@ -35,11 +35,11 @@
 #include <QDateTime>
 #include <QTextBrowser>
 #include <QDialogButtonBox>
+#include "textbrowser.h"
 
 class TextFormattingToolbar;
 class TextSearchToolbar;
 class NewNoteName;
-class TextBrowser;
 class Highlighter;
 class NoteDescriptor;
 
@@ -52,6 +52,8 @@ class Note : public QMainWindow, public Ui::Note {
 
       void highlightText(const QString & str);
       bool    searchbarVisible;
+
+      QTextEdit * textEdit() const { return textBrowser;}
 
      private:
       TextBrowser *textBrowser;

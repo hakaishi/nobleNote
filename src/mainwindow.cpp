@@ -151,18 +151,16 @@ MainWindow::MainWindow()
      folderView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
      noteView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-
-     // enable kinetic scrolling for touchscreens
-     charm[0] = new FlickCharm(this);
-     charm[1] = new  FlickCharm(this);
-     charm[0]->activateOn(folderView);
-     charm[1]->activateOn(noteView);
-
+     flickCharm = new FlickCharm(this);
 
      QList<ListView*> listViews;
      listViews << folderView << noteView;
      foreach(ListView* list, listViews) // add drag drop options
      {
+        if(QSettings().value("kinetic_scrolling", false).toBool())
+        {
+            flickCharm->activateOn(list);// enable kinetic scrolling for touchscreens
+        }
         list->setContextMenuPolicy(Qt::CustomContextMenu);
         //list->setSelectionMode(QAbstractItemView::SingleSelection); // single item can be draged or droped
         list->setDragDropMode(QAbstractItemView::DragDrop);
@@ -179,17 +177,19 @@ MainWindow::MainWindow()
      noteView->setModel(noteModel);
      noteView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-     checkAndSetFolders();
+     writeStandardPaths();
 
 
      connect(folderView,SIGNAL(activated(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(folderView,SIGNAL(clicked(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(folderView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
           QItemSelection)),this,SLOT(folderActivated(QItemSelection,QItemSelection))); //Wrapper
-     connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
-     connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),
              this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
+     connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)),
+             this, SLOT(showContextMenuFolder(const QPoint &)));
+     connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
+     connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
      //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
      //       SLOT(setCurrentFolder(const QModelIndex &)));
@@ -197,14 +197,14 @@ MainWindow::MainWindow()
      //       SLOT(setCurrentFolder(QModelIndex)));
      connect(noteView,SIGNAL(activated(QModelIndex)), this,
              SLOT(openNote(QModelIndex)));
-     connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)),
-             this, SLOT(showContextMenuFolder(const QPoint &)));
      connect(noteView, SIGNAL(customContextMenuRequested(const QPoint &)),
              this, SLOT(showContextMenuNote(const QPoint &)));
      connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
           QItemSelection)),this,SLOT(noteActivated(QItemSelection,QItemSelection))); //Wrapper
      connect(noteView,SIGNAL(activated(QModelIndex)),this,SLOT(noteActivated(QModelIndex)));
      connect(noteView,SIGNAL(clicked(QModelIndex)),this,SLOT(noteActivated(QModelIndex)));
+     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
+          QItemSelection)), this, SLOT(enableNoteMenu(QItemSelection,QItemSelection)));
 
 #ifndef NO_SYSTEM_TRAY_ICON
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
@@ -223,9 +223,6 @@ MainWindow::MainWindow()
      connect(actionNew_note, SIGNAL(triggered()), this, SLOT(newNote()));
      connect(actionRename_note, SIGNAL(triggered()), this, SLOT(renameNote()));
      connect(actionDelete_note, SIGNAL(triggered()), this, SLOT(removeNote()));
-     connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
-          QItemSelection)), this, SLOT(enableNoteMenu(QItemSelection,QItemSelection)));
-
      connect(actionShowToolbar, SIGNAL(toggled(bool)), toolBar, SLOT(setVisible(bool)));
      connect(toolBar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
      //connect(actionHistory, SIGNAL(triggered()), this, SLOT(showHistory()));
@@ -248,7 +245,8 @@ void MainWindow::showPreferences()
      if(!pref)
      {
           pref = new Preferences(this);
-          connect(pref, SIGNAL(sendPathChanged()), this, SLOT(changeRootIndex()));
+          connect(pref, SIGNAL(pathChanged()), this, SLOT(changeRootIndex()));
+          connect(pref,SIGNAL(kineticScrollingEnabledChanged(bool)),this,SLOT(setKineticScrollingEnabled(bool)));
      }
      pref->show();
 }
@@ -350,15 +348,15 @@ void MainWindow::noteActivated(const QItemSelection &selected, const QItemSelect
 
 void MainWindow::changeRootIndex(){
      if(!openNotes.isEmpty()){
-        foreach(Note *note, openNotes)
+        foreach(QWidget *note, openNotes)
             if(note)
                 note->close();
         openNotes.clear();
      }
-     checkAndSetFolders();
+     writeStandardPaths();
 }
 
-void MainWindow::checkAndSetFolders(){
+void MainWindow::writeStandardPaths(){
      if(!QDir(QSettings().value("root_path").toString()).exists())
        QDir().mkpath(QSettings().value("root_path").toString());
 
@@ -455,7 +453,7 @@ void MainWindow::openAllNotes(){
           }
 
            // check if the notePath is already used in a open note
-          Note* w = noteWindow(notePath);
+          QWidget* w = noteWindow(notePath);
           if(w)
           {
               w->activateWindow();  // highlight the note window
@@ -465,6 +463,10 @@ void MainWindow::openAllNotes(){
           Note* note = new Note(notePath);
           openNotes += note;
           note->setObjectName(notePath);
+          if(QSettings().value("kinetic_scrolling", false).toBool())
+          {
+              flickCharm->activateOn(note);
+          }
           if(noteModel->sourceModel() == findNoteModel){
             note->highlightText(searchText->text());
             note->searchbarVisible = true;
@@ -488,8 +490,10 @@ void MainWindow::openNoteSource()
     textEdit->setReadOnly(true);
     textEdit->setPlainText(QTextStream(&file).readAll());
 
-    //FlickCharm * flickCharm = new FlickCharm(mainWindow);
-    //flickCharm->activateOn(textEdit);
+    if(QSettings().value("kinetic_scrolling", false).toBool())
+    {
+        flickCharm->activateOn(textEdit);
+    }
 
     mainWindow->setCentralWidget(textEdit);
     TextSearchToolbar * searchBar = new TextSearchToolbar(textEdit,mainWindow);
@@ -497,13 +501,15 @@ void MainWindow::openNoteSource()
     mainWindow->resize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
 //    searchBar->searchLine()->setFocus();
 //    searchBar->setFocusPolicy(Qt::TabFocus);
+
+    openNotes += mainWindow;
     mainWindow->show();
 }
 
 Note *MainWindow::noteWindow(const QString &filePath)
 {
      QUuid uuid = HtmlNoteReader::uuid(filePath);
-     for(QList<QPointer<Note> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
+     for(QList<QPointer<QWidget> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
      {
         // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
         if(!(*it))
@@ -512,9 +518,10 @@ Note *MainWindow::noteWindow(const QString &filePath)
             continue;
         }
 
-        if((*it) && (*it)->noteDescriptor()->uuid() == uuid)
+        Note * note = qobject_cast<Note*>(*it);
+        if(note && note->noteDescriptor()->uuid() == uuid)
         {
-            return (*it);
+            return note;
         }
      }
      return 0;
@@ -646,6 +653,27 @@ void MainWindow::removeNote(){
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
      noteModel->removeList(noteView->selectionModel()->selectedIndexes());
+}
+
+void MainWindow::setKineticScrollingEnabled(bool b)
+{
+    QList<QWidget* > widgets;
+    widgets << noteView << folderView;
+    foreach(QWidget * w, openNotes)
+        if(Note * note = qobject_cast<Note*>(w))
+            widgets << note->textEdit();
+    if(b)
+    {
+        foreach(QWidget* widget, widgets)
+            if(widget)
+                flickCharm->activateOn(widget);
+    }
+    else
+    {
+        foreach(QWidget* widget, widgets)
+            if(widget)
+                flickCharm->deactivateFrom(widget);
+    }
 }
 
 void MainWindow::importDialog()

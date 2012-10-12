@@ -87,14 +87,14 @@ private:
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
-      QList<QPointer<Note> > openNotes; // every access to openNotes must check for null pointers
+      QList<QPointer<QWidget> > openNotes; // every access to openNotes must check for null pointers
       QPointer<Backup> backup;
-      FlickCharm * charm[2]; // kinetic scrolling for both list views
       QProgressDialog *dialog;
       ProgressReceiver *progressReceiver;
       QFutureWatcher<void> *futureWatcher;
       QStringList importFiles;
       QPointer<QFileDialog> fileDialog;
+      FlickCharm * flickCharm; // kinetic scrolling for both list views and all notes
 
       struct NoteImporter
       {
@@ -120,7 +120,7 @@ private:
       void enableNoteMenu(const QItemSelection &selected, const QItemSelection &deselected);
       void showPreferences();
       void showBackupWindow();
-      void checkAndSetFolders();
+      void writeStandardPaths();
       void changeRootIndex();
       void folderActivated(const QModelIndex &selected);
       void folderActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
@@ -144,6 +144,7 @@ private:
       void renameNote();
       void removeFolder();
       void removeNote();
+      void setKineticScrollingEnabled(bool b); // enable flickCharm
       void importDialog();
       void importXmlNotes();
       void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder

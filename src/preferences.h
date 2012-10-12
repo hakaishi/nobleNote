@@ -46,7 +46,8 @@ class Preferences : public QDialog, public Ui::Preferences {
       void openDir();
 
      signals:
-      void sendPathChanged();
+      void pathChanged();
+      void kineticScrollingEnabledChanged(bool);
 
      protected:
       virtual void showEvent(QShowEvent* show_pref);
