@@ -57,11 +57,25 @@ void Preferences::showEvent(QShowEvent* show_pref){
 }
 
 void Preferences::saveSettings(){
-     if(!settings->isWritable()){
+     if(!settings->isWritable())
        QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
-     }
 
      if(rootPath != originalRootPath){
+       if(QMessageBox::question(this,tr("Keep old files in the trash?"),
+                                tr("The old folder for the trash is: \"%1\".\n\n"
+                                   "If you keep this folder and you change back to "
+                                   "the old folder some time, the old files will show up in the trash again.\n\n"
+                                   "Do you want to delete this (old) folder?")
+                                .arg(settings->value("backup_dir_path").toString()),
+                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+       {
+            QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
+            foreach(QFileInfo backup, backups)
+              QFile().remove(backup.absoluteFilePath());
+            if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
+              QMessageBox::warning(this,tr("Couldn't delete backup folder"), tr("Could not delete the backup folder!"));
+       }
+
        QString str = rootPath;
        settings->setValue("root_path",rootPath);
 #ifdef Q_WS_X11
@@ -72,21 +86,6 @@ void Preferences::saveSettings(){
                                             "/nobleNote/backups" + str.replace(QString("/"), QString("_")));
 #endif
        pathChanged();
-
-       if(QMessageBox::question(this,tr("Keep old backups?"),
-                                tr("The old backup folder is: \"%1\".\n\n"
-                                   "If you keep the old backups and you change back to "
-                                   "the old folder, they will show up in the trash again.\n\n"
-                                   "Do you want to delete all old backups?")
-                                .arg(settings->value("backup_dir_path").toString()),
-                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-       {
-            QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
-            foreach(QFileInfo backup, backups)
-              QFile().remove(backup.absoluteFilePath());
-            if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
-              QMessageBox::warning(this,tr("Couldn't delete backup folder"), tr("Could not delete the backup folder!"));
-       }
      }
 
      settings->setValue("dont_quit_on_close", dontQuit->isChecked());
