@@ -74,7 +74,7 @@ void Preferences::saveSettings(){
        pathChanged();
 
        if(QMessageBox::question(this,tr("Keep old backups?"),
-                                tr("The current backup folder is: \"%1\".\n\n"
+                                tr("The old backup folder is: \"%1\".\n\n"
                                    "If you keep the old backups and you change back to "
                                    "the old folder, they will show up in the trash again.\n\n"
                                    "Do you want to delete all old backups?")
