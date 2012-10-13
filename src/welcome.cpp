@@ -28,10 +28,13 @@
 #include <QFileDialog>
 #include <QSettings>
 
-#ifdef Q_OS_WIN32
-const QString defaultPath = QDir::homePath() + "/nobleNote";
-#else
+#ifdef Q_WS_X11
 const QString defaultPath = QDir::homePath() + "/.nobleNote";
+const QString backupPath = QDir::homePath() + "/.local/share/nobleNote/backups";
+#else
+const QString defaultPath = QDir::homePath() + "/nobleNote";
+const QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
+                              "/nobleNote/backups";
 #endif
 
 Welcome::Welcome(QWidget *parent): QDialog(parent){
@@ -58,8 +61,14 @@ void Welcome::openDir(){
 }
 
 void Welcome::setRootDir(){
-     if(path->text() == "")
+     if(path->text() == ""){
        QSettings().setValue("root_path", defaultPath);
-     else
+       QString str = defaultPath;
+       QSettings().setValue("backup_dir_path", backupPath + str.replace(QString("/"), QString("_")));
+     }
+     else{
        QSettings().setValue("root_path", path->text());
+       QString str = path->text();
+       QSettings().setValue("backup_dir_path", backupPath + str.replace(QString("/"), QString("_")));
+     }
 }

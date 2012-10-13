@@ -62,13 +62,31 @@ void Preferences::saveSettings(){
      }
 
      if(rootPath != originalRootPath){
+       QString str = rootPath;
        settings->setValue("root_path",rootPath);
 #ifdef Q_WS_X11
-       settings->setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups");
+       settings->setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups" +
+                                            str.replace(QString("/"), QString("_")));
 #else
-       settings->setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
+       settings->setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
+                                            "/nobleNote/backups" + str.replace(QString("/"), QString("_")));
 #endif
        pathChanged();
+
+       if(QMessageBox::question(this,tr("Keep old backups?"),
+                                tr("The current backup folder is: \"%1\".\n\n"
+                                   "If you keep the old backups and you change back to "
+                                   "the old folder, they will show up in the trash again.\n\n"
+                                   "Do you want to delete all old backups?")
+                                .arg(settings->value("backup_dir_path").toString()),
+                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+       {
+            QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
+            foreach(QFileInfo backup, backups)
+              QFile().remove(backup.absoluteFilePath());
+            if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
+              QMessageBox::warning(this,tr("Couldn't delete backup folder"), tr("Could not delete the backup folder!"));
+       }
      }
 
      settings->setValue("dont_quit_on_close", dontQuit->isChecked());
@@ -87,11 +105,12 @@ void Preferences::openDir(){
                   | QFileDialog::DontResolveSymlinks);
      QFileInfo file(path);
      if(!file.isWritable() && !path.isEmpty()){
-         QMessageBox::warning(this,"No Write Access", QString("The path \"%1\" is not writable!").arg(file.filePath()));
+         QMessageBox::warning(this,tr("No Write Access"), tr("The path \"%1\" is not writable!").arg(file.filePath()));
        return;
      }
-     if(!path.isEmpty()){
-       rootPath = path;
-       pathLabel->setText(rootPath);
+     if(!path.isEmpty())
+     {
+          rootPath = path;
+          pathLabel->setText(rootPath);
      }
 }

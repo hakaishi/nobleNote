@@ -101,13 +101,6 @@ MainWindow::MainWindow()
        welcome = new Welcome(this);
        welcome->exec();
      }
-#ifdef Q_WS_X11
-     if(!settings.value("backup_dir_path").isValid())
-       settings.setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups");
-#else
-     if(!settings.value("backup_dir_path").isValid())
-       settings.setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/nobleNote/backups");
-#endif
 
    //Search line edits
      searchName = new LineEdit(this);
