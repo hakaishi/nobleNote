@@ -51,7 +51,7 @@ class Note : public QMainWindow, public Ui::Note {
       NoteDescriptor* noteDescriptor() const { return noteDescriptor_; }
 
       void highlightText(const QString & str);
-      bool    searchbarVisible;
+      bool searchbarVisible;
 
       QTextEdit * textEdit() const { return textBrowser;}
 
@@ -59,10 +59,10 @@ class Note : public QMainWindow, public Ui::Note {
       TextBrowser *textBrowser;
       TextDocument *textDocument;
 
-      TextFormattingToolbar * toolbar;
+      TextFormattingToolbar *toolbar;
       TextSearchToolbar *searchBar;
 
-      NoteDescriptor * noteDescriptor_;
+      NoteDescriptor *noteDescriptor_;
 
      public slots:
       void setSearchBarText(QString str);
@@ -71,7 +71,7 @@ class Note : public QMainWindow, public Ui::Note {
       void keyPressEvent(QKeyEvent *k);
       void keyReleaseEvent(QKeyEvent *k);
       virtual void showEvent(QShowEvent* event);
-      virtual void closeEvent(QCloseEvent* close_Note);
+      virtual void closeEvent(QCloseEvent *close_Note);
 };
 
 #endif

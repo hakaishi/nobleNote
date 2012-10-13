@@ -398,6 +398,14 @@ void MainWindow::showEvent(QShowEvent* show_window){
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
      if(QSettings().contains("splitter"))
        splitter->restoreState(QSettings().value("splitter").toByteArray());
+     if(QSettings().value("open_notes").isValid())
+       foreach(QString path, QSettings().value("open_notes").toStringList())
+       {
+          Note* note = new Note(path);
+          openNotes += note;
+          note->setObjectName(path);
+          note->show();
+       }
      QMainWindow::showEvent(show_window);
 }
 
@@ -456,6 +464,11 @@ void MainWindow::openAllNotes(){
           Note* note = new Note(notePath);
           openNotes += note;
           note->setObjectName(notePath);
+          QStringList savedOpenNoteList;
+          if(QSettings().value("open_notes").isValid())
+            savedOpenNoteList = QSettings().value("open_notes").toStringList();
+          savedOpenNoteList.append(notePath);
+          QSettings().setValue("open_notes",savedOpenNoteList);
           if(QSettings().value("kinetic_scrolling", false).toBool())
           {
               flickCharm->activateOn(note);

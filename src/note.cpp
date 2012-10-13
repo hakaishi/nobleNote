@@ -44,8 +44,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setAttribute(Qt::WA_DeleteOnClose);
 
-     ; //setting standard for initializing
-
      searchbarVisible = false; //initializing
 
      textBrowser = new TextBrowser(this);
@@ -104,6 +102,9 @@ void Note::closeEvent(QCloseEvent* close_Note){
      QSettings().setValue("Toolbars/state", saveState());
      QSettings().setValue("Notes/"+noteDescriptor_->uuid()+"_cursor_position",
         textBrowser->textCursor().position());
+     QStringList savedOpenNoteList = QSettings().value("open_notes").toStringList();
+     savedOpenNoteList.removeOne(noteDescriptor_->filePath());
+     QSettings().setValue("open_notes", savedOpenNoteList);
 
       if(textDocument->isModified())
         noteDescriptor_->stateChange();
