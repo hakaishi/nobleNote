@@ -110,6 +110,9 @@ void FlickCharm::deactivateFrom(QWidget *widget)
     if (scrollArea) {
         QWidget *viewport = scrollArea->viewport();
 
+        scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
         viewport->removeEventFilter(this);
         scrollArea->removeEventFilter(this);
 
