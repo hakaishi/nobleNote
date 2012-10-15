@@ -73,7 +73,7 @@ void Welcome::setRootDir(){
      else{
        QSettings().setValue("root_path", path->text());
        QString str = path->text();
-       str.replace(QString("/"), QString("_"))
+       str.replace(QString("/"), QString("_"));
      #ifdef Q_OS_WIN32
        str.remove(0,str.indexOf(":")+1); //remove e.g. C:
      #endif
