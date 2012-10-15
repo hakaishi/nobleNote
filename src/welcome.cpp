@@ -64,21 +64,21 @@ void Welcome::setRootDir(){
      if(path->text() == ""){
        QSettings().setValue("root_path", defaultPath);
        QString str = defaultPath;
-       str.replace(QString("/"), QString("_"));
-     #ifdef Q_OS_WIN32
-       str.prepend("_");
-       str.remove(":");
-     #endif
-       QSettings().setValue("backup_dir_path", backupPath + str);
+       adjustAndSetBackupDirPath(str);
      }
      else{
        QSettings().setValue("root_path", path->text());
        QString str = path->text();
-       str.replace(QString("/"), QString("_"));
-     #ifdef Q_OS_WIN32
-       str.prepend("_");
-       str.remove(":");
-     #endif
-       QSettings().setValue("backup_dir_path", backupPath + str);
+       adjustAndSetBackupDirPath(str);
      }
+}
+
+void Welcome::adjustAndSetBackupDirPath(QString &str)
+{
+     str.replace(QString("/"), QString("_"));
+   #ifdef Q_OS_WIN32
+     str.prepend("_");
+     str.remove(":");
+   #endif
+     QSettings().setValue("backup_dir_path", backupPath + str);
 }
