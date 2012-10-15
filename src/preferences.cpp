@@ -76,19 +76,7 @@ void Preferences::saveSettings(){
               QMessageBox::warning(this,tr("Couldn't delete backup folder"), tr("Could not delete the backup folder!"));
        }
 
-       QString str = rootPath;
-       str.replace(QString("/"), QString("_"));
-     #ifdef Q_OS_WIN32
-       str.prepend("_");
-       str.remove(":");
-     #endif
        settings->setValue("root_path",rootPath);
-     #ifdef Q_WS_X11
-       settings->setValue("backup_dir_path",QDir::homePath() + "/.local/share/nobleNote/backups" + str);
-     #else
-       settings->setValue("backup_dir_path",QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
-                                            "/nobleNote/backups" + str);
-     #endif
        pathChanged();
      }
 

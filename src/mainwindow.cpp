@@ -100,6 +100,7 @@ MainWindow::MainWindow()
      if(!settings.value("root_path").isValid()){ // root path has not been set before
        welcome = new Welcome(this);
        welcome->exec();
+       adjustAndSetBackupDirPath();
      }
 
    //Search line edits
@@ -226,6 +227,62 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow(){}
 
+void MainWindow::adjustAndSetBackupDirPath()
+{
+     QString str = QSettings().value("root_path").toString();
+     str.replace(QString("/"), QString("_"));
+   #ifdef Q_OS_WIN32
+     str.prepend("_");
+     str.remove(":");
+
+     QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
+                              "/nobleNote/backups";
+   #else
+     QString backupPath = QDir::homePath() + "/.local/share/nobleNote/backups";
+   #endif
+
+     QSettings().setValue("backup_dir_path", backupPath + str);
+}
+
+void MainWindow::changeRootIndex(){
+     if(!openNotes.isEmpty()){
+        foreach(QWidget *note, openNotes)
+            if(note)
+                note->close();
+        openNotes.clear();
+     }
+     adjustAndSetBackupDirPath();
+     writeStandardPaths();
+}
+
+void MainWindow::writeStandardPaths(){
+     if(!QDir(QSettings().value("root_path").toString()).exists())
+       QDir().mkpath(QSettings().value("root_path").toString());
+
+     if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
+       QDir().mkpath(QSettings().value("backup_dir_path").toString());
+
+     folderView->setRootIndex(folderModel->setRootPath(QSettings().value("root_path").toString()));
+
+     // make sure there's at least one folder
+     QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     if(dirList.isEmpty())
+     {
+         QString defaultDirName = tr("default");
+         QDir(QSettings().value("root_path").toString()).mkdir(defaultDirName);
+         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + defaultDirName)); // set default dir as current note folder
+     }
+     else
+         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
+
+     //Select the first folder
+     if(!dirList.isEmpty())
+     {
+          folderView->selectionModel()->select(folderModel->index(QSettings().value(
+               "root_path").toString() + "/" + dirList.first()),QItemSelectionModel::Select);
+     }
+}
+
 void MainWindow::enableNoteMenu(const QItemSelection &selected, const QItemSelection &deselected)
 {
      Q_UNUSED(deselected);
@@ -337,44 +394,6 @@ void MainWindow::noteActivated(const QItemSelection &selected, const QItemSelect
      if(selected.indexes().isEmpty())
        return;
      noteActivated(selected.indexes().first()); //we only need one - anyone is fine
-}
-
-void MainWindow::changeRootIndex(){
-     if(!openNotes.isEmpty()){
-        foreach(QWidget *note, openNotes)
-            if(note)
-                note->close();
-        openNotes.clear();
-     }
-     writeStandardPaths();
-}
-
-void MainWindow::writeStandardPaths(){
-     if(!QDir(QSettings().value("root_path").toString()).exists())
-       QDir().mkpath(QSettings().value("root_path").toString());
-
-     if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
-       QDir().mkpath(QSettings().value("backup_dir_path").toString());
-
-     folderView->setRootIndex(folderModel->setRootPath(QSettings().value("root_path").toString()));
-
-     // make sure there's at least one folder
-     QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-     if(dirList.isEmpty())
-     {
-         QString defaultDirName = tr("default");
-         QDir(QSettings().value("root_path").toString()).mkdir(defaultDirName);
-         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + defaultDirName)); // set default dir as current note folder
-     }
-     else
-         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + "/" + dirList.first())); // dirs exist, set first dir as current note folder
-
-     //Select the first folder
-     if(!dirList.isEmpty())
-     {
-          folderView->selectionModel()->select(folderModel->index(QSettings().value(
-               "root_path").toString() + "/" + dirList.first()),QItemSelectionModel::Select);
-     }
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON

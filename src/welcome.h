@@ -42,7 +42,6 @@ class Welcome : public QDialog, public Ui::Welcome{
      private slots:
       void openDir();
       void setRootDir();
-      void adjustAndSetBackupDirPath(QString &str);
 };
 
 #endif // WELCOME_H

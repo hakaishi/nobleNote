@@ -117,11 +117,12 @@ private:
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
 
      private slots:
+      void adjustAndSetBackupDirPath();
+      void changeRootIndex();
+      void writeStandardPaths();
       void enableNoteMenu(const QItemSelection &selected, const QItemSelection &deselected);
       void showPreferences();
       void showBackupWindow();
-      void writeStandardPaths();
-      void changeRootIndex();
       void folderActivated(const QModelIndex &selected);
       void folderActivated(const QItemSelection &selected, const QItemSelection &deselected); //Wrapper
       void noteActivated(const QModelIndex &selected);
