@@ -79,7 +79,8 @@ void Preferences::saveSettings(){
        QString str = rootPath;
        str.replace(QString("/"), QString("_"));
      #ifdef Q_OS_WIN32
-       str.remove(0,str.indexOf(":")+1); //remove e.g. C:
+       str.prepend("_");
+       str.remove(":");
      #endif
        settings->setValue("root_path",rootPath);
      #ifdef Q_WS_X11

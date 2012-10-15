@@ -66,7 +66,8 @@ void Welcome::setRootDir(){
        QString str = defaultPath;
        str.replace(QString("/"), QString("_"));
      #ifdef Q_OS_WIN32
-       str.remove(0,str.indexOf(":")+1); //remove e.g. C:
+       str.prepend("_");
+       str.remove(":");
      #endif
        QSettings().setValue("backup_dir_path", backupPath + str);
      }
@@ -75,7 +76,8 @@ void Welcome::setRootDir(){
        QString str = path->text();
        str.replace(QString("/"), QString("_"));
      #ifdef Q_OS_WIN32
-       str.remove(0,str.indexOf(":")+1); //remove e.g. C:
+       str.prepend("_");
+       str.remove(":");
      #endif
        QSettings().setValue("backup_dir_path", backupPath + str);
      }
