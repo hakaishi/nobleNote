@@ -311,8 +311,6 @@ void MainWindow::showBackupWindow()
 void MainWindow::find()
 {
     // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
-        if(!noteView->selectionModel()->hasSelection())
-           noteActivated(QModelIndex());
 
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
@@ -323,10 +321,12 @@ void MainWindow::find()
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
+     if(folderView->selectionModel()->selectedIndexes().isEmpty())
+       return;
      Q_UNUSED(editor);
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
      {
-         QString currFolderPath = folderModel->filePath(folderView->currentIndex());
+         QString currFolderPath = folderModel->filePath(folderView->selectionModel()->selectedIndexes().first());
          folderModel->sort(0);
          folderView->setCurrentIndex(folderModel->index(currFolderPath));
 
@@ -334,10 +334,6 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
          noteModel->setSourceModel(noteFSModel);
          noteView->setRootIndex(noteModel->setRootPath(currFolderPath));
      }
-
- // disable note toolbar buttons if selection is cleared after the folder has been renamed
-     if(!noteView->selectionModel()->hasSelection())
-        noteActivated(QModelIndex());
 
      folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
 }
@@ -380,10 +376,6 @@ void MainWindow::folderActivated(const QItemSelection &selected, const QItemSele
 void MainWindow::noteActivated(const QModelIndex &selected)
 {
      Q_UNUSED(selected);
-
-     if(noteView->model() == findNoteModel)
-       return;
-
      actionRename_note->setEnabled(true);
      actionDelete_note->setEnabled(true);
 }
@@ -596,14 +588,18 @@ void MainWindow::newNote(){
 }
 
 void MainWindow::renameFolder(){
-     folderView->edit(folderView->currentIndex());
+     if(!folderView->selectionModel()->selectedIndexes().isEmpty())
+       folderView->edit(folderView->selectionModel()->selectedIndexes().first());
 }
 
 void MainWindow::renameNote(){
-     noteView->edit(noteView->currentIndex());
+     if(!folderView->selectionModel()->selectedIndexes().isEmpty())
+       noteView->edit(noteView->selectionModel()->selectedIndexes().first());
 }
 
 void MainWindow::removeFolder(){
+     if(folderView->selectionModel()->selectedIndexes().isEmpty())
+       return;
 
      QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
@@ -617,7 +613,7 @@ void MainWindow::removeFolder(){
         return;
      }
 
-     QModelIndex idx = folderView->currentIndex();
+     QModelIndex idx = folderView->selectionModel()->selectedIndexes().first();
 
      // remove empty folders without prompt else show a yes/abort message box
      if(!folderModel->rmdir(idx)) // folder not empty
@@ -670,6 +666,8 @@ void MainWindow::removeFolder(){
 }
 
 void MainWindow::removeNote(){
+     if(noteView->selectionModel()->selectedIndexes().isEmpty())
+       return;
      QString names;
      foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedIndexes()))
           names += "\"" + name + "\"\n";
