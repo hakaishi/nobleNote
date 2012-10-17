@@ -64,9 +64,8 @@ FlickCharm::~FlickCharm()
     delete d;
 }
 
-void FlickCharm::activateOn(QWidget *widget)
+void FlickCharm::activateOn(QAbstractScrollArea *scrollArea)
 {
-    QAbstractScrollArea *scrollArea = qobject_cast<QAbstractScrollArea*>(widget);
     if (scrollArea) {
         scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -78,7 +77,7 @@ void FlickCharm::activateOn(QWidget *widget)
 
         d->flickData.remove(viewport);
         d->flickData[viewport] = new FlickData;
-        d->flickData[viewport]->widget = widget;
+        d->flickData[viewport]->widget = scrollArea;
         d->flickData[viewport]->state = FlickData::Steady;
 
         return;
@@ -104,9 +103,8 @@ void FlickCharm::activateOn(QWidget *widget)
     qWarning() << "or QWebView (and derived classes)";
 }
 
-void FlickCharm::deactivateFrom(QWidget *widget)
+void FlickCharm::deactivateFrom(QAbstractScrollArea *scrollArea)
 {
-    QAbstractScrollArea *scrollArea = qobject_cast<QAbstractScrollArea*>(widget);
     if (scrollArea) {
         QWidget *viewport = scrollArea->viewport();
 

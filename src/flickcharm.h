@@ -27,7 +27,7 @@
 #include <QObject>
 
 class FlickCharmPrivate;
-class QWidget;
+class QAbstractScrollArea;
 
 class FlickCharm: public QObject
 {
@@ -35,8 +35,8 @@ class FlickCharm: public QObject
 public:
     FlickCharm(QObject *parent = 0);
     ~FlickCharm();
-    void activateOn(QWidget *widget);
-    void deactivateFrom(QWidget *widget);
+    void activateOn(QAbstractScrollArea *scrollArea);
+    void deactivateFrom(QAbstractScrollArea *scrollArea);
     bool eventFilter(QObject *object, QEvent *event);
 
 protected:
