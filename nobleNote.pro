@@ -61,7 +61,6 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp src/listview.cpp \
     src/xmlnotereader.cpp \
     src/textdocument.cpp \
     src/notedescriptor.cpp \
-    src/abstractnotereader.cpp \
     src/htmlnotereader.cpp \
     src/htmlnotewriter.cpp \
     src/datetime.cpp \
