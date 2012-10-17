@@ -482,7 +482,7 @@ void MainWindow::openAllNotes(){
           QSettings().setValue("open_notes",savedOpenNoteList);
           if(QSettings().value("kinetic_scrolling", false).toBool())
           {
-              flickCharm->activateOn(note);
+              flickCharm->activateOn(note->textEdit());
           }
           if(noteModel->sourceModel() == findNoteModel){
             note->highlightText(searchText->text());
@@ -680,20 +680,20 @@ void MainWindow::removeNote(){
 
 void MainWindow::setKineticScrollingEnabled(bool b)
 {
-    QList<QWidget* > widgets;
+    QList<QAbstractScrollArea* > widgets;
     widgets << noteView << folderView;
     foreach(QWidget * w, openNotes)
         if(Note * note = qobject_cast<Note*>(w))
             widgets << note->textEdit();
     if(b)
     {
-        foreach(QWidget* widget, widgets)
+        foreach(QAbstractScrollArea* widget, widgets)
             if(widget)
                 flickCharm->activateOn(widget);
     }
     else
     {
-        foreach(QWidget* widget, widgets)
+        foreach(QAbstractScrollArea* widget, widgets)
             if(widget)
                 flickCharm->deactivateFrom(widget);
     }

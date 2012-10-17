@@ -40,8 +40,8 @@ class QIODevice;
 class AbstractNoteReader
 {
 public:
-    AbstractNoteReader();
-    virtual ~AbstractNoteReader();
+    AbstractNoteReader(){}
+    virtual ~AbstractNoteReader(){}
 
     virtual QUuid uuid() const = 0; // get the uuid that has been extracted during read()
 
