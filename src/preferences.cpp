@@ -62,11 +62,10 @@ void Preferences::saveSettings(){
 
      if(rootPath != originalRootPath){
        if(QMessageBox::question(this,tr("Keep old files in the trash?"),
-                                tr("The old folder for the trash is: \"%1\".\n\n"
-                                   "If you keep this folder and you change back to "
-                                   "the old folder some time, the old files will show up in the trash again.\n\n"
-                                   "Do you want to delete this (old) folder?")
-                                .arg(settings->value("backup_dir_path").toString()),
+                                tr("Everytime the path to the notes is changed, %1 creates a new backup folder. "
+                                   "The current backup folder path is %2. Shall the current backup folder and all its containted backups be removed?"
+                                   )
+                                .arg(QApplication::applicationName(),settings->value("backup_dir_path").toString()),
                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
        {
             QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
