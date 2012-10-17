@@ -29,9 +29,9 @@
 #include <QSettings>
 
 #ifdef Q_WS_X11
-const QString defaultPath = QDir::homePath() + "/.nobleNote";
+const QString defaultPath = QDir::homePath() + "/." + QApplication::applicationName();
 #else
-const QString defaultPath = QDir::homePath() + "/nobleNote";
+const QString defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
 #endif
 
 Welcome::Welcome(QWidget *parent): QDialog(parent){
