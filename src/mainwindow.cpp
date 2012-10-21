@@ -217,6 +217,8 @@ MainWindow::MainWindow()
      connect(actionNew_note, SIGNAL(triggered()), this, SLOT(newNote()));
      connect(actionRename_note, SIGNAL(triggered()), this, SLOT(renameNote()));
      connect(actionDelete_note, SIGNAL(triggered()), this, SLOT(removeNote()));
+     connect(action_Cut, SIGNAL(triggered()), this, SLOT(getCutFiles()));
+     connect(action_Paste, SIGNAL(triggered()), this, SLOT(pasteFiles()));
      connect(actionShowToolbar, SIGNAL(toggled(bool)), toolBar, SLOT(setVisible(bool)));
      connect(toolBar, SIGNAL(visibilityChanged(bool)), actionShowToolbar, SLOT(setChecked(bool)));
      //connect(actionHistory, SIGNAL(triggered()), this, SLOT(showHistory()));
@@ -784,12 +786,15 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          QAction* addNewN = new QAction(tr("&New note"), &menu);
          connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
          menu.addAction(addNewN);
+         menu.addSeparator();
+         menu.addAction(action_Paste);
      }
      if(noteView->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* openAll = new QAction(tr("&Open notes"), &menu);
          QAction* renameN = new QAction(tr("&Rename note"), &menu);
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
+
          if(noteView->selectionModel()->selectedIndexes().count() == 1)
            removeNote->setText(tr("&Delete note"));
          else
@@ -810,17 +815,59 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
              if(noteView->selectionModel()->selectedIndexes().count() == 1)
                menu.addAction(showSourceAction);
          }
+         menu.addSeparator();
+         menu.addAction(action_Cut);
      }
      menu.exec(globalPos);
 }
 
+void MainWindow::getCutFiles()
+{
+     shortcutNoteList.clear();
+     if(noteView->hasFocus())
+       foreach(QModelIndex idx, noteView->selectionModel()->selectedIndexes())
+          shortcutNoteList << noteModel->filePath(idx);
+
+     if(!shortcutNoteList.isEmpty())
+       action_Paste->setEnabled(true);
+}
+
+void MainWindow::pasteFiles()
+{
+     if(shortcutNoteList.isEmpty())
+       return;
+
+     QString copyErrorFiles;
+     foreach(QString note, shortcutNoteList)
+     {
+          if(!QFile(note).copy(folderModel->filePath(
+             folderView->selectionModel()->selectedIndexes().first())
+             + "/" + QFileInfo(note).fileName()))
+                     copyErrorFiles += "\"" + note + "\"\n";
+          else QFile(note).remove();
+     }
+     if(!copyErrorFiles.isEmpty())
+       QMessageBox::critical(this, tr("Copy error"), tr("Files of the same names "
+                             "already exist in this folder:\n\n") + copyErrorFiles);
+     shortcutNoteList.clear();
+     action_Paste->setDisabled(true);
+}
+
 void MainWindow::keyPressEvent(QKeyEvent *k){
-     if(k->key() == Qt::Key_Delete){
+     if(k->key() == Qt::Key_Delete)
+     {
        if(noteView->hasFocus())
          removeNote();
        if(folderView->hasFocus())
          removeFolder();
      }
+
+     if(k->matches(QKeySequence::Cut))
+       getCutFiles();
+     if(k->matches(QKeySequence::Paste))
+       pasteFiles();
+     if(k->key() == Qt::Key_Escape)
+       shortcutNoteList.clear();
 }
 
 void MainWindow::about()

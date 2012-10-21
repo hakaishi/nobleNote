@@ -92,9 +92,10 @@ private:
       QProgressDialog *dialog;
       ProgressReceiver *progressReceiver;
       QFutureWatcher<void> *futureWatcher;
-      QStringList importFiles;
+      QStringList     importFiles;
       QPointer<QFileDialog> fileDialog;
-      FlickCharm * flickCharm; // kinetic scrolling for both list views and all notes
+      FlickCharm      *flickCharm; // kinetic scrolling for both list views and all notes
+      QStringList     shortcutNoteList;
 
       struct NoteImporter
       {
@@ -150,6 +151,8 @@ private:
       void importXmlNotes();
       void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder
       void noteRenameFinished(const QString &path, const QString &oldName, const QString &newName); // updates window title
+      void getCutFiles();
+      void pasteFiles();
       void about();
 
      protected:
