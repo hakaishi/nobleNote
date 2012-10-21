@@ -771,6 +771,11 @@ void MainWindow::showContextMenuFolder(const QPoint &pos){
          connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
          menu.addAction(renameF);
          menu.addAction(removeFolder);
+         if(!shortcutNoteList.isEmpty())
+         {
+            menu.addSeparator();
+            menu.addAction(action_Paste);
+         }
      }
      menu.exec(globalPos);
 }
