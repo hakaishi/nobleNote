@@ -56,6 +56,8 @@ MainWindow::MainWindow()
 {
      setupUi(this);
 
+     
+
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
 
@@ -547,12 +549,12 @@ Note *MainWindow::noteWindow(const QString &filePath)
 }
 
 void MainWindow::newFolder(){
-     QString path = folderModel->rootPath() + "/" + tr("new folder");
+     QString path = folderModel->rootPath() + "/" + tr("new notebook");
      int counter = 0;
      while(QDir(path).exists())
      {
          ++counter;
-         path = folderModel->rootPath() + "/" + tr("new folder (%1)").arg(QString::number(counter));
+         path = folderModel->rootPath() + "/" + tr("new notebook (%1)").arg(QString::number(counter));
      }
      QModelIndex idx = folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
 
@@ -620,7 +622,7 @@ void MainWindow::removeFolder(){
      // remove empty folders without prompt else show a yes/abort message box
      if(!folderModel->rmdir(idx)) // folder not empty
      {
-         if(QMessageBox::warning(this,tr("Delete Folder"),
+         if(QMessageBox::warning(this,tr("Delete Notebook"),
                                 tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
@@ -643,7 +645,7 @@ void MainWindow::removeFolder(){
         // try to remove the (now empty?) folder again
         if(!folderModel->rmdir(idx))
         {
-            QMessageBox::warning(this,tr("Folder could not be deleted"), tr("The folder could not be deleted because one or more files inside the folder could not be deleted"));
+            QMessageBox::warning(this,tr("Notebook could not be deleted"), tr("The Notebook could not be deleted because one or more files inside the folder could not be deleted"));
             return;
         }
      }
@@ -759,14 +761,14 @@ void MainWindow::showContextMenuFolder(const QPoint &pos){
 
      if(!folderView->indexAt(pos).isValid()) // if index doesn't exists at position
      {
-         QAction* addNewF = new QAction(tr("&New folder"), &menu);
+         QAction* addNewF = new QAction(tr("&New notebook"), &menu);
          connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
          menu.addAction(addNewF);
      }
      if(folderView->indexAt(pos).isValid()) // if index exists at position
      {
-         QAction* renameF = new QAction(tr("&Rename folder"), &menu);
-         QAction* removeFolder = new QAction(tr("&Delete folder"), &menu);
+         QAction* renameF = new QAction(tr("&Rename notebook"), &menu);
+         QAction* removeFolder = new QAction(tr("&Delete notebook"), &menu);
          connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
          connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
          menu.addAction(renameF);
@@ -853,7 +855,7 @@ void MainWindow::pasteFiles()
      }
      if(!copyErrorFiles.isEmpty())
        QMessageBox::critical(this, tr("Copy error"), tr("Files of the same names "
-                             "already exist in this folder:\n\n") + copyErrorFiles);
+                             "already exist in this notebook:\n\n") + copyErrorFiles);
      shortcutNoteList.clear();
      action_Paste->setDisabled(true);
 }

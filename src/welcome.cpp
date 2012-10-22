@@ -29,7 +29,7 @@
 #include <QSettings>
 
 #ifdef Q_WS_X11
-const QString defaultPath = QDir::homePath() + "/." + QApplication::applicationName();
+const QString defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
 #else
 const QString defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
 #endif

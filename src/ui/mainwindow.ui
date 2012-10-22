@@ -186,7 +186,7 @@
      <normaloff>:/newFolder</normaloff>:/newFolder</iconset>
    </property>
    <property name="text">
-    <string>&amp;New folder</string>
+    <string>&amp;New notebook</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -198,7 +198,7 @@
      <normaloff>:/renameFolder</normaloff>:/renameFolder</iconset>
    </property>
    <property name="text">
-    <string>&amp;Rename folder</string>
+    <string>&amp;Rename notebook</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -210,7 +210,7 @@
      <normaloff>:/deleteFolder</normaloff>:/deleteFolder</iconset>
    </property>
    <property name="text">
-    <string>&amp;Delete folder</string>
+    <string>&amp;Delete notebook</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
