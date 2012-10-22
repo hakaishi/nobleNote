@@ -153,7 +153,7 @@ void FindFileModel::restoreOverrideCursor()
 bool FindFileModel::FileContains::operator ()(const QString& htmlFilePath)
 {
         if(!fileName.isEmpty() && !content.isEmpty())
-           return QFileInfo(htmlFilePath).baseName().contains(fileName, Qt::CaseInsensitive) && fileContentContains(htmlFilePath);
+           return QFileInfo(htmlFilePath).baseName().contains(fileName, Qt::CaseInsensitive) || fileContentContains(htmlFilePath);
         else if(!content.isEmpty())
             return fileContentContains(htmlFilePath);
         else
