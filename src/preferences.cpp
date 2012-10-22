@@ -70,7 +70,7 @@ void Preferences::saveSettings(){
        {
             QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
             foreach(QFileInfo backup, backups)
-              QFile().remove(backup.absoluteFilePath());
+              QFile(backup.absoluteFilePath()).remove();
             if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
               QMessageBox::warning(this,tr("Couldn't delete backup folder"), tr("Could not delete the backup folder!"));
        }
