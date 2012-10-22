@@ -42,7 +42,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      treeWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
      treeWidget->setSortingEnabled(true);
      treeWidget->sortByColumn(0,Qt::AscendingOrder);
-     treeWidget->setHeaderLabel(tr("Backups of deleted notes"));
+     treeWidget->setHeaderLabel(tr("Deleted notes"));
      treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
      treeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
      // TODO flickcharm here
@@ -50,7 +50,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      frame = new QFrame(splitter);
      gridLayout3 = new QGridLayout(frame);
      label = new QLabel(frame);
-     label->setText(tr("Preview of the selected backup"));
+     label->setText(tr("Preview of the selected note"));
      gridLayout3->addWidget(label, 0, 0, 1, 1);
      textEdit = new QTextEdit(frame);
      textEdit->setReadOnly(true);
@@ -127,7 +127,7 @@ void Backup::setupBackups()
 
      progressReceiver2 = new ProgressReceiver(this);
      progressDialog2 = new QProgressDialog(this);
-     progressDialog2->setLabelText(QString(tr("Indexing backup data...")));
+     progressDialog2->setLabelText(QString(tr("Indexing trash...")));
      setupBackup.p = progressReceiver2;
      backupDataHash = new QHash<QString,QStringList>;
      setupBackup.hash = backupDataHash;
