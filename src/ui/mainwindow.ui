@@ -169,6 +169,9 @@
    </property>
   </action>
   <action name="actionHistory">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../nobleNote.qrc">
      <normaloff>:/history</normaloff>:/history</iconset>

@@ -56,8 +56,6 @@ MainWindow::MainWindow()
 {
      setupUi(this);
 
-     
-
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
 
@@ -163,6 +161,7 @@ MainWindow::MainWindow()
         list->viewport()->setAcceptDrops(true);
         list->setDropIndicatorShown(true);
         list->setDefaultDropAction(Qt::MoveAction);
+        list->setSelectionBehavior(QAbstractItemView::SelectRows);
      }
      noteView->setDragEnabled(true);
      folderView->setDragEnabled(false);
@@ -325,12 +324,12 @@ void MainWindow::find()
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
-     if(folderView->selectionModel()->selectedIndexes().isEmpty())
+     if(folderView->selectionModel()->selectedRows().isEmpty())
        return;
      Q_UNUSED(editor);
      if(hint != QAbstractItemDelegate::RevertModelCache) // canceled editing
      {
-         QString currFolderPath = folderModel->filePath(folderView->selectionModel()->selectedIndexes().first());
+         QString currFolderPath = folderModel->filePath(folderView->selectionModel()->selectedRows().first());
          folderModel->sort(0);
          folderView->setCurrentIndex(folderModel->index(currFolderPath));
 
@@ -339,7 +338,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
          noteView->setRootIndex(noteModel->setRootPath(currFolderPath));
      }
 
-     folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
+     folderView->scrollTo(folderView->selectionModel()->selectedRows().first());
 }
 
 void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
@@ -352,7 +351,7 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      noteView->model()->sort(0);
      noteView->setCurrentIndex(noteModel->index(filePath));
 
-     noteView->scrollTo(noteView->selectionModel()->selectedIndexes().first());
+     noteView->scrollTo(noteView->selectionModel()->selectedRows().first());
 }
 
 void MainWindow::folderActivated(const QModelIndex &selected)
@@ -455,7 +454,7 @@ void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
 }
 
 void MainWindow::openAllNotes(){
-     QList<QModelIndex> indexes = noteView->selectionModel()->selectedIndexes();
+     QList<QModelIndex> indexes = noteView->selectionModel()->selectedRows();
      foreach(QModelIndex ind, indexes)
      {
           if(!ind.isValid()) // default constructed model index
@@ -564,7 +563,7 @@ void MainWindow::newFolder(){
          folderView->edit(idx); // 'open' for rename
      }
      folderModel->sort(0);
-     folderView->scrollTo(folderView->selectionModel()->selectedIndexes().first());
+     folderView->scrollTo(folderView->selectionModel()->selectedRows().first());
 }
 
 void MainWindow::newNote(){
@@ -588,21 +587,21 @@ void MainWindow::newNote(){
          noteView->edit(idx); // 'open' for rename
      }
      noteView->model()->sort(0);
-     noteView->scrollTo(noteView->selectionModel()->selectedIndexes().first());
+     noteView->scrollTo(noteView->selectionModel()->selectedRows().first());
 }
 
 void MainWindow::renameFolder(){
-     if(!folderView->selectionModel()->selectedIndexes().isEmpty())
-       folderView->edit(folderView->selectionModel()->selectedIndexes().first());
+     if(!folderView->selectionModel()->selectedRows().isEmpty())
+       folderView->edit(folderView->selectionModel()->selectedRows().first());
 }
 
 void MainWindow::renameNote(){
-     if(!folderView->selectionModel()->selectedIndexes().isEmpty())
-       noteView->edit(noteView->selectionModel()->selectedIndexes().first());
+     if(!folderView->selectionModel()->selectedRows().isEmpty())
+       noteView->edit(noteView->selectionModel()->selectedRows().first());
 }
 
 void MainWindow::removeFolder(){
-     if(folderView->selectionModel()->selectedIndexes().isEmpty())
+     if(folderView->selectionModel()->selectedRows().isEmpty())
        return;
 
      QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
@@ -617,7 +616,7 @@ void MainWindow::removeFolder(){
         return;
      }
 
-     QModelIndex idx = folderView->selectionModel()->selectedIndexes().first();
+     QModelIndex idx = folderView->selectionModel()->selectedRows().first();
 
      // remove empty folders without prompt else show a yes/abort message box
      if(!folderModel->rmdir(idx)) // folder not empty
@@ -670,16 +669,16 @@ void MainWindow::removeFolder(){
 }
 
 void MainWindow::removeNote(){
-     if(noteView->selectionModel()->selectedIndexes().isEmpty())
+     if(noteView->selectionModel()->selectedRows().isEmpty())
        return;
      QString names;
-     foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedIndexes()))
+     foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedRows()))
           names += "\"" + name + "\"\n";
      if(QMessageBox::warning(this,tr("Delete note"),
          tr("Do you really want to delete the following note(s)?\n%1").arg(names),
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
-     noteModel->removeList(noteView->selectionModel()->selectedIndexes());
+     noteModel->removeList(noteView->selectionModel()->selectedRows());
 }
 
 void MainWindow::setKineticScrollingEnabled(bool b)
@@ -802,14 +801,14 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          QAction* renameN = new QAction(tr("&Rename note"), &menu);
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
 
-         if(noteView->selectionModel()->selectedIndexes().count() == 1)
+         if(noteView->selectionModel()->selectedRows().count() == 1)
            removeNote->setText(tr("&Delete note"));
          else
            removeNote->setText(tr("&Delete notes"));
          connect(openAll, SIGNAL(triggered()), this, SLOT(openAllNotes()));
          connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
          connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
-         if(noteView->selectionModel()->selectedIndexes().count() == 1)
+         if(noteView->selectionModel()->selectedRows().count() == 1)
            menu.addAction(renameN);
          else
            menu.addAction(openAll);
@@ -819,7 +818,7 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          {
              QAction* showSourceAction = new QAction(tr("Show &Source"), &menu);
              connect(showSourceAction,SIGNAL(triggered()),this,SLOT(openNoteSource()));
-             if(noteView->selectionModel()->selectedIndexes().count() == 1)
+             if(noteView->selectionModel()->selectedRows().count() == 1)
                menu.addAction(showSourceAction);
          }
          menu.addSeparator();
@@ -832,7 +831,7 @@ void MainWindow::getCutFiles()
 {
      shortcutNoteList.clear();
      if(noteView->hasFocus())
-       foreach(QModelIndex idx, noteView->selectionModel()->selectedIndexes())
+       foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
           shortcutNoteList << noteModel->filePath(idx);
 
      if(!shortcutNoteList.isEmpty())
@@ -848,7 +847,7 @@ void MainWindow::pasteFiles()
      foreach(QString note, shortcutNoteList)
      {
           if(!QFile(note).copy(folderModel->filePath(
-             folderView->selectionModel()->selectedIndexes().first())
+             folderView->selectionModel()->selectedRows().first())
              + "/" + QFileInfo(note).fileName()))
                      copyErrorFiles += "\"" + note + "\"\n";
           else QFile(note).remove();
