@@ -51,6 +51,7 @@
 #include <QPushButton>
 #include <QtConcurrentMap>
 #include "flickcharm.h"
+#include "noteimporter.h"
 
 MainWindow::MainWindow()
 {
@@ -173,6 +174,8 @@ MainWindow::MainWindow()
      noteView->setModel(noteModel);
      noteView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
+     noteImporter = new NoteImporter(this);
+
      writeStandardPaths();
 
 
@@ -208,7 +211,7 @@ MainWindow::MainWindow()
      connect(minimizeRestoreAction, SIGNAL(triggered()), this, SLOT(tray_actions()));
 #endif
 
-     connect(actionImport,SIGNAL(triggered()),this,SLOT(importDialog()));
+     connect(actionImport,SIGNAL(triggered()),noteImporter,SLOT(importDialog()));
      connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
 
      connect(actionTrash, SIGNAL(triggered()), this, SLOT(showBackupWindow()));
@@ -701,57 +704,6 @@ void MainWindow::setKineticScrollingEnabled(bool b)
             if(widget)
                 flickCharm->deactivateFrom(widget);
     }
-}
-
-void MainWindow::importDialog()
-{
-     if(fileDialog)
-       return;
-
-     importFiles.clear(); //remove old files
-
-     fileDialog = new QFileDialog(this, tr("Select one or more files to open"),
-                      QSettings().value("import_path").toString(), tr("Notes")+"(*.note)");
-     fileDialog->setViewMode(QFileDialog::Detail);
-     fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
-     fileDialog->setFileMode(QFileDialog::ExistingFiles);
-     fileDialog->setOption(QFileDialog::ReadOnly);
-     fileDialog->show();
-     QObject::connect(fileDialog, SIGNAL(accepted()), this, SLOT(importXmlNotes()));
-     QObject::connect(fileDialog, SIGNAL(rejected()), fileDialog, SLOT(deleteLater()));
-}
-
-void MainWindow::importXmlNotes()
-{
-     importFiles = fileDialog->selectedFiles();
-     if(importFiles.isEmpty())
-        return;
-
-     QSettings().setValue("import_path",QFileInfo(importFiles.last()).absolutePath());
-
-     dialog = new QProgressDialog(this);
-     dialog->setLabelText(QString(tr("Importing notes...")));
-
-     progressReceiver = new ProgressReceiver(this);
-     noteImporter.path = QSettings().value("root_path").toString();
-     noteImporter.p = progressReceiver;
-
-     futureWatcher = new QFutureWatcher<void>(this);
-     futureWatcher->setFuture(QtConcurrent::map(importFiles, noteImporter));
-
-     QObject::connect(progressReceiver,SIGNAL(valueChanged(int)),dialog, SLOT(setValue(int)));
-     QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(reset()));
-     QObject::connect(dialog, SIGNAL(canceled()), futureWatcher, SLOT(cancel()));
-     QObject::connect(futureWatcher, SIGNAL(canceled()), futureWatcher, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(finished()), futureWatcher, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(canceled()), dialog, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(canceled()), progressReceiver, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(finished()), progressReceiver, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(canceled()), fileDialog, SLOT(deleteLater()));
-     QObject::connect(futureWatcher, SIGNAL(finished()), fileDialog, SLOT(deleteLater()));
-
-     dialog->show();
 }
 
 void MainWindow::showContextMenuFolder(const QPoint &pos){

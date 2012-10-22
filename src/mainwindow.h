@@ -41,6 +41,7 @@
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QFileDialog>
+#include "noteimporter.h"
 
 /**
  * @brief note taking application main window
@@ -89,26 +90,11 @@ private:
       FindFileModel   *findNoteModel;
       QList<QPointer<QWidget> > openNotes; // every access to openNotes must check for null pointers
       QPointer<Backup> backup;
-      QProgressDialog *dialog;
-      ProgressReceiver *progressReceiver;
-      QFutureWatcher<void> *futureWatcher;
-      QStringList     importFiles;
-      QPointer<QFileDialog> fileDialog;
+
       FlickCharm      *flickCharm; // kinetic scrolling for both list views and all notes
       QStringList     shortcutNoteList;
 
-      struct NoteImporter
-      {
-           ProgressReceiver *p;
-           QString path;
-           void operator()(const QString &file)
-           {
-                HtmlNoteWriter::writeXml2Html(file,path);
-                p->postProgressEvent();
-           }
-      };
-
-      NoteImporter noteImporter;
+      NoteImporter * noteImporter;
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -147,8 +133,6 @@ private:
       void removeFolder();
       void removeNote();
       void setKineticScrollingEnabled(bool b); // enable flickCharm
-      void importDialog();
-      void importXmlNotes();
       void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder
       void noteRenameFinished(const QString &path, const QString &oldName, const QString &newName); // updates window title
       void getCutFiles();
