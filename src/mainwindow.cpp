@@ -107,9 +107,9 @@ MainWindow::MainWindow()
      }
 
    //Search line edits
-     searchName = new LineEdit(this);
-     searchName->setPlaceholderText(tr("Search for note"));
-     gridLayout->addWidget(searchName, 1, 0);
+//     searchName = new LineEdit(this);
+//     searchName->setPlaceholderText(tr("Search for note"));
+//     gridLayout->addWidget(searchName, 1, 0);
 
      searchText = new LineEdit(this);
      searchText->setPlaceholderText(tr("Search for content"));
@@ -187,7 +187,7 @@ MainWindow::MainWindow()
              this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
      connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)),
              this, SLOT(showContextMenuFolder(const QPoint &)));
-     connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
+     //connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
      //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
@@ -321,7 +321,8 @@ void MainWindow::find()
 
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
-         noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
+         //noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
+         noteModel->findInFiles(searchText->text(),searchText->text(),folderModel->rootPath());
 
          actionNew_note->setDisabled(true);
 }
@@ -361,7 +362,7 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
 void MainWindow::folderActivated(const QModelIndex &selected)
 {
      // clear search line edits
-     searchName->clear();
+     //searchName->clear();
      searchText->clear();
 
      actionNew_note->setEnabled(true);
