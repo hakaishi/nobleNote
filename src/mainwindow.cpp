@@ -110,7 +110,7 @@ MainWindow::MainWindow()
 //     gridLayout->addWidget(searchName, 1, 0);
 
      searchText = new LineEdit(this);
-     searchText->setPlaceholderText(tr("Search for content"));
+     searchText->setPlaceholderText(tr("Type to search for notes"));
      gridLayout->addWidget(searchText, 2, 0);
 
 
