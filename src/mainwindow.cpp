@@ -608,9 +608,6 @@ void MainWindow::removeFolder(){
 
      QStringList dirList = QDir(QSettings().value("root_path").toString()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
-     // only needed if journal folder resides in the same folder
-     //dirList.removeOne(QDir(QSettings().value("journalFolderPath").toString()).dirName());
-
      // keep at least one folder
      if(dirList.size() == 1)
      {
@@ -624,7 +621,7 @@ void MainWindow::removeFolder(){
      if(!folderModel->rmdir(idx)) // folder not empty
      {
          if(QMessageBox::warning(this,tr("Delete Notebook"),
-                                tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
+                                tr("Do you really topwant to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
 
@@ -634,12 +631,12 @@ void MainWindow::removeFolder(){
         QStringList fileList = QDir(path).entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
 
         QModelIndexList indexes;
-        foreach(QString filePath, fileList)
+        foreach(const QString & fileName, fileList)
         {
-            indexes << folderModel->index(filePath);
+            indexes << folderModel->index(QString("%1/%2").arg(path).arg(fileName));
         }
-        folderModel->copyNotesToBackupDir(indexes);
 
+        folderModel->copyNotesToBackupDir(indexes);
         folderModel->removeList(indexes);
 
         // try to remove the (now empty?) folder again

@@ -93,7 +93,7 @@ bool FindFileSystemModel::remove(const QModelIndex &index) const
     return false;
 }
 
-bool FindFileSystemModel::removeList(const QList<QModelIndex> &index) const
+bool FindFileSystemModel::removeList(const QModelIndexList &index) const
 {
     bool successfull = true;
     foreach(QModelIndex idx, index)
@@ -114,6 +114,21 @@ bool FindFileSystemModel::removeList(const QList<QModelIndex> &index) const
 
     return successfull;
 }
+
+/*static*/ bool FindFileSystemModel::removeList(const QFileInfoList &fileInfos)
+{
+    qDebug("FindFileSystemModel::removeList FIXME: removal works?");
+    bool successfull = true;
+    foreach(const QFileInfo& fileInfo, fileInfos)
+    {
+        QString path = fileInfo.path();
+        if(!QFile::remove(fileInfo.path()))
+            successfull = false;
+    }
+    return successfull;
+}
+
+
 
 QFileInfo FindFileSystemModel::fileInfo(const QModelIndex &index) const
 {
@@ -175,7 +190,7 @@ QModelIndex FindFileSystemModel::index(const QString &path, int column) const
     return QModelIndex();
 }
 
-void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes)
+void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes) const
 {
     foreach(const QModelIndex& index, indexes)
     {
@@ -183,5 +198,15 @@ void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes)
         QUuid uuid = HtmlNoteReader::uuid(filePath);
         if(!uuid.isNull())
             QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
+    }
+}
+
+/*static*/ void FindFileSystemModel::copyNotesToBackupDir(const QFileInfoList& fileInfos)
+{
+    foreach(const QFileInfo& fileInfo, fileInfos)
+    {
+        QUuid uuid = HtmlNoteReader::uuid(fileInfo.path());
+        if(!uuid.isNull())
+            QFile::copy(fileInfo.path(), QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
     }
 }
