@@ -487,7 +487,9 @@ void MainWindow::openAllNotes(){
           {
               flickCharm->activateOn(note->textEdit());
           }
-          if(noteModel->sourceModel() == findNoteModel){
+          // only show the searchBar if the note contains the search text
+          if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
+          {
             note->highlightText(searchText->text());
             note->searchbarVisible = true;
             note->setSearchBarText(searchText->text());
