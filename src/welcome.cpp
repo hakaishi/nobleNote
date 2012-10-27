@@ -32,7 +32,11 @@ Welcome::Welcome(QWidget *parent): QDialog(parent){
      setupUi(this);
 
      path = new LineEdit(this);
+    #ifdef Q_OS_WIN32
+     defaultPath = QDir::homePath() + "\\" + QApplication::applicationName();
+    #else
      defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
+    #endif
      path->setText(defaultPath);
 
 
@@ -44,7 +48,7 @@ Welcome::Welcome(QWidget *parent): QDialog(parent){
 
 void Welcome::openDir(){
      QString str = QFileDialog::getExistingDirectory(this,
-       tr("Choose a directory"), "/home",
+       tr("Choose a directory"), QDir::homePath(),
        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
      if(str != "")
        path->setText(str);

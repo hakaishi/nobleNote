@@ -224,9 +224,11 @@ MainWindow::MainWindow()
 void MainWindow::writeBackupDirPath()
 {
      QString suffix = QSettings().value("root_path").toString();
-     suffix.replace("/", "_");
+    #ifdef Q_OS_WIN32
      suffix.replace("\\", "_");
-     // suffix.replace(QDir::separator()/*native separator*/, "_"); // does not work, because QDir::separator returns "/" on Windows
+    #else
+     suffix.replace("/", "_");
+    #endif
 
    #ifdef Q_OS_WIN32
      suffix.prepend("_");
@@ -621,7 +623,7 @@ void MainWindow::removeFolder(){
      if(!folderModel->rmdir(idx)) // folder not empty
      {
          if(QMessageBox::warning(this,tr("Delete Notebook"),
-                                tr("Do you really topwant to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
+                                tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
 
