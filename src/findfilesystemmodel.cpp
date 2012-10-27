@@ -99,11 +99,15 @@ bool FindFileSystemModel::removeList(const QList<QModelIndex> &index) const
     foreach(QModelIndex idx, index)
     {
         if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
+        {
             if(!fsm->remove(mapToSource(idx)))
                 successfull = false;
-            else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
+        }
+        else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
+        {
                 if(!ffm->remove(mapToSource(idx)))
                     successfull = false;
+        }
     }
     if(!successfull)
       qDebug("FindFileSystemModel::remove failed: one or more files could not be removed");
