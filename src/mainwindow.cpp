@@ -233,6 +233,12 @@ void MainWindow::writeBackupDirPath()
 
      QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
                               "/backups";
+
+     // reduce extraordinary long path
+     if(backupPath.contains("/" + qApp->organizationName() + "/" + qApp->applicationName()))
+     {
+         backupPath.remove("/" + qApp->organizationName());
+     }
    #else
      QString backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName() + "/backups";
    #endif
@@ -625,15 +631,14 @@ void MainWindow::removeFolder(){
         QString path = folderModel->filePath(idx);
         QStringList fileList = QDir(path).entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
 
-        // try to remove each
-        foreach(QString name, fileList)
+        QModelIndexList indexes;
+        foreach(QString filePath, fileList)
         {
-            name = QDir::toNativeSeparators(QString("%1/%2").arg(path).arg(name));
-            if(!folderModel->remove(folderModel->index(name)))
-            {
-                qWarning(qPrintable(QString("Could not delete ") + name));
-            }
+            indexes << folderModel->index(filePath);
         }
+        folderModel->copyNotesToBackupDir(indexes);
+
+        folderModel->removeList(indexes);
 
         // try to remove the (now empty?) folder again
         if(!folderModel->rmdir(idx))
@@ -676,12 +681,7 @@ void MainWindow::removeNote(){
      QModelIndexList selectedRows = noteView->selectionModel()->selectedRows();
 
      // try to copy the files to be removed into the backup folder
-     foreach(const QModelIndex& index, selectedRows)
-     {
-        QString filePath = noteModel->filePath(index);
-        QUuid uuid = HtmlNoteReader::uuid(filePath);
-        QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
-     }
+     noteModel->copyNotesToBackupDir(selectedRows);
      noteModel->removeList(selectedRows);
 }
 

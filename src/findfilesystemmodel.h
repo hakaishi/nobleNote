@@ -57,6 +57,7 @@ public:
     void clear();
     void findInFiles(const QString& fileName, const QString &content, const QString &path);
     QModelIndex index ( const QString & path, int column = 0 ) const; // wrapper method for the corresponding QFileSystemModel method
+    void copyNotesToBackupDir(const QModelIndexList &indexes); // reads the uuid from each note and copys the note to the backup dir with the uuid as its name
 };
 
 #endif // FINDFILESYSTEMMODEL_H

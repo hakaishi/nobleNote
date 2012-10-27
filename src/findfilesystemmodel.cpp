@@ -27,6 +27,7 @@
 #include "findfilemodel.h"
 #include "filesystemmodel.h"
 #include <QFileSystemModel>
+#include "htmlnotereader.h"
 
 FindFileSystemModel::FindFileSystemModel(QObject *parent) :
     QSortFilterProxyModel(parent)
@@ -94,21 +95,20 @@ bool FindFileSystemModel::remove(const QModelIndex &index) const
 
 bool FindFileSystemModel::removeList(const QList<QModelIndex> &index) const
 {
-    QHash<QModelIndex,bool> removed;
+    bool successfull = true;
     foreach(QModelIndex idx, index)
     {
-         if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-           removed.insert(idx,fsm->remove(mapToSource(idx)));
-         else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
-           removed.insert(idx,ffm->remove(mapToSource(idx)));
+        if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
+            if(!fsm->remove(mapToSource(idx)))
+                successfull = false;
+            else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
+                if(!ffm->remove(mapToSource(idx)))
+                    successfull = false;
     }
-    if(removed.values().contains(false))
-    {
-      qDebug("FindFileSystemModel::remove failed: cast failed");
-      return false;
-    }
-    else
-      return true;
+    if(!successfull)
+      qDebug("FindFileSystemModel::remove failed: one or more files could not be removed");
+
+    return successfull;
 }
 
 QFileInfo FindFileSystemModel::fileInfo(const QModelIndex &index) const
@@ -169,4 +169,14 @@ QModelIndex FindFileSystemModel::index(const QString &path, int column) const
       return mapFromSource(fsm->index(path,column));
     qDebug("FindFileSystemModel::index failed: cast failed. This method is only implemented for QFileSystemModel");
     return QModelIndex();
+}
+
+void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes)
+{
+    foreach(const QModelIndex& index, indexes)
+    {
+       QString filePath = this->filePath(index);
+       QUuid uuid = HtmlNoteReader::uuid(filePath);
+       QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
+    }
 }
