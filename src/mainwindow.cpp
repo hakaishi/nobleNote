@@ -682,7 +682,17 @@ void MainWindow::removeNote(){
          tr("Do you really want to delete the following note(s)?\n%1").arg(names),
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
-     noteModel->removeList(noteView->selectionModel()->selectedRows());
+
+     QModelIndexList selectedRows = noteView->selectionModel()->selectedRows();
+
+     // try to copy the files to be removed into the backup folder
+     foreach(const QModelIndex& index, selectedRows)
+     {
+        QString filePath = noteModel->filePath(index);
+        QUuid uuid = HtmlNoteReader::uuid(filePath);
+        QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
+     }
+     noteModel->removeList(selectedRows);
 }
 
 void MainWindow::setKineticScrollingEnabled(bool b)
