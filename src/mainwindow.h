@@ -71,8 +71,6 @@ class MainWindow : public QMainWindow, public Ui::NobleNote {
  
      public:
       MainWindow();
-      ~MainWindow();
-
 
 public slots:
     void quit();
@@ -104,9 +102,9 @@ private:
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
 
      private slots:
-      void adjustAndSetBackupDirPath();
+      void writeBackupDirPath();
       void changeRootIndex();
-      void writeStandardPaths();
+      void makeStandardPaths();
       void enableNoteMenu(const QItemSelection &selected, const QItemSelection &deselected);
       void showPreferences();
       void showBackupWindow();

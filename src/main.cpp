@@ -27,6 +27,9 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QSettings>
+#include <QMessageBox>
+#include <welcome.h>
 
 int main (int argc, char *argv[]){
      QApplication app(argc, argv);
@@ -48,6 +51,19 @@ int main (int argc, char *argv[]){
      app.installTranslator(&translator);
 
      app.setQuitOnLastWindowClosed(false);
+
+     //Configuration file
+     QSettings settings; // ini format does save but in the executables directory, use native format
+     if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
+         QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
+     if(!settings.value("import_path").isValid())
+         settings.setValue("import_path", QDir::homePath());
+     if(!settings.value("root_path").isValid())
+     { // root path has not been set before
+         QScopedPointer<Welcome> welcome(new Welcome);
+         if(welcome->exec() == QDialog::Rejected) // welcome writes the root path
+            return 0; // leave main if the user rejects the welcome dialog, else go on
+     }
 
      MainWindow window;
      window.show();

@@ -28,23 +28,18 @@
 #include <QFileDialog>
 #include <QSettings>
 
-#ifdef Q_WS_X11
-const QString defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
-#else
-const QString defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
-#endif
-
 Welcome::Welcome(QWidget *parent): QDialog(parent){
      setupUi(this);
 
      path = new LineEdit(this);
+     defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
      path->setText(defaultPath);
+
 
      gridLayout->addWidget(path, 3, 0, 1, 1);
 
      connect(browse, SIGNAL(clicked(bool)), this, SLOT(openDir()));
      connect(this, SIGNAL(accepted()), this, SLOT(setRootDir()));
-     connect(this, SIGNAL(rejected()), this, SLOT(setRootDir()));
 }
 
 void Welcome::openDir(){

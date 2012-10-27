@@ -92,17 +92,7 @@ MainWindow::MainWindow()
      actionShowToolbar->setChecked(QSettings().value("mainwindow_toolbar_visible", true).toBool());
      toolBar->setVisible(QSettings().value("mainwindow_toolbar_visible", true).toBool());
 
-   //Configuration file
-     QSettings settings; // ini format does save but in the executables directory, use native format
-     if(!settings.isWritable())
-       QMessageBox::critical(this,tr("Settings not writable"),tr("W: nobelNote settings not writable!"));
-     if(!settings.value("import_path").isValid())
-       settings.setValue("import_path", QDir::homePath());
-     if(!settings.value("root_path").isValid()){ // root path has not been set before
-       welcome = new Welcome(this);
-       welcome->exec();
-       adjustAndSetBackupDirPath();
-     }
+     writeBackupDirPath();
 
    //Search line edits
 //     searchName = new LineEdit(this);
@@ -175,7 +165,7 @@ MainWindow::MainWindow()
 
      noteImporter = new NoteImporter(this);
 
-     writeStandardPaths();
+     makeStandardPaths(); // mkpath the standard paths if they do not exist already
 
 
      connect(folderView,SIGNAL(activated(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
@@ -231,23 +221,23 @@ MainWindow::MainWindow()
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
 }
 
-MainWindow::~MainWindow(){}
-
-void MainWindow::adjustAndSetBackupDirPath()
+void MainWindow::writeBackupDirPath()
 {
-     QString str = QSettings().value("root_path").toString();
-     str.replace(QString("/"), QString("_"));
+     QString suffix = QSettings().value("root_path").toString();
+     suffix.replace("/", "_");
+     suffix.replace("\\", "_");
+
    #ifdef Q_OS_WIN32
      str.prepend("_");
      str.remove(":");
 
      QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
-                              "/nobleNote/backups";
+                              "/backups";
    #else
-     QString backupPath = QDir::homePath() + "/.local/share/nobleNote/backups";
+     QString backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName() + "/backups";
    #endif
 
-     QSettings().setValue("backup_dir_path", backupPath + str);
+     QSettings().setValue("backup_dir_path", backupPath + suffix);
 }
 
 void MainWindow::changeRootIndex(){
@@ -257,11 +247,11 @@ void MainWindow::changeRootIndex(){
                 note->close();
         openNotes.clear();
      }
-     adjustAndSetBackupDirPath();
-     writeStandardPaths();
+     writeBackupDirPath();
+     makeStandardPaths();
 }
 
-void MainWindow::writeStandardPaths(){
+void MainWindow::makeStandardPaths(){
      if(!QDir(QSettings().value("root_path").toString()).exists())
        QDir().mkpath(QSettings().value("root_path").toString());
 
