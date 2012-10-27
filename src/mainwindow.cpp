@@ -226,24 +226,24 @@ void MainWindow::writeBackupDirPath()
      QString suffix = QSettings().value("root_path").toString();
      suffix.replace("/", "_");
      suffix.replace("\\", "_");
+     // suffix.replace(QDir::separator()/*native separator*/, "_"); // does not work, because QDir::separator returns "/" on Windows
 
    #ifdef Q_OS_WIN32
-     str.prepend("_");
-     str.remove(":");
+     suffix.prepend("_");
+     suffix.remove(":");
 
-     QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation) +
-                              "/backups";
+     QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 
-     // reduce extraordinary long path
-     if(backupPath.contains("/" + qApp->organizationName() + "/" + qApp->applicationName()))
+     // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
+     if(backupPath.contains("\\" + qApp->organizationName() + "\\" + qApp->applicationName()))
      {
-         backupPath.remove("/" + qApp->organizationName());
+         backupPath.replace("\\" + qApp->organizationName() + "\\" + qApp->applicationName(),"\\" +qApp->applicationName());
      }
    #else
-     QString backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName() + "/backups";
+     QString backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName();
    #endif
 
-     QSettings().setValue("backup_dir_path", backupPath + suffix);
+     QSettings().setValue("backup_dir_path", backupPath + "/backups" + suffix);
 }
 
 void MainWindow::changeRootIndex(){

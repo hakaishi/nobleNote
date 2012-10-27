@@ -166,7 +166,7 @@ void FindFileSystemModel::findInFiles(const QString &fileName, const QString &co
 QModelIndex FindFileSystemModel::index(const QString &path, int column) const
 {
     if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
-      return mapFromSource(fsm->index(path,column));
+        return mapFromSource(fsm->index(path,column));
     qDebug("FindFileSystemModel::index failed: cast failed. This method is only implemented for QFileSystemModel");
     return QModelIndex();
 }
@@ -175,8 +175,9 @@ void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes)
 {
     foreach(const QModelIndex& index, indexes)
     {
-       QString filePath = this->filePath(index);
-       QUuid uuid = HtmlNoteReader::uuid(filePath);
-       QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
+        QString filePath = this->filePath(index);
+        QUuid uuid = HtmlNoteReader::uuid(filePath);
+        if(!uuid.isNull())
+            QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + "/" + uuid.toString().mid(1,36));
     }
 }
