@@ -36,7 +36,7 @@ XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly))
     {
-        qDebug(qPrintable(QString("XmlNoteReader::XmlNoteReader failed : could not open filepath") + QDir::toNativeSeparators(filePath)));
+        qDebug(qPrintable(QString("XmlNoteReader::XmlNoteReader failed : could not open filepath ") + QDir::toNativeSeparators(filePath)));
            return;
     }
     QXmlStreamReader::setDevice(&file);

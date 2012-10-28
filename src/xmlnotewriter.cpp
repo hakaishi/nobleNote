@@ -39,7 +39,7 @@ XmlNoteWriter::XmlNoteWriter(const QString &filePath) : file(filePath)
 {
     if(!file.open(QIODevice::WriteOnly))
     {
-        qDebug(qPrintable(QString("XmlNoteWriter::XmlNoteWriter failed : could not open filepath") + QDir::toNativeSeparators(filePath)));
+        qDebug(qPrintable(QString("XmlNoteWriter::XmlNoteWriter failed : could not open filepath ") + QDir::toNativeSeparators(filePath)));
            return;
     }
     QXmlStreamWriter::setDevice(&file);
