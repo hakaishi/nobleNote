@@ -65,7 +65,7 @@ void Preferences::saveSettings(){
                                 tr("Everytime the path to the notes is changed, %1 creates a new backup folder. "
                                    "The current backup folder path is %2. Shall the current backup folder and all its containted backups be removed?"
                                    )
-                                .arg(QApplication::applicationName(),settings->value("backup_dir_path").toString()),
+                                .arg(QApplication::applicationName(),QDir::toNativeSeparators(settings->value("backup_dir_path").toString())),
                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
        {
             QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
@@ -95,7 +95,7 @@ void Preferences::openDir(){
                   | QFileDialog::DontResolveSymlinks);
      QFileInfo file(path);
      if(!file.isWritable() && !path.isEmpty()){
-         QMessageBox::warning(this,tr("No Write Access"), tr("The path \"%1\" is not writable!").arg(file.filePath()));
+         QMessageBox::warning(this,tr("No Write Access"), tr("The path \"%1\" is not writable!").arg(QDir::toNativeSeparators(file.filePath())));
        return;
      }
      if(!path.isEmpty())

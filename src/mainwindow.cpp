@@ -24,7 +24,6 @@
  */
 
 #include "mainwindow.h"
-#include "listview.h"
 #include "welcome.h"
 #include "note.h"
 #include "findfilemodel.h"
@@ -38,6 +37,8 @@
 #include "fileiconprovider.h"
 #include "textsearchtoolbar.h"
 #include "backup.h"
+#include "flickcharm.h"
+#include "noteimporter.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -50,8 +51,6 @@
 #include <QList>
 #include <QPushButton>
 #include <QtConcurrentMap>
-#include "flickcharm.h"
-#include "noteimporter.h"
 
 MainWindow::MainWindow()
 {
@@ -129,8 +128,8 @@ MainWindow::MainWindow()
      noteModel->setSortCaseSensitivity(Qt::CaseInsensitive);
      noteModel->setSourceModel(noteFSModel);
 
-     folderView = new ListView(splitter);
-     noteView = new ListView(splitter);
+     folderView = new QListView(splitter);
+     noteView = new QListView(splitter);
 
      // FlickCharm needs this mode
      folderView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
@@ -138,9 +137,9 @@ MainWindow::MainWindow()
 
      flickCharm = new FlickCharm(this);
 
-     QList<ListView*> listViews;
+     QList<QListView*> listViews;
      listViews << folderView << noteView;
-     foreach(ListView* list, listViews) // add drag drop options
+     foreach(QListView* list, listViews) // add drag drop options
      {
         if(QSettings().value("kinetic_scrolling", false).toBool())
         {
@@ -158,8 +157,8 @@ MainWindow::MainWindow()
      folderView->setDragEnabled(false);
 
      folderView->setModel(folderModel);
-     folderView->setEditTriggers(ListView::EditKeyPressed);
-     noteView->setEditTriggers(ListView::EditKeyPressed);
+     folderView->setEditTriggers(QListView::EditKeyPressed);
+     noteView->setEditTriggers(QListView::EditKeyPressed);
      noteView->setModel(noteModel);
      noteView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
@@ -675,7 +674,7 @@ void MainWindow::removeNote(){
      foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedRows()))
           names += "\"" + name + "\"\n";
      if(QMessageBox::warning(this,tr("Delete note"),
-         tr("Do you really want to delete the following note(s)?\n%1").arg(names),
+         tr("Do you really want to delete the following notes?\n\n%1").arg(names),
            QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
 
@@ -808,7 +807,7 @@ void MainWindow::pasteFiles()
      }
      if(!copyErrorFiles.isEmpty())
        QMessageBox::critical(this, tr("Copy error"), tr("Files of the same names "
-                             "already exist in this notebook:\n\n") + copyErrorFiles);
+                             "already exist in this notebook:\n\n") + QDir::toNativeSeparators(copyErrorFiles));
      shortcutNoteList.clear();
      action_Paste->setDisabled(true);
 }

@@ -98,7 +98,7 @@ public:
                 foreach(QString file, files)
                        existingFiles += file + "\n";
                 if(!existingFiles.isEmpty())
-                  QMessageBox::warning(0,tr("Couldn't drop some file(s)"), tr("File(s) of the same name(s) are already existing in this folder:\n%1").arg(existingFiles));
+                  QMessageBox::warning(0,tr("Couldn't drop some file(s)"), tr("File(s) of the same name(s) are already existing in this folder:\n%1").arg(QDir::toNativeSeparators(existingFiles)));
 
                 return false;
             }

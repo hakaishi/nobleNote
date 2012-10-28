@@ -29,9 +29,11 @@
 #include "ui_mainwindow.h"
 #include "htmlnotewriter.h"
 #include "progressreceiver.h"
+#include "noteimporter.h"
 #include <QSyntaxHighlighter>
 #include <QSystemTrayIcon>
 #include <QSplitter>
+#include <QListView>
 #include <QFileSystemModel>
 #include <QAbstractItemModel>
 #include <QToolButton>
@@ -41,7 +43,6 @@
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QFileDialog>
-#include "noteimporter.h"
 
 /**
  * @brief note taking application main window
@@ -53,7 +54,6 @@
 
 //#define NO_SYSTEM_TRAY_ICON
 
-class ListView;
 class Welcome;
 class Preferences;
 class FindFileModel;
@@ -81,7 +81,7 @@ private:
       FindFileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
       FindFileSystemModel *noteModel;
-      ListView        *folderView, *noteView;
+      QListView        *folderView, *noteView;
       QAction         *quit_action, *minimizeRestoreAction;
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;

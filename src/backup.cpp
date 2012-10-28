@@ -213,7 +213,7 @@ void Backup::deleteBackup()
      if(QMessageBox::warning(this,tr("Deleting backups and file entries"),
           tr("Do you really want to delete the backups and entries for the "
              "following files?\n\n%1\nYou won't be able to restore them!").arg(
-          backupsToBeDeleted),QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+          QDir::toNativeSeparators(backupsToBeDeleted)),QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
         return;
 
      foreach(QString file, files)

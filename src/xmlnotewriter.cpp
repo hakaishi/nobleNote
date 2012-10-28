@@ -29,6 +29,7 @@
 #include <QTextCursor>
 #include <QApplication>
 #include <QFile>
+#include <QDir>
 
 XmlNoteWriter::XmlNoteWriter() :frame_(NULL)
 {
@@ -38,7 +39,7 @@ XmlNoteWriter::XmlNoteWriter(const QString &filePath) : file(filePath)
 {
     if(!file.open(QIODevice::WriteOnly))
     {
-        qDebug("XmlNoteWriter::XmlNoteWriter failed : could not open filepath");
+        qDebug(qPrintable(QString("XmlNoteWriter::XmlNoteWriter failed : could not open filepath") + QDir::toNativeSeparators(filePath)));
            return;
     }
     QXmlStreamWriter::setDevice(&file);
