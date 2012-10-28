@@ -33,7 +33,7 @@ Welcome::Welcome(QWidget *parent): QDialog(parent){
 
      path = new LineEdit(this);
     #ifdef Q_OS_WIN32
-     defaultPath = QDir::homePath() + "\\" + QApplication::applicationName();
+     defaultPath = QDir::toNativeSeparators(QDir::homePath()) + "\\" + QApplication::applicationName();
     #else
      defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
     #endif
