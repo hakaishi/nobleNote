@@ -622,7 +622,7 @@ void MainWindow::removeFolder(){
      if(!folderModel->rmdir(idx)) // folder not empty
      {
          if(QMessageBox::warning(this,tr("Delete Notebook"),
-                                tr("Do you really want to delete the notebook \"%1\"? All contained notes will be lost?").arg(folderModel->fileName(idx)),
+                                tr("Are you sure you want to move the notebook \"%1\" to the trash?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
 
@@ -670,12 +670,24 @@ void MainWindow::removeFolder(){
 void MainWindow::removeNote(){
      if(noteView->selectionModel()->selectedRows().isEmpty())
        return;
+
+
+     int numNotes = noteView->selectionModel()->selectedRows().size();
      QString names;
      foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedRows()))
           names += "\"" + name + "\"\n";
-     if(QMessageBox::warning(this,tr("Delete note"),
-         tr("Do you really want to delete the following notes?\n\n%1").arg(names),
-           QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+
+     QString title = tr("Delete Note");
+     QString text = tr("Are you sure you want to move the note \"%1\" to the trash?").arg(names);
+
+     if(numNotes > 1)
+     {
+        title = tr("Delete Multiple Notes");
+        text =  tr("Are you sure you want to move these %1 notes to the trash?\n\n%2").arg(QString::number(numNotes)).arg(names);
+     }
+
+
+     if(QMessageBox::warning(this,title,text,QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;
 
      QModelIndexList selectedRows = noteView->selectionModel()->selectedRows();
