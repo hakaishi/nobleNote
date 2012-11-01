@@ -98,8 +98,16 @@ public:
                 foreach(QString file, files)
                        existingFiles += file + "\n";
                 if(!existingFiles.isEmpty())
-                  QMessageBox::warning(0,tr("Couldn't drop some file(s)"), tr("File(s) of the same name(s) are already existing in this folder:\n%1").arg(QDir::toNativeSeparators(existingFiles)));
-
+                {
+                  QString title = tr("Couldn't drop some files");
+                  QString text = tr("Files of the same names are already existing in this folder:\n\n%1").arg(QDir::toNativeSeparators(existingFiles));
+                  if(files.size() == 1)
+                  {
+                    title = tr("Couldn't drop a file");
+                    text = tr("A file with the same name already exists in this folder:\n\n%1").arg(QDir::toNativeSeparators(existingFiles));
+                  }
+                  QMessageBox::warning(0, title, text);
+                }
                 return false;
             }
             else
