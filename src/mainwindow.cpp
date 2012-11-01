@@ -682,7 +682,7 @@ void MainWindow::removeNote(){
           names += "\"" + name + "\"\n";
 
      QString title = tr("Delete Note");
-     QString text = tr("Are you sure you want to move the note \"%1\" to the trash?").arg(names);
+     QString text = tr("Are you sure you want to move the note %1 to the trash?").arg(names);
 
      if(numNotes > 1)
      {
