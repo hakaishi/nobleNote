@@ -222,7 +222,12 @@ MainWindow::MainWindow()
      connect(searchText, SIGNAL(sendCleared()), this, SLOT(selectFolder()));
 }
 
-void MainWindow::selectFolder(){ folderActivated(folderView->selectionModel()->selectedIndexes().first()); }
+void MainWindow::selectFolder()
+{
+     if(folderView->selectionModel()->selectedIndexes().isEmpty())
+       return;
+     folderActivated(folderView->selectionModel()->selectedIndexes().first());
+}
 
 void MainWindow::writeBackupDirPath()
 {
