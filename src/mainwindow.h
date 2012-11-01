@@ -136,6 +136,7 @@ private:
       void getCutFiles();
       void pasteFiles();
       void about();
+      void selectFolder();
 
      protected:
       void keyPressEvent(QKeyEvent *k);

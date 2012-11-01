@@ -218,7 +218,11 @@ MainWindow::MainWindow()
 
      connect(actionConfigure, SIGNAL(triggered()), this, SLOT(showPreferences()));
      connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
+
+     connect(searchText, SIGNAL(sendCleared()), this, SLOT(selectFolder()));
 }
+
+void MainWindow::selectFolder(){ folderActivated(folderView->selectionModel()->selectedIndexes().first()); }
 
 void MainWindow::writeBackupDirPath()
 {
