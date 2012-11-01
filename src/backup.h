@@ -31,11 +31,7 @@
 #include "abstractnotereader.h"
 #include "progressreceiver.h"
 #include <QFileInfo>
-#include <QSplitter>
-#include <QTreeWidget>
-#include <QTextEdit>
 #include <QTextDocument>
-#include <QLabel>
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QUuid>
@@ -49,13 +45,7 @@ class Backup : public QDialog, public Ui::Backup {
       Backup(QWidget *parent = 0);
 
      private:
-      QSplitter     *splitter;
-      QFrame        *frame;
-      QGridLayout   *gridLayout3;
-      QTreeWidget   *treeWidget;
-      QLabel        *label;
       QTextDocument *document;
-      QTextEdit     *textEdit;
       QPushButton   *deleteOldButton;
       QStringList   noteFiles;
       QFutureWatcher<QString> *future1;

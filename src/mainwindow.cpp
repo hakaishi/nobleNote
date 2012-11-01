@@ -622,7 +622,7 @@ void MainWindow::removeFolder(){
      if(!folderModel->rmdir(idx)) // folder not empty
      {
          if(QMessageBox::warning(this,tr("Delete Notebook"),
-                                tr("Are you sure you want to move the notebook \"%1\" to the trash?").arg(folderModel->fileName(idx)),
+                                tr("Are you sure you want to delete the notebook \"%1\" and move all containing notes to the trash?").arg(folderModel->fileName(idx)),
                              QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
             return;
 

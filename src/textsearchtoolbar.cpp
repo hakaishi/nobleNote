@@ -113,4 +113,6 @@ void TextSearchToolbar::highlightText(QString str){
      connect(this->closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
      connect(this->closeSearch, SIGNAL(clicked(bool)), textEdit_, SLOT(setFocus()));
      connect(this->closeSearch, SIGNAL(clicked(bool)), this->searchLine_, SLOT(clear()));
+
+     textEdit_->ensureCursorVisible();
 }

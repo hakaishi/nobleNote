@@ -35,26 +35,8 @@ Backup::Backup(QWidget *parent): QDialog(parent){
 
      setAttribute(Qt::WA_DeleteOnClose);
 
-     splitter = new QSplitter(groupBox);
-     gridLayout_2->addWidget(splitter);
-     treeWidget = new QTreeWidget(splitter);
-     treeWidget->setAlternatingRowColors(true);
-     treeWidget->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-     treeWidget->setSortingEnabled(true);
      treeWidget->sortByColumn(0,Qt::AscendingOrder);
-     treeWidget->setHeaderLabel(tr("Deleted notes"));
-     treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
-     treeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
      // TODO flickcharm here
-
-     frame = new QFrame(splitter);
-     gridLayout3 = new QGridLayout(frame);
-     label = new QLabel(frame);
-     label->setText(tr("Preview of the selected note"));
-     gridLayout3->addWidget(label, 0, 0, 1, 1);
-     textEdit = new QTextEdit(frame);
-     textEdit->setReadOnly(true);
-     gridLayout3->addWidget(textEdit, 1, 0, 1, 1);
 
      getNotes(); //Searches for notes and backups. For the backups with no notes it will create the trees children.
 
