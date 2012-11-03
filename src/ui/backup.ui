@@ -104,9 +104,11 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>treeWidget</tabstop>
   <tabstop>restoreButton</tabstop>
   <tabstop>deleteButton</tabstop>
   <tabstop>buttonBox</tabstop>
+  <tabstop>textEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

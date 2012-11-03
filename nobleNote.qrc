@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file alias="version">version.txt</file>
         <file alias="nobleNote">src/noblenote-icons/noblenote_64x64.png</file>
         <file alias="bold">src/noblenote-icons/format-text-bold.png</file>
         <file alias="italic">src/noblenote-icons/format-text-italic.png</file>

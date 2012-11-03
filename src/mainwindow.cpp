@@ -652,7 +652,7 @@ void MainWindow::removeFolder(){
         // try to remove the (now empty?) folder again
         if(!folderModel->rmdir(idx))
         {
-            QMessageBox::warning(this,tr("Notebook could not be deleted"), tr("The Notebook could not be deleted because one or more files inside the folder could not be deleted"));
+            QMessageBox::warning(this,tr("Notebook could not be deleted"), tr("The Notebook could not be deleted because one or more files inside the folder could not be deleted."));
             return;
         }
      }
@@ -828,7 +828,7 @@ void MainWindow::pasteFiles()
      }
      if(!copyErrorFiles.isEmpty())
        QMessageBox::critical(this, tr("Copy error"), tr("Files of the same names "
-                             "already exist in this notebook:\n\n") + QDir::toNativeSeparators(copyErrorFiles));
+                             "already exist in this notebook:\n\n%1").arg(QDir::toNativeSeparators(copyErrorFiles)));
      shortcutNoteList.clear();
      action_Paste->setDisabled(true);
 }
@@ -852,18 +852,25 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
 
 void MainWindow::about()
 {
+   //Versioning
+     QFile versionFile(":version");
+     versionFile.open(QIODevice::ReadOnly | QIODevice::Text);
+     QTextStream in(&versionFile);
+     QString version = in.readLine();
+     versionFile.close();
+
      QMessageBox::about(this, tr("About ") + QApplication::applicationName(),
-                      tr("<p><b>%1</b> is a note taking application</p>"
+                      tr("<h1>%1 version %2</h1><p><b>%1</b> is a note taking application</p>"
                    "<p>Copyright (C) 2012 Christian Metscher, Fabian Deuchler</p>"
 
                    "<p>Permission is hereby granted, free of charge,"
                    " to any person obtaining a copy of this software and associated documentation files (the \"Software\"),"
-                   "to deal in the Software without restriction,"
-                   "including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,"
-                   "and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>"
+                   " to deal in the Software without restriction,"
+                   " including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,"
+                   " and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>"
                    "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software."
                    "<p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
-                   "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,"
-                   "WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>"
-                              ).arg(QApplication::applicationName())); //: %1 is the application name, also do not translate the licence text
+                   " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,"
+                   " WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>"
+                              ).arg(QApplication::applicationName()).arg(version)); //: %1 is the application name, also do not translate the licence text
 }
