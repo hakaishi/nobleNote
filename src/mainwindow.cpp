@@ -118,6 +118,7 @@ MainWindow::MainWindow()
      noteFSModel = new FileSystemModel(this);
      noteFSModel->setFilter(QDir::Files);
      noteFSModel->setReadOnly(false);
+     noteFSModel->setIconProvider(new FileIconProvider());
 
      //foreach(QString str, noteFSModel->mimeTypes())
      //    qDebug() << "mime types: " << str;
@@ -804,12 +805,17 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
 void MainWindow::getCutFiles()
 {
      shortcutNoteList.clear();
+
      if(noteView->hasFocus())
        foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
           shortcutNoteList << noteModel->filePath(idx);
 
      if(!shortcutNoteList.isEmpty())
        action_Paste->setEnabled(true);
+
+     FileIconProvider *icons = new FileIconProvider();
+     icons->setCutFiles(shortcutNoteList);
+     noteFSModel->setIconProvider(icons);
 }
 
 void MainWindow::pasteFiles()
@@ -847,7 +853,12 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
      if(k->matches(QKeySequence::Paste))
        pasteFiles();
      if(k->key() == Qt::Key_Escape)
-       shortcutNoteList.clear();
+     {
+          shortcutNoteList.clear();
+
+          FileIconProvider *icons = new FileIconProvider();
+          noteFSModel->setIconProvider(icons);
+     }
 }
 
 void MainWindow::about()
