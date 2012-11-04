@@ -55,6 +55,7 @@
 //#define NO_SYSTEM_TRAY_ICON
 
 class Welcome;
+class FileIconProvider;
 class Preferences;
 class FindFileModel;
 class FindFileSystemModel;
@@ -77,6 +78,7 @@ public slots:
 private:
       Welcome         *welcome;
       QSplitter       *splitter;
+      FileIconProvider *noteIcons;
       LineEdit        *searchName, *searchText;
       FindFileSystemModel *folderModel;
       FileSystemModel *noteFSModel;
