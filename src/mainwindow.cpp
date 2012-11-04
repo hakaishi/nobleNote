@@ -855,9 +855,7 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
      if(k->key() == Qt::Key_Escape)
      {
           shortcutNoteList.clear();
-
-          FileIconProvider *icons = new FileIconProvider();
-          noteFSModel->setIconProvider(icons);
+          noteFSModel->setIconProvider(new FileIconProvider());
      }
 }
 
