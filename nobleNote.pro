@@ -11,6 +11,8 @@ RCC_DIR = build
 win32 {
 QMAKE_LFLAGS += -static-libgcc
 
+RESOURCES += translations.qrc
+
 # use these for windows builds release builds only because debugging 
 #symbols wont be linked if only release is specified
 CONFIG -= debug_and_release
@@ -70,7 +72,7 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/progressreceiver.cpp \
     src/flickcharm.cpp \
     src/noteimporter.cpp
-RESOURCES = nobleNote.qrc
+RESOURCES += nobleNote.qrc
 TRANSLATIONS = src/translations/noblenote_de.ts
 
 !win32{
