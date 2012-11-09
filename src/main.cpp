@@ -46,8 +46,12 @@ int main (int argc, char *argv[]){
 
      //NobleNote translations
      QTranslator translator;
+    #ifdef Q_OS_WIN32
+     translator.load(":noblenote_" + QLocale::system().name());
+    #else
      QString tmp = "/usr/share/noblenote/translations/noblenote_";
      translator.load(tmp + QLocale::system().name());
+    #endif
      app.installTranslator(&translator);
 
      app.setQuitOnLastWindowClosed(false);
