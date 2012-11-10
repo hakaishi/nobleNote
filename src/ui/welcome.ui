@@ -32,8 +32,7 @@
      <property name="text">
       <string>Welcome to nobleNote!
 This is the first time that nobleNote has been started.
-You can choose a directory where the notes will be saved in. 
-The default is ~/.nobleNote.</string>
+You can choose a directory where the notes will be saved in.</string>
      </property>
     </widget>
    </item>

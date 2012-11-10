@@ -21,7 +21,7 @@
     <message>
         <location filename="../ui/backup.ui" line="60"/>
         <source>Select the notes you want to delete or restore</source>
-        <translation>Selektieren SIe die Notizen, die sie löschen oder wiederherstellen möchten</translation>
+        <translation>Wählen Sie die Notizen aus, die sie löschen oder wiederherstellen möchten</translation>
     </message>
     <message>
         <location filename="../ui/backup.ui" line="76"/>
@@ -36,17 +36,17 @@
     <message>
         <location filename="../backup.cpp" line="70"/>
         <source>Indexing notes...</source>
-        <translation>Indexiere Notizen...</translation>
+        <translation>Indiziere Notizen...</translation>
     </message>
     <message>
         <location filename="../backup.cpp" line="112"/>
         <source>Indexing trash...</source>
-        <translation>Indexiere Papierkorb...</translation>
+        <translation>Indiziere Papierkorb...</translation>
     </message>
     <message>
         <location filename="../backup.cpp" line="195"/>
         <source>Deleting backups and file entries</source>
-        <translation>Löschen von Backups und Dateieinträge</translation>
+        <translation type="unfinished">Lösche Backups und Dateieinträge</translation>
     </message>
     <message>
         <location filename="../backup.cpp" line="196"/>
@@ -54,7 +54,7 @@
 
 %1
 You won&apos;t be able to restore them!</source>
-        <translation>Wollen Sie wirklich die Backups und Eintragungen für die folgende Dateien löschen?
+        <translation type="unfinished">Wollen Sie wirklich die Backups und Eintragungen für die folgende Dateien löschen?
 
 %1
 Sie werden sie nicht wiederherstellen können! </translation>
@@ -65,28 +65,28 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../filesystemmodel.h" line="102"/>
         <source>Couldn&apos;t drop some files</source>
-        <translation type="unfinished">Einige Dateien konnten nicht verschoben werden</translation>
+        <translation type="unfinished">Eine oder mehrere Dateien konnten nicht abgelegt werden</translation>
     </message>
     <message>
         <location filename="../filesystemmodel.h" line="103"/>
         <source>Files of the same names are already existing in this folder:
 
 %1</source>
-        <translation>In diesem Verzeichnis existieren bereits Dateien mit gleichen Namen:
+        <translation type="unfinished">In diesem Verzeichnis existieren bereits Dateien mit diesen Namen:
 
 %1 </translation>
     </message>
     <message>
         <location filename="../filesystemmodel.h" line="106"/>
         <source>Couldn&apos;t drop a file</source>
-        <translation>Eine Datei konnte nicht verschoben werden</translation>
+        <translation type="unfinished">Datei konnte nicht abgelegt werden</translation>
     </message>
     <message>
         <location filename="../filesystemmodel.h" line="107"/>
         <source>A file with the same name already exists in this folder:
 
 %1</source>
-        <translation>In diesem Verzeichnis existiert bereits eine Datei mit dem selben Namen:
+        <translation type="unfinished">In diesem Verzeichnis existiert bereits eine Datei mit diesem Namen:
 
 %1</translation>
     </message>
@@ -114,12 +114,12 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../mainwindow.cpp" line="63"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Beenden</translation>
+        <translation>&amp;Schließen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="285"/>
         <source>default</source>
-        <translation>Vorgabeordner</translation>
+        <translation>Vorgabe</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="439"/>
@@ -129,7 +129,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../mainwindow.cpp" line="478"/>
         <source>Note does not exist</source>
-        <translation>Die Notiz existiert nicht</translation>
+        <translation>Notiz existiert nicht</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="584"/>
@@ -144,12 +144,12 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../mainwindow.cpp" line="626"/>
         <source>One notebook must remain</source>
-        <translation>Ein Notizbuch muss erhalten bleiben</translation>
+        <translation type="unfinished">Es muss mindestens ein Notizbuch vorhanden sein</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="626"/>
         <source>At least one notebook must remain.</source>
-        <translation>Es muss mindestens ein Notizbuch vorhanden sein.</translation>
+        <translation type="unfinished">Es muss mindestens ein Notizbuch vorhanden sein.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="102"/>
@@ -204,7 +204,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../mainwindow.cpp" line="696"/>
         <source>Delete Multiple Notes</source>
-        <translation>Löschen mehrerer Notizen</translation>
+        <translation>Löschen mehrerer Notizen bestätigen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="697"/>
@@ -259,19 +259,19 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../mainwindow.cpp" line="795"/>
         <source>Show &amp;Source</source>
-        <translation>Zeige &amp;Quelltext</translation>
+        <translation>&amp;Quelltext anzeigen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="839"/>
         <source>Copy error</source>
-        <translation>Kopierfehler</translation>
+        <translation type="unfinished">Fehler beim Kopieren</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="839"/>
         <source>Files of the same names already exist in this notebook:
 
 %1</source>
-        <translation>In diesem Notizbuch existieren bereits Dateien mit gleichen Namen:
+        <translation type="unfinished">In diesem Notizbuch existieren bereits Dateien mit diesem Namen:
 
 %1</translation>
     </message>
@@ -355,7 +355,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="112"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Beenden</translation>
+        <translation>&amp;Schließen</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="115"/>
@@ -370,7 +370,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="134"/>
         <source>&amp;Configure...</source>
-        <translation>&amp;Konfigurieren...</translation>
+        <translation>&amp;Anpassen...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="137"/>
@@ -385,7 +385,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="153"/>
         <source>&amp;Show toolbar</source>
-        <translation>&amp;Zeige Werkzeugleiste</translation>
+        <translation>&amp;Werkzeugleiste anzeigen</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="156"/>
@@ -506,12 +506,12 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../notedescriptor.cpp" line="69"/>
         <source>Keep non existing note</source>
-        <translation>Behalte nicht existente Notiz</translation>
+        <translation type="unfinished">Behalte nicht existente Notiz</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="70"/>
         <source>This note doesn&apos;t exist anymore. Keep this file open?</source>
-        <translation>Diese Notiz existiert nicht mehr. Datei geöffnet lassen?</translation>
+        <translation type="unfinished">Diese Notiz existiert nicht mehr. Datei geöffnet lassen?</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="103"/>
@@ -529,7 +529,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../noteimporter.cpp" line="45"/>
         <source>Select one or more tomboy or gnote notes</source>
-        <translation>Selektieren Sie eine oder mehrere Tomboy- oder GNote-Notizen</translation>
+        <translation>Wählen Sie eine oder mehrere Tomboy- oder Gnote-Notizen aus</translation>
     </message>
     <message>
         <location filename="../noteimporter.cpp" line="46"/>
@@ -552,17 +552,17 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/preferences.ui" line="126"/>
         <source>&amp;Auto convert tomboy and pure html notes to native notes</source>
-        <translation>&amp;Automatische Umwandlung von tomboy und reinen html Notizen in eigene Notizen</translation>
+        <translation type="unfinished">&amp;Automatische Umwandlung von tomboy und reinen html Notizen in eigene Notizen</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="119"/>
         <source>&amp;Don&apos;t quit when closing main window</source>
-        <translation>&amp;Beim Schließen des Hauptfensters das Programm nicht beenden</translation>
+        <translation type="unfinished">&amp;Beim Schließen des Hauptfensters das Programm nicht beenden</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="33"/>
         <source>Path to note folders:</source>
-        <translation>Pfad zu den Notiz-Verzeichnissen:</translation>
+        <translation type="unfinished">Hauptverzeichnis:</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="49"/>
@@ -592,7 +592,7 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/preferences.ui" line="140"/>
         <source>Enable touchscreen style scrolling</source>
-        <translation type="unfinished">Aktiviere die Touchscreen-Methode zum scrollen</translation>
+        <translation type="unfinished">Aktiviere Touchscreen-Scroll</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="152"/>
@@ -646,7 +646,7 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
     <message>
         <location filename="../preferences.cpp" line="99"/>
         <source>No Write Access</source>
-        <translation>Keine Schreibrechte</translation>
+        <translation>Kein Schreibzugriff</translation>
     </message>
 </context>
 <context>
@@ -689,7 +689,7 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="88"/>
         <source>&amp;Clear formatting</source>
-        <translation type="unfinished">Formatierung &amp;entfernen</translation>
+        <translation type="unfinished">Formatierung &amp;löschen</translation>
     </message>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="96"/>
@@ -758,10 +758,9 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
 This is the first time that nobleNote has been started.
 You can choose a directory where the notes will be saved in. 
 The default is ~/.nobleNote.</source>
-        <translation>Willkommen bei nobleNote!
+        <translation type="unfinished">Willkommen bei nobleNote!
 Dies ist das erste Mal, dass nobleNote gestartet wurde.
-Sie können ein Verzeichnis wählen, wo die Notizen gespeichert werden.
-Das Standardverzeichnis ist ~/.nobleNote.</translation>
+Sie können ein Verzeichnis wählen, wo die Notizen gespeichert werden.</translation>
     </message>
     <message>
         <location filename="../ui/welcome.ui" line="43"/>
@@ -771,7 +770,7 @@ Das Standardverzeichnis ist ~/.nobleNote.</translation>
     <message>
         <location filename="../welcome.cpp" line="51"/>
         <source>Choose a directory</source>
-        <translation>Wähle einen Ordner</translation>
+        <translation>Ordner auswählen</translation>
     </message>
 </context>
 </TS>
