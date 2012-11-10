@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="de">src/translations/noblenote_de.ts</file>
+        <file alias="de">src/translations/noblenote_de.qm</file>
     </qresource>
 </RCC>
