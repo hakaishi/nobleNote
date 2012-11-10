@@ -475,7 +475,7 @@ void MainWindow::openAllNotes(){
           QString notePath = noteModel->filePath(ind);
           if(!QFileInfo(notePath).exists())
           {
-              QMessageBox::warning(this,tr("Note does not exist"), tr("The selected note cannot be opened because it has been moved or renamed"));
+              QMessageBox::warning(this,tr("Note does not exist"), tr("The selected note cannot be opened because it has been moved or renamed!"));
               return;
           }
 
