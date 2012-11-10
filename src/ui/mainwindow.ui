@@ -139,7 +139,7 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>about</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionShowToolbar">
