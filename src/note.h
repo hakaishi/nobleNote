@@ -29,7 +29,6 @@
 #include "ui_note.h"
 #include "textdocument.h"
 #include <QTimer>
-#include <QFontComboBox>
 #include <QComboBox>
 #include <QKeyEvent>
 #include <QDateTime>

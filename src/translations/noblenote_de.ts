@@ -550,12 +550,17 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="126"/>
+        <location filename="../ui/preferences.ui" line="71"/>
+        <source>Default note editor size:</source>
+        <translation type="unfinished">Standardgröße für den Notiz-Editor:</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="132"/>
         <source>&amp;Auto convert tomboy and pure html notes to native notes</source>
         <translation type="unfinished">&amp;Automatische Umwandlung von tomboy und reinen html Notizen in eigene Notizen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="119"/>
+        <location filename="../ui/preferences.ui" line="125"/>
         <source>&amp;Don&apos;t quit when closing main window</source>
         <translation type="unfinished">&amp;Beim Schließen des Hauptfensters das Programm nicht beenden</translation>
     </message>
@@ -570,32 +575,27 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>&amp;Durchsuchen...</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="65"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Default note editor size:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Standardgröße für den Notiz-Editor:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="77"/>
+        <location filename="../ui/preferences.ui" line="83"/>
         <source>Width:  </source>
         <translation>Breite: </translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="84"/>
+        <location filename="../ui/preferences.ui" line="90"/>
         <source>Height:  </source>
         <translation>Höhe: </translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="133"/>
+        <location filename="../ui/preferences.ui" line="139"/>
         <source>&amp;Show &quot;Show Source&quot; in the notes context menu</source>
         <translation>&amp;Zeige &quot;Quelltext zeigen&quot; in dem Kontextmenü für Notizen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="140"/>
+        <location filename="../ui/preferences.ui" line="146"/>
         <source>Enable touchscreen style scrolling</source>
         <translation type="unfinished">Aktiviere Touchscreen-Scroll</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="152"/>
+        <location filename="../ui/preferences.ui" line="158"/>
         <source>folder</source>
         <translation>Verzeichnis</translation>
     </message>
@@ -756,14 +756,13 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
         <location filename="../ui/welcome.ui" line="33"/>
         <source>Welcome to nobleNote!
 This is the first time that nobleNote has been started.
-You can choose a directory where the notes will be saved in. 
-The default is ~/.nobleNote.</source>
+You can choose a directory where the notes will be saved in.</source>
         <translation type="unfinished">Willkommen bei nobleNote!
 Dies ist das erste Mal, dass nobleNote gestartet wurde.
 Sie können ein Verzeichnis wählen, wo die Notizen gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../ui/welcome.ui" line="43"/>
+        <location filename="../ui/welcome.ui" line="42"/>
         <source>&amp;Browse</source>
         <translation>&amp;Duchsuchen</translation>
     </message>
