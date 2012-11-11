@@ -45,6 +45,7 @@ public:
 public slots:
 
     void getFontAndPointSizeOfText(const QTextCharFormat &format);
+    void setFont(QFont font);
 
 private slots:
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);

@@ -29,8 +29,9 @@
 #include <QTimer>
 #include <QFileDialog>
 #include <QDesktopServices>
-
-Preferences::Preferences(QWidget *parent): QDialog(parent){
+#include <QDebug>
+Preferences::Preferences(QWidget *parent): QDialog(parent)
+{
      setupUi(this);
 
      settings = new QSettings(this);
@@ -46,17 +47,33 @@ Preferences::Preferences(QWidget *parent): QDialog(parent){
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
      connect(kineticScrolling,SIGNAL(toggled(bool)),this,SIGNAL(kineticScrollingEnabledChanged(bool)));
+     connect(fontSizeSpinBox,SIGNAL(valueChanged(int)),this,SLOT(setFontSize(int)));
 }
 
-void Preferences::showEvent(QShowEvent* show_pref){
+void Preferences::setFontSize(int i)
+{
+     QFont font;
+     font.setPointSize(i);
+     font.setFamily(fontComboBox->currentFont().family());
+     fontComboBox->setFont(font);
+}
+
+void Preferences::showEvent(QShowEvent* show_pref)
+{
      pathLabel->setText(settings->value("root_path").toString());
      rootPath = settings->value("root_path").toString();
      originalRootPath = rootPath;
+     QFont font;
+     font.setPointSize(settings->value("note_editor_font_size", 10).toInt());
+     font.setFamily(settings->value("note_editor_font", "DejaVu Sans").toString());
+     fontComboBox->setCurrentFont(font);
+     fontSizeSpinBox->setValue(font.pointSize());
 
-     QWidget::showEvent(show_pref);
+     QDialog::showEvent(show_pref);
 }
 
-void Preferences::saveSettings(){
+void Preferences::saveSettings()
+{
      if(!settings->isWritable())
        QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
 
@@ -84,12 +101,15 @@ void Preferences::saveSettings(){
      settings->setValue("convert_notes", convertNotes->isChecked());
      settings->setValue("note_editor_default_size", QSize(sizeSpinWidth->value(),sizeSpinHeight->value()));
      settings->setValue("show_source", showSource->isChecked());
-     settings->setValue("kinetic_scrolling",kineticScrolling->isChecked());
+     settings->setValue("kinetic_scrolling", kineticScrolling->isChecked());
+     settings->setValue("note_editor_font", fontComboBox->currentFont().family());
+     settings->setValue("note_editor_font_size", fontComboBox->currentFont().pointSize());
 
      accept();
 }
 
-void Preferences::openDir(){
+void Preferences::openDir()
+{
      QString path;
      path = QFileDialog::getExistingDirectory(this,
                   tr("Open Directory"), rootPath, QFileDialog::ShowDirsOnly

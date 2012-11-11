@@ -36,8 +36,6 @@ int main (int argc, char *argv[]){
      app.setApplicationName("nobleNote");
      app.setOrganizationName("nobleNote");
 
-     app.setFont(QFont("DejaVu Sans", 10)); // default font used in note editor
-
      //Qt translations
      QTranslator qtTranslator;
      qtTranslator.load("qt_" + QLocale::system().name(),

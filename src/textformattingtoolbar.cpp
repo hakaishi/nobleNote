@@ -118,8 +118,6 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     QFontDatabase db;
     foreach(int size, db.standardSizes())
       fontSizeComboBox->addItem(QString::number(size));
-    fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number(
-      QApplication::font().pointSize())));
 
     connect(textEdit_, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
       SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
@@ -253,4 +251,11 @@ void TextFormattingToolbar::pointSizeOfText(const QString &p){
        fmt.setFontPointSize(pointSize);
        mergeFormatOnWordOrSelection(fmt);
      }
+}
+
+void TextFormattingToolbar::setFont(QFont font)
+{
+     fontComboBox->setCurrentFont(font);
+     fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number(
+       font.pointSize())));
 }

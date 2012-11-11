@@ -61,6 +61,12 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      addToolBar(toolbar);
      addToolBarBreak(Qt::TopToolBarArea);
 
+     QFont font;
+     font.setFamily(QSettings().value("note_editor_font", "DejaVu Sans").toString());
+     font.setPointSize(QSettings().value("note_editor_font_size", 10).toInt());
+     textDocument->setDefaultFont(font);
+     toolbar->setFont(font);
+
      noteDescriptor_ = new NoteDescriptor(filePath,textBrowser, textDocument,this); // must be constructed after TextDocument
      textBrowser->setReadOnly(noteDescriptor_->readOnly());
      textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
