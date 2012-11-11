@@ -199,6 +199,8 @@
   <tabstop>kineticScrolling</tabstop>
   <tabstop>sizeSpinWidth</tabstop>
   <tabstop>sizeSpinHeight</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>fontSizeSpinBox</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
