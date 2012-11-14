@@ -34,7 +34,6 @@ HEADERS = src/mainwindow.h src/note.h \
     src/textbrowser.h \
     src/xorcipher.h \
     src/textformattingtoolbar.h \
-    src/newnotename.h \
     src/highlighter.h src/textsearchtoolbar.h \
     src/xmlnotewriter.h \
     src/xmlnotereader.h \
@@ -50,7 +49,7 @@ HEADERS = src/mainwindow.h src/note.h \
     src/flickcharm.h \
     src/noteimporter.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
-        src/ui/preferences.ui src/ui/newnotename.ui src/ui/backup.ui 
+        src/ui/preferences.ui src/ui/backup.ui 
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/welcome.cpp\
     src/preferences.cpp \
@@ -58,7 +57,6 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/findfilesystemmodel.cpp src/lineedit.cpp src/textbrowser.cpp \
     src/xorcipher.cpp \
     src/textformattingtoolbar.cpp \
-    src/newnotename.cpp \
     src/highlighter.cpp src/textsearchtoolbar.cpp \
     src/xmlnotewriter.cpp \
     src/xmlnotereader.cpp \

@@ -37,7 +37,6 @@
 
 class TextFormattingToolbar;
 class TextSearchToolbar;
-class NewNoteName;
 class Highlighter;
 class NoteDescriptor;
 

@@ -25,7 +25,6 @@
 
 #include "note.h"
 #include "textformattingtoolbar.h"
-#include "newnotename.h"
 #include "textbrowser.h"
 #include "textsearchtoolbar.h"
 #include "highlighter.h"
