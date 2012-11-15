@@ -287,19 +287,6 @@ Sie werden sie nicht wiederherstellen können! </translation>
     </message>
 </context>
 <context>
-    <name>NewNoteName</name>
-    <message>
-        <location filename="../ui/newnotename.ui" line="14"/>
-        <source>New note name</source>
-        <translation>Neuer Notizname</translation>
-    </message>
-    <message>
-        <location filename="../ui/newnotename.ui" line="30"/>
-        <source>please enter a new name</source>
-        <translation>Bitte geben sie einen neuen Notiznamen ein</translation>
-    </message>
-</context>
-<context>
     <name>NobleNote</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
@@ -550,17 +537,17 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="71"/>
+        <location filename="../ui/preferences.ui" line="148"/>
         <source>Default note editor size:</source>
         <translation type="unfinished">Standardgröße für den Notiz-Editor:</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="132"/>
+        <location filename="../ui/preferences.ui" line="169"/>
         <source>&amp;Auto convert tomboy and pure html notes to native notes</source>
         <translation type="unfinished">&amp;Automatische Umwandlung von tomboy und reinen html Notizen in eigene Notizen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="125"/>
+        <location filename="../ui/preferences.ui" line="176"/>
         <source>&amp;Don&apos;t quit when closing main window</source>
         <translation type="unfinished">&amp;Beim Schließen des Hauptfensters das Programm nicht beenden</translation>
     </message>
@@ -575,47 +562,52 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>&amp;Durchsuchen...</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="83"/>
+        <location filename="../ui/preferences.ui" line="81"/>
+        <source>Default note editor font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="100"/>
         <source>Width:  </source>
         <translation>Breite: </translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="90"/>
+        <location filename="../ui/preferences.ui" line="107"/>
         <source>Height:  </source>
         <translation>Höhe: </translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="139"/>
+        <location filename="../ui/preferences.ui" line="162"/>
         <source>&amp;Show &quot;Show Source&quot; in the notes context menu</source>
         <translation>&amp;Zeige &quot;Quelltext zeigen&quot; in dem Kontextmenü für Notizen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="146"/>
+        <location filename="../ui/preferences.ui" line="155"/>
         <source>Enable touchscreen style scrolling</source>
         <translation type="unfinished">Aktiviere Touchscreen-Scroll</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="158"/>
+        <location filename="../ui/preferences.ui" line="188"/>
         <source>folder</source>
         <translation>Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="61"/>
+        <location filename="../preferences.cpp" line="78"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="61"/>
+        <location filename="../preferences.cpp" line="78"/>
         <source>Could not write settings!</source>
         <translation>Einstellungen konnten nicht geschrieben werden!</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="64"/>
+        <location filename="../preferences.cpp" line="81"/>
         <source>Keep old files in the trash?</source>
         <translation>Alte Dateien im Papierkorb behalten?</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="65"/>
+        <location filename="../preferences.cpp" line="82"/>
         <source>Everytime the path to the notes is changed, %1 creates a new backup folder aka trash folder. The old path is %2. If you choose to keep the old folder, the files in the trash will be visible again when you change the note path back to the old one. If you choose &quot;no&quot; %1 will not be able to restore/undelete them.
 
 Do you want %1 to keep the old folder?</source>
@@ -624,27 +616,27 @@ Do you want %1 to keep the old folder?</source>
 Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="76"/>
+        <location filename="../preferences.cpp" line="93"/>
         <source>Couldn&apos;t delete backup folder</source>
         <translation>Konnte das Backupverzeichnis nicht löschen</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="76"/>
+        <location filename="../preferences.cpp" line="93"/>
         <source>Could not delete the backup folder!</source>
         <translation>Konnte das Backupverzeichnis nicht löschen!</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="95"/>
+        <location filename="../preferences.cpp" line="115"/>
         <source>Open Directory</source>
         <translation>Ordner öffnen</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="99"/>
+        <location filename="../preferences.cpp" line="119"/>
         <source>The path &quot;%1&quot; is not writable!</source>
         <translation>Der Pfad &quot;%1&quot; ist nicht beschreibbar!</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="99"/>
+        <location filename="../preferences.cpp" line="119"/>
         <source>No Write Access</source>
         <translation>Kein Schreibzugriff</translation>
     </message>
@@ -702,12 +694,12 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
         <translation>&amp;Hintergrundfarbe...</translation>
     </message>
     <message>
-        <location filename="../textformattingtoolbar.cpp" line="221"/>
+        <location filename="../textformattingtoolbar.cpp" line="219"/>
         <source>Insert hyperlink</source>
         <translation type="unfinished">Hyperlink einfügen</translation>
     </message>
     <message>
-        <location filename="../textformattingtoolbar.cpp" line="221"/>
+        <location filename="../textformattingtoolbar.cpp" line="219"/>
         <source>Addr&amp;ess:</source>
         <translation>&amp;Adresse:</translation>
     </message>
