@@ -203,6 +203,7 @@
   <tabstop>sizeSpinWidth</tabstop>
   <tabstop>sizeSpinHeight</tabstop>
   <tabstop>fontComboBox</tabstop>
+  <tabstop>fontSizeComboBox</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
