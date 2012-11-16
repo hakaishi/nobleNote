@@ -17,6 +17,8 @@ RESOURCES += translations.qrc
 #symbols wont be linked if only release is specified
 CONFIG -= debug_and_release
 CONFIG += release
+
+RC_FILE += icon.rc
 }
 
 system(lrelease nobleNote.pro)
