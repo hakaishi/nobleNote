@@ -42,7 +42,7 @@ class Preferences : public QDialog, public Ui::Preferences {
       QString    originalRootPath;
 
      private slots:
-      void setFontSize(int i);
+      void setFontSize(const QString size);
       void saveSettings();
       void openDir();
 

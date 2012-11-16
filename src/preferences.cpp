@@ -29,12 +29,16 @@
 #include <QTimer>
 #include <QFileDialog>
 #include <QDesktopServices>
-#include <QDebug>
+
 Preferences::Preferences(QWidget *parent): QDialog(parent)
 {
      setupUi(this);
 
      settings = new QSettings(this);
+
+     QFontDatabase db;
+     foreach(int size, db.standardSizes())
+       fontSizeComboBox->addItem(QString::number(size));
 
      dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
@@ -47,13 +51,14 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
      connect(kineticScrolling,SIGNAL(toggled(bool)),this,SIGNAL(kineticScrollingEnabledChanged(bool)));
-     connect(fontSizeSpinBox,SIGNAL(valueChanged(int)),this,SLOT(setFontSize(int)));
+     connect(fontSizeComboBox,SIGNAL(activated(QString)),this,SLOT(setFontSize(QString)));
 }
 
-void Preferences::setFontSize(int i)
+void Preferences::setFontSize(const QString size)
 {
      QFont font;
-     font.setPointSize(i);
+     qreal pointSize = size.toFloat();
+     font.setPointSize(pointSize);
      font.setFamily(fontComboBox->currentFont().family());
      fontComboBox->setFont(font);
 }
@@ -64,10 +69,11 @@ void Preferences::showEvent(QShowEvent* show_pref)
      rootPath = settings->value("root_path").toString();
      originalRootPath = rootPath;
      QFont font;
-     font.setPointSize(settings->value("note_editor_font_size", 10).toInt());
      font.setFamily(settings->value("note_editor_font", "DejaVu Sans").toString());
-     fontComboBox->setCurrentFont(font);
-     fontSizeSpinBox->setValue(font.pointSize());
+     font.setPointSize(settings->value("note_editor_font_size", 10).toInt());
+     fontComboBox->setFont(font);
+     fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number
+                                        (settings->value("note_editor_font_size").toInt())));
 
      QDialog::showEvent(show_pref);
 }
@@ -103,7 +109,7 @@ void Preferences::saveSettings()
      settings->setValue("show_source", showSource->isChecked());
      settings->setValue("kinetic_scrolling", kineticScrolling->isChecked());
      settings->setValue("note_editor_font", fontComboBox->currentFont().family());
-     settings->setValue("note_editor_font_size", fontComboBox->currentFont().pointSize());
+     settings->setValue("note_editor_font_size", fontComboBox->font().pointSize());
 
      accept();
 }
