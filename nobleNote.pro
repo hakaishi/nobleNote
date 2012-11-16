@@ -91,3 +91,7 @@ deinstall.depends = uninstall FORCE
 deinstall.commands = rm -R /usr/share/noblenote
 QMAKE_EXTRA_TARGETS = deinstall
 }
+
+OTHER_FILES += \
+    icon.rc \
+    src/noblenote-icons/noblenote.ico
