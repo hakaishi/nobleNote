@@ -73,7 +73,7 @@ void Preferences::showEvent(QShowEvent* show_pref)
      font.setPointSize(settings->value("note_editor_font_size", 10).toInt());
      fontComboBox->setFont(font);
      fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number
-                                        (settings->value("note_editor_font_size").toInt())));
+                                        (settings->value("note_editor_font_size",10).toInt())));
 
      QDialog::showEvent(show_pref);
 }
