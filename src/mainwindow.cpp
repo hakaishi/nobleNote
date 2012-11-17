@@ -427,10 +427,14 @@ void MainWindow::showEvent(QShowEvent* show_window){
      if(QSettings().value("open_notes").isValid())
        foreach(QString path, QSettings().value("open_notes").toStringList())
        {
-          Note* note = new Note(path);
-          openNotes += note;
-          note->setObjectName(path);
-          note->show();
+           // check if the notePath is already used in a open note
+          if(!noteIsOpen(path))
+          {
+               Note* note = new Note(path);
+               openNotes += note;
+               note->setObjectName(path);
+               note->show();
+          }
        }
      QMainWindow::showEvent(show_window);
 }
@@ -460,6 +464,18 @@ void MainWindow::quit()
      qApp->quit();
 }
 
+bool MainWindow::noteIsOpen(const QString &path)
+{
+     bool isOpen = false;
+     QWidget* w = noteWindow(path);
+     if(w)
+     {
+          isOpen = true;
+          w->activateWindow();  // highlight the note window
+     }
+     return isOpen;
+}
+
 void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
      Q_UNUSED(index);
      openAllNotes();
@@ -479,13 +495,8 @@ void MainWindow::openAllNotes(){
               return;
           }
 
-           // check if the notePath is already used in a open note
-          QWidget* w = noteWindow(notePath);
-          if(w)
-          {
-              w->activateWindow();  // highlight the note window
-              return;
-          }
+          if(noteIsOpen(notePath))
+            return;
 
           Note* note = new Note(notePath);
           openNotes += note;

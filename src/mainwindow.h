@@ -102,6 +102,7 @@ private:
 #endif
 
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
+      bool noteIsOpen(const QString &path);
 
      private slots:
       void writeBackupDirPath();
