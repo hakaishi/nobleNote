@@ -30,7 +30,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Path to note folders:</string>
+      <string>&lt;b&gt;Path to note folders:&lt;/b&gt;</string>
      </property>
     </widget>
    </item>
@@ -78,7 +78,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Default note editor font:</string>
+        <string>Note editor default font:</string>
        </property>
       </widget>
      </item>
@@ -138,12 +138,15 @@
         </font>
        </property>
        <property name="text">
-        <string>Default note editor size:</string>
+        <string>Note editor default size:</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0" colspan="2">
       <widget class="QCheckBox" name="kineticScrolling">
+       <property name="toolTip">
+        <string notr="true">Enables drag to scroll</string>
+       </property>
        <property name="text">
         <string>Enable touchscreen style scrolling</string>
        </property>
@@ -152,21 +155,27 @@
      <item row="2" column="0" colspan="2">
       <widget class="QCheckBox" name="showSource">
        <property name="text">
-        <string>&amp;Show &quot;Show Source&quot; in the notes context menu</string>
+        <string>&amp;Enable &quot;Show Source&quot; menu entry</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0" colspan="2">
       <widget class="QCheckBox" name="convertNotes">
+       <property name="toolTip">
+        <string>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</string>
+       </property>
        <property name="text">
-        <string>&amp;Auto convert tomboy and pure html notes to native notes</string>
+        <string>Convert notes to HTML</string>
        </property>
       </widget>
      </item>
      <item row="0" column="0" colspan="2">
       <widget class="QCheckBox" name="dontQuit">
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
-        <string>&amp;Don't quit when closing main window</string>
+        <string>&amp;Minimze to tray</string>
        </property>
       </widget>
      </item>

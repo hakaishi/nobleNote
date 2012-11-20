@@ -539,12 +539,12 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/preferences.ui" line="148"/>
         <source>Default note editor size:</source>
-        <translation type="unfinished">Standardgröße für den Notiz-Editor:</translation>
+        <translation>Notiz-Editor Standardgröße:</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="169"/>
         <source>&amp;Auto convert tomboy and pure html notes to native notes</source>
-        <translation type="unfinished">&amp;Automatische Umwandlung von tomboy und reinen html Notizen in eigene Notizen</translation>
+        <translation>&amp;Automatische Umwandlung in HTML Notizen</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="176"/>
@@ -681,7 +681,7 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="88"/>
         <source>&amp;Clear formatting</source>
-        <translation type="unfinished">Formatierung &amp;löschen</translation>
+        <translation>Formatierung &amp;löschen</translation>
     </message>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="96"/>
@@ -696,7 +696,7 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="219"/>
         <source>Insert hyperlink</source>
-        <translation type="unfinished">Hyperlink einfügen</translation>
+        <translation>Hyperlink einfügen</translation>
     </message>
     <message>
         <location filename="../textformattingtoolbar.cpp" line="219"/>
@@ -749,7 +749,7 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
         <source>Welcome to nobleNote!
 This is the first time that nobleNote has been started.
 You can choose a directory where the notes will be saved in.</source>
-        <translation type="unfinished">Willkommen bei nobleNote!
+        <translation>Willkommen bei nobleNote!
 Dies ist das erste Mal, dass nobleNote gestartet wurde.
 Sie können ein Verzeichnis wählen, wo die Notizen gespeichert werden.</translation>
     </message>
