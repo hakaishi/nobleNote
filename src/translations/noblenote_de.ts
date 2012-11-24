@@ -21,7 +21,7 @@
     <message>
         <location filename="../ui/backup.ui" line="60"/>
         <source>Select the notes you want to delete or restore</source>
-        <translation>Wählen Sie die Notizen aus, die sie löschen oder wiederherstellen möchten</translation>
+        <translation>Wählen Sie die Notizen aus, die Sie Löschen oder Wiederherstellen möchten</translation>
     </message>
     <message>
         <location filename="../ui/backup.ui" line="76"/>
@@ -45,50 +45,48 @@
     </message>
     <message>
         <location filename="../backup.cpp" line="195"/>
-        <source>Deleting backups and file entries</source>
-        <translation type="unfinished">Lösche Backups und Dateieinträge</translation>
+        <source>Delete multiple notes</source>
+        <translation>Löschen mehrerer Notizen bestätigen</translation>
     </message>
     <message>
         <location filename="../backup.cpp" line="196"/>
-        <source>Do you really want to delete the backups and entries for the following files?
+        <source>Are you sure you want to permanently delete these notes?
 
-%1
-You won&apos;t be able to restore them!</source>
-        <translation type="unfinished">Wollen Sie wirklich die Backups und Eintragungen für die folgende Dateien löschen?
+%1</source>
+        <translation>Sind Sie sicher, dass Sie die markierten Notizen endgültig löschen wollen?
 
-%1
-Sie werden sie nicht wiederherstellen können! </translation>
+%1</translation>
     </message>
 </context>
 <context>
     <name>FileSystemModel</name>
     <message>
         <location filename="../filesystemmodel.h" line="102"/>
-        <source>Couldn&apos;t drop some files</source>
-        <translation type="unfinished">Eine oder mehrere Dateien konnten nicht abgelegt werden</translation>
+        <source>Files could not be dropped</source>
+        <translation>Dateien konnten nicht abgelegt werden</translation>
     </message>
     <message>
         <location filename="../filesystemmodel.h" line="103"/>
-        <source>Files of the same names are already existing in this folder:
+        <source>The files could not be dropped because files of the same names are already existing in this notebook:
 
 %1</source>
-        <translation type="unfinished">In diesem Verzeichnis existieren bereits Dateien mit diesen Namen:
+        <translation>Die Dateien konnten nicht abgelegt werden da in diesem Verzeichnis bereits Dateien mit diesen Namen existieren:
 
-%1 </translation>
-    </message>
-    <message>
-        <location filename="../filesystemmodel.h" line="106"/>
-        <source>Couldn&apos;t drop a file</source>
-        <translation type="unfinished">Datei konnte nicht abgelegt werden</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../filesystemmodel.h" line="107"/>
-        <source>A file with the same name already exists in this folder:
+        <source>The file could not be dropped because a file with the same name already exists in this notebook:
 
 %1</source>
-        <translation type="unfinished">In diesem Verzeichnis existiert bereits eine Datei mit diesem Namen:
+        <translation>Die Datei konnten nicht abgelegt werden da in diesem Verzeichnis bereits eine Datei mit diesen Namen existiert:
 
 %1</translation>
+    </message>
+    <message>
+        <location filename="../filesystemmodel.h" line="106"/>
+        <source>File could not be dropped</source>
+        <translation>Datei konnte nicht abgelegt werden</translation>
     </message>
 </context>
 <context>
@@ -117,39 +115,29 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>&amp;Schließen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="285"/>
+        <location filename="../mainwindow.cpp" line="288"/>
         <source>default</source>
         <translation>Vorgabe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="443"/>
+        <location filename="../mainwindow.cpp" line="446"/>
         <source>&amp;Restore</source>
         <translation>&amp;Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="494"/>
+        <location filename="../mainwindow.cpp" line="497"/>
         <source>Note does not exist</source>
         <translation>Notiz existiert nicht</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="595"/>
+        <location filename="../mainwindow.cpp" line="598"/>
         <source>new note</source>
         <translation>Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="600"/>
+        <location filename="../mainwindow.cpp" line="603"/>
         <source>new note (%1)</source>
         <translation>Neue Notiz (%1)</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="637"/>
-        <source>One notebook must remain</source>
-        <translation type="unfinished">Es muss mindestens ein Notizbuch vorhanden sein</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="637"/>
-        <source>At least one notebook must remain.</source>
-        <translation type="unfinished">Es muss mindestens ein Notizbuch vorhanden sein.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="102"/>
@@ -157,57 +145,63 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>Zum suchen nach Notizen tippen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="494"/>
+        <location filename="../mainwindow.cpp" line="497"/>
         <source>The selected note cannot be opened because it has been moved or renamed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die ausgewählte Notiz konnte nicht geöffnet werden da sie verschoben oder umbenannt wurde!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="576"/>
+        <location filename="../mainwindow.cpp" line="579"/>
         <source>new notebook</source>
         <translation>Neues Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="581"/>
+        <location filename="../mainwindow.cpp" line="584"/>
         <source>new notebook (%1)</source>
         <translation>Neues Notizbuch (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="646"/>
+        <location filename="../mainwindow.cpp" line="649"/>
         <source>Delete Notebook</source>
         <translation>Lösche Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="647"/>
+        <location filename="../mainwindow.cpp" line="650"/>
         <source>Are you sure you want to delete the notebook &quot;%1&quot; and move all containing notes to the trash?</source>
         <translation>Sind Sie sicher, dass Sie das Notizbuch &quot;%1&quot; löschen und alle enthaltenen Notizen in den Papierkorb schieben wollen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="668"/>
+        <location filename="../mainwindow.cpp" line="640"/>
+        <location filename="../mainwindow.cpp" line="671"/>
         <source>Notebook could not be deleted</source>
         <translation>Notizbuch konnte nicht gelöscht werden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="668"/>
-        <source>The Notebook could not be deleted because one or more files inside the folder could not be deleted.</source>
-        <translation>Das Notizbuch konnte nicht gelöscht werden, da eine oder mehrere Dateien in dem Verzeichnis nicht gelöscht werden konnten.</translation>
+        <location filename="../mainwindow.cpp" line="640"/>
+        <source>The notebook could not be deleted because one notebook must remain</source>
+        <translation>Das Notizbuch konnte nicht gelöscht werden da mindestens ein Notizbuch vorhanden sein muss</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="702"/>
+        <location filename="../mainwindow.cpp" line="671"/>
+        <source>The notebook could not be deleted because one or more notes inside the notebook could not be deleted.</source>
+        <translation>Das Notizbuch konnte nicht gelöscht werden, da eine oder mehrere Notizen in dem Notizbuch nicht gelöscht werden konnten.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="705"/>
         <source>Delete Note</source>
         <translation>Lösche Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="703"/>
+        <location filename="../mainwindow.cpp" line="706"/>
         <source>Are you sure you want to move the note %1 to the trash?</source>
         <translation>Sind Sie sicher, dass Sie die Notiz %1 in den Papierkob schieben wollen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="707"/>
+        <location filename="../mainwindow.cpp" line="710"/>
         <source>Delete Multiple Notes</source>
         <translation>Löschen mehrerer Notizen bestätigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="708"/>
+        <location filename="../mainwindow.cpp" line="711"/>
         <source>Are you sure you want to move these %1 notes to the trash?
 
 %2</source>
@@ -216,72 +210,72 @@ Sie werden sie nicht wiederherstellen können! </translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="750"/>
+        <location filename="../mainwindow.cpp" line="753"/>
         <source>&amp;New notebook</source>
         <translation>&amp;Neues Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="756"/>
+        <location filename="../mainwindow.cpp" line="759"/>
         <source>&amp;Rename notebook</source>
         <translation>Notizbuch &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="757"/>
+        <location filename="../mainwindow.cpp" line="760"/>
         <source>&amp;Delete notebook</source>
         <translation>Notizbuch &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="779"/>
+        <location filename="../mainwindow.cpp" line="782"/>
         <source>&amp;New note</source>
         <translation>&amp;Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="787"/>
+        <location filename="../mainwindow.cpp" line="790"/>
         <source>&amp;Open notes</source>
         <translation>Notiz &amp;öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="788"/>
+        <location filename="../mainwindow.cpp" line="791"/>
         <source>&amp;Rename note</source>
         <translation>Notiz &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="789"/>
         <location filename="../mainwindow.cpp" line="792"/>
+        <location filename="../mainwindow.cpp" line="795"/>
         <source>&amp;Delete note</source>
         <translation>Notiz &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="794"/>
+        <location filename="../mainwindow.cpp" line="797"/>
         <source>&amp;Delete notes</source>
         <translation>Notizen &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="806"/>
+        <location filename="../mainwindow.cpp" line="809"/>
         <source>Show &amp;Source</source>
         <translation>&amp;Quelltext anzeigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="850"/>
+        <location filename="../mainwindow.cpp" line="853"/>
         <source>Copy error</source>
-        <translation type="unfinished">Fehler beim Kopieren</translation>
+        <translation>Fehler beim Kopieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="850"/>
-        <source>Files of the same names already exist in this notebook:
+        <location filename="../mainwindow.cpp" line="853"/>
+        <source>Notes of the same names already exist in this notebook:
 
 %1</source>
-        <translation type="unfinished">In diesem Notizbuch existieren bereits Dateien mit diesem Namen:
+        <translation>In diesem Notizbuch existieren bereits Notizen mit diesem Namen:
 
 %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="889"/>
+        <location filename="../mainwindow.cpp" line="892"/>
         <source>About </source>
         <translation>Über </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="890"/>
+        <location filename="../mainwindow.cpp" line="893"/>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -492,13 +486,13 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <name>NoteDescriptor</name>
     <message>
         <location filename="../notedescriptor.cpp" line="69"/>
-        <source>Keep non existing note</source>
-        <translation type="unfinished">Behalte nicht existente Notiz</translation>
+        <source>Note does not exit</source>
+        <translation>Notiz existiert nicht</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="70"/>
-        <source>This note doesn&apos;t exist anymore. Keep this file open?</source>
-        <translation type="unfinished">Diese Notiz existiert nicht mehr. Datei geöffnet lassen?</translation>
+        <source>This note does not longer exist. Do you want to keep the editor open?</source>
+        <translation>Diese Notiz existiert nicht mehr. Wollen Sie den Notizeditor geöffnet lassen?</translation>
     </message>
     <message>
         <location filename="../notedescriptor.cpp" line="103"/>
@@ -537,20 +531,9 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>Default note editor size:</source>
-        <translation type="obsolete">Notiz-Editor Standardgröße:</translation>
-    </message>
-    <message>
-        <source>&amp;Auto convert tomboy and pure html notes to native notes</source>
-        <translation type="obsolete">&amp;Automatische Umwandlung in HTML Notizen</translation>
-    </message>
-    <message>
-        <source>&amp;Don&apos;t quit when closing main window</source>
-        <translation type="obsolete">&amp;Beim Schließen des Hauptfensters das Programm nicht beenden</translation>
-    </message>
-    <message>
-        <source>Path to note folders:</source>
-        <translation type="obsolete">Hauptverzeichnis:</translation>
+        <location filename="../ui/preferences.ui" line="33"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Root directory&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="49"/>
@@ -558,14 +541,9 @@ Sie werden sie nicht wiederherstellen können! </translation>
         <translation>&amp;Durchsuchen...</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="33"/>
-        <source>&lt;b&gt;Path to note folders:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ui/preferences.ui" line="81"/>
         <source>Note editor default font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Notizeditor Standardschriftart:</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="93"/>
@@ -580,35 +558,31 @@ Sie werden sie nicht wiederherstellen können! </translation>
     <message>
         <location filename="../ui/preferences.ui" line="141"/>
         <source>Note editor default size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Show &quot;Show Source&quot; in the notes context menu</source>
-        <translation type="obsolete">&amp;Zeige &quot;Quelltext zeigen&quot; in dem Kontextmenü für Notizen</translation>
+        <translation>Notizeditor Standardgröße:</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="151"/>
-        <source>Enable touchscreen style scrolling</source>
-        <translation type="unfinished">Aktiviere Touchscreen-Scroll</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="158"/>
-        <source>&amp;Enable &quot;Show Source&quot; menu entry</source>
+        <source>touch screen scrolling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="165"/>
-        <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
+        <location filename="../ui/preferences.ui" line="158"/>
+        <source>&amp;Show &quot;Show Source&quot; menu entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="168"/>
-        <source>Convert notes to HTML</source>
+        <source>Convert notes to the HTML format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="178"/>
-        <source>&amp;Minimze to tray</source>
+        <source>&amp;Close to tray</source>
+        <translation>&amp;Zum Tray minimieren</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="165"/>
+        <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

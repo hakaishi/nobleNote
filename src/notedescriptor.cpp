@@ -66,8 +66,8 @@ void NoteDescriptor::stateChange()
 
         if(newFilePath.isEmpty())
         {
-            if(QMessageBox::warning(noteWidget_,tr("Keep non existing note"),
-                                    tr("This note doesn't exist anymore. Keep this file open?"),
+            if(QMessageBox::warning(noteWidget_,tr("Note does not exit"),
+                                    tr("This note does not longer exist. Do you want to keep the editor open?"),
                                     QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
             {
                 // check if file already exists

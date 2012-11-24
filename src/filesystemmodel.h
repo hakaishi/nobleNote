@@ -99,12 +99,12 @@ public:
                        existingFiles += file + "\n";
                 if(!existingFiles.isEmpty())
                 {
-                  QString title = tr("Couldn't drop some files");
-                  QString text = tr("Files of the same names are already existing in this folder:\n\n%1").arg(QDir::toNativeSeparators(existingFiles));
+                  QString title = tr("Files could not be dropped");
+                  QString text = tr("The files could not be dropped because files of the same names are already existing in this notebook:\n\n%1").arg(QDir::toNativeSeparators(existingFiles));
                   if(files.size() == 1)
                   {
-                    title = tr("Couldn't drop a file");
-                    text = tr("A file with the same name already exists in this folder:\n\n%1").arg(QDir::toNativeSeparators(existingFiles));
+                    title = tr("File could not be dropped");
+                    text = tr("The file could not be dropped because a file with the same name already exists in this notebook:\n\n%1").arg(QDir::toNativeSeparators(existingFiles));
                   }
                   QMessageBox::warning(0, title, text);
                 }

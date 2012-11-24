@@ -637,7 +637,7 @@ void MainWindow::removeFolder(){
      // keep at least one folder
      if(dirList.size() == 1)
      {
-        QMessageBox::information(this,tr("One notebook must remain"),tr("At least one notebook must remain."));
+        QMessageBox::information(this,tr("Notebook could not be deleted"),tr("The notebook could not be deleted because one notebook must remain"));
         return;
      }
 
@@ -668,7 +668,7 @@ void MainWindow::removeFolder(){
         // try to remove the (now empty?) folder again
         if(!folderModel->rmdir(idx))
         {
-            QMessageBox::warning(this,tr("Notebook could not be deleted"), tr("The Notebook could not be deleted because one or more files inside the folder could not be deleted."));
+            QMessageBox::warning(this,tr("Notebook could not be deleted"), tr("The notebook could not be deleted because one or more notes inside the notebook could not be deleted."));
             return;
         }
      }
@@ -850,7 +850,7 @@ void MainWindow::pasteFiles()
           else QFile(note).remove();
      }
      if(!copyErrorFiles.isEmpty())
-       QMessageBox::critical(this, tr("Copy error"), tr("Files of the same names "
+       QMessageBox::critical(this, tr("Copy error"), tr("Notes of the same names "
                              "already exist in this notebook:\n\n%1").arg(QDir::toNativeSeparators(copyErrorFiles)));
      shortcutNoteList.clear();
      action_Paste->setDisabled(true);

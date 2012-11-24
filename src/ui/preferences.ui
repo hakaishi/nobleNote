@@ -30,7 +30,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&lt;b&gt;Path to note folders:&lt;/b&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Root directory&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -148,14 +148,14 @@
         <string notr="true">Enables drag to scroll</string>
        </property>
        <property name="text">
-        <string>Enable touchscreen style scrolling</string>
+        <string>touch screen scrolling</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0" colspan="2">
       <widget class="QCheckBox" name="showSource">
        <property name="text">
-        <string>&amp;Enable &quot;Show Source&quot; menu entry</string>
+        <string>&amp;Show &quot;Show Source&quot; menu entry</string>
        </property>
       </widget>
      </item>
@@ -165,7 +165,7 @@
         <string>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</string>
        </property>
        <property name="text">
-        <string>Convert notes to HTML</string>
+        <string>Convert notes to the HTML format</string>
        </property>
       </widget>
      </item>
@@ -175,7 +175,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>&amp;Minimze to tray</string>
+        <string>&amp;Close to tray</string>
        </property>
       </widget>
      </item>
