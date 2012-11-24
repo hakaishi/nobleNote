@@ -624,7 +624,7 @@ void MainWindow::renameFolder(){
 }
 
 void MainWindow::renameNote(){
-     if(!folderView->selectionModel()->selectedRows().isEmpty())
+     if(!noteView->selectionModel()->selectedRows().isEmpty())
        noteView->edit(noteView->selectionModel()->selectedRows().first());
 }
 
@@ -788,7 +788,6 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
      if(noteView->indexAt(pos).isValid()) // if index exists at position
      {
          QAction* openAll = new QAction(tr("&Open notes"), &menu);
-         QAction* renameN = new QAction(tr("&Rename note"), &menu);
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
 
          if(noteView->selectionModel()->selectedRows().count() == 1)
@@ -796,10 +795,10 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          else
            removeNote->setText(tr("&Delete notes"));
          connect(openAll, SIGNAL(triggered()), this, SLOT(openAllNotes()));
-         connect(renameN, SIGNAL(triggered()), this, SLOT(renameNote()));
+         connect(actionRename_note, SIGNAL(triggered()), this, SLOT(renameNote()));
          connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
          if(noteView->selectionModel()->selectedRows().count() == 1)
-           menu.addAction(renameN);
+           menu.addAction(actionRename_note);
          else
            menu.addAction(openAll);
          menu.addAction(removeNote);
