@@ -79,12 +79,14 @@ class Backup : public QDialog, public Ui::Backup {
            {
 
                 QTextDocument *d = new QTextDocument;
+                AbstractNoteReader *reader = new HtmlNoteReader(file.absoluteFilePath(),d);
                 QStringList data;
-                data << HtmlNoteReader(file.absoluteFilePath(),d).title() << file.absoluteFilePath() << d->toHtml();
+                data << reader->title() << file.absoluteFilePath() << d->toHtml();
                 hash->insert(file.absoluteFilePath(),data);
 
                 p->postProgressEvent();
-                d->deleteLater();
+                delete d;
+                delete reader;
            }
       };
 
