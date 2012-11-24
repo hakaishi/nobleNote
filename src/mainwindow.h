@@ -72,13 +72,14 @@ class MainWindow : public QMainWindow, public Ui::NobleNote {
  
      public:
       MainWindow();
+      ~MainWindow();
 
 public slots:
     void quit();
 private:
       Welcome         *welcome;
+      FileIconProvider *folderIconProvider, *noteIconProvider;
       QSplitter       *splitter;
-      FileIconProvider *noteIcons;
       LineEdit        *searchName, *searchText;
       FindFileSystemModel *folderModel;
       FileSystemModel *noteFSModel;

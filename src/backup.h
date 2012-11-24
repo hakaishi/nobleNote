@@ -43,6 +43,7 @@ class Backup : public QDialog, public Ui::Backup {
  
      public:
       Backup(QWidget *parent = 0);
+      ~Backup();
 
      private:
       QTextDocument *document;
@@ -78,12 +79,12 @@ class Backup : public QDialog, public Ui::Backup {
            {
 
                 QTextDocument *d = new QTextDocument;
-                AbstractNoteReader *reader = new HtmlNoteReader(file.absoluteFilePath(),d);
                 QStringList data;
-                data << reader->title() << file.absoluteFilePath() << d->toHtml();
+                data << HtmlNoteReader(file.absoluteFilePath(),d).title() << file.absoluteFilePath() << d->toHtml();
                 hash->insert(file.absoluteFilePath(),data);
 
                 p->postProgressEvent();
+                d->deleteLater();
            }
       };
 

@@ -45,6 +45,8 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      connect(restoreButton, SIGNAL(clicked(bool)), this, SLOT(restoreBackup()));
 }
 
+Backup::~Backup() { delete backupDataHash; }
+
 void Backup::getNoteUuidList()
 {
      QFutureIterator<QString> it(future1->future());
@@ -54,8 +56,6 @@ void Backup::getNoteUuidList()
 
 void Backup::getNotes()
 {
-     noteFiles.clear(); //remove old files
-
      //get note files
      QDirIterator itFiles(QSettings().value("root_path").toString(),
                                               QDirIterator::Subdirectories);

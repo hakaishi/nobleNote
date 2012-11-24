@@ -102,24 +102,25 @@ MainWindow::MainWindow()
      searchText->setPlaceholderText(tr("Type to search for notes"));
      gridLayout->addWidget(searchText, 2, 0);
 
-
      splitter = new QSplitter(centralwidget);
      gridLayout->addWidget(splitter, 3, 0);
 
+   //IconProvider
+     folderIconProvider = new FileIconProvider();
+     noteIconProvider = new FileIconProvider();
 
      folderModel = new FindFileSystemModel(this);
      folderModel->setSortCaseSensitivity(Qt::CaseInsensitive);
      FileSystemModel *folderFSModel = new FileSystemModel(this);
      folderFSModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
      folderFSModel->setReadOnly(false);
-     folderFSModel->setIconProvider(new FileIconProvider());
+     folderFSModel->setIconProvider(folderIconProvider);
      folderModel->setSourceModel(folderFSModel);
 
      noteFSModel = new FileSystemModel(this);
      noteFSModel->setFilter(QDir::Files);
      noteFSModel->setReadOnly(false);
-     noteIcons = new FileIconProvider();
-     noteFSModel->setIconProvider(noteIcons);
+     noteFSModel->setIconProvider(noteIconProvider);
 
      //foreach(QString str, noteFSModel->mimeTypes())
      //    qDebug() << "mime types: " << str;
@@ -223,6 +224,8 @@ MainWindow::MainWindow()
 
      connect(searchText, SIGNAL(sendCleared()), this, SLOT(selectFolder()));
 }
+
+MainWindow::~MainWindow() { delete folderIconProvider; delete noteIconProvider; }
 
 void MainWindow::selectFolder()
 {
@@ -825,11 +828,11 @@ void MainWindow::getCutFiles()
      if(!shortcutNoteList.isEmpty())
        action_Paste->setEnabled(true);
 
-     if(noteIcons)
-       delete noteIcons;
-     noteIcons = new FileIconProvider();
-     noteIcons->setCutFiles(shortcutNoteList);
-     noteFSModel->setIconProvider(noteIcons);
+     if(noteIconProvider)
+       delete noteIconProvider;
+     noteIconProvider = new FileIconProvider();
+     noteIconProvider->setCutFiles(shortcutNoteList);
+     noteFSModel->setIconProvider(noteIconProvider);
 }
 
 void MainWindow::pasteFiles()
@@ -870,10 +873,10 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
      {
           shortcutNoteList.clear();
 
-          if(noteIcons)
-            delete noteIcons;
-          noteIcons = new FileIconProvider();
-          noteFSModel->setIconProvider(noteIcons);
+          if(noteIconProvider)
+            delete noteIconProvider;
+          noteIconProvider = new FileIconProvider();
+          noteFSModel->setIconProvider(noteIconProvider);
      }
 }
 
