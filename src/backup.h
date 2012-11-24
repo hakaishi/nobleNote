@@ -43,7 +43,6 @@ class Backup : public QDialog, public Ui::Backup {
  
      public:
       Backup(QWidget *parent = 0);
-      ~Backup();
 
      private:
       QTextDocument *document;
@@ -101,6 +100,9 @@ class Backup : public QDialog, public Ui::Backup {
       void getNotes();
       void setupBackups();
       void setupChildren();
+
+    protected:
+     virtual void closeEvent(QCloseEvent* close_calendar);
 };
 
 #endif //BACKUP_H

@@ -45,7 +45,7 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      connect(restoreButton, SIGNAL(clicked(bool)), this, SLOT(restoreBackup()));
 }
 
-Backup::~Backup()
+void Backup::closeEvent(QCloseEvent* e)
 {
      if(future1->isCanceled() && future2->isCanceled())
      {
@@ -53,6 +53,8 @@ Backup::~Backup()
         future2->waitForFinished();
      }
      delete backupDataHash;
+
+     QDialog::closeEvent(e);
 }
 
 void Backup::getNoteUuidList()
