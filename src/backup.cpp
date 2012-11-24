@@ -45,18 +45,6 @@ Backup::Backup(QWidget *parent): QDialog(parent){
      connect(restoreButton, SIGNAL(clicked(bool)), this, SLOT(restoreBackup()));
 }
 
-void Backup::closeEvent(QCloseEvent* e)
-{
-     if(future1->isCanceled() && future2->isCanceled())
-     {
-        future1->waitForFinished();
-        future2->waitForFinished();
-     }
-     delete backupDataHash;
-
-     QDialog::closeEvent(e);
-}
-
 void Backup::getNoteUuidList()
 {
      QFutureIterator<QString> it(future1->future());
@@ -121,8 +109,7 @@ void Backup::setupBackups()
      progressDialog2 = new QProgressDialog(this);
      progressDialog2->setLabelText(QString(tr("Indexing trash...")));
      setupBackup.p = progressReceiver2;
-     backupDataHash = new QHash<QString,QStringList>;
-     setupBackup.hash = backupDataHash;
+     setupBackup.hash = &backupDataHash;
      future2 = new QFutureWatcher<void>(this);
      future2->setFuture(QtConcurrent::map(backupFiles, setupBackup));
 
@@ -136,12 +123,11 @@ void Backup::setupBackups()
 
 void Backup::setupChildren()
 {
-     QHash<QString,QStringList> hash = *backupDataHash;
-     foreach(QString key, hash.keys())
+     foreach(QString key, backupDataHash.keys())
      {
           QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-          item->setText(0,hash[key].first()); //title
-          item->setData(0,Qt::UserRole,hash[key]); //title, path and content
+          item->setText(0,backupDataHash[key].first()); //title
+          item->setData(0,Qt::UserRole,backupDataHash[key]); //title, path and content
      }
 }
 

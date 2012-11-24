@@ -54,7 +54,7 @@ class Backup : public QDialog, public Ui::Backup {
       QProgressDialog  *progressDialog1, *progressDialog2;
       QStringList noteUuidList;
       QList<QFileInfo> backupFiles; //don't ever use a local stack variable
-      QHash<QString,QStringList> *backupDataHash;
+      QHash<QString,QStringList> backupDataHash;
 
       struct GetUuid
       {
@@ -100,9 +100,6 @@ class Backup : public QDialog, public Ui::Backup {
       void getNotes();
       void setupBackups();
       void setupChildren();
-
-    protected:
-     virtual void closeEvent(QCloseEvent* close_calendar);
 };
 
 #endif //BACKUP_H
