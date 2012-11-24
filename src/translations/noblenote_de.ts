@@ -485,8 +485,12 @@
 <context>
     <name>NoteDescriptor</name>
     <message>
-        <location filename="../notedescriptor.cpp" line="69"/>
         <source>Note does not exit</source>
+        <translation type="obsolete">Notiz existiert nicht</translation>
+    </message>
+    <message>
+        <location filename="../notedescriptor.cpp" line="69"/>
+        <source>Note does not exist</source>
         <translation>Notiz existiert nicht</translation>
     </message>
     <message>
