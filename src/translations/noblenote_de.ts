@@ -34,22 +34,22 @@
         <translation>Gelöschte Notizen</translation>
     </message>
     <message>
-        <location filename="../backup.cpp" line="70"/>
+        <location filename="../backup.cpp" line="68"/>
         <source>Indexing notes...</source>
         <translation>Indiziere Notizen...</translation>
     </message>
     <message>
-        <location filename="../backup.cpp" line="112"/>
+        <location filename="../backup.cpp" line="110"/>
         <source>Indexing trash...</source>
         <translation>Indiziere Papierkorb...</translation>
     </message>
     <message>
-        <location filename="../backup.cpp" line="195"/>
+        <location filename="../backup.cpp" line="191"/>
         <source>Delete multiple notes</source>
         <translation>Löschen mehrerer Notizen bestätigen</translation>
     </message>
     <message>
-        <location filename="../backup.cpp" line="196"/>
+        <location filename="../backup.cpp" line="192"/>
         <source>Are you sure you want to permanently delete these notes?
 
 %1</source>
@@ -235,33 +235,32 @@
         <translation>Notiz &amp;öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="791"/>
         <source>&amp;Rename note</source>
-        <translation>Notiz &amp;umbenennen</translation>
+        <translation type="obsolete">Notiz &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="792"/>
-        <location filename="../mainwindow.cpp" line="795"/>
+        <location filename="../mainwindow.cpp" line="791"/>
+        <location filename="../mainwindow.cpp" line="794"/>
         <source>&amp;Delete note</source>
         <translation>Notiz &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="797"/>
+        <location filename="../mainwindow.cpp" line="796"/>
         <source>&amp;Delete notes</source>
         <translation>Notizen &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="809"/>
+        <location filename="../mainwindow.cpp" line="808"/>
         <source>Show &amp;Source</source>
         <translation>&amp;Quelltext anzeigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="853"/>
+        <location filename="../mainwindow.cpp" line="852"/>
         <source>Copy error</source>
         <translation>Fehler beim Kopieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="853"/>
+        <location filename="../mainwindow.cpp" line="852"/>
         <source>Notes of the same names already exist in this notebook:
 
 %1</source>
@@ -270,12 +269,12 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="892"/>
+        <location filename="../mainwindow.cpp" line="891"/>
         <source>About </source>
         <translation>Über </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="893"/>
+        <location filename="../mainwindow.cpp" line="892"/>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -535,62 +534,62 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="33"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Root directory&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="49"/>
+        <location filename="../ui/preferences.ui" line="55"/>
         <source>&amp;Browse ...</source>
         <translation>&amp;Durchsuchen...</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="81"/>
+        <location filename="../ui/preferences.ui" line="87"/>
         <source>Note editor default font:</source>
         <translation>Notizeditor Standardschriftart:</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="93"/>
+        <location filename="../ui/preferences.ui" line="99"/>
         <source>Width:  </source>
         <translation>Breite: </translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="100"/>
+        <location filename="../ui/preferences.ui" line="106"/>
         <source>Height:  </source>
         <translation>Höhe: </translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="141"/>
+        <location filename="../ui/preferences.ui" line="147"/>
         <source>Note editor default size:</source>
         <translation>Notizeditor Standardgröße:</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="151"/>
+        <location filename="../ui/preferences.ui" line="157"/>
         <source>touch screen scrolling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="158"/>
+        <location filename="../ui/preferences.ui" line="164"/>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="168"/>
+        <location filename="../ui/preferences.ui" line="174"/>
         <source>Convert notes to the HTML format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="178"/>
+        <location filename="../ui/preferences.ui" line="184"/>
         <source>&amp;Close to tray</source>
         <translation>&amp;Zum Tray minimieren</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="165"/>
+        <location filename="../ui/preferences.ui" line="171"/>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="200"/>
+        <location filename="../ui/preferences.ui" line="39"/>
+        <source>Root directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="206"/>
         <source>folder</source>
         <translation>Verzeichnis</translation>
     </message>
