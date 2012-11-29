@@ -29,7 +29,7 @@
 #include <QLibraryInfo>
 #include <QSettings>
 #include <QMessageBox>
-#include <welcome.h>
+#include "welcome.h"
 
 int main (int argc, char *argv[]){
      QApplication app(argc, argv);
