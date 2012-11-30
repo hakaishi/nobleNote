@@ -562,8 +562,7 @@ Note *MainWindow::noteWindow(const QString &filePath)
         // remove NULL pointers, if the Note widget is destroyed, its pointer is automatically set to null
         if(!(*it))
         {
-            it = openNotes.erase(it); // skip iterator position
-            continue;
+            it = openNotes.erase(it); // set iterator to the item after the erased item
         }
 
         Note * note = qobject_cast<Note*>(*it);
