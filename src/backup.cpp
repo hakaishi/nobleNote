@@ -111,7 +111,7 @@ void Backup::setupBackups()
 
 void Backup::showTrash()
 {
-     trash = new Trash(this, &backupDataHash);
+     trash = new Trash(&backupDataHash, this);
      connect(trash, SIGNAL(destroyed()), this, SLOT(deleteLater()));
      trash->show();
 }

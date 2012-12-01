@@ -27,7 +27,7 @@
 #include <QSettings>
 #include <QMessageBox>
 
-Trash::Trash(QWidget *parent, QHash<QString,QStringList> *backupDataHash): QDialog(parent){
+Trash::Trash(QHash<QString,QStringList> *backupDataHash, QWidget *parent): QDialog(parent){
      setupUi(this);
 
      setAttribute(Qt::WA_DeleteOnClose);

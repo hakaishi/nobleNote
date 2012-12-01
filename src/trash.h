@@ -35,7 +35,7 @@ class Trash : public QDialog, public Ui::Trash {
      Q_OBJECT
  
      public:
-      Trash(QWidget *parent = 0, QHash<QString,QStringList> *backupDataHash = 0);
+      Trash(QHash<QString,QStringList> *backupDataHash, QWidget *parent = 0);
 
      private:
       QPushButton   *deleteOldButton;
