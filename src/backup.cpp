@@ -31,7 +31,7 @@
 #include <QtConcurrentMap>
 #include <QAbstractItemModel>
 
-Backup::Backup(QWidget *parent) : QWidget(parent)
+Backup::Backup()
 {
      getNotes(); //Searches for notes and backups. For the backups with no notes it will create the trees children.
 }

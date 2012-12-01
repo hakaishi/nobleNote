@@ -41,7 +41,7 @@ class Backup : public QWidget {
      Q_OBJECT
  
      public:
-      Backup(QWidget *parent = 0);
+      Backup();
 
      private:
       QTextDocument *document;
