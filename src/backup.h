@@ -26,7 +26,6 @@
 #ifndef BACKUP_H
 #define BACKUP_H
 
-#include "ui_backup.h"
 #include "htmlnotereader.h"
 #include "abstractnotereader.h"
 #include "progressreceiver.h"
@@ -34,11 +33,11 @@
 #include <QTextDocument>
 #include <QProgressDialog>
 #include <QFutureWatcher>
-#include <QUuid>
 
 class ProgressReceiver;
+class Trash;
 
-class Backup : public QDialog, public Ui::Backup {
+class Backup : public QWidget {
      Q_OBJECT
  
      public:
@@ -55,6 +54,7 @@ class Backup : public QDialog, public Ui::Backup {
       QStringList noteUuidList;
       QList<QFileInfo> backupFiles; //don't ever use a local stack variable
       QHash<QString,QStringList> backupDataHash;
+      Trash         *trash;
 
       struct GetUuid
       {
@@ -93,13 +93,10 @@ class Backup : public QDialog, public Ui::Backup {
       SetupBackup setupBackup;
 
      private slots:
-      void showPreview();
-      void restoreBackup();
-      void deleteBackup();
       void getNoteUuidList();
       void getNotes();
       void setupBackups();
-      void setupChildren();
+      void showTrash();
 };
 
 #endif //BACKUP_H

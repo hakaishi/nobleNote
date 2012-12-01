@@ -47,11 +47,12 @@ HEADERS = src/mainwindow.h src/note.h \
     src/htmlnotewriter.h \
     src/fileiconprovider.h \
     src/backup.h \
+    src/trash.h \
     src/progressreceiver.h \
     src/flickcharm.h \
     src/noteimporter.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
-        src/ui/preferences.ui src/ui/backup.ui 
+        src/ui/preferences.ui src/ui/trash.ui 
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/welcome.cpp\
     src/preferences.cpp \
@@ -69,6 +70,7 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/datetime.cpp \
     src/fileiconprovider.cpp \
     src/backup.cpp \
+    src/trash.cpp \
     src/progressreceiver.cpp \
     src/flickcharm.cpp \
     src/noteimporter.cpp
