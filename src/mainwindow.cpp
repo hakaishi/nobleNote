@@ -169,6 +169,7 @@ MainWindow::MainWindow()
 
      makeStandardPaths(); // mkpath the standard paths if they do not exist already
 
+     actionRename_note->setIconVisibleInMenu(false);
 
      connect(folderView,SIGNAL(activated(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
      connect(folderView,SIGNAL(clicked(QModelIndex)),this,SLOT(folderActivated(QModelIndex)));
@@ -785,28 +786,30 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
      }
      if(noteView->indexAt(pos).isValid()) // if index exists at position
      {
-         QAction* openAll = new QAction(tr("&Open notes"), &menu);
+
          QAction* removeNote = new QAction(tr("&Delete note"), &menu);
+         connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
 
          if(noteView->selectionModel()->selectedRows().count() == 1)
-           removeNote->setText(tr("&Delete note"));
+         {
+             menu.addAction(actionRename_note);
+             removeNote->setText(tr("&Delete note"));
+         }
          else
-           removeNote->setText(tr("&Delete notes"));
-         connect(openAll, SIGNAL(triggered()), this, SLOT(openAllNotes()));
-         connect(actionRename_note, SIGNAL(triggered()), this, SLOT(renameNote()));
-         connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
-         if(noteView->selectionModel()->selectedRows().count() == 1)
-           menu.addAction(actionRename_note);
-         else
-           menu.addAction(openAll);
+         {
+             QAction* openAll = new QAction(tr("&Open notes"), &menu);
+             connect(openAll, SIGNAL(triggered()), this, SLOT(openAllNotes()));
+             menu.addAction(openAll);
+             removeNote->setText(tr("&Delete notes"));
+         }
          menu.addAction(removeNote);
 
-         if(QSettings().value("show_source").toBool()) // developer option setting
+         // show source code menu entry
+         if(QSettings().value("show_source").toBool() && noteView->selectionModel()->selectedRows().count() == 1)
          {
              QAction* showSourceAction = new QAction(tr("Show &Source"), &menu);
              connect(showSourceAction,SIGNAL(triggered()),this,SLOT(openNoteSource()));
-             if(noteView->selectionModel()->selectedRows().count() == 1)
-               menu.addAction(showSourceAction);
+             menu.addAction(showSourceAction);
          }
          menu.addSeparator();
          menu.addAction(action_Cut);
