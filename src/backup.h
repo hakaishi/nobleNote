@@ -37,11 +37,12 @@
 class ProgressReceiver;
 class Trash;
 
-class Backup : public QWidget {
+class Backup : public QObject {
      Q_OBJECT
  
      public:
-      Backup();
+      Backup(QWidget *parent);
+      QWidget *parent_;
 
      private:
       QTextDocument *document;

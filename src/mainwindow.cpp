@@ -321,7 +321,7 @@ void MainWindow::showPreferences()
 void MainWindow::showBackupWindow()
 {
      if(!backup)
-       backup = new Backup();
+       backup = new Backup(this);
 }
 
 void MainWindow::find()

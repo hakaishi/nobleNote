@@ -31,8 +31,9 @@
 #include <QtConcurrentMap>
 #include <QAbstractItemModel>
 
-Backup::Backup()
+Backup::Backup(QWidget *parent)
 {
+     parent_ = parent;
      getNotes(); //Searches for notes and backups. For the backups with no notes it will create the trees children.
 }
 
@@ -55,7 +56,7 @@ void Backup::getNotes()
      }
 
      progressReceiver1 = new ProgressReceiver(this);
-     progressDialog1 = new QProgressDialog(this);
+     progressDialog1 = new QProgressDialog(parent_);
      progressDialog1->setLabelText(QString(tr("Indexing notes...")));
      getUuid.p = progressReceiver1;
      future1 = new QFutureWatcher<QString>(this);
@@ -94,7 +95,7 @@ void Backup::setupBackups()
           return;
 
      progressReceiver2 = new ProgressReceiver(this);
-     progressDialog2 = new QProgressDialog(this);
+     progressDialog2 = new QProgressDialog(parent_);
      progressDialog2->setLabelText(QString(tr("Indexing trash...")));
      setupBackup.p = progressReceiver2;
      setupBackup.hash = &backupDataHash;
@@ -111,7 +112,7 @@ void Backup::setupBackups()
 
 void Backup::showTrash()
 {
-     trash = new Trash(&backupDataHash, this);
+     trash = new Trash(&backupDataHash, parent_);
      connect(trash, SIGNAL(destroyed()), this, SLOT(deleteLater()));
      trash->show();
 }
