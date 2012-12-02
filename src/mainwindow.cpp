@@ -430,7 +430,7 @@ void MainWindow::showEvent(QShowEvent* show_window){
        foreach(QString path, QSettings().value("open_notes").toStringList())
        {
            // check if the notePath is already used in a open note
-          if(!noteIsOpen(path))
+          if(!noteIsOpen(path) && QFile(path).exists())
           {
                Note* note = new Note(path);
                openNotes += note;
