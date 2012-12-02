@@ -153,7 +153,7 @@ MainWindow::MainWindow()
         list->setDragDropMode(QAbstractItemView::DragDrop);
         list->viewport()->setAcceptDrops(true);
         list->setDropIndicatorShown(true);
-        list->setDefaultDropAction(Qt::MoveAction);
+        list->setDefaultDropAction(Qt::CopyAction);
         list->setSelectionBehavior(QAbstractItemView::SelectRows);
      }
      noteView->setDragEnabled(true);
