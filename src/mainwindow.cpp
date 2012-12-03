@@ -563,6 +563,9 @@ Note *MainWindow::noteWindow(const QString &filePath)
         if(!(*it))
         {
             it = openNotes.erase(it); // set iterator to the item after the erased item
+
+            if(it >= openNotes.end()) // iterator may be pointing to an element greater than the last element
+                return 0;
         }
 
         Note * note = qobject_cast<Note*>(*it);
