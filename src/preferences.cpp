@@ -84,13 +84,13 @@ void Preferences::saveSettings()
        QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
 
      if(rootPath != originalRootPath){
-       if(QMessageBox::question(this,tr("Keep old files in the trash?"),
-              tr("Everytime the path to the notes is changed, %1 creates a new backup folder aka trash folder. "
-                 "The old path is %2. If you choose to keep the old folder, the files in the trash "
-                 "will be visible again when you change the note path back to the old one. If you choose \"no\" "
-                 "%1 will not be able to restore/undelete them.\n\nDo you want %1 to keep the old folder?")
-                                .arg(QApplication::applicationName(),QDir::toNativeSeparators(settings->value("backup_dir_path").toString())),
-                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+       if(QMessageBox::question(this,tr("Keep old trash folder?"),
+          tr("Do you want to keep the old trash folder associated with the path %2? "
+            "(You will be able to see the old files in the trash again if you change "
+            "back to the previous directory.)")
+          .arg(QApplication::applicationName(),QDir::toNativeSeparators(
+               settings->value("backup_dir_path").toString())),
+          QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
        {
             QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
             foreach(QFileInfo backup, backups)
