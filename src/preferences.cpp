@@ -85,11 +85,10 @@ void Preferences::saveSettings()
 
      if(rootPath != originalRootPath){
        if(QMessageBox::question(this,tr("Keep old trash folder?"),
-          tr("Do you want to keep the old trash folder associated with the path %2? "
+          tr("Do you want to keep the old trash folder associated with the path %1? "
             "(You will be able to see the old files in the trash again if you change "
             "back to the previous directory.)")
-          .arg(QApplication::applicationName(),QDir::toNativeSeparators(
-               settings->value("backup_dir_path").toString())),
+          .arg(QDir::toNativeSeparators(settings->value("backup_dir_path").toString())),
           QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
        {
             QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
