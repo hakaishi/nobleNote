@@ -92,7 +92,10 @@ void Backup::setupBackups()
      }
 
      if(backupFiles.isEmpty())
+	{
+          showTrash();
           return;
+     }
 
      progressReceiver2 = new ProgressReceiver(this);
      progressDialog2 = new QProgressDialog(parent_);
