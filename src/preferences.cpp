@@ -95,7 +95,7 @@ void Preferences::saveSettings()
             foreach(QFileInfo backup, backups)
               QFile(backup.absoluteFilePath()).remove();
             if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
-              QMessageBox::warning(this,tr("Couldn't delete backup folder"), tr("Could not delete the backup folder!"));
+              QMessageBox::warning(this,tr("Couldn't delete trash folder"), tr("Could not delete the trash folder!"));
        }
 
        settings->setValue("root_path",rootPath);

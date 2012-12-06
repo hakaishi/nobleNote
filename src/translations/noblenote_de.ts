@@ -4,69 +4,25 @@
 <context>
     <name>Backup</name>
     <message>
-        <location filename="../ui/backup.ui" line="14"/>
-        <source>Trash</source>
-        <translation>Papierkorb</translation>
-    </message>
-    <message>
-        <location filename="../ui/backup.ui" line="30"/>
-        <source>&amp;Restore</source>
-        <translation>&amp;Wiederherstellen</translation>
-    </message>
-    <message>
-        <location filename="../ui/backup.ui" line="37"/>
-        <source>&amp;Delete</source>
-        <translation>&amp;Löschen</translation>
-    </message>
-    <message>
-        <location filename="../ui/backup.ui" line="60"/>
-        <source>Select the notes you want to delete or restore</source>
-        <translation>Wählen Sie die Notizen aus, die Sie Löschen oder Wiederherstellen möchten</translation>
-    </message>
-    <message>
-        <location filename="../ui/backup.ui" line="76"/>
-        <source>Preview</source>
-        <translation>Vorschau</translation>
-    </message>
-    <message>
-        <location filename="../ui/backup.ui" line="96"/>
-        <source>Deleted notes</source>
-        <translation>Gelöschte Notizen</translation>
-    </message>
-    <message>
-        <location filename="../backup.cpp" line="68"/>
+        <location filename="../backup.cpp" line="60"/>
         <source>Indexing notes...</source>
         <translation>Indiziere Notizen...</translation>
     </message>
     <message>
-        <location filename="../backup.cpp" line="110"/>
+        <location filename="../backup.cpp" line="102"/>
         <source>Indexing trash...</source>
         <translation>Indiziere Papierkorb...</translation>
-    </message>
-    <message>
-        <location filename="../backup.cpp" line="191"/>
-        <source>Delete multiple notes</source>
-        <translation>Löschen mehrerer Notizen bestätigen</translation>
-    </message>
-    <message>
-        <location filename="../backup.cpp" line="192"/>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation>Sind Sie sicher, dass Sie die markierten Notizen endgültig löschen wollen?
-
-%1</translation>
     </message>
 </context>
 <context>
     <name>FileSystemModel</name>
     <message>
-        <location filename="../filesystemmodel.h" line="102"/>
+        <location filename="../filesystemmodel.h" line="105"/>
         <source>Files could not be dropped</source>
         <translation>Dateien konnten nicht abgelegt werden</translation>
     </message>
     <message>
-        <location filename="../filesystemmodel.h" line="103"/>
+        <location filename="../filesystemmodel.h" line="106"/>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
 
 %1</source>
@@ -75,7 +31,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../filesystemmodel.h" line="107"/>
+        <location filename="../filesystemmodel.h" line="110"/>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
 
 %1</source>
@@ -84,7 +40,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../filesystemmodel.h" line="106"/>
+        <location filename="../filesystemmodel.h" line="109"/>
         <source>File could not be dropped</source>
         <translation>Datei konnte nicht abgelegt werden</translation>
     </message>
@@ -115,7 +71,7 @@
         <translation>&amp;Schließen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="288"/>
+        <location filename="../mainwindow.cpp" line="289"/>
         <source>default</source>
         <translation>Vorgabe</translation>
     </message>
@@ -130,12 +86,12 @@
         <translation>Notiz existiert nicht</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="598"/>
+        <location filename="../mainwindow.cpp" line="600"/>
         <source>new note</source>
         <translation>Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="603"/>
+        <location filename="../mainwindow.cpp" line="605"/>
         <source>new note (%1)</source>
         <translation>Neue Notiz (%1)</translation>
     </message>
@@ -150,58 +106,58 @@
         <translation>Die ausgewählte Notiz konnte nicht geöffnet werden da sie verschoben oder umbenannt wurde!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="579"/>
+        <location filename="../mainwindow.cpp" line="581"/>
         <source>new notebook</source>
         <translation>Neues Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="584"/>
+        <location filename="../mainwindow.cpp" line="586"/>
         <source>new notebook (%1)</source>
         <translation>Neues Notizbuch (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="649"/>
+        <location filename="../mainwindow.cpp" line="651"/>
         <source>Delete Notebook</source>
         <translation>Lösche Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="650"/>
+        <location filename="../mainwindow.cpp" line="652"/>
         <source>Are you sure you want to delete the notebook &quot;%1&quot; and move all containing notes to the trash?</source>
         <translation>Sind Sie sicher, dass Sie das Notizbuch &quot;%1&quot; löschen und alle enthaltenen Notizen in den Papierkorb schieben wollen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="640"/>
-        <location filename="../mainwindow.cpp" line="671"/>
+        <location filename="../mainwindow.cpp" line="642"/>
+        <location filename="../mainwindow.cpp" line="673"/>
         <source>Notebook could not be deleted</source>
         <translation>Notizbuch konnte nicht gelöscht werden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="640"/>
+        <location filename="../mainwindow.cpp" line="642"/>
         <source>The notebook could not be deleted because one notebook must remain</source>
         <translation>Das Notizbuch konnte nicht gelöscht werden da mindestens ein Notizbuch vorhanden sein muss</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="671"/>
+        <location filename="../mainwindow.cpp" line="673"/>
         <source>The notebook could not be deleted because one or more notes inside the notebook could not be deleted.</source>
         <translation>Das Notizbuch konnte nicht gelöscht werden, da eine oder mehrere Notizen in dem Notizbuch nicht gelöscht werden konnten.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="705"/>
+        <location filename="../mainwindow.cpp" line="707"/>
         <source>Delete Note</source>
         <translation>Lösche Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="706"/>
+        <location filename="../mainwindow.cpp" line="708"/>
         <source>Are you sure you want to move the note %1 to the trash?</source>
         <translation>Sind Sie sicher, dass Sie die Notiz %1 in den Papierkob schieben wollen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="710"/>
+        <location filename="../mainwindow.cpp" line="712"/>
         <source>Delete Multiple Notes</source>
         <translation>Löschen mehrerer Notizen bestätigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="711"/>
+        <location filename="../mainwindow.cpp" line="713"/>
         <source>Are you sure you want to move these %1 notes to the trash?
 
 %2</source>
@@ -210,57 +166,53 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="753"/>
+        <location filename="../mainwindow.cpp" line="755"/>
         <source>&amp;New notebook</source>
         <translation>&amp;Neues Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="759"/>
+        <location filename="../mainwindow.cpp" line="761"/>
         <source>&amp;Rename notebook</source>
         <translation>Notizbuch &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="760"/>
+        <location filename="../mainwindow.cpp" line="762"/>
         <source>&amp;Delete notebook</source>
         <translation>Notizbuch &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="782"/>
+        <location filename="../mainwindow.cpp" line="784"/>
         <source>&amp;New note</source>
         <translation>&amp;Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="790"/>
+        <location filename="../mainwindow.cpp" line="803"/>
         <source>&amp;Open notes</source>
         <translation>Notiz &amp;öffnen</translation>
     </message>
     <message>
-        <source>&amp;Rename note</source>
-        <translation type="obsolete">Notiz &amp;umbenennen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="791"/>
-        <location filename="../mainwindow.cpp" line="794"/>
+        <location filename="../mainwindow.cpp" line="793"/>
+        <location filename="../mainwindow.cpp" line="799"/>
         <source>&amp;Delete note</source>
         <translation>Notiz &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="796"/>
+        <location filename="../mainwindow.cpp" line="806"/>
         <source>&amp;Delete notes</source>
         <translation>Notizen &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="808"/>
+        <location filename="../mainwindow.cpp" line="813"/>
         <source>Show &amp;Source</source>
         <translation>&amp;Quelltext anzeigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="852"/>
+        <location filename="../mainwindow.cpp" line="856"/>
         <source>Copy error</source>
         <translation>Fehler beim Kopieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="852"/>
+        <location filename="../mainwindow.cpp" line="856"/>
         <source>Notes of the same names already exist in this notebook:
 
 %1</source>
@@ -269,12 +221,12 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="891"/>
+        <location filename="../mainwindow.cpp" line="895"/>
         <source>About </source>
         <translation>Über </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="892"/>
+        <location filename="../mainwindow.cpp" line="896"/>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -380,7 +332,7 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="168"/>
         <source>Ctrl+T</source>
-        <translation>Strg +T</translation>
+        <translation>Strg+T</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="180"/>
@@ -443,32 +395,32 @@
         <translation>Strg+Umschalt+R</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="258"/>
+        <location filename="../ui/mainwindow.ui" line="261"/>
         <source>&amp;Delete note</source>
         <translation>Notiz &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="261"/>
+        <location filename="../ui/mainwindow.ui" line="264"/>
         <source>Ctrl+Shift+D</source>
         <translation>Strg+Umschalt+D</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="266"/>
+        <location filename="../ui/mainwindow.ui" line="269"/>
         <source>&amp;Cut</source>
         <translation>&amp;Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="269"/>
+        <location filename="../ui/mainwindow.ui" line="272"/>
         <source>Ctrl+X</source>
         <translation>Strg+X</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="277"/>
+        <location filename="../ui/mainwindow.ui" line="280"/>
         <source>&amp;Paste</source>
         <translation>&amp;Einfügen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="280"/>
+        <location filename="../ui/mainwindow.ui" line="283"/>
         <source>Ctrl+V</source>
         <translation>Strg+V</translation>
     </message>
@@ -483,10 +435,6 @@
 </context>
 <context>
     <name>NoteDescriptor</name>
-    <message>
-        <source>Note does not exit</source>
-        <translation type="obsolete">Notiz existiert nicht</translation>
-    </message>
     <message>
         <location filename="../notedescriptor.cpp" line="69"/>
         <source>Note does not exist</source>
@@ -545,13 +493,13 @@
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="99"/>
-        <source>Width:  </source>
-        <translation>Breite: </translation>
+        <source>Width:</source>
+        <translation>Breite:</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="106"/>
-        <source>Height:  </source>
-        <translation>Höhe: </translation>
+        <source>Height:</source>
+        <translation>Höhe:</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="147"/>
@@ -605,40 +553,36 @@
     </message>
     <message>
         <location filename="../preferences.cpp" line="87"/>
-        <source>Keep old files in the trash?</source>
-        <translation>Alte Dateien im Papierkorb behalten?</translation>
+        <source>Keep old trash folder?</source>
+        <translation>Alten Papierkorb-Ordner behalten?</translation>
     </message>
     <message>
         <location filename="../preferences.cpp" line="88"/>
-        <source>Everytime the path to the notes is changed, %1 creates a new backup folder aka trash folder. The old path is %2. If you choose to keep the old folder, the files in the trash will be visible again when you change the note path back to the old one. If you choose &quot;no&quot; %1 will not be able to restore/undelete them.
-
-Do you want %1 to keep the old folder?</source>
-        <translation type="unfinished">Immer wenn der Pfad für die Notizen geändert wird erzeugt %1 ein neues Backup- bzw. Papierkorbverzeichnis. Das alte Pfad ist %2. Wenn Sie das alte Verzeichnis behalten, werden die Dateien in Papierkorb wieder sichtbar, wenn Sie wieder zum alten Notizverzeichnis zurückwechseln. Wenn sie &quot;Nein&quot; wählen, wird %1 sie nicht wiederherstellen können.
-
-Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
+        <source>Do you want to keep the old trash folder associated with the path %1? (You will be able to see the old files in the trash again if you change back to the previous directory.)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="99"/>
-        <source>Couldn&apos;t delete backup folder</source>
-        <translation>Konnte das Backupverzeichnis nicht löschen</translation>
+        <location filename="../preferences.cpp" line="98"/>
+        <source>Couldn&apos;t delete trash folder</source>
+        <translation>Konnte das Papierkorb-Ordner nicht löschen</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="99"/>
-        <source>Could not delete the backup folder!</source>
-        <translation>Konnte das Backupverzeichnis nicht löschen!</translation>
+        <location filename="../preferences.cpp" line="98"/>
+        <source>Could not delete the trash folder!</source>
+        <translation>Konnte den Papierkorb-Ordner nicht löschen!</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="121"/>
+        <location filename="../preferences.cpp" line="120"/>
         <source>Open Directory</source>
         <translation>Ordner öffnen</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="125"/>
+        <location filename="../preferences.cpp" line="124"/>
         <source>The path &quot;%1&quot; is not writable!</source>
         <translation>Der Pfad &quot;%1&quot; ist nicht beschreibbar!</translation>
     </message>
     <message>
-        <location filename="../preferences.cpp" line="125"/>
+        <location filename="../preferences.cpp" line="124"/>
         <source>No Write Access</source>
         <translation>Kein Schreibzugriff</translation>
     </message>
@@ -737,6 +681,53 @@ Wollen Sie, dass %1 das alte Verzeichnis behält?</translation>
         <location filename="../textsearchtoolbar.cpp" line="54"/>
         <source>&amp;Case sensitive</source>
         <translation>&amp;Groß- und Kleinschreibung beachten</translation>
+    </message>
+</context>
+<context>
+    <name>Trash</name>
+    <message>
+        <location filename="../ui/trash.ui" line="14"/>
+        <source>Trash</source>
+        <translation>Papierkorb</translation>
+    </message>
+    <message>
+        <location filename="../ui/trash.ui" line="30"/>
+        <source>&amp;Restore</source>
+        <translation>&amp;Wiederherstellen</translation>
+    </message>
+    <message>
+        <location filename="../ui/trash.ui" line="37"/>
+        <source>&amp;Delete</source>
+        <translation>&amp;Löschen</translation>
+    </message>
+    <message>
+        <location filename="../ui/trash.ui" line="60"/>
+        <source>Select the notes you want to delete or restore</source>
+        <translation>Wählen Sie die Notizen aus, die Sie Löschen oder Wiederherstellen möchten</translation>
+    </message>
+    <message>
+        <location filename="../ui/trash.ui" line="76"/>
+        <source>Preview</source>
+        <translation>Vorschau</translation>
+    </message>
+    <message>
+        <location filename="../ui/trash.ui" line="96"/>
+        <source>Deleted notes</source>
+        <translation>Gelöschte Notizen</translation>
+    </message>
+    <message>
+        <location filename="../trash.cpp" line="88"/>
+        <source>Delete multiple notes</source>
+        <translation>Löschen mehrerer Notizen bestätigen</translation>
+    </message>
+    <message>
+        <location filename="../trash.cpp" line="89"/>
+        <source>Are you sure you want to permanently delete these notes?
+
+%1</source>
+        <translation>Sind Sie sicher, dass Sie die markierten Notizen endgültig löschen wollen?
+
+%1</translation>
     </message>
 </context>
 <context>
