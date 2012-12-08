@@ -264,163 +264,153 @@
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="86"/>
-        <source>toolBar</source>
-        <translation>Toolbar</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="97"/>
-        <location filename="../ui/mainwindow.ui" line="120"/>
+        <location filename="../ui/mainwindow.ui" line="94"/>
+        <location filename="../ui/mainwindow.ui" line="112"/>
         <source>&amp;Open</source>
         <translation>&amp;Öffnen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="102"/>
+        <location filename="../ui/mainwindow.ui" line="99"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="107"/>
-        <source>&amp;Save</source>
-        <translation>&amp;Speichern</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="112"/>
+        <location filename="../ui/mainwindow.ui" line="104"/>
         <source>&amp;Quit</source>
         <translation>&amp;Schließen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="115"/>
+        <location filename="../ui/mainwindow.ui" line="107"/>
         <source>Ctrl+Q</source>
         <translation>Strg+Q</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="125"/>
+        <location filename="../ui/mainwindow.ui" line="117"/>
         <source>&amp;Import</source>
         <translation>&amp;Importieren</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="134"/>
+        <location filename="../ui/mainwindow.ui" line="126"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Anpassen...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="137"/>
+        <location filename="../ui/mainwindow.ui" line="129"/>
         <source>Ctrl+P</source>
         <translation>Strg+P</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="142"/>
+        <location filename="../ui/mainwindow.ui" line="134"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="153"/>
+        <location filename="../ui/mainwindow.ui" line="145"/>
         <source>&amp;Show toolbar</source>
         <translation>&amp;Werkzeugleiste anzeigen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="156"/>
+        <location filename="../ui/mainwindow.ui" line="148"/>
         <source>Ctrl+Shift+T</source>
         <translation>Strg+Umschalt+T</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="165"/>
+        <location filename="../ui/mainwindow.ui" line="157"/>
         <source>&amp;Trash</source>
         <translation>&amp;Papierkorb</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="168"/>
+        <location filename="../ui/mainwindow.ui" line="160"/>
         <source>Ctrl+T</source>
         <translation>Strg+T</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="180"/>
+        <location filename="../ui/mainwindow.ui" line="172"/>
         <source>&amp;History</source>
         <translation>&amp;Verlauf</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="183"/>
+        <location filename="../ui/mainwindow.ui" line="175"/>
         <source>Ctrl+Shift+H</source>
         <translation>Strg+Umschalt+H</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="192"/>
+        <location filename="../ui/mainwindow.ui" line="184"/>
         <source>&amp;New notebook</source>
         <translation>&amp;Neues Notizbuch</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="195"/>
+        <location filename="../ui/mainwindow.ui" line="187"/>
         <source>Ctrl+N</source>
         <translation>Strg+N</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="204"/>
+        <location filename="../ui/mainwindow.ui" line="196"/>
         <source>&amp;Rename notebook</source>
         <translation>Notizbuch &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="207"/>
+        <location filename="../ui/mainwindow.ui" line="199"/>
         <source>Ctrl+R</source>
         <translation>Strg+R</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="216"/>
+        <location filename="../ui/mainwindow.ui" line="208"/>
         <source>&amp;Delete notebook</source>
         <translation>Notizbuch &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="219"/>
+        <location filename="../ui/mainwindow.ui" line="211"/>
         <source>Ctrl+D</source>
         <translation>Strg+D</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="228"/>
+        <location filename="../ui/mainwindow.ui" line="220"/>
         <source>&amp;New note</source>
         <translation>&amp;Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="231"/>
+        <location filename="../ui/mainwindow.ui" line="223"/>
         <source>Ctrl+Shift+N</source>
         <translation>Strg+Umschalt+N</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="243"/>
+        <location filename="../ui/mainwindow.ui" line="235"/>
         <source>&amp;Rename note</source>
         <translation>Notiz &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="246"/>
+        <location filename="../ui/mainwindow.ui" line="238"/>
         <source>Ctrl+Shift+R</source>
         <translation>Strg+Umschalt+R</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="261"/>
+        <location filename="../ui/mainwindow.ui" line="253"/>
         <source>&amp;Delete note</source>
         <translation>Notiz &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="264"/>
+        <location filename="../ui/mainwindow.ui" line="256"/>
         <source>Ctrl+Shift+D</source>
         <translation>Strg+Umschalt+D</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="269"/>
+        <location filename="../ui/mainwindow.ui" line="261"/>
         <source>&amp;Cut</source>
         <translation>&amp;Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="272"/>
+        <location filename="../ui/mainwindow.ui" line="264"/>
         <source>Ctrl+X</source>
         <translation>Strg+X</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="280"/>
+        <location filename="../ui/mainwindow.ui" line="272"/>
         <source>&amp;Paste</source>
         <translation>&amp;Einfügen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="283"/>
+        <location filename="../ui/mainwindow.ui" line="275"/>
         <source>Ctrl+V</source>
         <translation>Strg+V</translation>
     </message>
