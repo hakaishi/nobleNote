@@ -519,8 +519,10 @@ void MainWindow::openAllNotes(){
             note->highlightText(searchText->text());
             note->searchbarVisible = true;
             note->setSearchBarText(searchText->text());
+            note->show();
           }
-          note->show();
+          else
+            note->show();
      }
 }
 
