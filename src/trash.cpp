@@ -85,7 +85,7 @@ void Trash::deleteBackup()
      foreach(QString str, files)
          backupsToBeDeleted += (str+"\n");
 
-     if(QMessageBox::warning(this,tr("Delete multiple notes"),
+     if(QMessageBox::warning(this,tr("Deleting notes"),
           tr("Are you sure you want to permanently delete these notes?\n\n%1").arg(
           QDir::toNativeSeparators(backupsToBeDeleted)),QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
         return;

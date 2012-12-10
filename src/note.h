@@ -48,7 +48,6 @@ class Note : public QMainWindow, public Ui::Note {
       NoteDescriptor* noteDescriptor() const { return noteDescriptor_; }
 
       void highlightText(const QString & str);
-      bool searchbarVisible;
 
       QTextEdit * textEdit() const { return textBrowser;}
 

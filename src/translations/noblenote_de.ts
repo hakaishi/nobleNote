@@ -707,8 +707,8 @@
     </message>
     <message>
         <location filename="../trash.cpp" line="88"/>
-        <source>Delete multiple notes</source>
-        <translation>Löschen mehrerer Notizen bestätigen</translation>
+        <source>Deleting notes</source>
+        <translation>Löschen von Notizen</translation>
     </message>
     <message>
         <location filename="../trash.cpp" line="89"/>

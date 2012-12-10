@@ -43,8 +43,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setAttribute(Qt::WA_DeleteOnClose);
 
-     searchbarVisible = false; //initializing
-
      textBrowser = new TextBrowser(this);
      textDocument = new TextDocument(this);
      textBrowser->setDocument(textDocument);
@@ -94,11 +92,6 @@ void Note::showEvent(QShowEvent* event){
      QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid()+"_size", defaultSize).toSize();
      resize(size);
 
-     if(searchbarVisible)
-       searchBar->setVisible(true);
-     else
-       searchBar->setVisible(false);
-
      QMainWindow::showEvent(event);
 }
 
@@ -146,4 +139,5 @@ void Note::keyReleaseEvent(QKeyEvent *k){
 void Note::setSearchBarText(QString str)
 {
     searchBar->setText(str);
+    searchBar->selectNextExpression();
 }
