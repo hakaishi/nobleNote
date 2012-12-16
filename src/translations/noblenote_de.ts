@@ -61,103 +61,103 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="62"/>
+        <location filename="../mainwindow.cpp" line="65"/>
         <source>&amp;Minimize</source>
         <translation>&amp;Minimieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="63"/>
+        <location filename="../mainwindow.cpp" line="66"/>
         <source>&amp;Quit</source>
         <translation>&amp;Schließen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="289"/>
+        <location filename="../mainwindow.cpp" line="292"/>
         <source>default</source>
         <translation>Vorgabe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="446"/>
+        <location filename="../mainwindow.cpp" line="449"/>
         <source>&amp;Restore</source>
         <translation>&amp;Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="497"/>
+        <location filename="../mainwindow.cpp" line="500"/>
         <source>Note does not exist</source>
         <translation>Notiz existiert nicht</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="596"/>
+        <location filename="../mainwindow.cpp" line="599"/>
         <source>new note</source>
         <translation>Neue Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="601"/>
+        <location filename="../mainwindow.cpp" line="604"/>
         <source>new note (%1)</source>
         <translation>Neue Notiz (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="102"/>
+        <location filename="../mainwindow.cpp" line="105"/>
         <source>Type to search for notes</source>
         <translation>Zum suchen nach Notizen tippen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="497"/>
+        <location filename="../mainwindow.cpp" line="500"/>
         <source>The selected note cannot be opened because it has been moved or renamed!</source>
         <translation>Die ausgewählte Notiz konnte nicht geöffnet werden da sie verschoben oder umbenannt wurde!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="577"/>
+        <location filename="../mainwindow.cpp" line="580"/>
         <source>new notebook</source>
         <translation>Neues Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="582"/>
+        <location filename="../mainwindow.cpp" line="585"/>
         <source>new notebook (%1)</source>
         <translation>Neues Notizbuch (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="647"/>
+        <location filename="../mainwindow.cpp" line="650"/>
         <source>Delete Notebook</source>
         <translation>Lösche Notizbuch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="648"/>
+        <location filename="../mainwindow.cpp" line="651"/>
         <source>Are you sure you want to delete the notebook &quot;%1&quot; and move all containing notes to the trash?</source>
         <translation>Sind Sie sicher, dass Sie das Notizbuch &quot;%1&quot; löschen und alle enthaltenen Notizen in den Papierkorb schieben wollen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="638"/>
-        <location filename="../mainwindow.cpp" line="669"/>
+        <location filename="../mainwindow.cpp" line="641"/>
+        <location filename="../mainwindow.cpp" line="672"/>
         <source>Notebook could not be deleted</source>
         <translation>Notizbuch konnte nicht gelöscht werden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="638"/>
+        <location filename="../mainwindow.cpp" line="641"/>
         <source>The notebook could not be deleted because one notebook must remain</source>
         <translation>Das Notizbuch konnte nicht gelöscht werden da mindestens ein Notizbuch vorhanden sein muss</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="669"/>
+        <location filename="../mainwindow.cpp" line="672"/>
         <source>The notebook could not be deleted because one or more notes inside the notebook could not be deleted.</source>
         <translation>Das Notizbuch konnte nicht gelöscht werden, da eine oder mehrere Notizen in dem Notizbuch nicht gelöscht werden konnten.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="703"/>
+        <location filename="../mainwindow.cpp" line="706"/>
         <source>Delete Note</source>
         <translation>Lösche Notiz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="704"/>
+        <location filename="../mainwindow.cpp" line="707"/>
         <source>Are you sure you want to move the note %1 to the trash?</source>
         <translation>Sind Sie sicher, dass Sie die Notiz %1 in den Papierkob schieben wollen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="708"/>
+        <location filename="../mainwindow.cpp" line="711"/>
         <source>Delete Multiple Notes</source>
         <translation>Löschen mehrerer Notizen bestätigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="709"/>
+        <location filename="../mainwindow.cpp" line="712"/>
         <source>Are you sure you want to move these %1 notes to the trash?
 
 %2</source>
@@ -166,53 +166,27 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="751"/>
-        <source>&amp;New notebook</source>
-        <translation>&amp;Neues Notizbuch</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="757"/>
-        <source>&amp;Rename notebook</source>
-        <translation>Notizbuch &amp;umbenennen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="758"/>
-        <source>&amp;Delete notebook</source>
-        <translation>Notizbuch &amp;löschen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="780"/>
-        <source>&amp;New note</source>
-        <translation>&amp;Neue Notiz</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="799"/>
+        <location filename="../mainwindow.cpp" line="790"/>
         <source>&amp;Open notes</source>
         <translation>Notiz &amp;öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="789"/>
-        <location filename="../mainwindow.cpp" line="795"/>
-        <source>&amp;Delete note</source>
-        <translation>Notiz &amp;löschen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="802"/>
+        <location filename="../mainwindow.cpp" line="793"/>
         <source>&amp;Delete notes</source>
         <translation>Notizen &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="809"/>
+        <location filename="../mainwindow.cpp" line="800"/>
         <source>Show &amp;Source</source>
         <translation>&amp;Quelltext anzeigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="852"/>
+        <location filename="../mainwindow.cpp" line="843"/>
         <source>Copy error</source>
         <translation>Fehler beim Kopieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="852"/>
+        <location filename="../mainwindow.cpp" line="843"/>
         <source>Notes of the same names already exist in this notebook:
 
 %1</source>
@@ -221,12 +195,12 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="891"/>
+        <location filename="../mainwindow.cpp" line="882"/>
         <source>About </source>
         <translation>Über </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="892"/>
+        <location filename="../mainwindow.cpp" line="883"/>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>

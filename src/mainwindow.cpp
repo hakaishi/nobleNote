@@ -56,6 +56,9 @@ MainWindow::MainWindow()
 {
      setupUi(this);
 
+   //saving to avoid duplicate translation string
+     deleteNotesTrString = actionDelete_note->text();
+
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
 
@@ -748,18 +751,12 @@ void MainWindow::showContextMenuFolder(const QPoint &pos){
 
      if(!folderView->indexAt(pos).isValid()) // if index doesn't exists at position
      {
-         QAction* addNewF = new QAction(tr("&New notebook"), &menu);
-         connect(addNewF, SIGNAL(triggered()), this, SLOT(newFolder()));
-         menu.addAction(addNewF);
+         menu.addAction(actionNew_folder);
      }
      if(folderView->indexAt(pos).isValid()) // if index exists at position
      {
-         QAction* renameF = new QAction(tr("&Rename notebook"), &menu);
-         QAction* removeFolder = new QAction(tr("&Delete notebook"), &menu);
-         connect(renameF, SIGNAL(triggered()), this, SLOT(renameFolder()));
-         connect(removeFolder, SIGNAL(triggered()), this, SLOT(removeFolder()));
-         menu.addAction(renameF);
-         menu.addAction(removeFolder);
+         menu.addAction(actionRename_folder);
+         menu.addAction(actionDelete_folder);
          if(!shortcutNoteList.isEmpty())
          {
             menu.addSeparator();
@@ -777,31 +774,25 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
      if(!noteView->indexAt(pos).isValid() &&
         !(noteModel->sourceModel() == findNoteModel)) // if index doesn't exists at position
      {
-         QAction* addNewN = new QAction(tr("&New note"), &menu);
-         connect(addNewN, SIGNAL(triggered()), this, SLOT(newNote()));
-         menu.addAction(addNewN);
+         menu.addAction(actionNew_note);
          menu.addSeparator();
          menu.addAction(action_Paste);
      }
      if(noteView->indexAt(pos).isValid()) // if index exists at position
      {
-
-         QAction* removeNote = new QAction(tr("&Delete note"), &menu);
-         connect(removeNote, SIGNAL(triggered()), this, SLOT(removeNote()));
-
          if(noteView->selectionModel()->selectedRows().count() == 1)
          {
              menu.addAction(actionRename_note);
-             removeNote->setText(tr("&Delete note"));
+             actionDelete_note->setText(deleteNotesTrString);
          }
          else
          {
              QAction* openAll = new QAction(tr("&Open notes"), &menu);
              connect(openAll, SIGNAL(triggered()), this, SLOT(openAllNotes()));
              menu.addAction(openAll);
-             removeNote->setText(tr("&Delete notes"));
+             actionDelete_note->setText(tr("&Delete notes"));
          }
-         menu.addAction(removeNote);
+         menu.addAction(actionDelete_note);
 
          // show source code menu entry
          if(QSettings().value("show_source").toBool() && noteView->selectionModel()->selectedRows().count() == 1)

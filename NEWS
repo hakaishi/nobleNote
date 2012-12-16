@@ -1,3 +1,9 @@
+Release 1.0.5
+=============
+
+ - removed redundant object causing failure on language import
+ - all translation problems solved! translations can now begin
+
 Release 1.0.4
 =============
 
