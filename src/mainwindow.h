@@ -31,6 +31,21 @@
 #include "progressreceiver.h"
 #include "noteimporter.h"
 #include <QSyntaxHighlighter>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QSystemTrayIcon>
+#include <QtWidgets/QSplitter>
+#include <QtWidgets/QListView>
+#include <QtWidgets/QFileSystemModel>
+#include <QAbstractItemModel>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QHBoxLayout>
+#include <QPointer>
+#include <QtWidgets/QProgressDialog>
+#include <QFutureWatcher>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMainWindow>
+#else
 #include <QSystemTrayIcon>
 #include <QSplitter>
 #include <QListView>
@@ -43,6 +58,8 @@
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QFileDialog>
+#include <QMainWindow>
+#endif
 
 /**
  * @brief note taking application main window
@@ -67,7 +84,8 @@ class ProgressReceiver;
 class Backup;
 class FlickCharm;
 
-class MainWindow : public QMainWindow, public Ui::NobleNote {
+class MainWindow : public QMainWindow, public Ui::MainWindow
+{
      Q_OBJECT // important for creating own singals and slots
  
      public:

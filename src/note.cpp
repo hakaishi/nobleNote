@@ -89,16 +89,16 @@ void Note::highlightText(const QString &str)
 
 void Note::showEvent(QShowEvent* event){
      QSize defaultSize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
-     QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid()+"_size", defaultSize).toSize();
+     QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_size", defaultSize).toSize();
      resize(size);
 
      QMainWindow::showEvent(event);
 }
 
 void Note::closeEvent(QCloseEvent* close_Note){
-     QSettings().setValue("Notes/"+noteDescriptor_->uuid()+"_size", size());
+     QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_size", size());
      QSettings().setValue("Toolbars/state", saveState());
-     QSettings().setValue("Notes/"+noteDescriptor_->uuid()+"_cursor_position",
+     QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_cursor_position",
         textBrowser->textCursor().position());
      QStringList savedOpenNoteList = QSettings().value("open_notes").toStringList();
      savedOpenNoteList.removeOne(noteDescriptor_->filePath());

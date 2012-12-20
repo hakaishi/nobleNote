@@ -204,7 +204,7 @@ void NoteDescriptor::load(const QString& filePath)
     uuid_ = reader->uuid(); // can be null
 
     QTextCursor cursor(document_);
-    cursor.setPosition(QSettings().value("Notes/"+uuid_+"_cursor_position").toInt());
+    cursor.setPosition(QSettings().value("Notes/"+uuid_.toString()+"_cursor_position").toInt());
     textBrowser_->setTextCursor(cursor);
 
     delete reader;

@@ -50,7 +50,11 @@
 #include <QFileIconProvider>
 #include <QList>
 #include <QPushButton>
-#include <QtConcurrentMap>
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrentMap>
+#else
+#include  <QtConcurrentMap>
+#endif
 
 MainWindow::MainWindow()
 {
@@ -229,7 +233,11 @@ MainWindow::MainWindow()
      connect(searchText, SIGNAL(sendCleared()), this, SLOT(selectFolder()));
 }
 
-MainWindow::~MainWindow() { delete folderIconProvider; delete noteIconProvider; }
+MainWindow::~MainWindow()
+{
+    delete folderIconProvider;
+    delete noteIconProvider;
+}
 
 void MainWindow::selectFolder()
 {

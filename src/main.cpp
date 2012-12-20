@@ -24,11 +24,17 @@
  */
 
 #include "mainwindow.h"
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMessageBox>
+#else
 #include <QApplication>
+#include <QMessageBox>
+#endif
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QSettings>
-#include <QMessageBox>
+
 #include "welcome.h"
 
 int main (int argc, char *argv[]){

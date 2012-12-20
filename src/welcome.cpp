@@ -28,7 +28,8 @@
 #include <QFileDialog>
 #include <QSettings>
 
-Welcome::Welcome(QWidget *parent): QDialog(parent){
+Welcome::Welcome(QWidget *parent): QDialog(parent)
+{
      setupUi(this);
 
      path = new LineEdit(this);

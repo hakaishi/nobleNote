@@ -140,7 +140,7 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
     if(!QDir(QSettings().value("backup_dir_path").toString()).exists())
         QDir().mkpath(QSettings().value("backup_dir_path").toString());
 
-    QString uuid = reader.uuid();
+    QString uuid = reader.uuid().toString();
     uuid.chop(1); // }
     uuid = uuid.remove(0,1); // {
 

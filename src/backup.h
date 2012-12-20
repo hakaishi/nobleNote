@@ -66,7 +66,7 @@ class Backup : public QObject {
            QString operator()(QString file)
            {
                 p->postProgressEvent();
-                return HtmlNoteReader::uuid(file);
+                return HtmlNoteReader::uuid(file).toString();
            }
       };
 
