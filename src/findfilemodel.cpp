@@ -31,6 +31,7 @@
 #include <QTextDocumentFragment>
 #include <QTimer>
 #include <QApplication>
+#include <QTextDocument>
 
 
 FindFileModel::FindFileModel(QObject *parent) :
@@ -163,11 +164,27 @@ bool FindFileModel::FileContains::operator ()(const QString& htmlFilePath)
 bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePath)
 {
     QFile file(htmlFilePath);
-    if(file.open(QIODevice::ReadOnly)){
+    if(file.open(QIODevice::ReadOnly))
+    {
       QTextStream in(&file);
-      QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
-      QString noteText = doc.toPlainText();
-      return noteText.contains(content, Qt::CaseInsensitive);
+      //QTextDocumentFragment doc = QTextDocumentFragment::fromHtml(in.readAll());
+      //QString noteText = doc.toPlainText();
+      //return noteText.contains(content, Qt::CaseInsensitive);
+
+      // remove this string here exactly once
+      const static QString whiteSpacePreWrap = "p, li { white-space: pre-wrap; }";
+      QString text = in.readAll();
+      int index;
+      if((index = text.indexOf(whiteSpacePreWrap)) != -1)
+      {
+          text.remove(index,whiteSpacePreWrap.size());
+      }
+
+#if QT_VERSION >= 0x050000
+      return text.remove(QRegExp("<[^>]*>")).contains(QString::toHtmlEscaped(content),Qt::CaseInsensitive);
+#else
+      return text.remove(QRegExp("<[^>]*>")).contains(Qt::escape(content),Qt::CaseInsensitive);
+#endif
     }
     return false;
 }
