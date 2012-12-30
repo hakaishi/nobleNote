@@ -140,4 +140,5 @@ void Note::setSearchBarText(QString str)
 {
     searchBar->setText(str);
     searchBar->selectNextExpression();
+    searchBar->setVisible(true);
 }

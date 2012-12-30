@@ -110,9 +110,9 @@ void TextSearchToolbar::highlightText(QString str){
        highlighter->caseSensitive = true;
      else
        highlighter->caseSensitive = false;
-     connect(this->closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
-     connect(this->closeSearch, SIGNAL(clicked(bool)), textEdit_, SLOT(setFocus()));
-     connect(this->closeSearch, SIGNAL(clicked(bool)), this->searchLine_, SLOT(clear()));
+     connect(closeSearch, SIGNAL(clicked(bool)), highlighter, SLOT(deleteLater()));
+     connect(closeSearch, SIGNAL(clicked(bool)), textEdit_, SLOT(setFocus()));
+     connect(closeSearch, SIGNAL(clicked(bool)), this->searchLine_, SLOT(clear()));
 
      textEdit_->ensureCursorVisible();
 }
