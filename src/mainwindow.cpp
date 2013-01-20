@@ -340,6 +340,8 @@ void MainWindow::find()
 {
     // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
 
+         noteView->viewport()->setAcceptDrops(false);
+
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          //noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
@@ -392,6 +394,8 @@ void MainWindow::folderActivated(const QModelIndex &selected)
 
      noteModel->setSourceModel(noteFSModel);
      noteView->setRootIndex(noteModel->setRootPath(folderModel->filePath(selected)));
+
+     noteView->viewport()->setAcceptDrops(true);
 }
 
 void MainWindow::folderActivated(const QItemSelection &selected, const QItemSelection &deselected) //Wrapper
