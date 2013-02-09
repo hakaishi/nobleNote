@@ -20,14 +20,18 @@
     </message>
     <message>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
+
 %1</source>
         <translation>Файлы не могут быть перемещены, поскольку файлы с такими именами уже существуют в этом блокноте:
+
 %1</translation>
     </message>
     <message>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
+
 %1</source>
         <translation>Файлы не могут быть перемещены, поскольку файл с такими именем уже существует в этом блокноте:
+
 %1</translation>
     </message>
     <message>
@@ -125,12 +129,6 @@
         <translation>Множественное удаление</translation>
     </message>
     <message>
-        <source>Are you sure you want to move these %1 notes to the trash?
-%2</source>
-        <translation>Переместить эти заметки %1 в корзину?
-%2</translation>
-    </message>
-    <message>
         <source>&amp;Open notes</source>
         <translation>&amp;Открыть заметки</translation>
     </message>
@@ -140,7 +138,7 @@
     </message>
     <message>
         <source>Show &amp;Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать &amp;исходный текст</translation>
     </message>
     <message>
         <source>Copy error</source>
@@ -148,8 +146,10 @@
     </message>
     <message>
         <source>Notes of the same names already exist in this notebook:
+
 %1</source>
         <translation>Заметки с такими названиями уже существуют в этом блокноте:
+
 %1</translation>
     </message>
     <message>
@@ -160,9 +160,6 @@
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation>&lt;h1&gt;%1, версия %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; — приложение для создания заметок&lt;/p&gt;&lt;p&gt;Авторские права (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Данная лицензия разрешает лицам, получившим копию данного программного обеспечения и сопутствующей документации (в дальнейшем именуемыми «Программное Обеспечение»), безвозмездно использовать Программное Обеспечение без ограничений, включая неограниченное право на использование, копирование, изменение, добавление, публикацию, распространение, сублицензирование и/или продажу копий Программного Обеспечения, также как и лицам, которым предоставляется данное Программное Обеспечение, при соблюдении следующих условий:&lt;/p&gt;Указанное выше уведомление об авторском праве и данные условия должны быть включены во все копии или значимые части данного Программного Обеспечения.&lt;p&gt;ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНО ВЫРАЖЕННЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ, СООТВЕТСТВИЯ ПО ЕГО КОНКРЕТНОМУ НАЗНАЧЕНИЮ И ОТСУТСТВИЯ НАРУШЕНИЙ ПРАВ. НИ В КАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПО ИСКАМ О ВОЗМЕЩЕНИИ УЩЕРБА, УБЫТКОВ ИЛИ ДРУГИХ ТРЕБОВАНИЙ ПО ДЕЙСТВУЮЩИМ КОНТРАКТАМ, ДЕЛИКТАМ ИЛИ ИНОМУ, ВОЗНИКШИМ ИЗ, ИМЕЮЩИМ ПРИЧИНОЙ ИЛИ СВЯЗАННЫМ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ ИЛИ ИСПОЛЬЗОВАНИЕМ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ ИЛИ ИНЫМИ ДЕЙСТВИЯМИ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ.&lt;/p&gt;</translation>
     </message>
-</context>
-<context>
-    <name>NobleNote</name>
     <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
@@ -186,10 +183,6 @@
     <message>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>Вы&amp;ход</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -299,6 +292,14 @@
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
+    <message>
+        <source>Are you sure you want to move these %1 notes to the trash?
+
+%2</source>
+        <translation>Переместить эти заметки %1 в корзину?
+
+%2</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
@@ -356,24 +357,12 @@
         <translation>Шрифт редактора заметок по умолчанию:</translation>
     </message>
     <message>
-        <source>Width: </source>
-        <translation>Ширина: </translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation>Высота: </translation>
-    </message>
-    <message>
         <source>Note editor default size:</source>
         <translation>Размеры редактора заметок по умолчанию:</translation>
     </message>
     <message>
-        <source>touch screen scrolling</source>
-        <translation>прокрутка на сенсорном экране</translation>
-    </message>
-    <message>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Отображать строку меню «Показать исходный текст»</translation>
     </message>
     <message>
         <source>Convert notes to the HTML format</source>
@@ -405,11 +394,11 @@
     </message>
     <message>
         <source>Keep old trash folder?</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить старый путь к корзины?</translation>
     </message>
     <message>
         <source>Do you want to keep the old trash folder associated with the path %1? (You will be able to see the old files in the trash again if you change back to the previous directory.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить старую папку для корзины, ассоциированную с путём %1? (Вы сможете снова увидеть старые файлы в корзине, если выберете путь, который был до этого.)</translation>
     </message>
     <message>
         <source>Couldn&apos;t delete trash folder</source>
@@ -431,16 +420,28 @@
         <source>No Write Access</source>
         <translation>Нет прав на запись</translation>
     </message>
+    <message>
+        <source>Width:</source>
+        <translation>Ширина: </translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Высота: </translation>
+    </message>
+    <message>
+        <source>&amp;Touch screen scrolling</source>
+        <translation>&amp;Прокрутка на сенсорном экране</translation>
+    </message>
 </context>
 <context>
     <name>TextFormattingToolbar</name>
     <message>
         <source>Format actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Форматирование</translation>
     </message>
     <message>
         <source>Formattoolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Панель форматирования</translation>
     </message>
     <message>
         <source>&amp;Bold</source>
@@ -542,8 +543,10 @@
     </message>
     <message>
         <source>Are you sure you want to permanently delete these notes?
+
 %1</source>
         <translation>Вы уверены, что вы хотите окончательно удалить эти заметки?
+
 %1</translation>
     </message>
 </context>

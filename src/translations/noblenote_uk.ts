@@ -20,14 +20,18 @@
     </message>
     <message>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
+
 %1</source>
         <translation>Не вдалося скинути файли, оскільки у цьому нотатнику вже є файли з такими самими назвами:
+
 %1</translation>
     </message>
     <message>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
+
 %1</source>
         <translation>Не вдалося скинути файл, оскільки у цьому нотатнику вже є файл з такою самою назвою:
+
 %1</translation>
     </message>
     <message>
@@ -125,12 +129,6 @@
         <translation>Вилучення декількох нотаток</translation>
     </message>
     <message>
-        <source>Are you sure you want to move these %1 notes to the trash?
-%2</source>
-        <translation>Ви справді хочете пересунути ці %1 нотатки до смітника?
-%2</translation>
-    </message>
-    <message>
         <source>&amp;Open notes</source>
         <translation>Ві&amp;дкрити нотатки</translation>
     </message>
@@ -148,8 +146,10 @@
     </message>
     <message>
         <source>Notes of the same names already exist in this notebook:
+
 %1</source>
         <translation>У цьому нотатнику вже є нотатки з такими самими назвами:
+
 %1</translation>
     </message>
     <message>
@@ -160,9 +160,6 @@
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation>&lt;h1&gt;%1, версія %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; — програма для роботи з нотатками&lt;/p&gt;&lt;p&gt;Авторські права належать Christian Metscher, Fabian Deuchler, 2012&lt;/p&gt;&lt;p&gt;Будь-кому, хто отримав копію цього програмного забезпечення та пов’язаних з ним файлів документації (надалі «Програмного забезпечення) надається дозвіл безкоштовно працювати з Програмним забезпеченням без обмежень, зокрема без обмежень щодо права використання, копіювання, внесення змін, об’єднання, оприлюднення, поширення, повторного ліцензування і/або продажу копій Програмного забезпечення, а також надавати Програмне забезпечення особам, для яких його було створено, ті ж права відповідно до таких умов:&lt;/p&gt;Разом з усіма копіями Програмного забезпечення або його суттєвих частин має бути надано це сповіщення щодо авторських прав.&lt;p&gt;ЦЕ ПРОГРАМНЕ ЗАБЕЗПЕЧЕННЯ НАДАЄТЬСЯ У ПОТОЧНОМУ СТАНІ, БЕЗ БУДЬ-ЯКИХ ГАРАНТІЙ, ЯВНИХ ЧИ НЕЯВНИХ, ЗОКРЕМА, АЛЕ НЕ ОБМЕЖУЮЧИСЬ, ГАРАНТІЙ ПРАЦЕЗДАТНОСТІ ЧИ ПРИДАТНОСТІ ДЛЯ ВИКОНАННЯ ПЕВНОЇ МЕТИ ТА ГАРАНТІЙ ЗБЕРЕЖЕННЯ ЦІЛІСНОСТІ ДАНИХ. АВТОРИ ТА ВЛАСНИКИ АВТОРСЬКИХ ПРАВ ЗА ЖОДНИХ ОБСТАВИН НЕ ВИЗНАЮТЬ СЕБЕ СТОРОНОЮ БУДЬ-ЯКИХ СКАРГ, ПОВ’ЯЗАНИХ З ЗАВДАНОЮ ШКОДОЮ АБО ІНШИМИ НЕЗРУЧНОСТЯМИ ПІД ЧАС РОБОТИ ЗА НАЙМОМ, ПРАВОПОРУШЕННЯ АБО ІНШИХ ОБСТАВИН, ЩО Є ПРЯМИМ, ОПОСЕРЕДКОВАНИМ ЧИ ПОВ’ЯЗАНИМ НАСЛІДКОМ РОБОТИ, ВИКОРИСТАННЯ АБО ІНШИХ АСПЕКТІВ, ПОВ’ЯЗАНИХ З ПРОГРАМНИМ ЗАБЕЗПЕЧЕННЯМ.&lt;/p&gt;</translation>
     </message>
-</context>
-<context>
-    <name>NobleNote</name>
     <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
@@ -186,10 +183,6 @@
     <message>
         <source>&amp;Edit</source>
         <translation>З&amp;міни</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>Ви&amp;йти</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -299,6 +292,14 @@
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
+    <message>
+        <source>Are you sure you want to move these %1 notes to the trash?
+
+%2</source>
+        <translation>Ви справді хочете пересунути ці %1 нотатки до смітника?
+
+%2</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
@@ -356,20 +357,8 @@
         <translation>Типовий шрифти редактора нотаток:</translation>
     </message>
     <message>
-        <source>Width: </source>
-        <translation>Ширина: </translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation>Висота: </translation>
-    </message>
-    <message>
         <source>Note editor default size:</source>
         <translation>Типовий розмір шрифту редактора нотаток:</translation>
-    </message>
-    <message>
-        <source>touch screen scrolling</source>
-        <translation>гортання за допомогою сенсорного екрана</translation>
     </message>
     <message>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
@@ -430,6 +419,18 @@
     <message>
         <source>No Write Access</source>
         <translation>Немає доступу для запису</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Ширина: </translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Висота: </translation>
+    </message>
+    <message>
+        <source>&amp;Touch screen scrolling</source>
+        <translation type="unfinished">гортання за допомогою сенсорного екрана</translation>
     </message>
 </context>
 <context>
@@ -542,8 +543,10 @@
     </message>
     <message>
         <source>Are you sure you want to permanently delete these notes?
+
 %1</source>
         <translation>Ви справді хочете остаточно вилучити ці нотатки?
+
 %1</translation>
     </message>
 </context>

@@ -1,164 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="cs">
+<TS version="2.0" language="es">
 <context>
     <name>Backup</name>
     <message>
         <source>Indexing notes...</source>
-        <translation>Indexují se poznámky...</translation>
+        <translation>Indizando las notas…</translation>
     </message>
     <message>
         <source>Indexing trash...</source>
-        <translation>Indexuje se koš...</translation>
+        <translation>Indizando la papelera…</translation>
     </message>
 </context>
 <context>
     <name>FileSystemModel</name>
     <message>
         <source>Files could not be dropped</source>
-        <translation>Soubory nemohou být puštěny</translation>
+        <translation>No se pudieron soltar los archivos</translation>
     </message>
     <message>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
 
 %1</source>
-        <translation>Soubory nemohli být puštěny, protože soubory se stejnými názvy již existují v tomto poznámkovém bloku:
-
-%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
 
 %1</source>
-        <translation>Soubor nemohl být puštěn, protože soubor se stejným názvem již existuje v tomto poznámkovém bloku:
-
-%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File could not be dropped</source>
-        <translation>Soubor nemohl být puštěn</translation>
+        <translation>No se pudo soltar el archivo</translation>
     </message>
 </context>
 <context>
     <name>HtmlNoteWriter</name>
     <message>
         <source>default</source>
-        <translation>výchozí</translation>
+        <translation>predeterminado</translation>
     </message>
     <message>
         <source>untitled note</source>
-        <translation>Nepojmenovaná poznámka</translation>
+        <translation>nota sin título</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Minimize</source>
-        <translation>&amp;Zmenšit</translation>
+        <translation>&amp;Minimizar</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Ukončit</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>default</source>
-        <translation>výchozí</translation>
+        <translation>predeterminado</translation>
     </message>
     <message>
         <source>&amp;Restore</source>
-        <translation>&amp;Obnovit</translation>
+        <translation>&amp;Restaurar</translation>
     </message>
     <message>
         <source>Note does not exist</source>
-        <translation>Poznámka neexistuje</translation>
+        <translation>La nota no existe</translation>
     </message>
     <message>
         <source>new note</source>
-        <translation>nová poznámka</translation>
+        <translation>nota nueva</translation>
     </message>
     <message>
         <source>new note (%1)</source>
-        <translation>nová poznámka (%1)</translation>
+        <translation>nota nueva (%1)</translation>
     </message>
     <message>
         <source>Type to search for notes</source>
-        <translation>Zadejte text pro vyhledávání poznámek</translation>
+        <translation>Escriba para buscar notas</translation>
     </message>
     <message>
         <source>The selected note cannot be opened because it has been moved or renamed!</source>
-        <translation>Zvolená poznámka nemůže být otevřena, protože byla přesunuta nebo přejmenována!</translation>
+        <translation>No se puede abrir la nota seleccionada porque se ha movido o renombrado.</translation>
     </message>
     <message>
         <source>new notebook</source>
-        <translation>nový poznámkový blok</translation>
+        <translation>Nueva libreta de notas</translation>
     </message>
     <message>
         <source>new notebook (%1)</source>
-        <translation>nový poznámkový blok (%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete Notebook</source>
-        <translation>Smazat poznámkový blok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to delete the notebook &quot;%1&quot; and move all containing notes to the trash?</source>
-        <translation>Opravdu chcete smazat poznámkový blok  &quot;%1&quot; a přesunout všechny obsažené poznámky do koše?</translation>
+        <translation>¿Está seguro de que desea eliminar la libreta de notas «%1» y mover todas las notas que contiene a la  papelera?</translation>
     </message>
     <message>
         <source>Notebook could not be deleted</source>
-        <translation>Poznámkový blok nemohl být smazán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The notebook could not be deleted because one notebook must remain</source>
-        <translation>Poznámkový blok nemohl být smazán, protože jeden musí zůstat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The notebook could not be deleted because one or more notes inside the notebook could not be deleted.</source>
-        <translation>Poznámkový blok nemohl být smazán protože jedna nebo více poznámek uvnitř nemohou být smazány.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete Note</source>
-        <translation>Odstranit poznámku</translation>
+        <translation>Eliminar nota</translation>
     </message>
     <message>
         <source>Are you sure you want to move the note %1 to the trash?</source>
-        <translation>Jste si jisti, že chcete přesunout poznámku %1 do koše?</translation>
+        <translation>¿Está seguro de que quiere mover la nota %1 a la papelera?</translation>
     </message>
     <message>
         <source>Delete Multiple Notes</source>
-        <translation>Smazat více poznámek</translation>
+        <translation>Eliminar múltiples notas</translation>
     </message>
     <message>
         <source>&amp;Open notes</source>
-        <translation>&amp;Otevřít poznámky</translation>
+        <translation>&amp;Abrir notas</translation>
     </message>
     <message>
         <source>&amp;Delete notes</source>
-        <translation>&amp;Smazat poznámky</translation>
+        <translation>&amp;Eliminar notas</translation>
     </message>
     <message>
         <source>Show &amp;Source</source>
-        <translation>Zobrazit &amp;Zdroj</translation>
+        <translation>Mostrar código &amp;fuente</translation>
     </message>
     <message>
         <source>Copy error</source>
-        <translation>Chyba při kopírování</translation>
+        <translation>Copiar error</translation>
     </message>
     <message>
         <source>Notes of the same names already exist in this notebook:
 
 %1</source>
-        <translation>Poznámky se stejnými názvy již existují v tomto poznámkovém bloku:
-
-%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>About </source>
-        <translation>O programu </translation>
+        <translation>Acerca de </translation>
     </message>
     <message>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation>&lt;h1&gt;%1 verze%2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; je psaní poznámek aplikace&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;tímto je uděleno povolení, bezplatně jakékoli osobě, která získá kopii tohoto softwaru a příslušné soubory dokumentace ( &quot;Software&quot;), nakládat se softwarem bez omezení, včetně a bez omezení práv na používání, kopírování, upravovat, slučovat, publikovat, distribuovat, udělovat podlicence, a / nebo prodávat kopie softwaru, a umožnit osobám, kterým Software je zařízený dělat tak, s výhradou těchto podmínek:&lt;/p&gt;výše uvedené označení copyrightu a toto povolení oznámení musí být zahrnuty ve všech kopiích nebo podstatným částem softwaru.&lt;p&gt;SOFTWARE jE POSKYTOVÁN &quot;TAK, JAK JE&quot;, BEZ ZÁRUKY JAKÉHOKOLIV DRUHU, VYJÁDŘENÉ NEBO VYPLÝVAJÍCÍ Z OKOLNOSTÍ, BEZ OMEZENÍ ZÁRUKY PRODEJNOSTI, VHODNOSTI PRO KONKRÉTNÍ ÚČEL A NEPORUŠENÍ. V ŽÁDNÉM PŘÍPADĚ AUTOŘI ANI VLASTNÍCI AUTORSKÝCH PRÁV NENESOU ODPOVĚDNOST ZA JAKÉKOLI ŠKODY NEBO JINOU ODPOVĚDNOST, AŤ JIŽ NA ZÁKLADĚ smlouvy, deliktu nebo jinak, které vznikly VE SPOJENÍ SE SOFTWAREM NEBO JEHO POUŽITÍM NEBO Z JINÉHO NAKLÁDÁNÍ SE SOFTWAREM.&lt;/p&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>nobleNote</source>
@@ -166,23 +160,23 @@
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Soubor</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Nastavení</translation>
+        <translation>&amp;Configuración</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Nápověda</translation>
+        <translation>Ay&amp;uda</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Náhled</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Upravit</translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -190,11 +184,11 @@
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp;Import</translation>
+        <translation>&amp;Importar</translation>
     </message>
     <message>
         <source>&amp;Configure...</source>
-        <translation>&amp;Nastavit...</translation>
+        <translation>&amp;Configurar…</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
@@ -202,19 +196,19 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;O programu</translation>
+        <translation>&amp;Acerca de</translation>
     </message>
     <message>
         <source>&amp;Show toolbar</source>
-        <translation>&amp;Zobrazit nástrojovou lištu</translation>
+        <translation>&amp;Mostrar barra de herramientas</translation>
     </message>
     <message>
         <source>Ctrl+Shift+T</source>
-        <translation>Ctrl+Shift+T</translation>
+        <translation>Ctrl+Mayús+T</translation>
     </message>
     <message>
         <source>&amp;Trash</source>
-        <translation>&amp;Koš</translation>
+        <translation>Mover a la &amp;papelera</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
@@ -222,15 +216,15 @@
     </message>
     <message>
         <source>&amp;History</source>
-        <translation>&amp;Historie</translation>
+        <translation>&amp;Histórico</translation>
     </message>
     <message>
         <source>Ctrl+Shift+H</source>
-        <translation>Ctrl+Shift+H</translation>
+        <translation>Ctrl+Mayús+H</translation>
     </message>
     <message>
         <source>&amp;New notebook</source>
-        <translation>&amp;Nový poznámkový blok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+N</source>
@@ -238,15 +232,15 @@
     </message>
     <message>
         <source>&amp;Rename notebook</source>
-        <translation>&amp;Přejmenovat poznámkový blok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Delete notebook</source>
-        <translation>&amp;Smazat poznámkový blok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+D</source>
@@ -254,31 +248,31 @@
     </message>
     <message>
         <source>&amp;New note</source>
-        <translation>&amp;Nová poznámka</translation>
+        <translation>&amp;Nota nueva</translation>
     </message>
     <message>
         <source>Ctrl+Shift+N</source>
-        <translation>Ctrl+Shift+N</translation>
+        <translation>Ctrl+Mayús+N</translation>
     </message>
     <message>
         <source>&amp;Rename note</source>
-        <translation>&amp;Přejmenovat poznámku</translation>
+        <translation>&amp;Renombrar nota</translation>
     </message>
     <message>
         <source>Ctrl+Shift+R</source>
-        <translation>Ctrl+Shift+R</translation>
+        <translation>Ctrl+Mayús+R</translation>
     </message>
     <message>
         <source>&amp;Delete note</source>
-        <translation>&amp;Smazat poznámku</translation>
+        <translation>&amp;Eliminar nota</translation>
     </message>
     <message>
         <source>Ctrl+Shift+D</source>
-        <translation>Ctrl+Shift+D</translation>
+        <translation>Ctrl+Mayús+D</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation>&amp;Vyjmout</translation>
+        <translation>&amp;Cortar</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
@@ -286,7 +280,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>&amp;Vložit</translation>
+        <translation>&amp;Pegar</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
@@ -296,7 +290,7 @@
         <source>Are you sure you want to move these %1 notes to the trash?
 
 %2</source>
-        <translation>Jste si jistý, že chcete přesunout tyto %1 poznámky do koše?
+        <translation>¿Está seguro de que quiere mover estas %1 notas a la papelera?
 
 %2</translation>
     </message>
@@ -305,247 +299,247 @@
     <name>Note</name>
     <message>
         <source>Note-Editor</source>
-        <translation>Editor-poznámek</translation>
+        <translation>Editor de notas</translation>
     </message>
 </context>
 <context>
     <name>NoteDescriptor</name>
     <message>
         <source>Note does not exist</source>
-        <translation>Poznámka neexistuje</translation>
+        <translation>La nota no existe</translation>
     </message>
     <message>
         <source>This note does not longer exist. Do you want to keep the editor open?</source>
-        <translation>Tato poznámka již neexistuje. Chcete nechat editor otevřený?</translation>
+        <translation>Esta nota actualmente ya no existe. ¿Desea mantener el editor abierto?</translation>
     </message>
     <message>
         <source>Note modified</source>
-        <translation>Poznámka byla upravena</translation>
+        <translation>Nota modificada</translation>
     </message>
     <message>
         <source>This note has been modified by another instance of %1. Should the note be saved under a different name? Else the note will be reloaded.</source>
-        <translation>Tato poznámka byla upravena jinou instancí %1. Může být poznámka uložena pod jiným názvem? Jinak bude poznámka znovu načtena.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NoteImporter</name>
     <message>
         <source>Select one or more tomboy or gnote notes</source>
-        <translation>Vyberte jednu, nebo více tomboy, nebo gnote poznámek</translation>
+        <translation>Seleccione una o más notas de tomboy o gnote</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Poznámky</translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Importing notes...</source>
-        <translation>Importují se poznámky...</translation>
+        <translation>Importando notas…</translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
         <source>Preferences</source>
-        <translation>Nastavení</translation>
+        <translation>Preferencias</translation>
     </message>
     <message>
         <source>&amp;Browse ...</source>
-        <translation>&amp;Procházet ...</translation>
+        <translation>&amp;Examinar…</translation>
     </message>
     <message>
         <source>Note editor default font:</source>
-        <translation>Standardní písmo poznámkového editoru:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Note editor default size:</source>
-        <translation>Standardní velikost poznámkového editoru:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
-        <translation>&amp;Zobrazit &quot;Zobrazit zdroj&quot; položku menu</translation>
+        <translation>&amp;Mostrar opción de menú «Mostrar código fuente»</translation>
     </message>
     <message>
         <source>Convert notes to the HTML format</source>
-        <translation>Převést poznámky do HTML formátu</translation>
+        <translation>Convertir notas al formato HTML</translation>
     </message>
     <message>
         <source>&amp;Close to tray</source>
-        <translation>&amp;Zavřít do lišty</translation>
+        <translation>&amp;Cerrar en el área de notificación</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
-        <translation>Automaticky převést ne-HTML poznámky do formátu HTML. Pokud je funkce vypnuta, jsou ne-HTML poznámky otevřeny pouze pro čtení.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Root directory</source>
-        <translation>Adresář roota</translation>
+        <translation>Directorio raíz</translation>
     </message>
     <message>
         <source>folder</source>
-        <translation>adresář</translation>
+        <translation>carpeta</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Varování</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>Could not write settings!</source>
-        <translation>Nelze zapsat nastavení!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Keep old trash folder?</source>
-        <translation>Zachovat starý adresář koše?</translation>
+        <translation>¿Mantener la carpeta de papelera anterior?</translation>
     </message>
     <message>
         <source>Do you want to keep the old trash folder associated with the path %1? (You will be able to see the old files in the trash again if you change back to the previous directory.)</source>
-        <translation>Chcete zachovat starý adresář koše spojený s cestou %1? (Budete mít možnost vidět staré soubory znovu v koši, pokud to změníte zpět do předchozího adresáře.)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Couldn&apos;t delete trash folder</source>
-        <translation>Nelze smazat adresář koše</translation>
+        <translation>No se pudo eliminar la carpeta de papelera</translation>
     </message>
     <message>
         <source>Could not delete the trash folder!</source>
-        <translation>Nelze smazat adresář koše!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open Directory</source>
-        <translation>Otevřít adresář</translation>
+        <translation>Abrir directorio</translation>
     </message>
     <message>
         <source>The path &quot;%1&quot; is not writable!</source>
-        <translation>Cesta &quot;%1&quot; není zapisovatelná!</translation>
+        <translation>La ruta «%1» no es escribible.</translation>
     </message>
     <message>
         <source>No Write Access</source>
-        <translation>Bez přístupu zapisování</translation>
+        <translation>Sin acceso de escritura</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Šířka: </translation>
+        <translation>Anchura: </translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation>Výška: </translation>
+        <translation>Altura: </translation>
     </message>
     <message>
         <source>&amp;Touch screen scrolling</source>
-        <translation>&amp;Posun dotykové obrazovky</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TextFormattingToolbar</name>
     <message>
         <source>Format actions</source>
-        <translation>Akce formátování</translation>
+        <translation>Acciones de formato</translation>
     </message>
     <message>
         <source>Formattoolbar</source>
-        <translation>Nástrojová lišta formátování</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Bold</source>
-        <translation>&amp;Tučné</translation>
+        <translation>&amp;Negrita</translation>
     </message>
     <message>
         <source>&amp;Italic</source>
-        <translation>&amp;Kurzíva</translation>
+        <translation>&amp;Cursiva</translation>
     </message>
     <message>
         <source>&amp;Underline</source>
-        <translation>&amp;Podtržené</translation>
+        <translation>&amp;Subrayado</translation>
     </message>
     <message>
         <source>&amp;Strike Out</source>
-        <translation>&amp;Přeškrtnuté</translation>
+        <translation>&amp;Tachado</translation>
     </message>
     <message>
         <source>&amp;Hyperlink</source>
-        <translation>&amp;Odkaz</translation>
+        <translation>&amp;Hiperenlace</translation>
     </message>
     <message>
         <source>&amp;Clear formatting</source>
-        <translation>&amp;Čisté formátování</translation>
+        <translation>&amp;Limpiar formato</translation>
     </message>
     <message>
         <source>&amp;Text color...</source>
-        <translation>&amp;Barva textu...</translation>
+        <translation>Color del &amp;texto…</translation>
     </message>
     <message>
         <source>&amp;Background color...</source>
-        <translation>&amp;Barva pozadí...</translation>
+        <translation>Color del &amp;fondo…</translation>
     </message>
     <message>
         <source>Insert hyperlink</source>
-        <translation>Vloží hypertextový odkaz</translation>
+        <translation>Insertar hiperenlace</translation>
     </message>
     <message>
         <source>Addr&amp;ess:</source>
-        <translation>&amp;Adresa:</translation>
+        <translation>&amp;Dirección:</translation>
     </message>
 </context>
 <context>
     <name>TextSearchToolbar</name>
     <message>
         <source>Search bar</source>
-        <translation>Lišta hledání</translation>
+        <translation>Barra de búsqueda</translation>
     </message>
     <message>
         <source>Searchtoolbar</source>
-        <translation>Nástrojová lišta vyhledávání</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter search argument</source>
-        <translation>Vložte parametr vyhledávání</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Find &amp;previous</source>
-        <translation>Hledat &amp;předchozí</translation>
+        <translation>Buscar &amp;anterior</translation>
     </message>
     <message>
         <source>Find &amp;next</source>
-        <translation>Najdi &amp;následující</translation>
+        <translation>Buscar &amp;siguiente</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation>&amp;Rozlišovat velká/malá</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Trash</name>
     <message>
         <source>Trash</source>
-        <translation>Koš</translation>
+        <translation>Papelera</translation>
     </message>
     <message>
         <source>&amp;Restore</source>
-        <translation>&amp;Obnovit</translation>
+        <translation>&amp;Restaurar</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>&amp;Smazat</translation>
+        <translation>&amp;Eliminar</translation>
     </message>
     <message>
         <source>Select the notes you want to delete or restore</source>
-        <translation>Vyberte poznámky, které chcete smazat, nebo obnovit</translation>
+        <translation>Seleccione las notas que quiere eliminar o restaurar</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Náhled</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <source>Deleted notes</source>
-        <translation>Smazané poznámky</translation>
+        <translation>Notas eliminadas</translation>
     </message>
     <message>
         <source>Deleting notes</source>
-        <translation>Mažou se poznámky</translation>
+        <translation>Eliminando notas</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete these notes?
 
 %1</source>
-        <translation>Jste si jisti, že chcete trvale odstranit tyto poznámky?
+        <translation>¿Está seguro de que quiere eliminar estas notas permanentemente?
 
 %1</translation>
     </message>
@@ -554,23 +548,21 @@
     <name>Welcome</name>
     <message>
         <source>Welcome to nobleNote</source>
-        <translation>Vítejte v nobleNote</translation>
+        <translation>Bienvenido/a nobleNote</translation>
     </message>
     <message>
         <source>Welcome to nobleNote!
 This is the first time that nobleNote has been started.
 You can choose a directory where the notes will be saved in.</source>
-        <translation>Vítejte v nobleNote!
-Toto je poprvé, co byl spuštěn nobleNote.
-Můžete vybrat adresář, kam budou poznámky uloženy.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Browse</source>
-        <translation>&amp;Procházet</translation>
+        <translation>&amp;Examinar</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation>Vyberte adresář</translation>
+        <translation>Elija un directorio</translation>
     </message>
 </context>
 </TS>

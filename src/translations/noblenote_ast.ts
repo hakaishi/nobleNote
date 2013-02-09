@@ -20,14 +20,18 @@
     </message>
     <message>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
+
 %1</source>
         <translation>Nun se pudieron soltar los ficheros porque yá esisten ficheros colos mesmos nomes nesti cuadernu de notes:
+
 %1</translation>
     </message>
     <message>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
+
 %1</source>
         <translation>Nun se pudo soltar el ficheru porque yá esiste un ficheru col mesmu nome nesti cuadernu de notes:
+
 %1</translation>
     </message>
     <message>
@@ -125,11 +129,6 @@
         <translation>Desaniciar múltiples notes</translation>
     </message>
     <message>
-        <source>Are you sure you want to move these %1 notes to the trash?
-%2</source>
-        <translation>¿Tas seguru de que quies mover les %1 notes a la basoria?</translation>
-    </message>
-    <message>
         <source>&amp;Open notes</source>
         <translation>&amp;Abrir notes</translation>
     </message>
@@ -147,8 +146,10 @@
     </message>
     <message>
         <source>Notes of the same names already exist in this notebook:
+
 %1</source>
         <translation>Yá esisten notes colos mesmos nomes nesti cuadernu de notes:
+
 %1</translation>
     </message>
     <message>
@@ -159,9 +160,6 @@
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>NobleNote</name>
     <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
@@ -185,10 +183,6 @@
     <message>
         <source>&amp;Edit</source>
         <translation>&amp;Editar</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>&amp;Colar</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -298,6 +292,14 @@
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
+    <message>
+        <source>Are you sure you want to move these %1 notes to the trash?
+
+%2</source>
+        <translation>¿Tas seguru de que quies mover les %1 notes a la basoria?
+
+%2</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
@@ -355,20 +357,8 @@
         <translation>Fonte predeterminada del editor de notes:</translation>
     </message>
     <message>
-        <source>Width: </source>
-        <translation>Anchor: </translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation>Altor: </translation>
-    </message>
-    <message>
         <source>Note editor default size:</source>
         <translation>Tamañu predetermináu del editor de notes:</translation>
-    </message>
-    <message>
-        <source>touch screen scrolling</source>
-        <translation>desplazamientu con pantalla táctil</translation>
     </message>
     <message>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
@@ -430,6 +420,18 @@
         <source>No Write Access</source>
         <translation>Nun hai accesu d&apos;escritura</translation>
     </message>
+    <message>
+        <source>Width:</source>
+        <translation>Anchor: </translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Altor: </translation>
+    </message>
+    <message>
+        <source>&amp;Touch screen scrolling</source>
+        <translation>&amp;Desplazamientu con pantalla táctil</translation>
+    </message>
 </context>
 <context>
     <name>TextFormattingToolbar</name>
@@ -471,7 +473,7 @@
     </message>
     <message>
         <source>&amp;Background color...</source>
-        <translation>Color de &amp;fondu</translation>
+        <translation>Color de &amp;fondu...</translation>
     </message>
     <message>
         <source>Insert hyperlink</source>
@@ -541,6 +543,7 @@
     </message>
     <message>
         <source>Are you sure you want to permanently delete these notes?
+
 %1</source>
         <translation type="unfinished"></translation>
     </message>

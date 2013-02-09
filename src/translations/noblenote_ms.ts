@@ -20,14 +20,18 @@
     </message>
     <message>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
+
 %1</source>
         <translation>Fail tidak dapat dilepaskan kerana fail dengan nama yang sama sudah wujud dalam buku nota ini:
+
 %1</translation>
     </message>
     <message>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
+
 %1</source>
         <translation>Fail tidak dapat dilepaskan kerana fail dengan nama yang sama sudah wujud dalam buku nota ini:
+
 %1</translation>
     </message>
     <message>
@@ -125,12 +129,6 @@
         <translation>Padam Nota Berbilang</translation>
     </message>
     <message>
-        <source>Are you sure you want to move these %1 notes to the trash?
-%2</source>
-        <translation>Anda pasti hendak alihkan %1 nota ini ke tong sampah?
-%2</translation>
-    </message>
-    <message>
         <source>&amp;Open notes</source>
         <translation>&amp;Buka nota</translation>
     </message>
@@ -148,8 +146,10 @@
     </message>
     <message>
         <source>Notes of the same names already exist in this notebook:
+
 %1</source>
         <translation>Nota dari nama yang sama sudah wujud dalam buku nota ini:
+
 %1</translation>
     </message>
     <message>
@@ -160,9 +160,6 @@
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
         <translation>&lt;h1&gt;%1 versi %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; adalah aplikasi pengambilan note &lt;/p&gt;&lt;p&gt;Hakcipta (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Keizinan disini diberikan, secara percuma, kepada mana-mana individu yang memperoleh salinain perisian ini dan fail dokumentasi yang berkaitan (&quot;Perisian&quot;), untuk mengendalikan Perisian tanpa sekatan, termasuklah tiada had terhadap hak mengguna, menyalin, mengubahsuai, menggabung, menerbit, mengedar, sublesen, dan/atau menjual salinan Perisian, dan membenarkan individu melakukannya berdasarkan syarat berikut:&lt;/p&gt;Notis hakcipta diatas dan notis keizinannya akan disisip di dalam semua salinan atau sebahagian daripada Perisian.&lt;p&gt;PERISIAN INI DISEDIAKAN &quot;SEBAGAIMANA ADANYA&quot;, TANPA SEBARANG JENIS JAMINAN, SEGERA ATAU TERSIRAT, YANG TERMASUK TETAPI TIDAK TERHAD KEPADA JAMINAN KEBOLEHDAGANGAN, KESESUAIAN UNTUK TUJUAN TERTENTU DAN KETIDAKLANGGARAN.  PENGARANG ATAU PEMEGANG HAK CIPTA DALAM KEADAAN TIDAK AKAN BERTANGGUNGJAWAB UNTUK SEBARANG TUNTUTAN, KEROSAKAN ATAU LIABILITI LAIN, SAMA ADA DALAM PERBUATAN KONTRAK, TORT ATAU SEBALIKNYA, YANG TIMBUL DARIPADA, LUAR ATAU BERHUBUNGAN DENGAN PERISIAN INI ATAU PENGGUNAAN ATAU PERLAKUAN LAIN DALAM PERISIAN. &lt;/ p&gt;</translation>
     </message>
-</context>
-<context>
-    <name>NobleNote</name>
     <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
@@ -186,10 +183,6 @@
     <message>
         <source>&amp;Edit</source>
         <translation>&amp;Sunting</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>&amp;Keluar</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -299,6 +292,14 @@
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
+    <message>
+        <source>Are you sure you want to move these %1 notes to the trash?
+
+%2</source>
+        <translation>Anda pasti hendak alihkan %1 nota ini ke tong sampah?
+
+%2</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
@@ -356,20 +357,8 @@
         <translation>Fon lalai penyunting nota:</translation>
     </message>
     <message>
-        <source>Width: </source>
-        <translation>Lebar: </translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation>Tinggi: </translation>
-    </message>
-    <message>
         <source>Note editor default size:</source>
         <translation>Saiz lalai penyunting nota:</translation>
-    </message>
-    <message>
-        <source>touch screen scrolling</source>
-        <translation>penatalan skrin sentuh</translation>
     </message>
     <message>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
@@ -430,6 +419,18 @@
     <message>
         <source>No Write Access</source>
         <translation>Tiada Capaian Tulis</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Lebar: </translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Tinggi: </translation>
+    </message>
+    <message>
+        <source>&amp;Touch screen scrolling</source>
+        <translation type="unfinished">&amp;Penatalan skrin sentuh</translation>
     </message>
 </context>
 <context>
@@ -542,8 +543,11 @@
     </message>
     <message>
         <source>Are you sure you want to permanently delete these notes?
+
 %1</source>
-        <translation>Anda pasti hendak memadam nota ini secara kekal?</translation>
+        <translation>Anda pasti hendak memadam nota ini secara kekal?
+
+%1</translation>
     </message>
 </context>
 <context>

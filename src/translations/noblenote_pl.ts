@@ -20,14 +20,18 @@
     </message>
     <message>
         <source>The files could not be dropped because files of the same names are already existing in this notebook:
+
 %1</source>
         <translation>Pliki nie mogły zostać upuszczone, ponieważ pliki z takimi samymi nazwami już istnieją w tym notesie:
+
 %1</translation>
     </message>
     <message>
         <source>The file could not be dropped because a file with the same name already exists in this notebook:
+
 %1</source>
         <translation>Plik nie mógł zostać upuszczony, ponieważ plik z taką samą nazwą już istnieje w tym notesie:
+
 %1</translation>
     </message>
     <message>
@@ -125,12 +129,6 @@
         <translation>Usuń wiele notatek</translation>
     </message>
     <message>
-        <source>Are you sure you want to move these %1 notes to the trash?
-%2</source>
-        <translation>Jesteś pewien, że chcesz przenieść te %1 notatek do kosza?
-%2</translation>
-    </message>
-    <message>
         <source>&amp;Open notes</source>
         <translation>&amp;Otwórz notatki</translation>
     </message>
@@ -148,8 +146,10 @@
     </message>
     <message>
         <source>Notes of the same names already exist in this notebook:
+
 %1</source>
         <translation>Notatki o tych samych nazwach już istnieją w tym notesie:
+
 %1</translation>
     </message>
     <message>
@@ -162,9 +162,6 @@
 PODSTAWY POWSTAŁEJ W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYTKOWANIEM GO LUB
 WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     </message>
-</context>
-<context>
-    <name>NobleNote</name>
     <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
@@ -188,10 +185,6 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     <message>
         <source>&amp;Edit</source>
         <translation>&amp;Edycja</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>&amp;Wyjdź</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -301,6 +294,14 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
+    <message>
+        <source>Are you sure you want to move these %1 notes to the trash?
+
+%2</source>
+        <translation>Jesteś pewien, że chcesz przenieść te %1 notatek do kosza?
+
+%2</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
@@ -358,20 +359,8 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
         <translation>Domyślna czcionka edytora notatek:</translation>
     </message>
     <message>
-        <source>Width: </source>
-        <translation>Szerokość: </translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation>Wysokość: </translation>
-    </message>
-    <message>
         <source>Note editor default size:</source>
         <translation>Domyślny rozmiar edytora notatek:</translation>
-    </message>
-    <message>
-        <source>touch screen scrolling</source>
-        <translation>przewijanie dotykowe</translation>
     </message>
     <message>
         <source>&amp;Show &quot;Show Source&quot; menu entry</source>
@@ -432,6 +421,18 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     <message>
         <source>No Write Access</source>
         <translation>Brak praw do zapisu</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Szerokość: </translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Wysokość: </translation>
+    </message>
+    <message>
+        <source>&amp;Touch screen scrolling</source>
+        <translation>&amp;Przewijanie dotykowe</translation>
     </message>
 </context>
 <context>
@@ -544,8 +545,10 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete these notes?
+
 %1</source>
         <translation>Jesteś pewien, że chcesz trwale usunąć te notatki?
+
 %1</translation>
     </message>
 </context>
