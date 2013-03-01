@@ -87,7 +87,9 @@ void FindFileModel::appendFile(QString filePath)
 bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
      QStandardItemModel::setData(index,value,role);
-     return QFile::rename(filePath(index),fileInfo(index).path() + "/" + value.toString());
+
+     //value can be folder/filename or simply filename
+     return QFile::rename(filePath(index),fileInfo(index).path() + "/" + QFileInfo(value.toString()).fileName());
 }
 
 QStringList FindFileModel::mimeTypes() const
