@@ -51,7 +51,9 @@ public:
     // get the uuid that has been extracted during read()
     QUuid uuid() const                         { return uuid_;}
 
-    const QString& title() const            { return title_;}
+    const QString& title() const            { return title_;} // file name
+
+    const QString& titleFromHtml() const { return titleFromHtml_;} // returns the title from the html header
 
      // get last change date
     const QDateTime& lastChange() const         { return lastChange_;}
@@ -80,6 +82,7 @@ private:
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
+    QString titleFromHtml_;
     QTextDocument * document_;
     QUuid uuid_;
     QDateTime lastChange_;

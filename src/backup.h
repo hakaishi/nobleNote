@@ -79,9 +79,9 @@ class Backup : public QObject {
            {
 
                 QTextDocument *d = new QTextDocument;
-                AbstractNoteReader *reader = new HtmlNoteReader(file.absoluteFilePath(),d);
+                HtmlNoteReader *reader = new HtmlNoteReader(file.absoluteFilePath(),d);
                 QStringList data;
-                data << reader->title() << file.absoluteFilePath() << d->toHtml();
+                data << reader->titleFromHtml() << file.absoluteFilePath() << d->toHtml();
                 hash->insert(file.absoluteFilePath(),data);
 
                 p->postProgressEvent();
