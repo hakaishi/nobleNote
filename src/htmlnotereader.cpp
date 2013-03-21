@@ -72,9 +72,10 @@ void HtmlNoteReader::read(const QString& filePath)
      if(document_)
      {
          document_->setHtml(html);
+         titleFromHtml_ = document_->metaInformation(QTextDocument::DocumentTitle);
      }
        title_ = info.baseName();  // always use file name
-       titleFromHtml_ = document_->metaInformation(QTextDocument::DocumentTitle);
+
 }
 
 /*QUuid*/ QUuid HtmlNoteReader::uuid(QString filePath)
