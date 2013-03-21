@@ -81,13 +81,9 @@ void Trash::deleteBackup()
           files << dataList.first();
      }
 
-     QString backupsToBeDeleted;
-     foreach(QString str, files)
-         backupsToBeDeleted += (str+"\n");
-
      if(QMessageBox::warning(this,tr("Deleting notes"),
-          tr("Are you sure you want to permanently delete these notes?\n\n%1").arg(
-          QDir::toNativeSeparators(backupsToBeDeleted)),QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
+          tr("Are you sure you want to permanently delete the selected notes?")
+             ,QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
         return;
 
      foreach(QString file, files)

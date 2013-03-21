@@ -429,7 +429,7 @@
         <translation>Höhe: </translation>
     </message>
     <message>
-        <source>&amp;Touch screen scrolling</source>
+        <source>touch screen scrolling</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -545,9 +545,13 @@
         <source>Are you sure you want to permanently delete these notes?
 
 %1</source>
-        <translation>Sind Sie sicher, dass Sie die markierten Notizen endgültig löschen wollen?
+        <translation type="obsolete">Sind Sie sicher, dass Sie die markierten Notizen endgültig löschen wollen?
 
 %1</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently delete the selected notes?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
