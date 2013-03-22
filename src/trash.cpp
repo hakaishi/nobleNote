@@ -51,7 +51,11 @@ void Trash::restoreBackup()
 {
      if(treeWidget->selectedItems().isEmpty())
        return;
-     int i = 0;
+
+     QString dir = QSettings().value("root_path").toString()+"/restored notes";
+     if(!QDir(dir).exists())
+       QDir().mkpath(dir);
+
      foreach(QTreeWidgetItem *item, treeWidget->selectedItems())
      {
           QStringList dataList = item->data(0,Qt::UserRole).toStringList();
@@ -60,13 +64,14 @@ void Trash::restoreBackup()
             return;
           else
           {
-             if(!QDir(QSettings().value("root_path").toString()+"/restored notes").exists())
-               QDir().mkpath(QSettings().value("root_path").toString()+"/restored notes");
-             if(!QFile(dataList.first()).copy(QSettings().value("root_path").toString()+"/restored notes/"+title))
+             QString filePath = dir+"/"+title;
+             int i = 0;
+             while(QFile::exists(filePath))
              {
                 i++;
-                QFile(dataList.first()).copy(QSettings().value("root_path").toString()+"/restored notes/"+title+" ("+QString::number(i)+")");
+                filePath = dir+"/"+title+" ("+QString::number(i)+")";
              }
+             QFile(dataList.first()).copy(filePath);
           }
           delete item;
      }
