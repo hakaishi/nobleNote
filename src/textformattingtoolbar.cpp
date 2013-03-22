@@ -28,7 +28,8 @@
 #include <QApplication>
 #include <QColorDialog>
 #include <QInputDialog>
-
+#include <QTextBlock>
+#include <QDebug>
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
     QToolBar(parent), textEdit_(textEdit)
 {
@@ -125,18 +126,23 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
 void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit_->textCursor();
-     if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
-       cursor.select(QTextCursor::WordUnderCursor);
+     QString block = cursor.block().text();
+     if(!cursor.atBlockStart() && !cursor.atBlockEnd())
+       if(!(block.at(cursor.positionInBlock()) == ' ') && !(block.at(cursor.positionInBlock()-1) == ' '))
+         cursor.select(QTextCursor::WordUnderCursor);
      cursor.mergeCharFormat(format);
      textEdit_->mergeCurrentCharFormat(format);
 }
 
 void TextFormattingToolbar::clearCharFormat()
 {
-    QTextCursor cursor = textEdit_->textCursor();
-    if(!cursor.hasSelection() && !cursor.atBlockStart() && !cursor.atBlockEnd())
-      cursor.select(QTextCursor::WordUnderCursor);
-    cursor.setCharFormat(QTextCharFormat());
+     QTextCursor cursor = textEdit_->textCursor();
+     QString block = cursor.block().text();
+     if(!cursor.atBlockStart() && !cursor.atBlockEnd())
+       if(!(block.at(cursor.positionInBlock()) == ' ') && !(block.at(cursor.positionInBlock()-1) == ' '))
+         cursor.select(QTextCursor::WordUnderCursor);
+     cursor.setCharFormat(QTextCharFormat());
+     textEdit_->setCurrentCharFormat(QTextCharFormat());
 }
 
 void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &format){
