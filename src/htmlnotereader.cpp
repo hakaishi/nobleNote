@@ -43,7 +43,7 @@ void HtmlNoteReader::read(const QString& filePath)
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug(qPrintable(QString("HtmlNoteReader::read failed : could not open filepath ") + QDir::toNativeSeparators(filePath)));
+        //qDebug(qPrintable(QString("HtmlNoteReader::read failed : could not open filepath ") + QDir::toNativeSeparators(filePath)));
            return;
     }
 

@@ -66,7 +66,7 @@ void HtmlNoteWriter::write()
     QFile file(filePath_);
     if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        qDebug(qPrintable(QString("HtmlNoteWriter::write failed : could not open ") + QDir::toNativeSeparators(filePath_)));
+        //qDebug(qPrintable(QString("HtmlNoteWriter::write failed : could not open ") + QDir::toNativeSeparators(filePath_)));
            return;
     }
 
