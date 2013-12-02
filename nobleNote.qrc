@@ -18,7 +18,6 @@
         <file alias="cut_file">src/noblenote-icons/cut_file.png</file>
         <file alias="folder">src/noblenote-icons/folder.png</file>
         <file alias="clearFormatting">src/noblenote-icons/clearFormatting.png</file>
-        <file alias="history">src/noblenote-icons/chronometer.png</file>
         <file alias="trash">src/noblenote-icons/trash.png</file>
         <file alias="preferences">src/noblenote-icons/preferences.png</file>
     </qresource>
