@@ -60,9 +60,6 @@ MainWindow::MainWindow()
 {
      setupUi(this);
 
-   //saving to avoid duplicate translation string
-     deleteNotesTrString = actionDelete_note->text();
-
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
 
@@ -795,7 +792,7 @@ void MainWindow::showContextMenuNote(const QPoint &pos){
          if(noteView->selectionModel()->selectedRows().count() == 1)
          {
              menu.addAction(actionRename_note);
-             actionDelete_note->setText(deleteNotesTrString);
+             actionDelete_note->setText(actionDelete_note->text());
          }
          else
          {

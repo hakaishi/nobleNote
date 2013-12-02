@@ -95,7 +95,6 @@ class MainWindow : public QMainWindow, public Ui::MainWindow
 public slots:
     void quit();
 private:
-      QString         deleteNotesTrString;
       Welcome         *welcome;
       FileIconProvider *folderIconProvider, *noteIconProvider;
       QSplitter       *splitter;
