@@ -183,7 +183,7 @@ bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePat
       }
 
 #if QT_VERSION >= 0x050000
-      return text.remove(QRegExp("<[^>]*>")).contains(QString::toHtmlEscaped(content),Qt::CaseInsensitive);
+      return text.remove(QRegExp("<[^>]*>")).contains(content.toHtmlEscaped(),Qt::CaseInsensitive);
 #else
       return text.remove(QRegExp("<[^>]*>")).contains(Qt::escape(content),Qt::CaseInsensitive);
 #endif
