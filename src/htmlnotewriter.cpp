@@ -61,6 +61,11 @@ void HtmlNoteWriter::write()
     insertMetaElement(&html,"last-change-date",DateTime::toISO8601(lastChange_.isNull()? QDateTime::currentDateTime():lastChange_));
     insertMetaElement(&html,"uuid",uuidStr);
 
+    // set html5 utf-8 tag
+    QString metaLine("<meta charset=\"UTF-8\"/>");
+    int headIdx = html.indexOf("<head>");
+    html.insert(headIdx + qstrlen("<head>"),metaLine);
+
 
 
     QFile file(filePath_);
