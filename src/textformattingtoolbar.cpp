@@ -127,11 +127,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
 void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit_->textCursor();
-     QString block = cursor.block().text();
-     if(!cursor.atBlockStart() && !cursor.atBlockEnd())
-       if(!(block.at(cursor.positionInBlock()) == ' ') && !(block.at(cursor.positionInBlock()-1) == ' '))
-         cursor.select(QTextCursor::WordUnderCursor);
-     cursor.mergeCharFormat(format);
+     cursor.setCharFormat(QTextCharFormat());
      textEdit_->mergeCurrentCharFormat(format);
 }
 
