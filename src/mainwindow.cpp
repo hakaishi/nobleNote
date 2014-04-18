@@ -706,8 +706,6 @@ void MainWindow::removeNote(){
      if(noteView->selectionModel()->selectedRows().isEmpty())
        return;
 
-
-     int numNotes = noteView->selectionModel()->selectedRows().size();
      QString names;
      foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedRows()))
           names += "\"" + name + "\"\n";
@@ -715,6 +713,7 @@ void MainWindow::removeNote(){
      QString title = tr("Delete Note");
      QString text = tr("Are you sure you want to move the note %1 to the trash?").arg(names);
 
+     int numNotes = noteView->selectionModel()->selectedRows().size();
      if(numNotes > 1)
      {
         title = tr("Delete Multiple Notes");

@@ -53,7 +53,14 @@ QString FindFileModel::filePath(const QModelIndex &index) const
 
 bool FindFileModel::remove(const QModelIndex &index)
 {
-    bool b = QFile::remove(itemFromIndex(index)->data(Qt::UserRole + 1).toString());
+    QStandardItem * item = itemFromIndex(index);
+    if(!item)
+    {
+        qWarning("FindFileModel::remove failed: itemFromIndex returned NULL");
+        return false;
+    }
+    QString filePath = item->data(Qt::UserRole + 1).toString();
+    bool b = QFile::remove(filePath);
     if(b)
          this->removeRow(index.row(),index.parent());
     return b;
