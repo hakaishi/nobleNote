@@ -30,6 +30,7 @@
 #include <QInputDialog>
 #include <QTextBlock>
 #include <QDebug>
+#include <QTextDocumentFragment>
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
     QToolBar(parent), textEdit_(textEdit)
 {
@@ -137,10 +138,6 @@ void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &
 void TextFormattingToolbar::clearCharFormat()
 {
      QTextCursor cursor = textEdit_->textCursor();
-     QString block = cursor.block().text();
-     if(!cursor.atBlockStart() && !cursor.atBlockEnd())
-       if(!(block.at(cursor.positionInBlock()) == ' ') && !(block.at(cursor.positionInBlock()-1) == ' '))
-         cursor.select(QTextCursor::WordUnderCursor);
      cursor.setCharFormat(QTextCharFormat());
      textEdit_->setCurrentCharFormat(QTextCharFormat());
 }
