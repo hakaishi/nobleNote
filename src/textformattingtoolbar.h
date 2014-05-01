@@ -50,6 +50,7 @@ public slots:
 private slots:
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
     void clearCharFormat(); // sets a default QTextCharFormat()
+    void removeWhitespace();
     void boldText();
     void italicText();
     void underlinedText();
@@ -71,6 +72,7 @@ private:
     QAction *actionTextStrikeOut;
     QAction *actionInsertHyperlink;
     QAction *actionClearFormatting;
+    QAction *actionRemoveWhitespace;
     QTextEdit * textEdit_;
 };
 

@@ -94,6 +94,11 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
     addAction(actionClearFormatting);
 
+    actionRemoveWhitespace = new QAction(/*QIcon::fromTheme("TODO",QIcon("")),tr("&Remove Whitespace"),*/this);
+    actionRemoveWhitespace->setPriority(QAction::LowPriority);
+    connect(actionRemoveWhitespace,SIGNAL(triggered()),this,SLOT(removeWhitespace()));
+    addAction(actionRemoveWhitespace);
+
     QPixmap textPix(16, 16);
     textPix.fill(textEdit_->palette().windowText().color());
     actionTextColor = new QAction(textPix, tr("&Text color..."), this);
@@ -141,6 +146,11 @@ void TextFormattingToolbar::clearCharFormat()
        cursor.select(QTextCursor::WordUnderCursor);
      cursor.setCharFormat(QTextCharFormat());
      textEdit_->setCurrentCharFormat(QTextCharFormat());
+}
+
+void TextFormattingToolbar::removeWhitespace()
+{
+    textEdit_->setPlainText(textEdit_->toPlainText().replace(" ", ""));
 }
 
 void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &format){
