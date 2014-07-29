@@ -94,10 +94,10 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
     addAction(actionClearFormatting);
 
-    actionRemoveWhitespace = new QAction(/*QIcon::fromTheme("TODO",QIcon("")),tr("&Remove Whitespace"),*/this);
-    actionRemoveWhitespace->setPriority(QAction::LowPriority);
-    connect(actionRemoveWhitespace,SIGNAL(triggered()),this,SLOT(removeWhitespace()));
-    addAction(actionRemoveWhitespace);
+//    actionRemoveWhitespace = new QAction(/*QIcon::fromTheme("TODO",QIcon("")),tr("&Remove Whitespace"),*/this);
+//    actionRemoveWhitespace->setPriority(QAction::LowPriority);
+//    connect(actionRemoveWhitespace,SIGNAL(triggered()),this,SLOT(removeWhitespace()));
+//    addAction(actionRemoveWhitespace);
 
     QPixmap textPix(16, 16);
     textPix.fill(textEdit_->palette().windowText().color());
