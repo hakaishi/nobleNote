@@ -137,7 +137,8 @@ void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &
      {
         cursor.select(QTextCursor::WordUnderCursor);
      }
-      cursor.mergeCharFormat(format);
+     textEdit_->mergeCurrentCharFormat(format); // enables formatting for chars at the beginning of a new line
+     cursor.mergeCharFormat(format); // enables formatting for word under cursor, this is not done by textEdit_->mergeCurrentCharFormat(format);
 }
 
 void TextFormattingToolbar::clearCharFormat()
