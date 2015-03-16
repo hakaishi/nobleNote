@@ -94,6 +94,12 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
     addAction(actionClearFormatting);
 
+    actionBulletPoint = new QAction(QIcon::fromTheme("TODO",QIcon(":bulletPoint")),tr("Bullet point"),this);
+    actionBulletPoint->setPriority(QAction::LowPriority);
+    // TODO shortcut
+    connect(actionBulletPoint,SIGNAL(triggered()),this,SLOT(insertBulletPoints()));
+    addAction(actionBulletPoint);
+
 //    actionRemoveWhitespace = new QAction(/*QIcon::fromTheme("TODO",QIcon("")),tr("&Remove Whitespace"),*/this);
 //    actionRemoveWhitespace->setPriority(QAction::LowPriority);
 //    connect(actionRemoveWhitespace,SIGNAL(triggered()),this,SLOT(removeWhitespace()));
@@ -150,10 +156,12 @@ void TextFormattingToolbar::clearCharFormat()
      textEdit_->setCurrentCharFormat(QTextCharFormat());
 }
 
-void TextFormattingToolbar::removeWhitespace()
-{
-    textEdit_->setPlainText(textEdit_->toPlainText().replace(" ", ""));
-}
+
+
+//void TextFormattingToolbar::removeWhitespace()
+//{
+//    textEdit_->setPlainText(textEdit_->toPlainText().replace(" ", ""));
+//}
 
 void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &format){
      QFont f = format.font();
@@ -199,6 +207,16 @@ void TextFormattingToolbar::strikedOutText(){
     QTextCharFormat fmt;
     fmt.setFontStrikeOut(actionTextStrikeOut->isChecked());
     mergeFormatOnWordOrSelection(fmt);
+}
+
+void TextFormattingToolbar::insertBulletPoints()
+{
+    QTextCursor cursor = textEdit_->textCursor();
+    QTextListFormat::Style style = QTextListFormat::ListDisc;
+
+    QTextListFormat listFormat;
+    listFormat.setStyle( style );
+    cursor.createList( listFormat );
 }
 
 void TextFormattingToolbar::coloredText(){

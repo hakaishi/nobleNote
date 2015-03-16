@@ -50,11 +50,12 @@ public slots:
 private slots:
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
     void clearCharFormat(); // sets a default QTextCharFormat()
-    void removeWhitespace();
+    //void removeWhitespace(); // not connected to a toolbutton
     void boldText();
     void italicText();
     void underlinedText();
     void strikedOutText();
+    void insertBulletPoints(); // insert bullet points  •
     void coloredText();
     void markedText();
     void insertHyperlink();
@@ -73,6 +74,7 @@ private:
     QAction *actionInsertHyperlink;
     QAction *actionClearFormatting;
     QAction *actionRemoveWhitespace;
+    QAction *actionBulletPoint;
     QTextEdit * textEdit_;
 };
 
