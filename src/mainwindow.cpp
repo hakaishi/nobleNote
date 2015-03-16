@@ -44,7 +44,6 @@
 #include <QModelIndex>
 #include <QInputDialog>
 #include <QMouseEvent>
-#include <QDesktopServices>
 #include <QSettings>
 #include <QMessageBox>
 #include <QFileIconProvider>
@@ -52,8 +51,10 @@
 #include <QPushButton>
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrentMap>
+#include <QStandardPaths>
 #else
-#include  <QtConcurrentMap>
+#include <QtConcurrentMap>
+#include <QDesktopServices>
 #endif
 
 MainWindow::MainWindow()
@@ -256,7 +257,13 @@ void MainWindow::writeBackupDirPath()
      suffix.prepend("_");
      suffix.remove(":");
 
+#if QT_VERSION < 0x050000
      QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#elif QT_VERSION > 0x050400
+     QString backupPath = QStandardPaths::AppLocalDataLocation;
+#elif QT_VERSION > 0x050000 && QT_VERSION < 0x050400
+     QString backupPath = QStandardPaths::DataLocation;
+#endif
 
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
      if(backupPath.contains("\\" + qApp->organizationName() + "\\" + qApp->applicationName()))
