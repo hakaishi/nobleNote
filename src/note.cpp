@@ -76,7 +76,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      searchBar->setFocusPolicy(Qt::TabFocus);
      addToolBar(searchBar);
 
-     restoreState(QSettings().value("Toolbars/state").toByteArray());
+     restoreState(QSettings().value("Note_window_and_toolbar/state").toByteArray());
 
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(textBrowser,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
@@ -97,7 +97,7 @@ void Note::showEvent(QShowEvent* event){
 
 void Note::closeEvent(QCloseEvent* close_Note){
      QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_size", size());
-     QSettings().setValue("Toolbars/state", saveState());
+     QSettings().setValue("Note_window_and_toolbar/state", saveState());
      QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_cursor_position",
         textBrowser->textCursor().position());
      QStringList savedOpenNoteList = QSettings().value("open_notes").toStringList();
