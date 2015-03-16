@@ -96,7 +96,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
     actionBulletPoint = new QAction(QIcon::fromTheme("TODO",QIcon(":bulletpoints")),tr("Bullet point"),this);
     actionBulletPoint->setPriority(QAction::LowPriority);
-    //actionBulletPoint->setShortcut();
+    actionBulletPoint->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L); // ms word add bullet points formatting shortcut
     connect(actionBulletPoint,SIGNAL(triggered()),this,SLOT(insertBulletPoints()));
     addAction(actionBulletPoint);
 
