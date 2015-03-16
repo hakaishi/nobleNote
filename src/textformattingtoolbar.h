@@ -62,6 +62,7 @@ private slots:
     void fontOfText(const QString &f);
     void pointSizeOfText(const QString &p);
 
+    void updateBulletPointToolbarButton();
 private:
     QFontComboBox *fontComboBox;
     QComboBox *fontSizeComboBox;

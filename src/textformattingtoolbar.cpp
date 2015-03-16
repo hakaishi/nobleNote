@@ -29,7 +29,7 @@
 #include <QColorDialog>
 #include <QInputDialog>
 #include <QTextBlock>
-#include <QDebug>
+#include <QTextList>
 #include <QTextDocumentFragment>
 
 TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *parent) :
@@ -97,6 +97,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     actionBulletPoint = new QAction(QIcon::fromTheme("TODO",QIcon(":bulletpoints")),tr("Bullet point"),this);
     actionBulletPoint->setPriority(QAction::LowPriority);
     actionBulletPoint->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L); // ms word add bullet points formatting shortcut
+    actionBulletPoint->setCheckable(true);
     connect(actionBulletPoint,SIGNAL(triggered()),this,SLOT(insertBulletPoints()));
     addAction(actionBulletPoint);
 
@@ -135,6 +136,8 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
     connect(textEdit_, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,
       SLOT(getFontAndPointSizeOfText(QTextCharFormat)));
+
+    connect(textEdit_,SIGNAL(cursorPositionChanged()),this,SLOT(updateBulletPointToolbarButton()));
 }
 
 void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
@@ -179,10 +182,34 @@ void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &for
      actionTextColor->setIcon(textPix);
      QPixmap bPix(16,16);
      if(format.background().style() == Qt::NoBrush)
-       bPix.fill(textEdit_->palette().base().color());
+     {
+      bPix.fill(textEdit_->palette().base().color());
+     }
      else
+     {
        bPix.fill(format.background().color());
+     }
      actionTextBColor->setIcon(bPix);
+
+
+
+}
+
+void TextFormattingToolbar::updateBulletPointToolbarButton()
+{
+     QTextCursor cursor = textEdit_->textCursor();
+    //get the cursor's current list (formatting)
+    QTextList* currentList = cursor.currentList();
+
+    if(currentList != 0 && currentList->format().style() == QTextListFormat::ListDisc)
+    {
+       actionBulletPoint->setChecked(true);
+    }
+    else if(currentList == 0 || (currentList != 0 && currentList->format().style() != QTextListFormat::ListDisc)) // null or not bullet
+    {
+       actionBulletPoint->setChecked(false);
+    }
+
 }
 
 void TextFormattingToolbar::boldText(){
@@ -212,11 +239,34 @@ void TextFormattingToolbar::strikedOutText(){
 void TextFormattingToolbar::insertBulletPoints()
 {
     QTextCursor cursor = textEdit_->textCursor();
-    QTextListFormat::Style style = QTextListFormat::ListDisc;
 
-    QTextListFormat listFormat;
-    listFormat.setStyle( style );
-    cursor.createList( listFormat );
+
+    //get the cursor's current list, which you want to remove from the text.
+    QTextList* currentList = cursor.currentList();
+
+    if(currentList != 0 && currentList->format().style() == QTextListFormat::ListDisc)
+    {
+
+    //get the current block, which you want to remove from the current list
+    QTextBlock currentBlock = cursor.block();
+
+    //call the list's remove() function, passing the block as a parameter
+    currentList->remove(currentBlock);
+
+    //the list is now removed, but you still have to remove the list identation
+    QTextBlockFormat blockFormat = cursor.blockFormat();
+    blockFormat.setIndent(0);
+    cursor.setBlockFormat(blockFormat);
+    }
+    else if(currentList == 0 || (currentList != 0 && currentList->format().style() != QTextListFormat::ListDisc)) // null or not bullet
+    {
+        QTextListFormat::Style style = QTextListFormat::ListDisc;
+
+        QTextListFormat listFormat;
+        listFormat.setStyle( style );
+        cursor.createList( listFormat );
+
+    }
 }
 
 void TextFormattingToolbar::coloredText(){
