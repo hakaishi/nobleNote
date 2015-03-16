@@ -12,8 +12,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent
 win32 {
 QMAKE_LFLAGS += -static-libgcc
 
-RESOURCES += translations.qrc
-
 # use these for windows builds release builds only because debugging 
 #symbols wont be linked if only release is specified
 CONFIG -= debug_and_release
