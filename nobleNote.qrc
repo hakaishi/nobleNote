@@ -20,5 +20,6 @@
         <file alias="clearFormatting">src/noblenote-icons/clearFormatting.png</file>
         <file alias="trash">src/noblenote-icons/trash.png</file>
         <file alias="preferences">src/noblenote-icons/preferences.png</file>
+        <file alias="bulletpoints">src/noblenote-icons/bulletpoints.png</file>
     </qresource>
 </RCC>

@@ -94,9 +94,9 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
     addAction(actionClearFormatting);
 
-    actionBulletPoint = new QAction(QIcon::fromTheme("TODO",QIcon(":bulletPoint")),tr("Bullet point"),this);
+    actionBulletPoint = new QAction(QIcon::fromTheme("TODO",QIcon(":bulletpoints")),tr("Bullet point"),this);
     actionBulletPoint->setPriority(QAction::LowPriority);
-    // TODO shortcut
+    //actionBulletPoint->setShortcut();
     connect(actionBulletPoint,SIGNAL(triggered()),this,SLOT(insertBulletPoints()));
     addAction(actionBulletPoint);
 
