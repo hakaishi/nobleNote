@@ -21,25 +21,6 @@
    <property name="horizontalSpacing">
     <number>10</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Root directory</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="2">
     <widget class="QPushButton" name="browseButton">
      <property name="enabled">
@@ -65,7 +46,7 @@
    </item>
    <item row="2" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QFontComboBox" name="fontComboBox">
        <property name="currentFont">
         <font>
@@ -75,7 +56,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
@@ -88,7 +69,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0" colspan="2">
+     <item row="6" column="0" colspan="2">
       <layout class="QFormLayout" name="formLayout">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
@@ -135,7 +116,7 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0" colspan="2">
+     <item row="5" column="0" colspan="2">
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
@@ -154,7 +135,7 @@
         <string notr="true">Enables drag to scroll</string>
        </property>
        <property name="text">
-        <string>touch screen scrolling</string>
+        <string>&amp;Touch screen scrolling</string>
        </property>
       </widget>
      </item>
@@ -171,7 +152,7 @@
         <string>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</string>
        </property>
        <property name="text">
-        <string>Convert notes to the HTML format</string>
+        <string>Convert notes to the &amp;HTML format</string>
        </property>
       </widget>
      </item>
@@ -185,13 +166,23 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="QComboBox" name="fontSizeComboBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QPushButton" name="createPortable">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Cre&amp;ate a portable copy</string>
        </property>
       </widget>
      </item>
@@ -204,6 +195,25 @@
      </property>
      <property name="text">
       <string>folder</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Root directory</string>
      </property>
     </widget>
    </item>

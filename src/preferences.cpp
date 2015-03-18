@@ -39,6 +39,9 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
      foreach(int size, db.standardSizes())
        fontSizeComboBox->addItem(QString::number(size));
 
+     if(settings->value("isPortable",false).toBool())
+          createPortable->setDisabled(true);
+
      dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      showSource->setChecked(settings->value("show_source", false).toBool());
@@ -48,9 +51,10 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
 
 
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
-     connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(openDir()));
+     connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(setNewPaths()));
      connect(kineticScrolling,SIGNAL(toggled(bool)),this,SIGNAL(kineticScrollingEnabledChanged(bool)));
      connect(fontSizeComboBox,SIGNAL(activated(QString)),this,SLOT(setFontSize(QString)));
+     connect(createPortable, SIGNAL(clicked(bool)), this, SLOT(createPortableAtPath()));
 }
 
 void Preferences::setFontSize(const QString size)
@@ -112,7 +116,7 @@ void Preferences::saveSettings()
      accept();
 }
 
-void Preferences::openDir()
+QString Preferences::openDir()
 {
      QString path;
      path = QFileDialog::getExistingDirectory(this,
@@ -121,11 +125,87 @@ void Preferences::openDir()
      QFileInfo file(path);
      if(!file.isWritable() && !path.isEmpty()){
          QMessageBox::warning(this,tr("No Write Access"), tr("The path \"%1\" is not writable!").arg(QDir::toNativeSeparators(file.filePath())));
-       return;
+       return QString();
      }
-     if(!path.isEmpty())
+     return path;
+}
+
+void Preferences::setNewPaths()
+{
+     QString newPath = openDir();
+     if(!newPath.isEmpty())
      {
-          rootPath = path;
+          rootPath = newPath;
           pathLabel->setText(rootPath);
      }
+}
+
+void Preferences::createPortableAtPath()
+{
+     QString newPath = openDir();
+
+     if(newPath.isEmpty())
+       return;
+
+   #ifdef Q_OS_WIN32
+     QFile noblenote(QCoreApplication::applicationFilePath());
+     noblenote.copy(newPath + "\\noblenote");
+
+     QString newSettingsFilePath = newPath;
+     QString settingFileName = settings->fileName();
+     while(settingFileName.contains("\\"))
+       settingFileName.remove(0,settingFileName.indexOf("\\")+1);
+     QFile file(settings->fileName());
+     QDir().mkpath(newSettingsFilePath);
+     file.copy(newSettingsFilePath + "\\" + settingFileName);
+     QSettings newSettings(QString(newSettingsFilePath + "\\" + settingFileName),QSettings::NativeFormat,this);
+     newSettings.setValue("isPortable",true);
+
+     QString newRootPath = newPath + "\\notes";
+     QList<QFileInfo> notebooks = QDir(settings->value("root_path").toString()).entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot);
+     foreach(QFileInfo notebook, notebooks)
+     {
+          QDir().mkpath(newRootPath + "\\" + notebook.fileName());
+          QList<QFileInfo> notes = QDir(notebook.absoluteFilePath()).entryInfoList(QDir::Files);
+          foreach(QFileInfo note, notes)
+               QFile(note.absoluteFilePath()).copy(
+                     newRootPath + "\\" + notebook.fileName() + "\\" + note.fileName());
+     }
+
+     QString backupPath = newPath + "\\backups";
+     QDir().mkpath(backupPath);
+     QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
+     foreach(QFileInfo backup, backups)
+          QFile(backup.absoluteFilePath()).copy(backupPath + "\\" + backup.fileName());
+   #else
+     QFile noblenote(QCoreApplication::applicationFilePath());
+     noblenote.copy(newPath + "/noblenote");
+
+     QString newSettingsFilePath = newPath;
+     QString settingFileName = settings->fileName();
+     while(settingFileName.contains("/"))
+       settingFileName.remove(0,settingFileName.indexOf("/")+1);
+     QFile file(settings->fileName());
+     QDir().mkpath(newSettingsFilePath);
+     file.copy(newSettingsFilePath + "/" + settingFileName);
+     QSettings newSettings(QString(newSettingsFilePath + "/" + settingFileName),QSettings::NativeFormat,this);
+     newSettings.setValue("isPortable",true);
+
+     QString newRootPath = newPath + "/notes";
+     QList<QFileInfo> notebooks = QDir(settings->value("root_path").toString()).entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot);
+     foreach(QFileInfo notebook, notebooks)
+     {
+          QDir().mkpath(newRootPath + "/" + notebook.fileName());
+          QList<QFileInfo> notes = QDir(notebook.absoluteFilePath()).entryInfoList(QDir::Files);
+          foreach(QFileInfo note, notes)
+               QFile(note.absoluteFilePath()).copy(
+                     newRootPath + "/" + notebook.fileName() + "/" + note.fileName());
+     }
+
+     QString backupPath = newPath + "/backups";
+     QDir().mkpath(backupPath);
+     QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
+     foreach(QFileInfo backup, backups)
+          QFile(backup.absoluteFilePath()).copy(backupPath + "/" + backup.fileName());
+   #endif
 }

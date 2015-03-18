@@ -257,13 +257,20 @@ void MainWindow::writeBackupDirPath()
      suffix.prepend("_");
      suffix.remove(":");
 
-#if QT_VERSION < 0x050000
-     QString backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#elif QT_VERSION > 0x050400
-     QString backupPath = QStandardPaths::AppLocalDataLocation;
-#elif QT_VERSION > 0x050000 && QT_VERSION < 0x050400
-     QString backupPath = QStandardPaths::DataLocation;
-#endif
+     QString settingsFile = QCoreApplication::applicationDirPath() + "\\nobleNote.conf";
+     QString backupPath;
+     if(!QFile(settingsFile).exists())
+     {
+      #if QT_VERSION < 0x050000
+        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+      #elif QT_VERSION > 0x050400
+        backupPath = QStandardPaths::AppLocalDataLocation;
+      #elif QT_VERSION > 0x050000 && QT_VERSION < 0x050400
+        backupPath = QStandardPaths::DataLocation;
+      #endif
+     }
+     else
+       backupPath = QCoreApplication::applicationDirPath();
 
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
      if(backupPath.contains("\\" + qApp->organizationName() + "\\" + qApp->applicationName()))
@@ -271,7 +278,12 @@ void MainWindow::writeBackupDirPath()
          backupPath.replace("\\" + qApp->organizationName() + "\\" + qApp->applicationName(),"\\" +qApp->applicationName());
      }
    #else
-     QString backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName();
+     QString settingsFile = QCoreApplication::applicationDirPath() + "/nobleNote.conf";
+     QString backupPath;
+     if(!QFile(settingsFile).exists())
+       backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName();
+     else
+       backupPath = QCoreApplication::applicationDirPath();
    #endif
 
      QSettings().setValue("backup_dir_path", backupPath + "/backups" + suffix);

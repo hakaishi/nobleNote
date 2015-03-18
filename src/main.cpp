@@ -61,7 +61,16 @@ int main (int argc, char *argv[]){
      app.setQuitOnLastWindowClosed(false);
 
      //Configuration file
-     QSettings settings; // ini format does save but in the executables directory, use native format
+     QString settingsFile;
+    #ifdef Q_OS_WIN32
+     settingsFile = QCoreApplication::applicationDirPath() + "\\nobleNote.conf";
+    #else
+     settingsFile = QCoreApplication::applicationDirPath() + "/nobleNote.conf";
+    #endif
+     QSettings settings;
+     if(QFile(settingsFile).exists())
+       settings.setPath(QSettings::NativeFormat,QSettings::UserScope,settingsFile);
+
      if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
          QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
      if(!settings.value("import_path").isValid())
