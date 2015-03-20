@@ -127,7 +127,11 @@ QString Preferences::openDir()
          QMessageBox::warning(this,tr("No Write Access"), tr("The path \"%1\" is not writable!").arg(QDir::toNativeSeparators(file.filePath())));
        return QString();
      }
-     return path;
+   #ifdef Q_OS_WIN32
+     return QString(path + "\\nobleNote");
+   #else
+     return QString(path + "/nobleNote");
+   #endif
 }
 
 void Preferences::setNewPaths()
@@ -146,6 +150,8 @@ void Preferences::createPortableAtPath()
 
      if(newPath.isEmpty())
        return;
+     else
+       QDir().mkdir(newPath);
 
    #ifdef Q_OS_WIN32
      QFile noblenote(QCoreApplication::applicationFilePath());
@@ -159,7 +165,6 @@ void Preferences::createPortableAtPath()
      QDir().mkpath(newSettingsFilePath);
      file.copy(newSettingsFilePath + "\\" + settingFileName);
      QSettings newSettings(QString(newSettingsFilePath + "\\" + settingFileName),QSettings::NativeFormat,this);
-     newSettings.setValue("isPortable",true);
 
      QString newRootPath = newPath + "\\notes";
      QList<QFileInfo> notebooks = QDir(settings->value("root_path").toString()).entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot);
@@ -189,7 +194,6 @@ void Preferences::createPortableAtPath()
      QDir().mkpath(newSettingsFilePath);
      file.copy(newSettingsFilePath + "/" + settingFileName);
      QSettings newSettings(QString(newSettingsFilePath + "/" + settingFileName),QSettings::NativeFormat,this);
-     newSettings.setValue("isPortable",true);
 
      QString newRootPath = newPath + "/notes";
      QList<QFileInfo> notebooks = QDir(settings->value("root_path").toString()).entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot);
@@ -208,4 +212,8 @@ void Preferences::createPortableAtPath()
      foreach(QFileInfo backup, backups)
           QFile(backup.absoluteFilePath()).copy(backupPath + "/" + backup.fileName());
    #endif
+
+     newSettings.setValue("isPortable",true);
+     newSettings.setValue("root_path",newRootPath);
+     newSettings.setValue("backup_dir_path",backupPath);
 }

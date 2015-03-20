@@ -60,16 +60,19 @@ int main (int argc, char *argv[]){
 
      app.setQuitOnLastWindowClosed(false);
 
-     //Configuration file
-     QString settingsFile;
+     QString path, suf;
     #ifdef Q_OS_WIN32
-     settingsFile = QCoreApplication::applicationDirPath() + "\\nobleNote.conf";
+     path = QCoreApplication::applicationDirPath();
+     suf = "\\nobleNote.conf";
     #else
-     settingsFile = QCoreApplication::applicationDirPath() + "/nobleNote.conf";
+     path = QCoreApplication::applicationDirPath();
+     suf = "/nobleNote.conf";
     #endif
+     QDir settingsFilePath = QDir(path); //Dirty trick to get what we want.
+     settingsFilePath.cdUp();
      QSettings settings;
-     if(QFile(settingsFile).exists())
-       settings.setPath(QSettings::NativeFormat,QSettings::UserScope,settingsFile);
+     if(QFile(path + suf).exists())
+       QSettings::setPath(QSettings::defaultFormat(),QSettings::UserScope,settingsFilePath.path());
 
      if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
          QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
