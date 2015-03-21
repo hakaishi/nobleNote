@@ -179,7 +179,9 @@
      <item row="4" column="0" colspan="2">
       <widget class="QPushButton" name="createPortable">
        <property name="toolTip">
-        <string/>
+        <string>For example for USB sticks.
+This creates a copy of all
+neccessary data to a desired location.</string>
        </property>
        <property name="text">
         <string>Cre&amp;ate a portable copy</string>
