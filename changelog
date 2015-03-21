@@ -6,6 +6,7 @@ Release 1.1.0
  - fixed backup path
  - added "create portable version"
  - added show/hide tool bars via context menu
+ - save position of notes
  - other fixes
 
 Release 1.0.8

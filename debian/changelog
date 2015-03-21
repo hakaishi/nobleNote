@@ -5,6 +5,7 @@ noblenote (1.1.0-1) unstable; urgency=low
   - fixed backup path
   - added "create portable version"
   - added show/hide tool bars via context menu
+  - save position of notes
   - other fixes
 
  -- Christian Metscher <hakaishi@web.de>  Sat, 21 Mar 2015 13:55:12 +0100

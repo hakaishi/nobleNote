@@ -105,6 +105,7 @@ void Trash::deleteBackup()
           uuid.remove(QSettings().value("backup_dir_path").toString() + "/");
           QSettings().remove("Notes/" + QUuid(uuid).toString() + "_size");
           QSettings().remove("Notes/" + QUuid(uuid).toString() + "_cursor_position");
+          QSettings().remove("Notes/" + QUuid(uuid).toString() + "_window_position");
      }
 
      foreach(QTreeWidgetItem *item, itemList)
