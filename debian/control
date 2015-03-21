@@ -1,0 +1,20 @@
+Source: noblenote
+Section: editors
+Priority: optional
+Maintainer: nobleNote Developers <noblenote.developers@gmail.com>
+Uploaders: Fabian Deuchler <Taiko000@gmail.com>, Christian Metscher <hakaishi@web.de>
+Build-Depends: debhelper (>= 9), qtbase5-dev, qttools5-dev-tools
+Standards-Version: 3.9.6
+Vcs-Git: git://github.com/hakaishi/nobleNote.git
+Vcs-browser: https://github.com/hakaishi/nobleNote
+Homepage: https://github.com/hakaishi/nobleNote
+
+Package: noblenote
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Qt program for taking notes
+ nobleNote is a program to organize and create notes. It has an icon
+ in the system tray and supports drag and drop. The note-editor supports
+ different fonts, font sizes and colors as well as background colors.
+ You can also import notes from other programs like gnote and tomboy.
+ The notes are saved in the html format.

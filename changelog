@@ -1,3 +1,13 @@
+Release 1.1.0
+=============
+
+ - fixed word formatting
+ - added bullet list option
+ - fixed backup path
+ - added "create portable version"
+ - added show/hide tool bars via context menu
+ - other fixes
+
 Release 1.0.8
 =============
 

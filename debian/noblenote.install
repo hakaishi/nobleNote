@@ -1,0 +1,4 @@
+bin/* usr/bin
+src/translations/*.qm usr/share/noblenote/translations
+src/noblenote-icons/noblenote* usr/share/pixmaps
+noblenote.desktop usr/share/applications

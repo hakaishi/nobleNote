@@ -1,0 +1,6 @@
+?package(noblenote):\
+  needs="X11"\
+  section="Applications/Editors"\
+  title="nobleNote"\
+  icon="/usr/share/pixmaps/noblenote.xpm"\
+  command="/usr/bin/noblenote"

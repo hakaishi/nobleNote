@@ -83,7 +83,16 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/flickcharm.cpp \
     src/noteimporter.cpp
 RESOURCES += nobleNote.qrc
-TRANSLATIONS = src/translations/noblenote_de.ts
+TRANSLATIONS = src/translations/noblenote_ast.ts\
+               src/translations/noblenote_cs.ts\
+               src/translations/noblenote_de.ts\
+               src/translations/noblenote_de_DE.ts\
+               src/translations/noblenote_es.ts\
+               src/translations/noblenote_gl.ts\
+               src/translations/noblenote_ms.ts\
+               src/translations/noblenote_pl.ts\
+               src/translations/noblenote_ru.ts\
+               src/translations/noblenote_uk.ts
 
 !win32{
 # install

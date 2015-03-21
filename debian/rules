@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export QT_SELECT=qt5
+%:
+	dh $@
+
+override_dh_clean:
+	rm -f ./src/translations/*.qm
+	dh_clean
