@@ -49,8 +49,9 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textBrowser->ensureCursorVisible();
      textBrowser->setTabStopWidth( fontMetrics().width(" ") * 4); // set tab size to 4 for android compatibility
 
-     showHideToolbars = new QAction("hallo",this);
+     showHideToolbars = new QAction(this);
      showHideToolbars->setShortcut(Qt::CTRL + Qt::Key_T);
+     showHideToolbars->setPriority(QAction::LowPriority);
      connect(showHideToolbars, SIGNAL(triggered()), this, SLOT(showOrHideToolbars()));
      textBrowser->setContextMenuPolicy(Qt::CustomContextMenu);
      connect(textBrowser,SIGNAL(customContextMenuRequested(const QPoint&)),
@@ -132,6 +133,9 @@ void Note::keyPressEvent(QKeyEvent *k){
          searchBar->setVisible(true);
          searchBar->searchLine()->setFocus();
      }
+
+     if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_T))
+       showOrHideToolbars();
 }
 
 void Note::keyReleaseEvent(QKeyEvent *k){
@@ -158,7 +162,7 @@ void Note::showContextMenu(const QPoint &pt)
      QMenu *menu = textBrowser->createStandardContextMenu();
      menu->addAction(showHideToolbars);
      menu->exec(textBrowser->mapToGlobal(pt));
-     delete menu;
+     //delete menu;
 }
 
 void Note::showOrHideToolbars()
