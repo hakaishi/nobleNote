@@ -49,6 +49,13 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textBrowser->ensureCursorVisible();
      textBrowser->setTabStopWidth( fontMetrics().width(" ") * 4); // set tab size to 4 for android compatibility
 
+     showHideToolbars = new QAction("hallo",this);
+     showHideToolbars->setShortcut(Qt::CTRL + Qt::Key_T);
+     connect(showHideToolbars, SIGNAL(triggered()), this, SLOT(showOrHideToolbars()));
+     textBrowser->setContextMenuPolicy(Qt::CustomContextMenu);
+     connect(textBrowser,SIGNAL(customContextMenuRequested(const QPoint&)),
+             this,SLOT(showContextMenu(const QPoint &)));
+
 //     FlickCharm * flickCharm = new FlickCharm(this);
 //     flickCharm->activateOn(textBrowser);
 
@@ -84,7 +91,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
 void Note::highlightText(const QString &str)
 {
-    searchBar->highlightText(str);
+     searchBar->highlightText(str);
 }
 
 void Note::showEvent(QShowEvent* event){
@@ -134,11 +141,38 @@ void Note::keyReleaseEvent(QKeyEvent *k){
                                             Qt::LinksAccessibleByMouse);
 }
 
-
-
 void Note::setSearchBarText(QString str)
 {
     searchBar->setText(str);
     searchBar->selectNextExpression();
     searchBar->setVisible(true);
+}
+
+void Note::showContextMenu(const QPoint &pt)
+{
+     if(searchBar->isVisible() || toolbar->isVisible())
+       showHideToolbars->setText(tr("Hide Toolbars"));
+     else
+       showHideToolbars->setText(tr("Show Toolbars"));
+
+     QMenu *menu = textBrowser->createStandardContextMenu();
+     menu->addAction(showHideToolbars);
+     menu->exec(textBrowser->mapToGlobal(pt));
+     delete menu;
+}
+
+void Note::showOrHideToolbars()
+{
+     if(searchBar->isVisible() || toolbar->isVisible())
+     {
+          if(searchBar->isVisible())
+            searchBar->setVisible(false);
+          if(toolbar->isVisible())
+            toolbar->setVisible(false);
+     }
+     else
+     {
+          searchBar->setVisible(true);
+          toolbar->setVisible(true);
+     }
 }

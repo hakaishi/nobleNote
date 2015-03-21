@@ -33,6 +33,7 @@
 #include <QDateTime>
 #include <QTextBrowser>
 #include <QDialogButtonBox>
+#include <QMenu>
 #include "textbrowser.h"
 
 class TextFormattingToolbar;
@@ -54,6 +55,8 @@ class Note : public QMainWindow, public Ui::Note {
      private:
       TextBrowser *textBrowser;
       TextDocument *textDocument;
+      QMenu    *menu;
+      QAction  *showHideToolbars;
 
       TextFormattingToolbar *toolbar;
       TextSearchToolbar *searchBar;
@@ -62,6 +65,9 @@ class Note : public QMainWindow, public Ui::Note {
 
      public slots:
       void setSearchBarText(QString str);
+     private slots:
+      void showContextMenu(const QPoint &pt);
+      void showOrHideToolbars();
 
      protected:
       void keyPressEvent(QKeyEvent *k);
