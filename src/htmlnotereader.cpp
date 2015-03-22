@@ -51,6 +51,7 @@ void HtmlNoteReader::read(const QString& filePath)
     QString html;
 
     QTextStream in(&file);
+    in.setCodec("UTF-8");
     html = in.readAll();
     file.close();
 

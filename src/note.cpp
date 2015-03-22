@@ -36,6 +36,7 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QSettings>
+#include <QDesktopWidget>
 //#include "flickcharm.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
@@ -85,7 +86,12 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      addToolBar(searchBar);
 
      restoreState(QSettings().value("Note_window_and_toolbar/state").toByteArray());
-     restoreGeometry(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").toByteArray());
+
+     if(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").isValid())
+        restoreGeometry(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").toByteArray());
+     else // center in desktop if there's no saved position
+        move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
 
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(textBrowser,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
@@ -138,13 +144,16 @@ void Note::keyPressEvent(QKeyEvent *k){
 
      if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_T))
        showOrHideToolbars();
+
+     QMainWindow::keyPressEvent(k);
 }
 
 void Note::keyReleaseEvent(QKeyEvent *k){
-     Q_UNUSED(k);
      textBrowser->setReadOnly(noteDescriptor_->readOnly());
      textBrowser->setTextInteractionFlags(textBrowser->textInteractionFlags()|
                                             Qt::LinksAccessibleByMouse);
+
+     QMainWindow::keyReleaseEvent(k);
 }
 
 void Note::setSearchBarText(QString str)
