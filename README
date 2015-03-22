@@ -6,7 +6,7 @@ INSTALL:
 
 Dependencies: libqt4-dev, build-essential
 
-If you want to install from source, open a terminal and change into this folder.
+If you want to compile from source, open a terminal and change into the nobleNote source folder.
 To install type:
 
 qmake
