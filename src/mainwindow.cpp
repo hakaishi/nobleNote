@@ -555,10 +555,10 @@ void MainWindow::openOneNote(QString path)
      note->show();
 
      QStringList recentNoteList = QSettings().value("Recent_notes").toStringList();
-     recentNoteList.removeAll(path);
-     recentNoteList.prepend(path);
+     recentNoteList.removeAll(path); //remove if already present
+     recentNoteList.prepend(path); //prepend to be at the first place
      while(recentNoteList.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
-       recentNoteList.removeLast();
+       recentNoteList.removeLast(); //make sure to keep the size set in the preferences
      QSettings().setValue("Recent_notes", recentNoteList);
      createAndUpdateRecent(); //also calls createRecent
 }
@@ -568,34 +568,36 @@ void MainWindow::createAndUpdateRecent()
      menu_Open_recent->clear();
      QStringList recentFilePaths = QSettings().value("Recent_notes").toStringList();
 
+     //remove all nonexisting note paths
      for(int i = 0; i < recentFilePaths.size(); i++)
         if(!QFile(recentFilePaths[i]).exists())
           recentFilePaths.removeAll(recentFilePaths[i]);
 
+     //remove all note paths to match the size in the preferences
      while(recentFilePaths.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
        recentFilePaths.removeLast();
 
-     QSettings().setValue("Recent_notes", recentFilePaths);
+     QSettings().setValue("Recent_notes", recentFilePaths); //save for later
 
-     menu_Open_recent->setDisabled(QSettings().value("Recent_notes").toStringList().isEmpty());
+     menu_Open_recent->setDisabled(QSettings().value("Recent_notes").toStringList().isEmpty()); //disable if zero
 
      QAction *recentAction = 0;
      for(int i = 0; i < recentFilePaths.size(); i++)
      {
           recentAction = new QAction(menu_Open_recent);
-          QString fileName = QFileInfo(recentFilePaths[i]).fileName();
-          recentAction->setText(fileName);
-          recentAction->setData(recentFilePaths[i]);
-          connect(recentAction, SIGNAL(triggered()), this, SLOT(openRecent()));
+          QString fileName = QFileInfo(recentFilePaths[i]).fileName(); //get file name
+          recentAction->setText(fileName); //displayed name
+          recentAction->setData(recentFilePaths[i]); //add the path as data
+          connect(recentAction, SIGNAL(triggered()), this, SLOT(openRecent())); 
           menu_Open_recent->addAction(recentAction);
      }
 }
 
 void MainWindow::openRecent()
 {
-     QAction *action = qobject_cast<QAction *>(sender());
-     if(action)
-       openOneNote(action->data().toString());
+     QAction *action = qobject_cast<QAction *>(sender()); //get QAction that was the sender of the signal
+     if(action) //if not NULL
+       openOneNote(action->data().toString()); //open note with the path in data of QAction
 }
 
 void MainWindow::openNoteSource()

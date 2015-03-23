@@ -68,11 +68,12 @@ int main (int argc, char *argv[]){
      path = QCoreApplication::applicationDirPath();
      suf = "/nobleNote.conf";
     #endif
-     QDir settingsFilePath = QDir(path); //Dirty trick to get what we want.
+     QDir settingsFilePath = QDir(path); //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
      settingsFilePath.cdUp();
-     QSettings settings;
-     if(QFile(path + suf).exists())
-       QSettings::setPath(QSettings::defaultFormat(),QSettings::UserScope,settingsFilePath.path());
+     QSettings settings; // uses standard path + Organization/Application.conf automatically
+     if(QFile(path + suf).exists()) //check if there is a conf file next to the executable
+       QSettings::setPath(QSettings::defaultFormat(),
+          QSettings::UserScope,settingsFilePath.path()); //use this file instead of system standard if this is the case
 
      if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
          QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
