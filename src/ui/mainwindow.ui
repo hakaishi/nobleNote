@@ -30,16 +30,23 @@
      <x>0</x>
      <y>0</y>
      <width>280</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menu_Open_recent">
+     <property name="title">
+      <string>&amp;Open recent</string>
+     </property>
+    </widget>
     <addaction name="actionImport"/>
     <addaction name="actionTrash"/>
     <addaction name="actionQuit"/>
+    <addaction name="separator"/>
+    <addaction name="menu_Open_recent"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">
@@ -150,7 +157,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../nobleNote.qrc">
+    <iconset>
      <normaloff>:/history</normaloff>:/history</iconset>
    </property>
    <property name="text">
@@ -261,6 +268,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionA">
+   <property name="text">
+    <string>a</string>
    </property>
   </action>
  </widget>

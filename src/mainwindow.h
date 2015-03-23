@@ -31,6 +31,7 @@
 #include "progressreceiver.h"
 #include "noteimporter.h"
 #include <QSyntaxHighlighter>
+#include <QSettings>
 #if QT_VERSION >= 0x050000
 #include <QtWidgets/QSystemTrayIcon>
 #include <QtWidgets/QSplitter>
@@ -103,7 +104,7 @@ private:
       FileSystemModel *noteFSModel;
       FindFileSystemModel *noteModel;
       QListView        *folderView, *noteView;
-      QAction         *quit_action, *minimizeRestoreAction;
+      QAction         *quit_action, *minimizeRestoreAction, *recentAction;
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
@@ -142,7 +143,10 @@ private:
 
       void find();
       void openNote(const QModelIndex &ind);
+      void openOneNote(QString path);
       void openAllNotes();
+      void updateRecent();
+      void openRecent();
       void openNoteSource();
       void showContextMenuFolder(const QPoint &pos);
       void showContextMenuNote(const QPoint &pos);

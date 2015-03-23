@@ -44,7 +44,6 @@
 #include <QModelIndex>
 #include <QInputDialog>
 #include <QMouseEvent>
-#include <QSettings>
 #include <QMessageBox>
 #include <QFileIconProvider>
 #include <QList>
@@ -60,6 +59,23 @@
 MainWindow::MainWindow()
 {
      setupUi(this);
+     menu_Open_recent->setDisabled(QSettings().value("Recent_notes").toStringList().isEmpty());
+     QStringList recentNoteList = QSettings().value("Recent_notes").toStringList();
+     while(recentNoteList.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
+       recentNoteList.removeLast();
+     for(int i = 0; i < recentNoteList.size(); i++)
+        if(!QFile(recentNoteList[i]).exists())
+          recentNoteList.removeOne(recentNoteList[i]);
+     QSettings().setValue("Recent_notes", recentNoteList);
+     for(int i = 0; i < recentNoteList.size(); i++)
+     {
+          recentAction = new QAction(this);
+          QString fileName = QFileInfo(recentNoteList[i]).fileName();
+          recentAction->setText(fileName);
+          recentAction->setData(recentNoteList[i]);
+          connect(recentAction, SIGNAL(triggered()), this, SLOT(openRecent()));
+          menu_Open_recent->addAction(recentAction);
+     }
 
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
@@ -529,23 +545,58 @@ void MainWindow::openAllNotes(){
           if(noteIsOpen(notePath))
             return;
 
-          Note* note = new Note(notePath);
-          openNotes += note;
-          note->setObjectName(notePath);
-          QStringList savedOpenNoteList;
-          if(QSettings().value("open_notes").isValid())
-            savedOpenNoteList = QSettings().value("open_notes").toStringList();
-          savedOpenNoteList.append(notePath);
-          QSettings().setValue("open_notes",savedOpenNoteList);
-          if(QSettings().value("kinetic_scrolling", false).toBool())
-          {
-              flickCharm->activateOn(note->textEdit());
-          }
-          // only show the searchBar if the note contains the search text
-          if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
-             note->setSearchBarText(searchText->text());
-          note->show();
+          openOneNote(notePath);
      }
+}
+
+void MainWindow::openOneNote(QString path)
+{
+     Note* note = new Note(path);
+     openNotes += note;
+     note->setObjectName(path);
+     QStringList savedOpenNoteList;
+     if(QSettings().value("open_notes").isValid())
+       savedOpenNoteList = QSettings().value("open_notes").toStringList();
+     savedOpenNoteList.append(path);
+     QSettings().setValue("open_notes",savedOpenNoteList);
+     if(QSettings().value("kinetic_scrolling", false).toBool())
+     {
+         flickCharm->activateOn(note->textEdit());
+     }
+     // only show the searchBar if the note contains the search text
+     if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
+        note->setSearchBarText(searchText->text());
+     note->show();
+
+     QStringList recentNoteList = QSettings().value("Recent_notes").toStringList();
+     recentNoteList.removeAll(path);
+     recentNoteList.prepend(path);
+     while(recentNoteList.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
+       recentNoteList.removeLast();
+     QSettings().setValue("Recent_notes", recentNoteList);
+     updateRecent();
+}
+
+void MainWindow::updateRecent()
+{
+     QStringList recentFilePaths = QSettings().value("Recent_notes").toStringList();
+     menu_Open_recent->clear();
+     for(int i = 0; i < recentFilePaths.size(); i++)
+     {
+          recentAction = new QAction(this);
+          QString fileName = QFileInfo(recentFilePaths[i]).fileName();
+          recentAction->setText(fileName);
+          recentAction->setData(recentFilePaths[i]);
+          connect(recentAction, SIGNAL(triggered()), this, SLOT(openRecent()));
+          menu_Open_recent->addAction(recentAction);
+     }
+}
+
+void MainWindow::openRecent()
+{
+     QAction *action = qobject_cast<QAction *>(sender());
+     if(action)
+       openOneNote(action->data().toString());
 }
 
 void MainWindow::openNoteSource()

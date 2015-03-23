@@ -77,6 +77,7 @@ void Preferences::showEvent(QShowEvent* show_pref)
      fontComboBox->setFont(font);
      fontSizeComboBox->setCurrentIndex(fontSizeComboBox->findText(QString::number
                                         (settings->value("note_editor_font_size",10).toInt())));
+     recentSpin->setValue(settings->value("Number_of_recent_Notes",5).toInt());
 
      QDialog::showEvent(show_pref);
 }
@@ -112,6 +113,7 @@ void Preferences::saveSettings()
      settings->setValue("kinetic_scrolling", kineticScrolling->isChecked());
      settings->setValue("note_editor_font", fontComboBox->currentFont().family());
      settings->setValue("note_editor_font_size", fontComboBox->font().pointSize());
+     settings->setValue("Number_of_recent_Notes", recentSpin->value());
 
      accept();
 }

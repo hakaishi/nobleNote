@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>383</height>
+    <height>409</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,7 @@
    </item>
    <item row="2" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QFontComboBox" name="fontComboBox">
        <property name="currentFont">
         <font>
@@ -56,7 +56,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
@@ -69,7 +69,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0" colspan="2">
+     <item row="7" column="0" colspan="2">
       <layout class="QFormLayout" name="formLayout">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
@@ -116,7 +116,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="0" colspan="2">
+     <item row="6" column="0" colspan="2">
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
@@ -129,7 +129,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="2">
+     <item row="4" column="0" colspan="2">
       <widget class="QCheckBox" name="kineticScrolling">
        <property name="toolTip">
         <string notr="true">Enables drag to scroll</string>
@@ -139,14 +139,14 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="2">
+     <item row="3" column="0" colspan="2">
       <widget class="QCheckBox" name="showSource">
        <property name="text">
         <string>&amp;Show &quot;Show Source&quot; menu entry</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
+     <item row="2" column="0" colspan="2">
       <widget class="QCheckBox" name="convertNotes">
        <property name="toolTip">
         <string>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</string>
@@ -156,7 +156,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0" colspan="2">
+     <item row="1" column="0" colspan="2">
       <widget class="QCheckBox" name="dontQuit">
        <property name="toolTip">
         <string/>
@@ -166,7 +166,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="9" column="1">
       <widget class="QComboBox" name="fontSizeComboBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -176,7 +176,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="2">
+     <item row="5" column="0" colspan="2">
       <widget class="QPushButton" name="createPortable">
        <property name="toolTip">
         <string>For example for USB sticks.
@@ -185,6 +185,23 @@ neccessary data to a desired location.</string>
        </property>
        <property name="text">
         <string>Cre&amp;ate a portable copy</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="recentSpin">
+       <property name="maximum">
+        <number>15</number>
+       </property>
+       <property name="value">
+        <number>5</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Number of recently opened notes</string>
        </property>
       </widget>
      </item>
