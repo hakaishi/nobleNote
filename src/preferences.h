@@ -51,6 +51,7 @@ class Preferences : public QDialog, public Ui::Preferences {
      signals:
       void pathChanged();
       void kineticScrollingEnabledChanged(bool);
+      void recentCountChanged();
 
      protected:
       virtual void showEvent(QShowEvent* show_pref);

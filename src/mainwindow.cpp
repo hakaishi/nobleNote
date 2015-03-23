@@ -59,23 +59,8 @@
 MainWindow::MainWindow()
 {
      setupUi(this);
-     menu_Open_recent->setDisabled(QSettings().value("Recent_notes").toStringList().isEmpty());
-     QStringList recentNoteList = QSettings().value("Recent_notes").toStringList();
-     while(recentNoteList.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
-       recentNoteList.removeLast();
-     for(int i = 0; i < recentNoteList.size(); i++)
-        if(!QFile(recentNoteList[i]).exists())
-          recentNoteList.removeOne(recentNoteList[i]);
-     QSettings().setValue("Recent_notes", recentNoteList);
-     for(int i = 0; i < recentNoteList.size(); i++)
-     {
-          recentAction = new QAction(this);
-          QString fileName = QFileInfo(recentNoteList[i]).fileName();
-          recentAction->setText(fileName);
-          recentAction->setData(recentNoteList[i]);
-          connect(recentAction, SIGNAL(triggered()), this, SLOT(openRecent()));
-          menu_Open_recent->addAction(recentAction);
-     }
+
+     createAndUpdateRecent();
 
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
@@ -242,7 +227,7 @@ MainWindow::MainWindow()
      //connect(actionHistory, SIGNAL(triggered()), this, SLOT(showHistory()));
 
      connect(actionConfigure, SIGNAL(triggered()), this, SLOT(showPreferences()));
-     connect(actionAbout,SIGNAL(triggered()),this,SLOT(about()));
+     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
      connect(searchText, SIGNAL(sendCleared()), this, SLOT(selectFolder()));
 }
@@ -355,6 +340,7 @@ void MainWindow::showPreferences()
           pref = new Preferences(this);
           connect(pref, SIGNAL(pathChanged()), this, SLOT(changeRootIndex()));
           connect(pref,SIGNAL(kineticScrollingEnabledChanged(bool)),this,SLOT(setKineticScrollingEnabled(bool)));
+          connect(pref, SIGNAL(recentCountChanged()), this, SLOT(createAndUpdateRecent()));
      }
      pref->show();
 }
@@ -574,16 +560,29 @@ void MainWindow::openOneNote(QString path)
      while(recentNoteList.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
        recentNoteList.removeLast();
      QSettings().setValue("Recent_notes", recentNoteList);
-     updateRecent();
+     createAndUpdateRecent(); //also calls createRecent
 }
 
-void MainWindow::updateRecent()
+void MainWindow::createAndUpdateRecent()
 {
-     QStringList recentFilePaths = QSettings().value("Recent_notes").toStringList();
      menu_Open_recent->clear();
+     QStringList recentFilePaths = QSettings().value("Recent_notes").toStringList();
+
+     for(int i = 0; i < recentFilePaths.size(); i++)
+        if(!QFile(recentFilePaths[i]).exists())
+          recentFilePaths.removeAll(recentFilePaths[i]);
+
+     while(recentFilePaths.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
+       recentFilePaths.removeLast();
+
+     QSettings().setValue("Recent_notes", recentFilePaths);
+
+     menu_Open_recent->setDisabled(QSettings().value("Recent_notes").toStringList().isEmpty());
+
+     QAction *recentAction = 0;
      for(int i = 0; i < recentFilePaths.size(); i++)
      {
-          recentAction = new QAction(this);
+          recentAction = new QAction(menu_Open_recent);
           QString fileName = QFileInfo(recentFilePaths[i]).fileName();
           recentAction->setText(fileName);
           recentAction->setData(recentFilePaths[i]);

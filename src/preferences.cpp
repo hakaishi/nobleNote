@@ -115,6 +115,8 @@ void Preferences::saveSettings()
      settings->setValue("note_editor_font_size", fontComboBox->font().pointSize());
      settings->setValue("Number_of_recent_Notes", recentSpin->value());
 
+     recentCountChanged(); //to update recent notes list
+
      accept();
 }
 

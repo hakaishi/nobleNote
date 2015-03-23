@@ -104,7 +104,7 @@ private:
       FileSystemModel *noteFSModel;
       FindFileSystemModel *noteModel;
       QListView        *folderView, *noteView;
-      QAction         *quit_action, *minimizeRestoreAction, *recentAction;
+      QAction         *quit_action, *minimizeRestoreAction;
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
@@ -145,7 +145,7 @@ private:
       void openNote(const QModelIndex &ind);
       void openOneNote(QString path);
       void openAllNotes();
-      void updateRecent();
+      void createAndUpdateRecent();
       void openRecent();
       void openNoteSource();
       void showContextMenuFolder(const QPoint &pos);
