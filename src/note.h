@@ -1,5 +1,5 @@
 /* nobleNote, a note taking application
- * Copyright (C) 2012 Christian Metscher <hakaishi@web.de>,
+ * Copyright (C) 2015 Christian Metscher <hakaishi@web.de>,
                       Fabian Deuchler <Taiko000@gmail.com>
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
