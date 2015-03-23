@@ -155,7 +155,7 @@ void Preferences::createPortableAtPath()
      if(newPath.isEmpty())
        return;
      else
-       QDir().mkdir(newPath);
+       QDir().mkpath(newPath);
 
    #ifdef Q_OS_WIN32
      QFile noblenote(QCoreApplication::applicationFilePath());
