@@ -4,14 +4,17 @@ nobleNote
 INSTALL:
 ========
 
+Note for Windows users: Binary releases can be found on the releases page of this github repository
+
+Qt 4.8, Qt5 or newer is required to build from source.
+
 Dependencies: libqt4-dev, build-essential
 
-If you want to compile from source, open a terminal and change into the nobleNote source folder.
+To compile from source, open a terminal and change into the nobleNote source folder.
 To install type:
 
 qmake
 sudo make install distclean
-
 
 UNINSTALL:
 ==========
