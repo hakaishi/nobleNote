@@ -10,12 +10,12 @@ RCC_DIR = build
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent
 
 win32 {
-QMAKE_LFLAGS += -static-libgcc
+#QMAKE_LFLAGS += -static-libgcc
 
 # use these for windows builds release builds only because debugging 
 #symbols wont be linked if only release is specified
-CONFIG -= debug_and_release
-CONFIG += release
+#CONFIG -= debug_and_release
+#CONFIG += release
 
 RC_FILE += icon.rc
 }
