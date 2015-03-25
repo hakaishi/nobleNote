@@ -42,11 +42,11 @@
       <string>Open recent</string>
      </property>
     </widget>
+    <addaction name="menu_Open_recent"/>
+    <addaction name="separator"/>
     <addaction name="actionImport"/>
     <addaction name="actionTrash"/>
     <addaction name="actionQuit"/>
-    <addaction name="separator"/>
-    <addaction name="menu_Open_recent"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">

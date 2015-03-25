@@ -60,18 +60,16 @@ int main (int argc, char *argv[]){
 
      app.setQuitOnLastWindowClosed(false);
 
-     QString path, suf;
+     QString slash;
     #ifdef Q_OS_WIN32
-     path = QCoreApplication::applicationDirPath();
-     suf = "\\nobleNote.conf";
+     slash = "\\";
     #else
-     path = QCoreApplication::applicationDirPath();
-     suf = "/nobleNote.conf";
+     slash = "/";
     #endif
-     QDir settingsFilePath = QDir(path); //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
+     QDir settingsFilePath = QDir(QCoreApplication::applicationDirPath()); //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
      settingsFilePath.cdUp();
      QSettings settings; // uses standard path + Organization/Application.conf automatically
-     if(QFile(path + suf).exists()) //check if there is a conf file next to the executable
+     if(QFile(QCoreApplication::applicationDirPath() + slash + QFileInfo(settings.fileName()).fileName()).exists()) //check if there is a conf file next to the executable
        QSettings::setPath(QSettings::defaultFormat(),
           QSettings::UserScope,settingsFilePath.path()); //use this file instead of system standard if this is the case
 

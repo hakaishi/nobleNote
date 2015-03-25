@@ -56,6 +56,12 @@
 #include <QDesktopServices>
 #endif
 
+    #ifdef Q_OS_WIN32
+      const QString slash = "\\";
+    #else
+      const QString slash = "/";
+    #endif
+
 MainWindow::MainWindow()
 {
      setupUi(this);
@@ -250,21 +256,13 @@ void MainWindow::selectFolder()
 
 void MainWindow::writeBackupDirPath()
 {
-    #ifdef Q_OS_WIN32
-     QString settingsFile = QCoreApplication::applicationDirPath() + "\\nobleNote.conf";
-    #else
-     QString settingsFile = QCoreApplication::applicationDirPath() + "/nobleNote.conf";
-    #endif
+     QString settingsFile = QCoreApplication::applicationDirPath() + slash + QFileInfo(QSettings().fileName()).fileName();
      QString backupPath;
      QString suffix = QSettings().value("root_path").toString();
 
      if(!QFile(settingsFile).exists())
      {
-      #ifdef Q_OS_WIN32
-       suffix.replace("\\", "_");
-      #else
-       suffix.replace("/", "_");
-      #endif
+       suffix.replace(slash, "_");
 
     #ifdef Q_OS_WIN32
        suffix.prepend("_");
@@ -287,7 +285,7 @@ void MainWindow::writeBackupDirPath()
      else
        backupPath = QCoreApplication::applicationDirPath();
 
-     QSettings().setValue("backup_dir_path", backupPath + "/backups" + suffix);
+     QSettings().setValue("backup_dir_path", backupPath + slash + "backups" + suffix);
 }
 
 void MainWindow::changeRootIndex(){
@@ -370,11 +368,6 @@ void MainWindow::find()
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
-    #ifdef Q_OS_WIN32
-     QString slash = "\\";
-    #else
-     QString slash = "/";
-    #endif
      QString newNotebookName = folderView->selectionModel()->selectedRows().first().data(Qt::DisplayRole).toString();
      QStringList recent = QSettings().value("Recent_notes").toStringList();
 
@@ -383,7 +376,8 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
           QString fileName = QFileInfo(recent[i]).fileName();
           QString strippedPath = recent[i];
           strippedPath.chop(fileName.size() + getToBerenamedNotebook.size() +1);
-          recent[i] = strippedPath + newNotebookName + slash + fileName;
+          if(!strippedPath.contains(strippedPath + getToBerenamedNotebook))
+            recent[i] = strippedPath + newNotebookName + slash + fileName;
      }
      QSettings().setValue("Recent_notes", recent);
      createAndUpdateRecent();
@@ -418,11 +412,7 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      noteView->scrollTo(noteView->selectionModel()->selectedRows().first());
 
      QStringList recent = QSettings().value("Recent_notes").toStringList();
-    #ifdef Q_OS_WIN32
-     QString slash = "\\";
-    #else
-     QString slash = "/";
-    #endif
+
      for(int i = 0; i < recent.size(); i++)
           if(recent[i].contains(path + slash + oldName))
             recent.replace(i, path + slash + newName);
