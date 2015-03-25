@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl">
+<TS version="2.1" language="pl">
 <context>
     <name>Backup</name>
     <message>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; jest aplikacją do robienia notatek&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Każda osoba nabywająca to oprogramowanie i powiązane pliki dokumentacji (dalej &quot;Oprogramowanie&quot;) ninejszym otrzymuje zezwolenie na ingerowanie w Oprogramowanie bez ograniczeń, włączając brak ograniczeń praw do kopiowania, modyfikowania, scalania, publikowania, dystrybucji, sublicencjowania, i/lub sprzedawania kopii Oprogramowania i udzielania pozwolenia na robienie tego samego osobom, którym Oprogramowanie jest dostarczane, pod następującymi warunkami:&lt;/p&gt;Powyższa informacja o prawach autorskich winna być zawarta we wszystkich kopiach bądź znacznych fragmentach Oprogramowania.&lt;p&gt;OPROGRAMOWANIE JEST DOSTARCZANE &quot;W OBECNYM STANIE RZECZY&quot;, BEZ JAKIEJKOLWIEK GWARANCJI,  WYRAŹNEJ LUB DOROZUMIANEJ,  NIE WYŁĄCZAJĄC GWARANCJI PRZYDATNOŚCI HANDLOWEJ LUB PRZYDATNOŚCI DO OKREŚLONYCH CELÓW A TAKŻE BRAKU WAD PRAWNYCH. W ŻADNYM PRZYPADKU TWÓRCA LUB POSIADACZ PRAW AUTORSKICH NIE MOŻE PONOSIĆ ODPOWIEDZIALNOŚCI Z TYTUŁU ROSZCZEŃ LUB WYRZĄDZONEJ SZKODY A TAKŻE ŻADNEJ INNEJ ODPOWIEDZIALNOŚCI CZY TO WYNIKAJĄCEJ Z UMOWY, DELIKTU, CZY JAKIEJKOLWIEK INNEJ
+        <translation type="vanished">&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; jest aplikacją do robienia notatek&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Każda osoba nabywająca to oprogramowanie i powiązane pliki dokumentacji (dalej &quot;Oprogramowanie&quot;) ninejszym otrzymuje zezwolenie na ingerowanie w Oprogramowanie bez ograniczeń, włączając brak ograniczeń praw do kopiowania, modyfikowania, scalania, publikowania, dystrybucji, sublicencjowania, i/lub sprzedawania kopii Oprogramowania i udzielania pozwolenia na robienie tego samego osobom, którym Oprogramowanie jest dostarczane, pod następującymi warunkami:&lt;/p&gt;Powyższa informacja o prawach autorskich winna być zawarta we wszystkich kopiach bądź znacznych fragmentach Oprogramowania.&lt;p&gt;OPROGRAMOWANIE JEST DOSTARCZANE &quot;W OBECNYM STANIE RZECZY&quot;, BEZ JAKIEJKOLWIEK GWARANCJI,  WYRAŹNEJ LUB DOROZUMIANEJ,  NIE WYŁĄCZAJĄC GWARANCJI PRZYDATNOŚCI HANDLOWEJ LUB PRZYDATNOŚCI DO OKREŚLONYCH CELÓW A TAKŻE BRAKU WAD PRAWNYCH. W ŻADNYM PRZYPADKU TWÓRCA LUB POSIADACZ PRAW AUTORSKICH NIE MOŻE PONOSIĆ ODPOWIEDZIALNOŚCI Z TYTUŁU ROSZCZEŃ LUB WYRZĄDZONEJ SZKODY A TAKŻE ŻADNEJ INNEJ ODPOWIEDZIALNOŚCI CZY TO WYNIKAJĄCEJ Z UMOWY, DELIKTU, CZY JAKIEJKOLWIEK INNEJ
 PODSTAWY POWSTAŁEJ W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYTKOWANIEM GO LUB
 WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     </message>
@@ -302,12 +302,34 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
 
 %2</translation>
     </message>
+    <message>
+        <source>Open recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2015 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
+        <translation type="unfinished">&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; jest aplikacją do robienia notatek&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Każda osoba nabywająca to oprogramowanie i powiązane pliki dokumentacji (dalej &quot;Oprogramowanie&quot;) ninejszym otrzymuje zezwolenie na ingerowanie w Oprogramowanie bez ograniczeń, włączając brak ograniczeń praw do kopiowania, modyfikowania, scalania, publikowania, dystrybucji, sublicencjowania, i/lub sprzedawania kopii Oprogramowania i udzielania pozwolenia na robienie tego samego osobom, którym Oprogramowanie jest dostarczane, pod następującymi warunkami:&lt;/p&gt;Powyższa informacja o prawach autorskich winna być zawarta we wszystkich kopiach bądź znacznych fragmentach Oprogramowania.&lt;p&gt;OPROGRAMOWANIE JEST DOSTARCZANE &quot;W OBECNYM STANIE RZECZY&quot;, BEZ JAKIEJKOLWIEK GWARANCJI,  WYRAŹNEJ LUB DOROZUMIANEJ,  NIE WYŁĄCZAJĄC GWARANCJI PRZYDATNOŚCI HANDLOWEJ LUB PRZYDATNOŚCI DO OKREŚLONYCH CELÓW A TAKŻE BRAKU WAD PRAWNYCH. W ŻADNYM PRZYPADKU TWÓRCA LUB POSIADACZ PRAW AUTORSKICH NIE MOŻE PONOSIĆ ODPOWIEDZIALNOŚCI Z TYTUŁU ROSZCZEŃ LUB WYRZĄDZONEJ SZKODY A TAKŻE ŻADNEJ INNEJ ODPOWIEDZIALNOŚCI CZY TO WYNIKAJĄCEJ Z UMOWY, DELIKTU, CZY JAKIEJKOLWIEK INNEJ
+PODSTAWY POWSTAŁEJ W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYTKOWANIEM GO LUB
+WPROWADZANIEM GO DO OBROTU.&lt;/p&gt; {1&gt;?} {1 ?} {2&lt;?} {1&gt;?} {1&lt;?} {2015 ?}</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
     <message>
         <source>Note-Editor</source>
         <translation>Edytor notatek</translation>
+    </message>
+    <message>
+        <source>Hide Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Toolbars</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -368,7 +390,7 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Convert notes to the HTML format</source>
-        <translation>Konwertuj notatki do formatu HTML</translation>
+        <translation type="vanished">Konwertuj notatki do formatu HTML</translation>
     </message>
     <message>
         <source>&amp;Close to tray</source>
@@ -434,6 +456,24 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
         <source>&amp;Touch screen scrolling</source>
         <translation>&amp;Przewijanie dotykowe</translation>
     </message>
+    <message>
+        <source>Convert notes to the &amp;HTML format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For example for USB sticks.
+This creates a copy of all
+neccessary data to a desired location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cre&amp;ate a portable copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextFormattingToolbar</name>
@@ -484,6 +524,10 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
     <message>
         <source>Addr&amp;ess:</source>
         <translation>Adr&amp;es:</translation>
+    </message>
+    <message>
+        <source>Bullet point</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -547,9 +591,13 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
         <source>Are you sure you want to permanently delete these notes?
 
 %1</source>
-        <translation>Jesteś pewien, że chcesz trwale usunąć te notatki?
+        <translation type="vanished">Jesteś pewien, że chcesz trwale usunąć te notatki?
 
 %1</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently delete the selected notes?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

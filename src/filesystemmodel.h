@@ -42,6 +42,8 @@
 class FileSystemModel : public QFileSystemModel
 {
     Q_OBJECT
+signals:
+     void droppedAFile();
 public:
     explicit FileSystemModel(QObject *parent = 0) : QFileSystemModel(parent) {}
     Qt::ItemFlags flags(const QModelIndex &index) const
@@ -114,7 +116,10 @@ public:
                 return false;
             }
             else
+            {
+               droppedAFile();
                return true; //files sucessfully dropped
+            }
         }
         return false; // dropped between items
     }

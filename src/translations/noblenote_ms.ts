@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ms">
+<TS version="2.1" language="ms">
 <context>
     <name>Backup</name>
     <message>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation>&lt;h1&gt;%1 versi %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; adalah aplikasi pengambilan note &lt;/p&gt;&lt;p&gt;Hakcipta (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Keizinan disini diberikan, secara percuma, kepada mana-mana individu yang memperoleh salinain perisian ini dan fail dokumentasi yang berkaitan (&quot;Perisian&quot;), untuk mengendalikan Perisian tanpa sekatan, termasuklah tiada had terhadap hak mengguna, menyalin, mengubahsuai, menggabung, menerbit, mengedar, sublesen, dan/atau menjual salinan Perisian, dan membenarkan individu melakukannya berdasarkan syarat berikut:&lt;/p&gt;Notis hakcipta diatas dan notis keizinannya akan disisip di dalam semua salinan atau sebahagian daripada Perisian.&lt;p&gt;PERISIAN INI DISEDIAKAN &quot;SEBAGAIMANA ADANYA&quot;, TANPA SEBARANG JENIS JAMINAN, SEGERA ATAU TERSIRAT, YANG TERMASUK TETAPI TIDAK TERHAD KEPADA JAMINAN KEBOLEHDAGANGAN, KESESUAIAN UNTUK TUJUAN TERTENTU DAN KETIDAKLANGGARAN.  PENGARANG ATAU PEMEGANG HAK CIPTA DALAM KEADAAN TIDAK AKAN BERTANGGUNGJAWAB UNTUK SEBARANG TUNTUTAN, KEROSAKAN ATAU LIABILITI LAIN, SAMA ADA DALAM PERBUATAN KONTRAK, TORT ATAU SEBALIKNYA, YANG TIMBUL DARIPADA, LUAR ATAU BERHUBUNGAN DENGAN PERISIAN INI ATAU PENGGUNAAN ATAU PERLAKUAN LAIN DALAM PERISIAN. &lt;/ p&gt;</translation>
+        <translation type="vanished">&lt;h1&gt;%1 versi %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; adalah aplikasi pengambilan note &lt;/p&gt;&lt;p&gt;Hakcipta (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Keizinan disini diberikan, secara percuma, kepada mana-mana individu yang memperoleh salinain perisian ini dan fail dokumentasi yang berkaitan (&quot;Perisian&quot;), untuk mengendalikan Perisian tanpa sekatan, termasuklah tiada had terhadap hak mengguna, menyalin, mengubahsuai, menggabung, menerbit, mengedar, sublesen, dan/atau menjual salinan Perisian, dan membenarkan individu melakukannya berdasarkan syarat berikut:&lt;/p&gt;Notis hakcipta diatas dan notis keizinannya akan disisip di dalam semua salinan atau sebahagian daripada Perisian.&lt;p&gt;PERISIAN INI DISEDIAKAN &quot;SEBAGAIMANA ADANYA&quot;, TANPA SEBARANG JENIS JAMINAN, SEGERA ATAU TERSIRAT, YANG TERMASUK TETAPI TIDAK TERHAD KEPADA JAMINAN KEBOLEHDAGANGAN, KESESUAIAN UNTUK TUJUAN TERTENTU DAN KETIDAKLANGGARAN.  PENGARANG ATAU PEMEGANG HAK CIPTA DALAM KEADAAN TIDAK AKAN BERTANGGUNGJAWAB UNTUK SEBARANG TUNTUTAN, KEROSAKAN ATAU LIABILITI LAIN, SAMA ADA DALAM PERBUATAN KONTRAK, TORT ATAU SEBALIKNYA, YANG TIMBUL DARIPADA, LUAR ATAU BERHUBUNGAN DENGAN PERISIAN INI ATAU PENGGUNAAN ATAU PERLAKUAN LAIN DALAM PERISIAN. &lt;/ p&gt;</translation>
     </message>
     <message>
         <source>nobleNote</source>
@@ -300,12 +300,32 @@
 
 %2</translation>
     </message>
+    <message>
+        <source>Open recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2015 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
+        <translation type="unfinished">&lt;h1&gt;%1 versi %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; adalah aplikasi pengambilan note &lt;/p&gt;&lt;p&gt;Hakcipta (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Keizinan disini diberikan, secara percuma, kepada mana-mana individu yang memperoleh salinain perisian ini dan fail dokumentasi yang berkaitan (&quot;Perisian&quot;), untuk mengendalikan Perisian tanpa sekatan, termasuklah tiada had terhadap hak mengguna, menyalin, mengubahsuai, menggabung, menerbit, mengedar, sublesen, dan/atau menjual salinan Perisian, dan membenarkan individu melakukannya berdasarkan syarat berikut:&lt;/p&gt;Notis hakcipta diatas dan notis keizinannya akan disisip di dalam semua salinan atau sebahagian daripada Perisian.&lt;p&gt;PERISIAN INI DISEDIAKAN &quot;SEBAGAIMANA ADANYA&quot;, TANPA SEBARANG JENIS JAMINAN, SEGERA ATAU TERSIRAT, YANG TERMASUK TETAPI TIDAK TERHAD KEPADA JAMINAN KEBOLEHDAGANGAN, KESESUAIAN UNTUK TUJUAN TERTENTU DAN KETIDAKLANGGARAN.  PENGARANG ATAU PEMEGANG HAK CIPTA DALAM KEADAAN TIDAK AKAN BERTANGGUNGJAWAB UNTUK SEBARANG TUNTUTAN, KEROSAKAN ATAU LIABILITI LAIN, SAMA ADA DALAM PERBUATAN KONTRAK, TORT ATAU SEBALIKNYA, YANG TIMBUL DARIPADA, LUAR ATAU BERHUBUNGAN DENGAN PERISIAN INI ATAU PENGGUNAAN ATAU PERLAKUAN LAIN DALAM PERISIAN. &lt;/ p&gt; {1&gt;?} {1 ?} {2&lt;?} {1&gt;?} {1&lt;?} {2015 ?}</translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
     <message>
         <source>Note-Editor</source>
         <translation>Penyunting-Nota</translation>
+    </message>
+    <message>
+        <source>Hide Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Toolbars</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -366,7 +386,7 @@
     </message>
     <message>
         <source>Convert notes to the HTML format</source>
-        <translation>Tukar nota ke format HTML</translation>
+        <translation type="vanished">Tukar nota ke format HTML</translation>
     </message>
     <message>
         <source>&amp;Close to tray</source>
@@ -432,6 +452,24 @@
         <source>&amp;Touch screen scrolling</source>
         <translation type="unfinished">&amp;Penatalan skrin sentuh</translation>
     </message>
+    <message>
+        <source>Convert notes to the &amp;HTML format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For example for USB sticks.
+This creates a copy of all
+neccessary data to a desired location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cre&amp;ate a portable copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextFormattingToolbar</name>
@@ -482,6 +520,10 @@
     <message>
         <source>Addr&amp;ess:</source>
         <translation>Ala&amp;mat:</translation>
+    </message>
+    <message>
+        <source>Bullet point</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -545,9 +587,13 @@
         <source>Are you sure you want to permanently delete these notes?
 
 %1</source>
-        <translation>Anda pasti hendak memadam nota ini secara kekal?
+        <translation type="vanished">Anda pasti hendak memadam nota ini secara kekal?
 
 %1</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently delete the selected notes?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

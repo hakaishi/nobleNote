@@ -230,6 +230,9 @@ MainWindow::MainWindow()
      connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
      connect(searchText, SIGNAL(sendCleared()), this, SLOT(selectFolder()));
+
+     connect(folderFSModel, SIGNAL(droppedAFile()), this, SLOT(createAndUpdateRecent())); //moving a note with
+                                                                 //drag and drop removes it from the recent files
 }
 
 MainWindow::~MainWindow()
@@ -367,6 +370,24 @@ void MainWindow::find()
 
 void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
+    #ifdef Q_OS_WIN32
+     QString slash = "\\";
+    #else
+     QString slash = "/";
+    #endif
+     QString newNotebookName = folderView->selectionModel()->selectedRows().first().data(Qt::DisplayRole).toString();
+     QStringList recent = QSettings().value("Recent_notes").toStringList();
+
+     for(int i = 0; i < recent.size(); i++)
+     {
+          QString fileName = QFileInfo(recent[i]).fileName();
+          QString strippedPath = recent[i];
+          strippedPath.chop(fileName.size() + getToBerenamedNotebook.size() +1);
+          recent[i] = strippedPath + newNotebookName + slash + fileName;
+     }
+     QSettings().setValue("Recent_notes", recent);
+     createAndUpdateRecent();
+
      if(folderView->selectionModel()->selectedRows().isEmpty())
        return;
      Q_UNUSED(editor);
@@ -395,6 +416,18 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      noteView->setCurrentIndex(noteModel->index(filePath));
 
      noteView->scrollTo(noteView->selectionModel()->selectedRows().first());
+
+     QStringList recent = QSettings().value("Recent_notes").toStringList();
+    #ifdef Q_OS_WIN32
+     QString slash = "\\";
+    #else
+     QString slash = "/";
+    #endif
+     for(int i = 0; i < recent.size(); i++)
+          if(recent[i].contains(path + slash + oldName))
+            recent.replace(i, path + slash + newName);
+     QSettings().setValue("Recent_notes", recent);
+     createAndUpdateRecent();
 }
 
 void MainWindow::folderActivated(const QModelIndex &selected)
@@ -699,6 +732,7 @@ void MainWindow::newNote(){
 void MainWindow::renameFolder(){
      if(!folderView->selectionModel()->selectedRows().isEmpty())
        folderView->edit(folderView->selectionModel()->selectedRows().first());
+     getToBerenamedNotebook = folderView->selectionModel()->selectedRows().first().data(Qt::DisplayRole).toString();
 }
 
 void MainWindow::renameNote(){
@@ -768,6 +802,8 @@ void MainWindow::removeFolder(){
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
 //QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
+
+     createAndUpdateRecent();
 }
 
 void MainWindow::removeNote(){
@@ -797,6 +833,8 @@ void MainWindow::removeNote(){
      // try to copy the files to be removed into the backup folder
      noteModel->copyNotesToBackupDir(selectedRows);
      noteModel->removeList(selectedRows);
+
+     createAndUpdateRecent();
 }
 
 void MainWindow::setKineticScrollingEnabled(bool b)

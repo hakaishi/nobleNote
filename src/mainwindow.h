@@ -123,6 +123,7 @@ private:
 
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
       bool noteIsOpen(const QString &path);
+      QString getToBerenamedNotebook; //used for recent file list
 
      private slots:
       void writeBackupDirPath();

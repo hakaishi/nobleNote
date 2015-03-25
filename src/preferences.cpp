@@ -160,7 +160,7 @@ void Preferences::createPortableAtPath()
    #ifdef Q_OS_WIN32
      //copy executable
      QFile noblenote(QCoreApplication::applicationFilePath());
-     noblenote.copy(newPath + "\\noblenote");
+     noblenote.copy(newPath + "\\" + QFileInfo(QCoreApplication::applicationFilePath()).fileName());
 
      //copy settings file
      QString newSettingsFilePath = newPath;
