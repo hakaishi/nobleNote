@@ -157,10 +157,6 @@
         <translation>O programu </translation>
     </message>
     <message>
-        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;h1&gt;%1 verze%2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; je psaní poznámek aplikace&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;tímto je uděleno povolení, bezplatně jakékoli osobě, která získá kopii tohoto softwaru a příslušné soubory dokumentace ( &quot;Software&quot;), nakládat se softwarem bez omezení, včetně a bez omezení práv na používání, kopírování, upravovat, slučovat, publikovat, distribuovat, udělovat podlicence, a / nebo prodávat kopie softwaru, a umožnit osobám, kterým Software je zařízený dělat tak, s výhradou těchto podmínek:&lt;/p&gt;výše uvedené označení copyrightu a toto povolení oznámení musí být zahrnuty ve všech kopiích nebo podstatným částem softwaru.&lt;p&gt;SOFTWARE jE POSKYTOVÁN &quot;TAK, JAK JE&quot;, BEZ ZÁRUKY JAKÉHOKOLIV DRUHU, VYJÁDŘENÉ NEBO VYPLÝVAJÍCÍ Z OKOLNOSTÍ, BEZ OMEZENÍ ZÁRUKY PRODEJNOSTI, VHODNOSTI PRO KONKRÉTNÍ ÚČEL A NEPORUŠENÍ. V ŽÁDNÉM PŘÍPADĚ AUTOŘI ANI VLASTNÍCI AUTORSKÝCH PRÁV NENESOU ODPOVĚDNOST ZA JAKÉKOLI ŠKODY NEBO JINOU ODPOVĚDNOST, AŤ JIŽ NA ZÁKLADĚ smlouvy, deliktu nebo jinak, které vznikly VE SPOJENÍ SE SOFTWAREM NEBO JEHO POUŽITÍM NEBO Z JINÉHO NAKLÁDÁNÍ SE SOFTWAREM.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
     </message>
@@ -385,24 +381,12 @@
         <translation>&amp;Zobrazit &quot;Zobrazit zdroj&quot; položku menu</translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Převést poznámky do HTML formátu</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation>&amp;Zavřít do lišty</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation>Automaticky převést ne-HTML poznámky do formátu HTML. Pokud je funkce vypnuta, jsou ne-HTML poznámky otevřeny pouze pro čtení.</translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation>Adresář roota</translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>adresář</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -468,6 +452,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -582,14 +578,6 @@ neccessary data to a desired location.</source>
     <message>
         <source>Deleting notes</source>
         <translation>Mažou se poznámky</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation type="vanished">Jste si jisti, že chcete trvale odstranit tyto poznámky?
-
-%1</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete the selected notes?</source>

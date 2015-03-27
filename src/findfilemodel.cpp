@@ -24,6 +24,7 @@
  */
 
 #include "findfilemodel.h"
+#include "slash.h"
 #include <QFileIconProvider>
 #include <QDirIterator>
 #include <QTextStream>
@@ -32,7 +33,6 @@
 #include <QTimer>
 #include <QApplication>
 #include <QTextDocument>
-
 
 FindFileModel::FindFileModel(QObject *parent) :
     QStandardItemModel(parent)
@@ -82,8 +82,8 @@ void FindFileModel::appendFile(QString filePath)
 
     QString filePathTrunc = info.filePath();
 
-    while(filePathTrunc.count("/") > 1)
-      filePathTrunc.remove(0,filePathTrunc.indexOf("/")+1);
+    while(filePathTrunc.count(slash) > 1)
+      filePathTrunc.remove(0,filePathTrunc.indexOf(slash)+1);
 
     QStandardItem * fileItem = new QStandardItem(filePathTrunc);
     fileItem->setIcon(QFileIconProvider().icon(info));
@@ -96,7 +96,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
      QStandardItemModel::setData(index,value,role);
 
      //value can be folder/filename or simply filename
-     return QFile::rename(filePath(index),fileInfo(index).path() + "/" + QFileInfo(value.toString()).fileName());
+     return QFile::rename(filePath(index),fileInfo(index).path() + slash + QFileInfo(value.toString()).fileName());
 }
 
 QStringList FindFileModel::mimeTypes() const

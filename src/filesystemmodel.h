@@ -26,6 +26,7 @@
 #ifndef FILESYSTEMMODEL_H
 #define FILESYSTEMMODEL_H
 
+#include "slash.h"
 #include <QFileSystemModel>
 #include <QSettings>
 #include <QMimeData>
@@ -86,11 +87,7 @@ public:
             //remove all file titles that don't exist in the target folder, because they will be sucessfully dropped
             foreach(QString file, files)
             {
-               #ifdef Q_OS_WIN32
-                QString path = parentPath + "\\" + QFileInfo(file).fileName();
-               #else
-                QString path = parentPath + "/" + QFileInfo(file).fileName();
-               #endif
+                QString path = parentPath + slash + QFileInfo(file).fileName();
                 if(!QFileInfo(path).exists())
                    files.removeOne(file);
             }

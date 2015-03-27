@@ -36,6 +36,7 @@
 #include <QSettings>
 
 #include "welcome.h"
+#include "slash.h"
 
 int main (int argc, char *argv[]){
      QApplication app(argc, argv);
@@ -60,12 +61,6 @@ int main (int argc, char *argv[]){
 
      app.setQuitOnLastWindowClosed(false);
 
-     QString slash;
-    #ifdef Q_OS_WIN32
-     slash = "\\";
-    #else
-     slash = "/";
-    #endif
      QDir settingsFilePath = QDir(QCoreApplication::applicationDirPath()); //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
      settingsFilePath.cdUp();
      QSettings settings; // uses standard path + Organization/Application.conf automatically

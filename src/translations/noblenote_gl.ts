@@ -375,24 +375,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Converter notas ao formato HTML</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation>&amp;Pechar na área de notificación</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation>Directorio raíz</translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>cartafol</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -458,6 +446,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -572,14 +572,6 @@ neccessary data to a desired location.</source>
     <message>
         <source>Deleting notes</source>
         <translation>Eliminando notas</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation type="vanished">Confirma que quere eliminar estas notas permanentemente?
-
-%1</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete the selected notes?</source>

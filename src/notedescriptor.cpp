@@ -26,6 +26,7 @@
 #include "notedescriptor.h"
 #include "htmlnotereader.h"
 #include "htmlnotewriter.h"
+#include "slash.h"
 #include <QFile>
 #include <QTimer>
 #include <QSettings>
@@ -152,7 +153,7 @@ void NoteDescriptor::save(const QString& filePath,QUuid uuid)
     QString uuidStr = uuid.toString();
     uuidStr.chop(1); // }
     uuidStr = uuidStr.remove(0,1); // {
-    QString backupFilePath = backup_dir_path + "/" + uuidStr;
+    QString backupFilePath = backup_dir_path + slash + uuidStr;
     write(backupFilePath,uuid); // write backup
 
      if(noteWidget_)

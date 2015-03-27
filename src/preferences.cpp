@@ -24,16 +24,11 @@
  */
 
 #include "preferences.h"
+#include "slash.h"
 #include <QDir>
 #include <QMessageBox>
 #include <QTimer>
 #include <QFileDialog>
-
-    #ifdef Q_OS_WIN32
-      const QString slash = "\\";
-    #else
-      const QString slash = "/";
-    #endif
 
 Preferences::Preferences(QWidget *parent): QDialog(parent)
 {
@@ -74,7 +69,8 @@ void Preferences::setFontSize(const QString size)
 
 void Preferences::showEvent(QShowEvent* show_pref)
 {
-     pathLabel->setText(settings->value("root_path").toString());
+     rootPathLabel->setText(settings->value("root_path").toString());
+     backupPathLabel->setText(settings->value("backup_dir_path").toString());
      rootPath = settings->value("root_path").toString();
      originalRootPath = rootPath;
      QFont font;
@@ -138,7 +134,7 @@ QString Preferences::openDir()
        return QString();
      }
 
-     return QString(path + slash +"nobleNote");
+     return QString(path + slash + "nobleNote");
 }
 
 void Preferences::setNewPaths()
@@ -147,7 +143,8 @@ void Preferences::setNewPaths()
      if(!newPath.isEmpty())
      {
           rootPath = newPath;
-          pathLabel->setText(rootPath);
+          rootPathLabel->setText(rootPath);
+          backupPathLabel->setText(tr("(Will be updated after pressing OK.)"));
      }
 }
 
@@ -160,18 +157,42 @@ void Preferences::createPortableAtPath()
      else
        QDir().mkpath(newPath);
 
-     //copy executable
+    //copy all neccessary files for Windows
+    #ifdef Q_OS_WIN32
+     QStringList dirList = QDir(QCoreApplication::applicationDirPath()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+     QStringList fileList = QDir(QCoreApplication::applicationDirPath()).entryList(QDir::Files);
+
+     foreach(QString file, fileList)
+     {
+          //removing all files that are not .dll, .exe or .qm
+          if(!file.contains(QRegEx("\.dll|\.exe|\.qm",Qt::CaseInsensitive)))
+               fileList.remove(file);
+          else //copy file located in the dir of the executable
+               QFile(file).copy(newPath + slash + QFile(file).fileName());
+     }
+
+     //copy files located in dirList
+     foreach(QString dir, dirList)
+     {
+          QString newDir = newPath + slash + QDir(dir).dirName();
+          QDir().mkpath(newDir);
+          QStringList dirFileList = QDir(newDir).entryList(QDir::Files);
+          foreach(QString file, dirFileList)
+               QFile(file).copy(newDir + slash + QFileInfo(file).fileName());
+     }
+    #else //as of Windows the executable was already included and copied above.
      QFile noblenote(QCoreApplication::applicationFilePath());
      noblenote.copy(newPath + slash + QFileInfo(QCoreApplication::applicationFilePath()).fileName());
+    #endif
 
      //copy settings file
      QString newSettingsFilePath = newPath;
+     QDir().mkpath(newSettingsFilePath);
      QString settingFileName = QFileInfo(settings->fileName()).fileName();
      QFile file(settings->fileName());
-     QDir().mkpath(newSettingsFilePath);
      file.copy(newSettingsFilePath + slash + settingFileName);
      QSettings newSettings(QString(newSettingsFilePath + slash +
-                  settingFileName),QSettings::NativeFormat,this); //create new settings
+                  settingFileName),QSettings::defaultFormat(),this); //create new settings
 
      //copy all notes to the new location
      QString newRootPath = newPath + slash +"notes";

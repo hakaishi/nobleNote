@@ -157,10 +157,6 @@
         <translation>О программе </translation>
     </message>
     <message>
-        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;h1&gt;%1, версия %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; — приложение для создания заметок&lt;/p&gt;&lt;p&gt;Авторские права (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Данная лицензия разрешает лицам, получившим копию данного программного обеспечения и сопутствующей документации (в дальнейшем именуемыми «Программное Обеспечение»), безвозмездно использовать Программное Обеспечение без ограничений, включая неограниченное право на использование, копирование, изменение, добавление, публикацию, распространение, сублицензирование и/или продажу копий Программного Обеспечения, также как и лицам, которым предоставляется данное Программное Обеспечение, при соблюдении следующих условий:&lt;/p&gt;Указанное выше уведомление об авторском праве и данные условия должны быть включены во все копии или значимые части данного Программного Обеспечения.&lt;p&gt;ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНО ВЫРАЖЕННЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ, СООТВЕТСТВИЯ ПО ЕГО КОНКРЕТНОМУ НАЗНАЧЕНИЮ И ОТСУТСТВИЯ НАРУШЕНИЙ ПРАВ. НИ В КАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПО ИСКАМ О ВОЗМЕЩЕНИИ УЩЕРБА, УБЫТКОВ ИЛИ ДРУГИХ ТРЕБОВАНИЙ ПО ДЕЙСТВУЮЩИМ КОНТРАКТАМ, ДЕЛИКТАМ ИЛИ ИНОМУ, ВОЗНИКШИМ ИЗ, ИМЕЮЩИМ ПРИЧИНОЙ ИЛИ СВЯЗАННЫМ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ ИЛИ ИСПОЛЬЗОВАНИЕМ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ ИЛИ ИНЫМИ ДЕЙСТВИЯМИ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
     </message>
@@ -385,24 +381,12 @@
         <translation>&amp;Отображать строку меню «Показать исходный текст»</translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Конвертировать заметки в HTML</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation>&amp;Свернуть в трей</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation>Автоматически конвертировать заметки в формат HTML. Если отключено, заметки в формате, отличном от HTML будут открываться в режиме «только для чтения».</translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation>Корневой каталог</translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>папка</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -468,6 +452,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -582,14 +578,6 @@ neccessary data to a desired location.</source>
     <message>
         <source>Deleting notes</source>
         <translation>Удаление заметок</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation type="vanished">Вы уверены, что вы хотите окончательно удалить эти заметки?
-
-%1</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete the selected notes?</source>

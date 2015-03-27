@@ -157,12 +157,6 @@
         <translation>O programie </translation>
     </message>
     <message>
-        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; jest aplikacją do robienia notatek&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Każda osoba nabywająca to oprogramowanie i powiązane pliki dokumentacji (dalej &quot;Oprogramowanie&quot;) ninejszym otrzymuje zezwolenie na ingerowanie w Oprogramowanie bez ograniczeń, włączając brak ograniczeń praw do kopiowania, modyfikowania, scalania, publikowania, dystrybucji, sublicencjowania, i/lub sprzedawania kopii Oprogramowania i udzielania pozwolenia na robienie tego samego osobom, którym Oprogramowanie jest dostarczane, pod następującymi warunkami:&lt;/p&gt;Powyższa informacja o prawach autorskich winna być zawarta we wszystkich kopiach bądź znacznych fragmentach Oprogramowania.&lt;p&gt;OPROGRAMOWANIE JEST DOSTARCZANE &quot;W OBECNYM STANIE RZECZY&quot;, BEZ JAKIEJKOLWIEK GWARANCJI,  WYRAŹNEJ LUB DOROZUMIANEJ,  NIE WYŁĄCZAJĄC GWARANCJI PRZYDATNOŚCI HANDLOWEJ LUB PRZYDATNOŚCI DO OKREŚLONYCH CELÓW A TAKŻE BRAKU WAD PRAWNYCH. W ŻADNYM PRZYPADKU TWÓRCA LUB POSIADACZ PRAW AUTORSKICH NIE MOŻE PONOSIĆ ODPOWIEDZIALNOŚCI Z TYTUŁU ROSZCZEŃ LUB WYRZĄDZONEJ SZKODY A TAKŻE ŻADNEJ INNEJ ODPOWIEDZIALNOŚCI CZY TO WYNIKAJĄCEJ Z UMOWY, DELIKTU, CZY JAKIEJKOLWIEK INNEJ
-PODSTAWY POWSTAŁEJ W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYTKOWANIEM GO LUB
-WPROWADZANIEM GO DO OBROTU.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
     </message>
@@ -389,24 +383,12 @@ WPROWADZANIEM GO DO OBROTU.&lt;/p&gt; {1&gt;?} {1 ?} {2&lt;?} {1&gt;?} {1&lt;?} 
         <translation>&amp;Pokazuj &quot;Pokaż źródło&quot; w menu</translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Konwertuj notatki do formatu HTML</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation>&amp;Zamykaj do obszaru powiadomień</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation>Automatycznie konwertuj notatki do formatu HTML. Jeśli wyłączone, notatki w formatach innych niż HTML będą otwierane tylko do odczytu.</translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation>Katalog główny</translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>folder</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -472,6 +454,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -586,14 +580,6 @@ neccessary data to a desired location.</source>
     <message>
         <source>Deleting notes</source>
         <translation>Usuwanie notatek</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation type="vanished">Jesteś pewien, że chcesz trwale usunąć te notatki?
-
-%1</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete the selected notes?</source>

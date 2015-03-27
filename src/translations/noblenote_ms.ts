@@ -157,10 +157,6 @@
         <translation>Perihal </translation>
     </message>
     <message>
-        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;h1&gt;%1 versi %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; adalah aplikasi pengambilan note &lt;/p&gt;&lt;p&gt;Hakcipta (C) 2012 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Keizinan disini diberikan, secara percuma, kepada mana-mana individu yang memperoleh salinain perisian ini dan fail dokumentasi yang berkaitan (&quot;Perisian&quot;), untuk mengendalikan Perisian tanpa sekatan, termasuklah tiada had terhadap hak mengguna, menyalin, mengubahsuai, menggabung, menerbit, mengedar, sublesen, dan/atau menjual salinan Perisian, dan membenarkan individu melakukannya berdasarkan syarat berikut:&lt;/p&gt;Notis hakcipta diatas dan notis keizinannya akan disisip di dalam semua salinan atau sebahagian daripada Perisian.&lt;p&gt;PERISIAN INI DISEDIAKAN &quot;SEBAGAIMANA ADANYA&quot;, TANPA SEBARANG JENIS JAMINAN, SEGERA ATAU TERSIRAT, YANG TERMASUK TETAPI TIDAK TERHAD KEPADA JAMINAN KEBOLEHDAGANGAN, KESESUAIAN UNTUK TUJUAN TERTENTU DAN KETIDAKLANGGARAN.  PENGARANG ATAU PEMEGANG HAK CIPTA DALAM KEADAAN TIDAK AKAN BERTANGGUNGJAWAB UNTUK SEBARANG TUNTUTAN, KEROSAKAN ATAU LIABILITI LAIN, SAMA ADA DALAM PERBUATAN KONTRAK, TORT ATAU SEBALIKNYA, YANG TIMBUL DARIPADA, LUAR ATAU BERHUBUNGAN DENGAN PERISIAN INI ATAU PENGGUNAAN ATAU PERLAKUAN LAIN DALAM PERISIAN. &lt;/ p&gt;</translation>
-    </message>
-    <message>
         <source>nobleNote</source>
         <translation>nobleNote</translation>
     </message>
@@ -385,24 +381,12 @@
         <translation>P&amp;apar masukan menu &quot;Papar Sumber&quot;</translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Tukar nota ke format HTML</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation>T&amp;utup ke talam</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation>Tukar nota bukan-HTML secara automatik ke format HTML. Jika dilumpuhkan, nota bukan-HTML dibuka sebagai baca sahaja.</translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation>Direktori root</translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>folder</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -468,6 +452,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -582,14 +578,6 @@ neccessary data to a desired location.</source>
     <message>
         <source>Deleting notes</source>
         <translation>Memadam nota</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation type="vanished">Anda pasti hendak memadam nota ini secara kekal?
-
-%1</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete the selected notes?</source>

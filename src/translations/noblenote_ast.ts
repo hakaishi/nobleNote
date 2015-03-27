@@ -381,24 +381,12 @@
         <translation>Amo&amp;sar la entrada de menú &quot;Ver fonte&quot;</translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Convertir notes al formatu HTML</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation>&amp;Zarrar a la bandexa</translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>carpeta</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -464,6 +452,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

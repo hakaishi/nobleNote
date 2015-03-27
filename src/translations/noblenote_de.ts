@@ -381,24 +381,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convert notes to the HTML format</source>
-        <translation type="vanished">Konvertiere Notizen in das HTML-Format</translation>
-    </message>
-    <message>
         <source>&amp;Close to tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Automatically convert non-HTML notes to the HTML format. If disabled, non-HTML notes are opened read only.</source>
         <translation>Konvertiere nicht-HTML Notizen automatisch in das HTML-Format. Wenn deaktiviert, werden nicht-HTML Notizen schreibgeschützt geöffnet.</translation>
-    </message>
-    <message>
-        <source>Root directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>folder</source>
-        <translation>Verzeichnis</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -464,6 +452,18 @@ neccessary data to a desired location.</source>
     </message>
     <message>
         <source>Number of recently opened notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup directroy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -578,14 +578,6 @@ neccessary data to a desired location.</source>
     <message>
         <source>Deleting notes</source>
         <translation>Löschen von Notizen</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to permanently delete these notes?
-
-%1</source>
-        <translation type="obsolete">Sind Sie sicher, dass Sie die markierten Notizen endgültig löschen wollen?
-
-%1</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete the selected notes?</source>

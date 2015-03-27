@@ -24,6 +24,7 @@
  */
 
 #include "mainwindow.h"
+#include "slash.h"
 #include "welcome.h"
 #include "note.h"
 #include "findfilemodel.h"
@@ -55,12 +56,6 @@
 #include <QtConcurrentMap>
 #include <QDesktopServices>
 #endif
-
-    #ifdef Q_OS_WIN32
-      const QString slash = "\\";
-    #else
-      const QString slash = "/";
-    #endif
 
 MainWindow::MainWindow()
 {
