@@ -34,9 +34,6 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
 {
      setupUi(this);
 
-     rootPathLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
-     backupPathLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
-
      settings = new QSettings(this);
 
      QFontDatabase db;
