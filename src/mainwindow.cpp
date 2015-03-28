@@ -265,10 +265,10 @@ void MainWindow::writeBackupDirPath()
 
       #if QT_VERSION < 0x050000
        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-      #elif QT_VERSION > 0x050400
-       backupPath = QStandardPaths::AppLocalDataLocation;
       #elif QT_VERSION > 0x050000 && QT_VERSION < 0x050400
        backupPath = QStandardPaths::DataLocation;
+      #elif QT_VERSION > 0x050400
+       backupPath = QStandardPaths::AppLocalDataLocation;
       #endif
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
        if(backupPath.contains("\\" + qApp->organizationName() + "\\" + qApp->applicationName()))
