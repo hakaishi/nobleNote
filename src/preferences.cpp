@@ -29,6 +29,7 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QFileDialog>
+#include <QRegExp>
 
 Preferences::Preferences(QWidget *parent): QDialog(parent)
 {
@@ -165,8 +166,8 @@ void Preferences::createPortableAtPath()
      foreach(QString file, fileList)
      {
           //removing all files that are not .dll, .exe or .qm
-          if(!file.contains(QRegEx("\.dll|\.exe|\.qm",Qt::CaseInsensitive)))
-               fileList.remove(file);
+          if(!file.contains(QRegExp("\.dll|\.exe|\.qm",Qt::CaseInsensitive)))
+               fileList.removeAll(file);
           else //copy file located in the dir of the executable
                QFile(file).copy(newPath + slash + QFile(file).fileName());
      }
