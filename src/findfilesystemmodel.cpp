@@ -28,7 +28,6 @@
 #include "filesystemmodel.h"
 #include <QFileSystemModel>
 #include "htmlnotereader.h"
-#include "slash.h"
 
 FindFileSystemModel::FindFileSystemModel(QObject *parent) :
     QSortFilterProxyModel(parent)
@@ -198,7 +197,7 @@ void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes) c
         QString filePath = this->filePath(index);
         QUuid uuid = HtmlNoteReader::uuid(filePath);
         if(!uuid.isNull())
-            QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + slash + uuid.toString().mid(1,36));
+            QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + QDir::separator() + uuid.toString().mid(1,36));
     }
 }
 
@@ -208,6 +207,6 @@ void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes) c
     {
         QUuid uuid = HtmlNoteReader::uuid(fileInfo.path());
         if(!uuid.isNull())
-            QFile::copy(fileInfo.path(), QSettings().value("backup_dir_path").toString() + slash + uuid.toString().mid(1,36));
+            QFile::copy(fileInfo.path(), QSettings().value("backup_dir_path").toString() + QDir::separator() + uuid.toString().mid(1,36));
     }
 }

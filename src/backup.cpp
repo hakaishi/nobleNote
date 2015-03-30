@@ -25,7 +25,6 @@
 
 #include "backup.h"
 #include "trash.h"
-#include "slash.h"
 #include <QDirIterator>
 #include <QMessageBox>
 #include <QSettings>
@@ -83,12 +82,12 @@ void Backup::setupBackups()
      foreach(QString uuid, noteUuidList)
      {
           if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
-                                  + slash + uuid.mid(1,36))))
+                                  + QDir::separator() + uuid.mid(1,36))))
           {
              backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
-                                   + slash + uuid.mid(1,36)));
+                                   + QDir::separator() + uuid.mid(1,36)));
              backupFiles.removeOne(QFileInfo(QSettings().value("backup_dir_path").toString()
-                                   + slash + uuid));
+                                   + QDir::separator() + uuid));
           }
      }
 

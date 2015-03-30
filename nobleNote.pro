@@ -58,8 +58,7 @@ HEADERS = src/mainwindow.h src/note.h \
     src/trash.h \
     src/progressreceiver.h \
     src/flickcharm.h \
-    src/noteimporter.h \
-    src/slash.h
+    src/noteimporter.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
         src/ui/preferences.ui src/ui/trash.ui 
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \

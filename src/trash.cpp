@@ -24,7 +24,6 @@
  */
 
 #include "trash.h"
-#include "slash.h"
 #include <QSettings>
 #include <QMessageBox>
 
@@ -65,12 +64,12 @@ void Trash::restoreBackup()
             return;
           else
           {
-             QString filePath = dir+slash+title;
+             QString filePath = dir+QDir::separator()+title;
              int i = 0;
              while(QFile::exists(filePath))
              {
                 i++;
-                filePath = dir+slash+title+" ("+QString::number(i)+")";
+                filePath = dir+QDir::separator()+title+" ("+QString::number(i)+")";
              }
              QFile(dataList.first()).copy(filePath);
           }
@@ -103,7 +102,7 @@ void Trash::deleteBackup()
             QFile(file).remove();
 
           QString uuid = file;
-          uuid.remove(QSettings().value("backup_dir_path").toString() + slash);
+          uuid.remove(QSettings().value("backup_dir_path").toString() + QDir::separator());
           QSettings().remove("Notes/" + QUuid(uuid).toString() + "_size");
           QSettings().remove("Notes/" + QUuid(uuid).toString() + "_cursor_position");
           QSettings().remove("Notes/" + QUuid(uuid).toString() + "_window_position");

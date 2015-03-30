@@ -26,7 +26,6 @@
 #include "htmlnotewriter.h"
 #include "datetime.h"
 #include "xmlnotereader.h"
-#include "slash.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDateTime>
@@ -122,8 +121,8 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
         title = tr("untitled note");
 
     QString filePath;
-    QDir().mkpath(outputPath + slash + folder);
-    filePath =  outputPath + slash + folder + slash + title;
+    QDir().mkpath(outputPath + QDir::separator() + folder);
+    filePath =  outputPath + QDir::separator() + folder + QDir::separator() + title;
 
     // TODO move this in extra static method
     int counter = 0;
@@ -150,5 +149,5 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
     uuid.chop(1); // }
     uuid = uuid.remove(0,1); // {
 
-    QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + slash + uuid);
+    QFile::copy(filePath, QSettings().value("backup_dir_path").toString() + QDir::separator() + uuid);
 }

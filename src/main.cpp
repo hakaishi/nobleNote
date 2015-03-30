@@ -36,7 +36,6 @@
 #include <QSettings>
 
 #include "welcome.h"
-#include "slash.h"
 
 int main (int argc, char *argv[]){
      QApplication app(argc, argv);
@@ -64,7 +63,7 @@ int main (int argc, char *argv[]){
      QDir settingsFilePath = QDir(QCoreApplication::applicationDirPath()); //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
      settingsFilePath.cdUp();
      QSettings settings; // uses standard path + Organization/Application.conf automatically
-     if(QFile(QCoreApplication::applicationDirPath() + slash + QFileInfo(settings.fileName()).fileName()).exists()) //check if there is a conf file next to the executable
+     if(QFile(QCoreApplication::applicationDirPath() + QDir::separator() + QFileInfo(settings.fileName()).fileName()).exists()) //check if there is a conf file next to the executable
        QSettings::setPath(QSettings::defaultFormat(),
           QSettings::UserScope,settingsFilePath.path()); //use this file instead of system standard if this is the case
 

@@ -24,7 +24,6 @@
  */
 
 #include "mainwindow.h"
-#include "slash.h"
 #include "welcome.h"
 #include "note.h"
 #include "findfilemodel.h"
@@ -251,13 +250,13 @@ void MainWindow::selectFolder()
 
 void MainWindow::writeBackupDirPath()
 {
-     QString settingsFile = QCoreApplication::applicationDirPath() + slash + QFileInfo(QSettings().fileName()).fileName();
+     QString settingsFile = QCoreApplication::applicationDirPath() + QDir::separator() + QFileInfo(QSettings().fileName()).fileName();
      QString backupPath;
      QString suffix = QSettings().value("root_path").toString();
 
      if(!QFile(settingsFile).exists())
      {
-       suffix.replace(slash, "_");
+       suffix.replace(QDir::separator(), "_");
 
     #ifdef Q_OS_WIN32
        suffix.prepend("_");
@@ -280,7 +279,7 @@ void MainWindow::writeBackupDirPath()
      else
        backupPath = QCoreApplication::applicationDirPath();
 
-     QSettings().setValue("backup_dir_path", backupPath + slash + "backups" + suffix);
+     QSettings().setValue("backup_dir_path", backupPath + QDir::separator() + "backups" + suffix);
 }
 
 void MainWindow::changeRootIndex(){
@@ -309,16 +308,16 @@ void MainWindow::makeStandardPaths(){
      {
          QString defaultDirName = tr("default");
          QDir(QSettings().value("root_path").toString()).mkdir(defaultDirName);
-         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + slash + defaultDirName)); // set default dir as current note folder
+         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + QDir::separator() + defaultDirName)); // set default dir as current note folder
      }
      else
-         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + slash + dirList.first())); // dirs exist, set first dir as current note folder
+         noteView->setRootIndex(noteModel->setRootPath(QSettings().value("root_path").toString() + QDir::separator() + dirList.first())); // dirs exist, set first dir as current note folder
 
      //Select the first folder
      if(!dirList.isEmpty())
      {
           folderView->selectionModel()->select(folderModel->index(QSettings().value(
-               "root_path").toString() + slash + dirList.first()),QItemSelectionModel::Select);
+               "root_path").toString() + QDir::separator() + dirList.first()),QItemSelectionModel::Select);
      }
 }
 
@@ -372,7 +371,7 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
           QString strippedPath = recent[i];
           strippedPath.chop(fileName.size() + getToBerenamedNotebook.size() +1);
           if(!strippedPath.contains(strippedPath + getToBerenamedNotebook))
-            recent[i] = strippedPath + newNotebookName + slash + fileName;
+            recent[i] = strippedPath + newNotebookName + QDir::separator() + fileName;
      }
      QSettings().setValue("Recent_notes", recent);
      createAndUpdateRecent();
@@ -397,9 +396,9 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
 void MainWindow::noteRenameFinished(const QString & path, const QString & oldName, const QString & newName)
 {
      QString filePath = noteModel->filePath(noteView->currentIndex());
-     Note * w = noteWindow(path + slash + oldName);
+     Note * w = noteWindow(path + QDir::separator() + oldName);
      if(w)
-        w->setWindowTitle(QFileInfo(path + slash + newName).baseName());
+        w->setWindowTitle(QFileInfo(path + QDir::separator() + newName).baseName());
 
      noteView->model()->sort(0);
      noteView->setCurrentIndex(noteModel->index(filePath));
@@ -409,8 +408,8 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
      QStringList recent = QSettings().value("Recent_notes").toStringList();
 
      for(int i = 0; i < recent.size(); i++)
-          if(recent[i].contains(path + slash + oldName))
-            recent.replace(i, path + slash + newName);
+          if(recent[i].contains(path + QDir::separator() + oldName))
+            recent.replace(i, path + QDir::separator() + newName);
      QSettings().setValue("Recent_notes", recent);
      createAndUpdateRecent();
 }
@@ -672,12 +671,12 @@ Note *MainWindow::noteWindow(const QString &filePath)
 }
 
 void MainWindow::newFolder(){
-     QString path = folderModel->rootPath() + slash + tr("new notebook");
+     QString path = folderModel->rootPath() + QDir::separator() + tr("new notebook");
      int counter = 0;
      while(QDir(path).exists())
      {
          ++counter;
-         path = folderModel->rootPath() + slash + tr("new notebook (%1)").arg(QString::number(counter));
+         path = folderModel->rootPath() + QDir::separator() + tr("new notebook (%1)").arg(QString::number(counter));
      }
      QModelIndex idx = folderModel->mkdir(folderView->rootIndex(),QDir(path).dirName());
 
@@ -691,12 +690,12 @@ void MainWindow::newFolder(){
 }
 
 void MainWindow::newNote(){
-     QString filePath = noteModel->rootPath() + slash + tr("new note");
+     QString filePath = noteModel->rootPath() + QDir::separator() + tr("new note");
      int counter = 0;
      while(QFile::exists(filePath))
      {
          ++counter;
-         filePath = noteModel->rootPath() + slash + tr("new note (%1)").arg(QString::number(counter));
+         filePath = noteModel->rootPath() + QDir::separator() + tr("new note (%1)").arg(QString::number(counter));
      }
 
      QFile file(filePath);
@@ -934,7 +933,7 @@ void MainWindow::pasteFiles()
      {
           if(!QFile(note).copy(folderModel->filePath(
              folderView->selectionModel()->selectedRows().first())
-             + slash + QFileInfo(note).fileName()))
+             + QDir::separator() + QFileInfo(note).fileName()))
                      copyErrorFiles += "\"" + note + "\"\n";
           else QFile(note).remove();
      }
