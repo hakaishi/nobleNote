@@ -150,7 +150,7 @@ void Preferences::setNewPaths()
 
 void Preferences::createPortableAtPath()
 {
-     QString newPath = openDir();
+/*     QString newPath = openDir();
 
      if(newPath.isEmpty())
        return;
@@ -216,5 +216,5 @@ void Preferences::createPortableAtPath()
      //set portable and save new paths in the settings
      newSettings.setValue("isPortable",true);
      newSettings.setValue("root_path",newRootPath);
-     newSettings.setValue("backup_dir_path",backupPath);
+     newSettings.setValue("backup_dir_path",backupPath);*/
 }

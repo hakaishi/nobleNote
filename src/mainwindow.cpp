@@ -248,20 +248,20 @@ void MainWindow::selectFolder()
      folderActivated(folderView->selectionModel()->selectedIndexes().first());
 }
 
-void MainWindow::writeBackupDirPath()
+void MainWindow::writeBackupDirPath() //generates a backup path according to OS and portability
 {
-     QString settingsFile = QCoreApplication::applicationDirPath() + QDir::separator() + QFileInfo(QSettings().fileName()).fileName();
      QString backupPath;
-     QString suffix = QSettings().value("root_path").toString();
+     QString suffix = "";
 
-     if(!QFile(settingsFile).exists())
+     if(!QSettings().value("isPortable",false).toBool()) //if not portable
      {
+       suffix = QSettings().value("root_path").toString();
        suffix.replace(QDir::separator(), "_");
 
     #ifdef Q_OS_WIN32
        suffix.prepend("_");
        suffix.remove(":");
-
+//TODO: Check if backupPath is set and what the content is. From here till ...
       #if QT_VERSION < 0x050000
        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
       #elif QT_VERSION > 0x050000 && QT_VERSION < 0x050400
@@ -269,17 +269,20 @@ void MainWindow::writeBackupDirPath()
       #elif QT_VERSION > 0x050400
        backupPath = QStandardPaths::AppLocalDataLocation;
       #endif
+//TODO: ... till here. backupPath should never be empty at this point.
+     backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation); //TODO: remove after fixing the above.
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
        if(backupPath.contains("\\" + qApp->organizationName() + "\\" + qApp->applicationName()))
          backupPath.replace("\\" + qApp->organizationName() + "\\" + qApp->applicationName(),"\\" +qApp->applicationName());
-    #else
+    #else //not WIN32
        backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName();
     #endif
      }
-     else
+     else //if portable
        backupPath = QCoreApplication::applicationDirPath();
 
      QSettings().setValue("backup_dir_path", backupPath + QDir::separator() + "backups" + suffix);
+     //note that suffix will be "" if portable
 }
 
 void MainWindow::changeRootIndex(){
