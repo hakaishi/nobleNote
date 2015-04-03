@@ -46,7 +46,6 @@ class Preferences : public QDialog, public Ui::Preferences {
       void saveSettings();
       QString openDir();
       void setNewPaths();
-      void createPortableAtPath(); //make nobleNote portable by setting a path for all files
 
      signals:
       void pathChanged();

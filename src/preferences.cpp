@@ -40,9 +40,6 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
      foreach(int size, db.standardSizes())
        fontSizeComboBox->addItem(QString::number(size));
 
-     if(settings->value("isPortable",false).toBool())
-          createPortable->setDisabled(true);
-
      dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      showSource->setChecked(settings->value("show_source", false).toBool());
@@ -146,75 +143,4 @@ void Preferences::setNewPaths()
           rootPathLabel->setText(rootPath);
           backupPathLabel->setText(tr("(Will be updated after pressing OK.)"));
      }
-}
-
-void Preferences::createPortableAtPath()
-{
-/*     QString newPath = openDir();
-
-     if(newPath.isEmpty())
-       return;
-     else
-       QDir().mkpath(newPath);
-
-    //copy all neccessary files for Windows
-    #ifdef Q_OS_WIN32
-     QStringList dirList = QDir(QCoreApplication::applicationDirPath()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-     QStringList fileList = QDir(QCoreApplication::applicationDirPath()).entryList(QDir::Files);
-
-     foreach(QString file, fileList)
-     {
-          //removing all files that are not .dll, .exe or .qm
-          if(!file.contains(QRegExp("\.dll|\.exe|\.qm",Qt::CaseInsensitive)))
-               fileList.removeAll(file);
-          else //copy file located in the dir of the executable
-               QFile(file).copy(newPath + QDir::separator() + QFile(file).fileName());
-     }
-
-     //copy files located in dirList
-     foreach(QString dir, dirList)
-     {
-          QString newDir = newPath + QDir::separator() + QDir(dir).dirName();
-          QDir().mkpath(newDir);
-          QStringList dirFileList = QDir(newDir).entryList(QDir::Files);
-          foreach(QString file, dirFileList)
-               QFile(file).copy(newDir + QDir::separator() + QFileInfo(file).fileName());
-     }
-    #else //as of Windows the executable was already included and copied above.
-     QFile noblenote(QCoreApplication::applicationFilePath());
-     noblenote.copy(newPath + QDir::separator() + QFileInfo(QCoreApplication::applicationFilePath()).fileName());
-    #endif
-
-     //copy settings file
-     QString newSettingsFilePath = newPath;
-     QDir().mkpath(newSettingsFilePath);
-     QString settingFileName = QFileInfo(settings->fileName()).fileName();
-     QFile file(settings->fileName());
-     file.copy(newSettingsFilePath + QDir::separator() + settingFileName);
-     QSettings newSettings(QString(newSettingsFilePath + QDir::separator() +
-                  settingFileName),QSettings::defaultFormat(),this); //create new settings
-
-     //copy all notes to the new location
-     QString newRootPath = newPath + QDir::separator() +"notes";
-     QList<QFileInfo> notebooks = QDir(settings->value("root_path").toString()).entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot);
-     foreach(QFileInfo notebook, notebooks)
-     {
-          QDir().mkpath(newRootPath + QDir::separator() + notebook.fileName());
-          QList<QFileInfo> notes = QDir(notebook.absoluteFilePath()).entryInfoList(QDir::Files);
-          foreach(QFileInfo note, notes)
-               QFile(note.absoluteFilePath()).copy(
-                     newRootPath + QDir::separator() + notebook.fileName() + QDir::separator() + note.fileName());
-     }
-
-     //copy all backups to the new location
-     QString backupPath = newPath + QDir::separator() +"backups";
-     QDir().mkpath(backupPath);
-     QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
-     foreach(QFileInfo backup, backups)
-          QFile(backup.absoluteFilePath()).copy(backupPath + QDir::separator() + backup.fileName());
-
-     //set portable and save new paths in the settings
-     newSettings.setValue("isPortable",true);
-     newSettings.setValue("root_path",newRootPath);
-     newSettings.setValue("backup_dir_path",backupPath);*/
 }
