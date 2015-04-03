@@ -258,25 +258,22 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
        suffix = QSettings().value("root_path").toString();
        suffix.replace(QDir::separator(), "_");
 
-    #ifdef Q_OS_WIN32
+      #ifdef Q_OS_WIN32
        suffix.prepend("_");
        suffix.remove(":");
-//TODO: Check if backupPath is set and what the content is. From here till ...
+      #endif
+
       #if QT_VERSION < 0x050000
        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
       #elif QT_VERSION > 0x050000 && QT_VERSION < 0x050400
-       backupPath = QStandardPaths::DataLocation;
+       backupPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
       #elif QT_VERSION > 0x050400
-       backupPath = QStandardPaths::AppLocalDataLocation;
+       backupPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).first();
       #endif
-//TODO: ... till here. backupPath should never be empty at this point.
-     backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation); //TODO: remove after fixing the above.
+
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
-       if(backupPath.contains("\\" + qApp->organizationName() + "\\" + qApp->applicationName()))
-         backupPath.replace("\\" + qApp->organizationName() + "\\" + qApp->applicationName(),"\\" +qApp->applicationName());
-    #else //not WIN32
-       backupPath = QDir::homePath() + "/.local/share/" + qApp->applicationName();
-    #endif
+       if(backupPath.contains(QDir::separator() + qApp->organizationName() + QDir::separator() + qApp->applicationName()))
+         backupPath.replace(QDir::separator() + qApp->organizationName() + QDir::separator() + qApp->applicationName(),QDir::separator() +qApp->applicationName());
      }
      else //if portable
        backupPath = QCoreApplication::applicationDirPath();
