@@ -256,10 +256,13 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
      if(!QSettings().value("isPortable",false).toBool()) //if not portable
      {
        suffix = QSettings().value("root_path").toString();
-       suffix.replace(QDir::separator(), "_");
 
-       suffix.prepend("_");
-       suffix.remove(":");
+      #ifdef Q_OS_WIN32
+       suffix.prepend(QDir::separator()); //we want to seperate "backup" from the rest of the path (see below)
+       suffix.remove(":"); //removing illegal character from path
+      #endif
+
+       suffix.replace(QDir::separator(), "_");
 
       #if QT_VERSION < 0x050000
        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
