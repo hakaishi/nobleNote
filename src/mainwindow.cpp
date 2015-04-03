@@ -258,10 +258,8 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
        suffix = QSettings().value("root_path").toString();
        suffix.replace(QDir::separator(), "_");
 
-      #ifdef Q_OS_WIN32
        suffix.prepend("_");
        suffix.remove(":");
-      #endif
 
       #if QT_VERSION < 0x050000
        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
@@ -272,8 +270,19 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
       #endif
 
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
-       if(backupPath.contains(QDir::separator() + qApp->organizationName() + QDir::separator() + qApp->applicationName()))
-         backupPath.replace(QDir::separator() + qApp->organizationName() + QDir::separator() + qApp->applicationName(),QDir::separator() +qApp->applicationName());
+
+        QString doubleNobleNote =
+                (QDir::separator() + qApp->organizationName() + QDir::separator() + qApp->applicationName());
+        QString singleNobleNote = QDir::separator() +qApp->applicationName();
+
+        // use unified separators, because QDir::separator() is platform native (\ on Windows)
+        // but QStandardPaths uses / on Windows and Linux
+        backupPath = QDir().toNativeSeparators(backupPath);
+        doubleNobleNote = QDir().toNativeSeparators(doubleNobleNote);
+        singleNobleNote = QDir().toNativeSeparators(singleNobleNote);
+
+       if(backupPath.contains(doubleNobleNote))
+         backupPath.replace(doubleNobleNote,singleNobleNote);
      }
      else //if portable
        backupPath = QCoreApplication::applicationDirPath();
