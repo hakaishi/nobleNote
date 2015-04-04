@@ -1003,8 +1003,9 @@ void MainWindow::about()
                    " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,"
                    " WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>"
                          ).arg(QApplication::applicationName()).arg(version)  //: %1 is the application name, also do not translate the licence text
-#ifdef Q_CC_GNU
+
+                        // these macros should work for every compiler
                         +   "<p>Build " + QString(__TIME__) + " " + QString(__DATE__)  // build time and date
-#endif
+
                         +   "</p><p>Qt " + QString(QT_VERSION_STR) + "</p>");  // the Qt version this build is linked against
 }
