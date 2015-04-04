@@ -8,7 +8,7 @@ Note for Windows users: Binary releases can be found on the releases page of thi
 
 Qt 4.8, Qt5 or newer is required to build from source.
 
-Dependencies: libqt4-dev, build-essential
+Dependencies: build-essential, qtbase5-dev, qttools5-dev-tools (or libqt4-dev)
 
 To compile from source, open a terminal and change into the nobleNote source folder.
 To install type:

@@ -64,8 +64,12 @@ int main (int argc, char *argv[]){
      settingsFilePath.cdUp();
      QSettings settings; // uses standard path + Organization/Application.conf automatically
      if(QFile(QCoreApplication::applicationDirPath() + QDir::separator() + QFileInfo(settings.fileName()).fileName()).exists()) //check if there is a conf file next to the executable (for portable version)
-       QSettings::setPath(QSettings::defaultFormat(),
-          QSettings::UserScope,settingsFilePath.path()); //use this file instead of system standard if this is the case
+     {
+          QSettings::setPath(QSettings::defaultFormat(), QSettings::UserScope,settingsFilePath.path()); //use this file instead of system standard if this is the case
+          QSettings().setValue("isPortable",true);
+     }
+     else
+       QSettings().setValue("isPortable",false);
 
      if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
          QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
@@ -74,13 +78,15 @@ int main (int argc, char *argv[]){
      bool rootPathIsSet = settings.value("root_path").isValid();
      bool rootPathExists = QFileInfo(settings.value("root_path").toString()).exists();
      bool rootPathIsWritable = QFileInfo(settings.value("root_path").toString()).isWritable();
-     if(!rootPathExists || !rootPathIsWritable)
+     if(!QSettings().value("isPortable",false).toBool() && (!rootPathExists || !rootPathIsWritable))
      {
           QScopedPointer<Welcome> welcome(new Welcome);
           welcome->getInstance(rootPathIsSet, rootPathExists, rootPathIsWritable);
           if(welcome->exec() == QDialog::Rejected) // welcome writes the root path
             return 0; // leave main if the user rejects the welcome dialog, else go on
      }
+     else if(!rootPathIsSet)
+       QSettings().setValue("root_path", QCoreApplication::applicationDirPath());
 
      MainWindow window;
      window.show();
