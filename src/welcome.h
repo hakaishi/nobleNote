@@ -50,6 +50,9 @@ class Welcome : public QDialog, public Ui::Welcome
      private slots:
       void openDir();
       void setRootDir();
+
+     public slots:
+      void getInstance(bool rootPathIsSet, bool rootPathExists, bool rootPathIsWritable);
 };
 
 #endif // WELCOME_H

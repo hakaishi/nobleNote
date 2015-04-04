@@ -69,12 +69,16 @@ int main (int argc, char *argv[]){
 
      if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
          QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
-     if(!settings.value("import_path").isValid())
+     if(!QFile(settings.value("import_path").toString()).exists())
          settings.setValue("import_path", QDir::homePath());
-     if(!settings.value("root_path").isValid())
-     { // root path has not been set before
-         QScopedPointer<Welcome> welcome(new Welcome);
-         if(welcome->exec() == QDialog::Rejected) // welcome writes the root path
+     bool rootPathIsSet = settings.value("root_path").isValid();
+     bool rootPathExists = QFileInfo(settings.value("root_path").toString()).exists();
+     bool rootPathIsWritable = QFileInfo(settings.value("root_path").toString()).isWritable();
+     if(!rootPathExists || !rootPathIsWritable)
+     {
+          QScopedPointer<Welcome> welcome(new Welcome);
+          welcome->getInstance(rootPathIsSet, rootPathExists, rootPathIsWritable);
+          if(welcome->exec() == QDialog::Rejected) // welcome writes the root path
             return 0; // leave main if the user rejects the welcome dialog, else go on
      }
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
+    <width>421</width>
     <height>220</height>
    </rect>
   </property>
@@ -30,7 +30,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QLabel" name="welcomeText">
      <property name="text">
-      <string>Welcome to nobleNote!
+      <string notr="true">Welcome to nobleNote!
 This is the first time that nobleNote has been started.
 You can choose a directory where the notes will be saved in.</string>
      </property>

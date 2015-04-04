@@ -33,13 +33,8 @@ Welcome::Welcome(QWidget *parent): QDialog(parent)
      setupUi(this);
 
      path = new LineEdit(this);
-    #ifdef Q_OS_WIN32
-     defaultPath = QDir::toNativeSeparators(QDir::homePath()) + "\\" + QApplication::applicationName();
-    #else
-     defaultPath = QDir::homePath() + "/" + QApplication::applicationName();
-    #endif
+     defaultPath = QDir::toNativeSeparators(QDir::homePath() + QDir::separator() + QApplication::applicationName());
      path->setText(defaultPath);
-
 
      gridLayout->addWidget(path, 3, 0, 1, 1);
 
@@ -62,4 +57,20 @@ void Welcome::setRootDir(){
        QSettings().setValue("root_path", defaultPath);
      else
        QSettings().setValue("root_path", path->text());
+}
+
+void Welcome::getInstance(bool rootPathIsSet, bool rootPathExists, bool rootPathIsWritable)
+{
+     if(!rootPathIsSet)
+       welcomeText->setText(tr("Welcome to nobleNote!\nThis is the first time that nobleNote has been started.\n"
+                               "You can choose a directory where the notes will be saved in."));
+     if(!rootPathExists)
+       welcomeText->setText(tr("Welcome to nobleNote!\nThe set path for the notes does not exist.\n"
+                               "Maybe it has been moved or renamed.\n"
+                               "You can choose a new directory where the notes are or where they will be saved in."));
+     if(rootPathExists && !rootPathIsWritable)
+       welcomeText->setText(tr("Welcome to nobleNote!\nThe path where the notes are located is not writable.\n"
+                               "You can choose a new directory where the notes will be saved in.\n"
+                               "Otherwise changes might not be saved."));
+
 }
