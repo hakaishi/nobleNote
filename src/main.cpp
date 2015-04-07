@@ -60,24 +60,23 @@ int main (int argc, char *argv[]){
 
      app.setQuitOnLastWindowClosed(false);
 
-     QDir settingsFilePath = QDir(QCoreApplication::applicationDirPath()); //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
-     settingsFilePath.cdUp();
-     QSettings settings; // uses standard path + Organization/Application.conf automatically
-     if(QFile(QCoreApplication::applicationDirPath() + QDir::separator() + QFileInfo(settings.fileName()).fileName()).exists()) //check if there is a conf file next to the executable (for portable version)
+     // try to find a settings file next to the app executable
+     QString settingsFile = qApp->applicationDirPath() +"/" + qApp->applicationName() + ".ini"; //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
+     if(QFile(settingsFile).exists()) //check if there is an ini file next to the executable (for portable version)
      {
-          QSettings::setPath(QSettings::defaultFormat(), QSettings::UserScope,settingsFilePath.path()); //use this file instead of system standard if this is the case
+          QSettings::setPath(QSettings::IniFormat, QSettings::UserScope,settingsFile); //use this file instead of system standard if this is the case
           QSettings().setValue("isPortable",true);
      }
      else
        QSettings().setValue("isPortable",false);
 
-     if(!settings.isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
+     if(!QSettings().isWritable()) // TODO QObject::tr does not work here because there is no Q_OBJECT macro in main
          QMessageBox::critical(0,"Settings not writable", QString("%1 settings not writable!").arg(app.applicationName()));
-     if(!QFile(settings.value("import_path").toString()).exists())
-         settings.setValue("import_path", QDir::homePath());
-     bool rootPathIsSet = settings.value("root_path").isValid();
-     bool rootPathExists = QFileInfo(settings.value("root_path").toString()).exists();
-     bool rootPathIsWritable = QFileInfo(settings.value("root_path").toString()).isWritable();
+     if(!QFile(QSettings().value("import_path").toString()).exists())
+         QSettings().setValue("import_path", QDir::homePath());
+     bool rootPathIsSet = QSettings().value("root_path").isValid();
+     bool rootPathExists = QFileInfo(QSettings().value("root_path").toString()).exists();
+     bool rootPathIsWritable = QFileInfo(QSettings().value("root_path").toString()).isWritable();
      if(!QSettings().value("isPortable",false).toBool() && (!rootPathExists || !rootPathIsWritable))
      {
           QScopedPointer<Welcome> welcome(new Welcome);
