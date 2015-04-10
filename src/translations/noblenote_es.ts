@@ -435,16 +435,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>For example for USB sticks.
-This creates a copy of all
-neccessary data to a desired location.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cre&amp;ate a portable copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Number of recently opened notes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -597,6 +587,31 @@ You can choose a directory where the notes will be saved in.</source>
     <message>
         <source>Choose a directory</source>
         <translation>Elija un directorio</translation>
+    </message>
+    <message>
+        <source>Welcome to nobleNote!
+This is the first time that nobleNote has been started.
+You are encouraged to use the standard path, but you can also choose a directory located on the system. Please note that the notes won&apos;t be saved on your drive if you do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to nobleNote!
+The set path for the notes does not exist.
+Maybe it has been moved or renamed.
+You can choose a new directory where the notes are or where they will be saved in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to nobleNote!
+The path where the notes are located is not writable.
+Maybe your drive is running in read only mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to nobleNote!
+The path where the notes are located is not writable.
+You can choose a new directory where the notes will be saved in. Otherwise changes might not be saved.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

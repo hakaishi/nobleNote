@@ -34,6 +34,9 @@
 This is the first time that nobleNote has been started.
 You can choose a directory where the notes will be saved in.</string>
      </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="3" column="1">

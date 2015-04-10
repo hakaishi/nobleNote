@@ -31,9 +31,13 @@
 Welcome::Welcome(QWidget *parent): QDialog(parent)
 {
      setupUi(this);
+     isPortable = QSettings().value("isPortable",false).toBool();
 
      path = new LineEdit(this);
-     defaultPath = QDir::toNativeSeparators(QDir::homePath() + QDir::separator() + QApplication::applicationName());
+     if(isPortable)
+       defaultPath = QDir::toNativeSeparators(qApp->applicationDirPath() + "/" + qApp->applicationName());
+     else
+       defaultPath = QDir::toNativeSeparators(QDir::homePath() + "/" + qApp->applicationName());
      path->setText(defaultPath);
 
      gridLayout->addWidget(path, 3, 0, 1, 1);
@@ -43,8 +47,14 @@ Welcome::Welcome(QWidget *parent): QDialog(parent)
 }
 
 void Welcome::openDir(){
+     QString standardPath;
+     if(isPortable)
+       standardPath = qApp->applicationDirPath();
+     else
+       standardPath = QDir::homePath();
+
      QString str = QFileDialog::getExistingDirectory(this,
-       tr("Choose a directory"), QDir::homePath(),
+       tr("Choose a directory"), standardPath,
        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
      if(str != "")
        path->setText(str);
@@ -61,16 +71,33 @@ void Welcome::setRootDir(){
 
 void Welcome::getInstance(bool rootPathIsSet, bool rootPathExists, bool rootPathIsWritable)
 {
-     if(!rootPathIsSet)
-       welcomeText->setText(tr("Welcome to nobleNote!\nThis is the first time that nobleNote has been started.\n"
-                               "You can choose a directory where the notes will be saved in."));
-     if(!rootPathExists)
-       welcomeText->setText(tr("Welcome to nobleNote!\nThe set path for the notes does not exist.\n"
-                               "Maybe it has been moved or renamed.\n"
-                               "You can choose a new directory where the notes are or where they will be saved in."));
-     if(rootPathExists && !rootPathIsWritable)
-       welcomeText->setText(tr("Welcome to nobleNote!\nThe path where the notes are located is not writable.\n"
-                               "You can choose a new directory where the notes will be saved in.\n"
-                               "Otherwise changes might not be saved."));
-
+     if(isPortable)
+     {
+          if(!rootPathIsSet)
+            welcomeText->setText(tr("Welcome to nobleNote!\nThis is the first time that nobleNote has been started.\n"
+                                    "You are encouraged to use the standard path, but you can also choose a directory "
+                                    "located on the system. Please note that the notes won't be saved on your drive "
+                                    "if you do."));
+          if(rootPathIsSet && !rootPathExists)
+            welcomeText->setText(tr("Welcome to nobleNote!\nThe set path for the notes does not exist.\n"
+                                    "Maybe it has been moved or renamed.\n"
+                                    "You can choose a new directory where the notes are or where they will be saved in."));
+          if(rootPathExists && !rootPathIsWritable)
+            welcomeText->setText(tr("Welcome to nobleNote!\nThe path where the notes are located is not writable.\n"
+                                    "Maybe your drive is running in read only mode."));
+     }
+     else
+     {
+          if(!rootPathIsSet)
+            welcomeText->setText(tr("Welcome to nobleNote!\nThis is the first time that nobleNote has been started.\n"
+                                    "You can choose a directory where the notes will be saved in."));
+          if(rootPathIsSet && !rootPathExists)
+            welcomeText->setText(tr("Welcome to nobleNote!\nThe set path for the notes does not exist.\n"
+                                    "Maybe it has been moved or renamed.\n"
+                                    "You can choose a new directory where the notes are or where they will be saved in."));
+          if(rootPathExists && !rootPathIsWritable)
+            welcomeText->setText(tr("Welcome to nobleNote!\nThe path where the notes are located is not writable.\n"
+                                    "You can choose a new directory where the notes will be saved in. "
+                                    "Otherwise changes might not be saved."));
+     }
 }

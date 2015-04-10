@@ -46,6 +46,7 @@ class Welcome : public QDialog, public Ui::Welcome
      private:
       LineEdit *path;
       QString defaultPath;
+      bool     isPortable;
 
      private slots:
       void openDir();
