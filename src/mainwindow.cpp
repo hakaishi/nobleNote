@@ -288,7 +288,7 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
          backupPath.replace(doubleNobleNote,singleNobleNote);
      }
      else //if portable
-       backupPath = QCoreApplication::applicationDirPath();
+       backupPath = qApp->applicationDirPath();
 
      QSettings().setValue("backup_dir_path", backupPath + QDir::separator() + "backups" + suffix);
      //note that suffix will be "" if portable
