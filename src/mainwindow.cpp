@@ -264,7 +264,7 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
 
        suffix.replace(QDir::separator(), "_");
 
-      #if QT_VERSION < 0x050000 && !Q_OS_WIN32
+      #if QT_VERSION < 0x050000 && !defined(Q_OS_WIN32)
        backupPath = QDir::home().absolutePath() +  "/.local/share/" + qApp->applicationName();
       #elif QT_VERSION < 0x050000
        backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
