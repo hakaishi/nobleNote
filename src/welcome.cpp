@@ -75,9 +75,9 @@ void Welcome::getInstance(bool rootPathIsSet, bool rootPathExists, bool rootPath
      {
           if(!rootPathIsSet)
             welcomeText->setText(tr("Welcome to nobleNote!\nThis is the first time that nobleNote has been started.\n"
-                                    "You are encouraged to use the standard path, but you can also choose a directory "
-                                    "located on the system. Please note that the notes won't be saved on your drive "
-                                    "if you do."));
+                                    "This is the portable edition of nobleNote.\n"
+                                    "You are encouraged to use the default path, but you can also choose any other directory."
+                                    ));
           if(rootPathIsSet && !rootPathExists)
             welcomeText->setText(tr("Welcome to nobleNote!\nThe set path for the notes does not exist.\n"
                                     "Maybe it has been moved or renamed.\n"
