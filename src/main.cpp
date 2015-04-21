@@ -24,13 +24,8 @@
  */
 
 #include "mainwindow.h"
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMessageBox>
-#else
 #include <QApplication>
 #include <QMessageBox>
-#endif
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QSettings>
@@ -60,11 +55,16 @@ int main (int argc, char *argv[]){
 
      app.setQuitOnLastWindowClosed(false);
 
-     // try to find a settings file next to the app executable
-     QString settingsFile = qApp->applicationDirPath() +"/" + qApp->applicationName() + ".ini"; //the settings always use organization as the folder, so we need to to change in the folder above. The folder must be named nobleNote!
-     if(QFile(settingsFile).exists()) //check if there is an ini file next to the executable (for portable version)
+     QSettings::setDefaultFormat(QSettings::IniFormat);
+
+     QFileInfo settingsFile = QFile(QDir::toNativeSeparators(app.applicationDirPath() + "/" +
+                              app.applicationName() + "/" + QFileInfo(QSettings().fileName()).fileName()));
+
+     if(settingsFile.exists()) //check if there is a conf/ini file in a folder called nobleNote next to the executable (for portable version)
      {
-          QSettings::setPath(QSettings::IniFormat, QSettings::UserScope,settingsFile); //use this file instead of system standard if this is the case
+          QDir settingsParentDir = settingsFile.dir();
+          settingsParentDir.cdUp(); //cdUp because the current folder will be created by QSettings here after.
+          QSettings::setPath(QSettings::IniFormat,QSettings::UserScope,settingsParentDir.absolutePath()); //use this file instead of system standard if this is the case
           QSettings().setValue("isPortable",true);
      }
      else
@@ -77,7 +77,7 @@ int main (int argc, char *argv[]){
      bool rootPathIsSet = QSettings().value("root_path").isValid();
      bool rootPathExists = QFileInfo(QSettings().value("root_path").toString()).exists();
      bool rootPathIsWritable = QFileInfo(QSettings().value("root_path").toString()).isWritable();
-     if(!QSettings().value("isPortable",false).toBool() && (!rootPathExists || !rootPathIsWritable))
+     if(!rootPathExists || !rootPathIsWritable)
      {
           QScopedPointer<Welcome> welcome(new Welcome);
           welcome->getInstance(rootPathIsSet, rootPathExists, rootPathIsWritable);
@@ -85,7 +85,7 @@ int main (int argc, char *argv[]){
             return 0; // leave main if the user rejects the welcome dialog, else go on
      }
      else if(!rootPathIsSet)
-       QSettings().setValue("root_path", QCoreApplication::applicationDirPath());
+       QSettings().setValue("root_path", app.applicationDirPath() + "/" + app.applicationName());
 
      MainWindow window;
      window.show();
