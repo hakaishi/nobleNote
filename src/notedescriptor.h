@@ -48,6 +48,7 @@ public:
     const QString& filePath() const { return filePath_; } // return the current filePath
     bool readOnly() const { return readOnly_; }
     QUuid uuid() const { return uuid_;}
+
     
 signals:
     void close(); // emitted if the user wants to close the note via a message box
@@ -63,9 +64,11 @@ private slots:
 
 private:
 
-    void save(const QString &filePath, QUuid uuid); // calls write with note and backup
+    void save(const QString &filePath, QUuid uuid, bool overwriteExisting); // calls write with note and backup
     void write(const QString &filePath, QUuid uuid); // write note file to disc
     void load(const QString& filePath); // load a note file into the document
+
+    void findOrReCreate(); // search a note by its uuid and ask the user to create a new one if it cannot be found
 
 
 
@@ -75,9 +78,8 @@ private:
     TextDocument * document_;
     QTextBrowser  * textBrowser_;
     QDateTime lastChange_;
-    QDateTime createDate_;
-    //QDateTime lastMetadataChange_;
     QString title_;
+    QDateTime createDate_;
     bool readOnly_;
 
     // thread locking mechanism for stateChange(), because if a MessageBox opens inside stateChange()

@@ -50,6 +50,13 @@ NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, Text
     QTimer::singleShot(0,this,SLOT(unlockStateChange())); // enable stateChange() after all events have been processed
 }
 
+/**
+ * @brief NoteDescriptor::stateChange
+ *
+ * 1. checks if the file exists and check if its uuid is still the same
+ * 2. rare case: check for modification inside the autosave-interval
+ * 3. reload if modified
+ */
 void NoteDescriptor::stateChange()
 {
     if(Lock::isLocked()|| readOnly_)
@@ -57,48 +64,24 @@ void NoteDescriptor::stateChange()
 
     Lock lock;
 
-    // get file Path
-    // uuid_ != reader.uuid() checks if the file has been replaces by another file of the same name
-    if(!QFile::exists(filePath_) || uuid_ != HtmlNoteReader::uuid(filePath_))
+    /// 1.
+    // an filePath_ that still exists and an uuid that has changed means the file has been replaced by another file of the same name
+    if(QFile::exists(filePath_))
     {
-        // search the moved or renamed file by its uuid
-        QString newFilePath = HtmlNoteReader::findUuid(uuid_, QSettings().value("root_path").toString());
-
-        if(newFilePath.isEmpty())
+        QUuid uuid = HtmlNoteReader::uuid(filePath_);
+        if(!uuid.isNull() && uuid_ != uuid)
         {
-            if(QMessageBox::warning(noteWidget_,tr("Note does not exist"),
-                                    tr("This note does not longer exist. Do you want to keep the editor open?"),
-                                    QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-            {
-                // check if file already exists
-                uuid_ = QUuid::createUuid();
-                int counter = 0;
-                QString origPath = filePath_;
-                while(QFile::exists(filePath_))
-                {
-                    ++counter;
-                    filePath_ = origPath +  QString(" (%1)").arg(counter);
-                }
-                title_ = QFileInfo(filePath_).baseName();
-                if(noteWidget_)
-                    noteWidget_->setWindowTitle(title_); // update window title
-                save(filePath_,uuid_); // save under old path with new uuid
-            }
-            else
-            {
-                emit close();
-            }
-            return;
+            findOrReCreate();
         }
-        filePath_ = newFilePath; // old filePath_ not longer needed
-        title_ = QFileInfo(filePath_).baseName();
-        if(noteWidget_)
-            noteWidget_->setWindowTitle(title_); // update window title
+    }
+    else // file does not longer exist
+    {
+        findOrReCreate();
     }
 
-     HtmlNoteReader reader(filePath_);
-
-    if(lastChange_ < reader.lastChange() && !reader.lastChange().isNull()) // modified elsewhere, lastChange can be null for html files not created with this software
+    /// 2.
+     // rare: reload a note if it has been modified before autosave has been triggered
+    if(lastChange_ < QFileInfo(filePath_).lastModified())
     {
         if(document_->isModified() && QMessageBox::warning(noteWidget_,tr("Note modified"),
                tr("This note has been modified by another instance of %1. Should the"
@@ -109,15 +92,7 @@ void NoteDescriptor::stateChange()
             title_ = QFileInfo(filePath_).baseName();
             createDate_ = QDateTime::currentDateTime();
 
-            // check if file already exists
-            int counter = 0;
-            QString origPath = filePath_;
-            while(QFile::exists(filePath_))
-            {
-                ++counter;
-                filePath_ = origPath +  QString(" (%1)").arg(counter);
-            }
-            save(filePath_,uuid_); // save under new name with new uuid
+            save(filePath_,uuid_,false); // save under new name with new uuid
         }
         else // not modified, silently reload
         {
@@ -126,12 +101,43 @@ void NoteDescriptor::stateChange()
         return;
      }
 
+     /// 3.
+    // reload if modified
     if(document_->isModified())
     {
-        save(filePath_,uuid_);
+        save(filePath_,uuid_,true);
         document_->setModified(false);
         return;
     }
+}
+
+void NoteDescriptor::findOrReCreate()
+{
+    // search the moved or renamed file by its uuid
+    QString newFilePath = HtmlNoteReader::findUuid(uuid_, QSettings().value("root_path").toString());
+
+    if(newFilePath.isEmpty())
+    {
+        if(QMessageBox::warning(noteWidget_,tr("Note does not exist"),
+                                tr("This note does not longer exist. Do you want to keep the editor open?"),
+                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+        {
+            title_ = QFileInfo(filePath_).baseName();
+            if(noteWidget_)
+                noteWidget_->setWindowTitle(title_); // update window title
+            save(filePath_,uuid_,false); // save under old path with new uuid
+        }
+        else
+        {
+            emit close();
+        }
+        return;
+    }
+    filePath_ = newFilePath; // old filePath_ not longer needed
+    title_ = QFileInfo(filePath_).baseName();
+    if(noteWidget_)
+        noteWidget_->setWindowTitle(title_); // update window title
+
 }
 
 void NoteDescriptor::unlockStateChange()
@@ -139,8 +145,20 @@ void NoteDescriptor::unlockStateChange()
     delete initialLock;
 }
 
-void NoteDescriptor::save(const QString& filePath,QUuid uuid)
+void NoteDescriptor::save(const QString& filePath,QUuid uuid, bool overwriteExisting)
 {
+    if(!overwriteExisting)
+    {
+        // avoid overwriting an existing file (this case might arise when the user clicks a dialog to save a not longer existing note)
+        int counter = 0;
+        QString origPath = filePath_;
+        while(QFile::exists(filePath_))
+        {
+            ++counter;
+            filePath_ = origPath +  QString(" (%1)").arg(counter);
+        }
+    }
+
     if(!QDir(QFileInfo(filePath).absolutePath()).exists())
         QDir().mkpath(QFileInfo(filePath).absolutePath());
 
@@ -199,8 +217,8 @@ void NoteDescriptor::load(const QString& filePath)
         noteWidget_->setWindowTitle(title_);
 
     // dates can be null, HtmlNoteWriter will generate non null dates
-    lastChange_ = reader->lastChange();
     createDate_ = reader->createDate();
+    lastChange_ = QFileInfo(filePath).lastModified();
     uuid_ = reader->uuid(); // can be null
 
     QTextCursor cursor(document_);
@@ -211,14 +229,14 @@ void NoteDescriptor::load(const QString& filePath)
     reader = 0;
 
      // incomplete note, overwrite with html format
-    if(isXmlNote || lastChange_.isNull() /*|| createDate_.isNull()*/ || uuid_.isNull())
+    if(isXmlNote /*|| createDate_.isNull()*/ || uuid_.isNull())
     {
         uuid_ = uuid_.isNull() ? QUuid::createUuid() : uuid_;
         //lastChange_ gets written by save
         // createDate_ gets written by HtmlNoteWriter
         readOnly_ = !QSettings().value("convert_notes",true).toBool();
         if(!readOnly_)
-            save(filePath_,uuid_); // only overwrite if convert_notes is enabled in settings
+            save(filePath_,uuid_,true); // only overwrite if convert_notes is enabled in settings
     }
 
 
@@ -226,24 +244,6 @@ void NoteDescriptor::load(const QString& filePath)
 
     document_->setModified(false); // avoid emit of delayedModificationChanged()
 }
-
-//void NoteDescriptor::showSource()
-//{
-//    stateChange(); // save current state
-//    QFile file(filePath_);
-//    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-//    {
-//        qDebug("NoteDescriptor::toggleSource failed : could not open filepath");
-//           return;
-//    }
-//    QString html;
-//    QTextStream in(&file);
-//    html = in.readAll();
-//    file.close();
-//    document_->setPlainText(html);
-//    document_->setModified(false);
-//}
-
 
 
 bool NoteDescriptor::Lock::isLocked()

@@ -74,6 +74,7 @@ class Note : public QMainWindow, public Ui::Note {
       void keyReleaseEvent(QKeyEvent *k);
       virtual void showEvent(QShowEvent* event);
       virtual void closeEvent(QCloseEvent *close_Note);
+      // focus events must be overridden in the TextBrowser class
 };
 
 #endif

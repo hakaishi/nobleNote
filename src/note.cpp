@@ -58,9 +58,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      connect(textBrowser,SIGNAL(customContextMenuRequested(const QPoint&)),
              this,SLOT(showContextMenu(const QPoint &)));
 
-//     FlickCharm * flickCharm = new FlickCharm(this);
-//     flickCharm->activateOn(textBrowser);
-
 
      toolbar = new TextFormattingToolbar(textBrowser,this);
      toolbar->setFocusPolicy(Qt::TabFocus);
