@@ -60,6 +60,8 @@ MainWindow::MainWindow()
 {
      setupUi(this);
 
+     fileWatcher = new QFileSystemWatcher(this);
+
      createAndUpdateRecent();
 
    //TrayIcon
@@ -188,6 +190,7 @@ MainWindow::MainWindow()
      //connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
+     connect(fileWatcher, SIGNAL(fileChanged(const QString)), this, SLOT(createAndUpdateRecent()));
      //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
      //       SLOT(setCurrentFolder(const QModelIndex &)));
      //     connect(folderList,SIGNAL(activated(QModelIndex)), this,
@@ -386,7 +389,6 @@ void MainWindow::folderRenameFinished(QWidget *editor, QAbstractItemDelegate::En
             recent[i] = strippedPath + newNotebookName + QDir::separator() + fileName;
      }
      QSettings().setValue("Recent_notes", recent);
-     createAndUpdateRecent();
 
      if(folderView->selectionModel()->selectedRows().isEmpty())
        return;
@@ -423,7 +425,6 @@ void MainWindow::noteRenameFinished(const QString & path, const QString & oldNam
           if(recent[i].contains(path + QDir::separator() + oldName))
             recent.replace(i, path + QDir::separator() + newName);
      QSettings().setValue("Recent_notes", recent);
-     createAndUpdateRecent();
 }
 
 void MainWindow::folderActivated(const QModelIndex &selected)
@@ -606,6 +607,7 @@ void MainWindow::createAndUpdateRecent()
      while(recentFilePaths.size() > QSettings().value("Number_of_recent_Notes",5).toInt())
        recentFilePaths.removeLast();
 
+     fileWatcher->addPaths(recentFilePaths);
      QSettings().setValue("Recent_notes", recentFilePaths); //save for later
 
      menu_Open_recent->setDisabled(QSettings().value("Recent_notes").toStringList().isEmpty()); //disable if zero
@@ -625,8 +627,12 @@ void MainWindow::createAndUpdateRecent()
 void MainWindow::openRecent()
 {
      QAction *action = qobject_cast<QAction *>(sender()); //get QAction that was the sender of the signal
-     if(action) //if not NULL
-       openOneNote(action->data().toString()); //open note with the path in data of QAction
+     if(action){ //if not NULL
+       if(noteIsOpen(action->data().toString()))
+         return;
+       else
+         openOneNote(action->data().toString()); //open note with the path in data of QAction
+     }
 }
 
 void MainWindow::openNoteSource()
@@ -798,8 +804,6 @@ void MainWindow::removeFolder(){
 //TODO: check why:
 //QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: Datei oder Verzeichnis nicht gefunden
 //QFileSystemWatcher: failed to add paths: /home/hakaishi/.nobleNote/new folder
-
-     createAndUpdateRecent();
 }
 
 void MainWindow::removeNote(){
@@ -829,8 +833,6 @@ void MainWindow::removeNote(){
      // try to copy the files to be removed into the backup folder
      noteModel->copyNotesToBackupDir(selectedRows);
      noteModel->removeList(selectedRows);
-
-     createAndUpdateRecent();
 }
 
 void MainWindow::setKineticScrollingEnabled(bool b)

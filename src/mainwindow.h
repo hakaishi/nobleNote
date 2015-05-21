@@ -61,6 +61,7 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #endif
+#include <QFileSystemWatcher>
 
 /**
  * @brief note taking application main window
@@ -97,6 +98,7 @@ public slots:
     void quit();
 private:
       Welcome         *welcome;
+      QFileSystemWatcher *fileWatcher;
       FileIconProvider *folderIconProvider, *noteIconProvider;
       QSplitter       *splitter;
       LineEdit        *searchName, *searchText;
