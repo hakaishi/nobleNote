@@ -95,6 +95,7 @@ class MainWindow : public QMainWindow, public Ui::MainWindow
       ~MainWindow();
 
 public slots:
+    void showOpenNotes();
     void quit();
 private:
       Welcome         *welcome;

@@ -67,7 +67,7 @@ MainWindow::MainWindow()
    //TrayIcon
      QIcon icon = QIcon(":nobleNote");
 
-     minimizeRestoreAction = new QAction(tr("&Minimize"),this);
+     minimizeRestoreAction = new QAction(tr("&Restore"),this);
      quit_action = new QAction(tr("&Quit"),this);
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -467,14 +467,16 @@ void MainWindow::noteActivated(const QItemSelection &selected, const QItemSelect
 }
 
 #ifndef NO_SYSTEM_TRAY_ICON
-void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason){
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
      if(reason == QSystemTrayIcon::Trigger)
        tray_actions();
 }
 #endif
 
 #ifndef NO_SYSTEM_TRAY_ICON
-void MainWindow::tray_actions(){
+void MainWindow::tray_actions()
+{
      if(isMinimized() || isHidden())  //in case that the window is minimized or hidden
        showNormal();
      else
@@ -482,11 +484,21 @@ void MainWindow::tray_actions(){
 }
 #endif
 
-void MainWindow::showEvent(QShowEvent* show_window){
+void MainWindow::showEvent(QShowEvent* show_window)
+{
+     minimizeRestoreAction->setText(tr("&Minimize"));
      if(QSettings().contains("mainwindow_size"))
        restoreGeometry(QSettings().value("mainwindow_size").toByteArray());
      if(QSettings().contains("splitter"))
        splitter->restoreState(QSettings().value("splitter").toByteArray());
+
+     showOpenNotes();
+
+     QMainWindow::showEvent(show_window);
+}
+
+void MainWindow::showOpenNotes() //do not confuse with "recent"
+{
      if(QSettings().value("open_notes").isValid())
        foreach(QString path, QSettings().value("open_notes").toStringList())
        {
@@ -499,15 +511,16 @@ void MainWindow::showEvent(QShowEvent* show_window){
                note->show();
           }
        }
-     QMainWindow::showEvent(show_window);
 }
 
-void MainWindow::hideEvent(QHideEvent* window_hide){
+void MainWindow::hideEvent(QHideEvent* window_hide)
+{
      minimizeRestoreAction->setText(tr("&Restore"));
      QMainWindow::hideEvent(window_hide);
 }
 
-void MainWindow::closeEvent(QCloseEvent* window_close){
+void MainWindow::closeEvent(QCloseEvent* window_close)
+{
      if(QSettings().value("dont_quit_on_close").toBool())
      {
        hide();

@@ -44,6 +44,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
      convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      showSource->setChecked(settings->value("show_source", false).toBool());
      kineticScrolling->setChecked(settings->value("kinetic_scrolling", false).toBool());
+     silentStart->setChecked(settings->value("Hide_main_at_startup",false).toBool());
      sizeSpinHeight->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().height());
      sizeSpinWidth->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().width());
 
@@ -108,6 +109,7 @@ void Preferences::saveSettings()
      settings->setValue("convert_notes", convertNotes->isChecked());
      settings->setValue("note_editor_default_size", QSize(sizeSpinWidth->value(),sizeSpinHeight->value()));
      settings->setValue("show_source", showSource->isChecked());
+     settings->setValue("Hide_main_at_startup", silentStart->isChecked());
      settings->setValue("kinetic_scrolling", kineticScrolling->isChecked());
      settings->setValue("note_editor_font", fontComboBox->currentFont().family());
      settings->setValue("note_editor_font_size", fontComboBox->font().pointSize());

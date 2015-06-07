@@ -88,6 +88,10 @@ int main (int argc, char *argv[]){
        QSettings().setValue("root_path", app.applicationDirPath() + "/" + app.applicationName());
 
      MainWindow window;
-     window.show();
+     if(QSettings().value("Hide_main_at_startup",false).toBool())
+       window.showOpenNotes();
+     else
+       window.show();
+
      return app.exec();
 }

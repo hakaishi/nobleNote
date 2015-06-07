@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>399</height>
+    <height>437</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,17 +52,7 @@
    </item>
    <item row="3" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="8" column="0">
-      <widget class="QFontComboBox" name="fontComboBox">
-       <property name="currentFont">
-        <font>
-         <family>DejaVu Sans</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
@@ -75,7 +65,40 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0" colspan="2">
+     <item row="10" column="0">
+      <widget class="QFontComboBox" name="fontComboBox">
+       <property name="currentFont">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0" colspan="2">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Note editor default size:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QCheckBox" name="dontQuit">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>&amp;Close to tray</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0" colspan="2">
       <layout class="QFormLayout" name="formLayout">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
@@ -122,36 +145,6 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="0" colspan="2">
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Note editor default size:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QCheckBox" name="kineticScrolling">
-       <property name="toolTip">
-        <string notr="true">Enables drag to scroll</string>
-       </property>
-       <property name="text">
-        <string>&amp;Touch screen scrolling</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0" colspan="2">
-      <widget class="QCheckBox" name="showSource">
-       <property name="text">
-        <string>&amp;Show &quot;Show Source&quot; menu entry</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0" colspan="2">
       <widget class="QCheckBox" name="convertNotes">
        <property name="toolTip">
@@ -162,17 +155,14 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QCheckBox" name="dontQuit">
-       <property name="toolTip">
-        <string/>
-       </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>&amp;Close to tray</string>
+        <string>Number of recently opened notes</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="10" column="1">
       <widget class="QComboBox" name="fontSizeComboBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -192,10 +182,31 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_6">
+     <item row="6" column="0" colspan="2">
+      <widget class="QCheckBox" name="kineticScrolling">
+       <property name="toolTip">
+        <string notr="true">Enables drag to scroll</string>
+       </property>
        <property name="text">
-        <string>Number of recently opened notes</string>
+        <string>&amp;Touch screen scrolling</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" rowspan="2" colspan="2">
+      <widget class="QCheckBox" name="silentStart">
+       <property name="toolTip">
+        <string>Do not show the main interface and notes on startup.
+(Minimized to tray icon)</string>
+       </property>
+       <property name="text">
+        <string>&amp;Hide main window at startup</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="2">
+      <widget class="QCheckBox" name="showSource">
+       <property name="text">
+        <string>&amp;Show &quot;Show Source&quot; menu entry</string>
        </property>
       </widget>
      </item>
@@ -286,7 +297,6 @@
   <tabstop>browseButton</tabstop>
   <tabstop>dontQuit</tabstop>
   <tabstop>convertNotes</tabstop>
-  <tabstop>showSource</tabstop>
   <tabstop>kineticScrolling</tabstop>
   <tabstop>sizeSpinWidth</tabstop>
   <tabstop>sizeSpinHeight</tabstop>
