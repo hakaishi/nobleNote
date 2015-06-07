@@ -63,7 +63,9 @@ class Note : public QMainWindow, public Ui::Note {
 
       NoteDescriptor *noteDescriptor_;
 
-     public slots:
+      // this is called asynchronously when the window is closed and saves geometry etc.
+      void saveWindowState(QVariantList variantList);
+public slots:
       void setSearchBarText(QString str);
      private slots:
       void showContextMenu(const QPoint &pt);
