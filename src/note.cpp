@@ -37,6 +37,7 @@
 #include <QColorDialog>
 #include <QSettings>
 #include <QDesktopWidget>
+#include <QtConcurrent>
 //#include "flickcharm.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
@@ -107,20 +108,34 @@ void Note::showEvent(QShowEvent* event){
      QMainWindow::showEvent(event);
 }
 
-void Note::closeEvent(QCloseEvent* close_Note){
-     QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_size", size());
-     QSettings().setValue("Note_window_and_toolbar/state", saveState());
-     QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_window_position", saveGeometry());
-     QSettings().setValue("Notes/"+noteDescriptor_->uuid().toString()+"_cursor_position",
-        textBrowser->textCursor().position());
-     QStringList savedOpenNoteList = QSettings().value("open_notes").toStringList();
-     savedOpenNoteList.removeOne(noteDescriptor_->filePath());
-     QSettings().setValue("open_notes", savedOpenNoteList);
+void Note::closeEvent(QCloseEvent* close_Note)
+{
+    QVariantList variantList;
 
-      if(textDocument->isModified())
-        noteDescriptor_->stateChange();
+    // collect all stuff that requires the gui thread and pointers that are soon not longer valid
+    variantList << size()  << saveState() << saveGeometry() << textBrowser->textCursor().position()<<
+                           noteDescriptor()->uuid() << noteDescriptor()->filePath();
+
+   // run it asynchronously to avoid blocking the gui thread, when he destroys the window
+     QtConcurrent::run(this, &Note::saveWindowState,variantList);
 
      QMainWindow::closeEvent(close_Note);
+}
+
+void Note::saveWindowState(QVariantList variantList)
+{
+    // see closeEvent() for the order of items in this variant list
+    QUuid uuid = variantList[4].toUuid();
+    QSettings().setValue("Notes/"+uuid.toString()+"_size", variantList[0].toSize());
+    QSettings().setValue("Note_window_and_toolbar/state", variantList[1].toByteArray());
+    QSettings().setValue("Notes/"+uuid.toString()+"_window_position", variantList[2].toByteArray());
+    QSettings().setValue("Notes/"+uuid.toString()+"_cursor_position",variantList[3].toInt()/*textCursorPosition*/);
+    QStringList savedOpenNoteList = QSettings().value("open_notes").toStringList();
+    savedOpenNoteList.removeOne(variantList[5].toString());
+    QSettings().setValue("open_notes", savedOpenNoteList);
+
+
+
 }
 
 void Note::keyPressEvent(QKeyEvent *k){
