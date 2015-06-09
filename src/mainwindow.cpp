@@ -484,6 +484,13 @@ void MainWindow::tray_actions()
 }
 #endif
 
+/*#ifndef NO_SYSTEM_TRAY_ICON
+void MainWindow::updateMyTrayIcon()
+{
+     trayMenu
+}
+#endif*/
+
 void MainWindow::showEvent(QShowEvent* show_window)
 {
      minimizeRestoreAction->setText(tr("&Minimize"));
@@ -948,6 +955,9 @@ void MainWindow::getCutFiles()
      noteIconProvider = new FileIconProvider();
      noteIconProvider->setCutFiles(shortcutNoteList);
      noteFSModel->setIconProvider(noteIconProvider);
+
+     foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
+       noteView->update(idx);
 }
 
 void MainWindow::pasteFiles()
@@ -992,6 +1002,10 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
             delete noteIconProvider;
           noteIconProvider = new FileIconProvider();
           noteFSModel->setIconProvider(noteIconProvider);
+
+//TODO: this works only if the marked file is selected. -> do for all
+          foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
+            noteView->update(idx);
      }
 }
 
