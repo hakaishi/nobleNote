@@ -29,6 +29,7 @@
 #include "xmlnotereader.h"
 #include "xmlnotewriter.h"
 #include "textdocument.h"
+#include "htmlnotereader.h"
 #include <QObject>
 #include <QTextDocument>
 #include <QTextBrowser>
@@ -51,6 +52,7 @@ public:
 
     
 signals:
+    void loadFinished(HtmlNoteReader * reader); // emitted when  the async note loading via HtmlNoteReader finishes
     void close(); // emitted if the user wants to close the note via a message box
     
 public slots:
@@ -61,12 +63,16 @@ public slots:
 
 private slots:
     void unlockStateChange();
+    void onHtmlLoadFinished(HtmlNoteReader * reader);
+
 
 private:
 
     void save(const QString &filePath, QUuid uuid, bool overwriteExisting); // calls write with note and backup
     void write(const QString &filePath, QUuid uuid); // write note file to disc
-    void load(const QString& filePath); // load a note file into the document
+    void load(); // load a note file into the document, calls onLoadFinished synchonously or asynchronously
+    void loadHtml(AbstractNoteReader *reader); // used with QtConcurrent::run to load async
+    void onLoadFinished(AbstractNoteReader * reader, bool isXmlNote = false); // called when the async note loading via HtmlNoteReader finishes
 
     void findOrReCreate(); // search a note by its uuid and ask the user to create a new one if it cannot be found
 

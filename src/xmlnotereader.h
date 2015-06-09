@@ -48,7 +48,9 @@
 class XmlNoteReader : public AbstractNoteReader, protected QXmlStreamReader
 {
 public:
-    XmlNoteReader(const QString &filePath, QTextDocument* doc = 0);
+    XmlNoteReader(const QString &filePath, QTextDocument* doc);
+
+    void read();
 
     // Warning: The application will crash if device* points to a local stack object
     // that gets destroyed before read() is called
@@ -86,16 +88,19 @@ public:
     static bool mightBeXmlNote(const QString & filePath);
 
 private:
-    void read(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
+    void parseXml(); // read the content's of a QIODevice and write the formatted text into a QTextFrame
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
     QTextDocument * document_;
+    QString filePath_;
     QUuid uuid_;
     QDateTime lastChange_;
     QDateTime lastMetadataChange_;
     QDateTime createDate_;
     QString tag_;
 };
+
+
 
 #endif // XMLNOTEREADER_H

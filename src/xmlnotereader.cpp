@@ -32,18 +32,22 @@
 XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
 {
     document_ = doc;
+    filePath_ = filePath;
+}
 
-    QFile file(filePath);
+void XmlNoteReader::read()
+{
+    QFile file(filePath_);
     if(!file.open(QIODevice::ReadOnly))
     {
         //qDebug(qPrintable(QString("XmlNoteReader::XmlNoteReader failed : could not open filepath ") + QDir::toNativeSeparators(filePath)));
            return;
     }
     QXmlStreamReader::setDevice(&file);
-    read();
+    parseXml();
     // if uuid wasn't inside the xml text try to get it out of the filename
     if(uuid_.isNull())
-        uuid_ = QUuid(QFileInfo(filePath).baseName());
+        uuid_ = QUuid(QFileInfo(filePath_).baseName());
 
     // remove the title inside the document and the empty 2nd line, because the title is already in the window title
     QTextCursor cursor(document_); // point to start of the document
@@ -59,7 +63,7 @@ XmlNoteReader::XmlNoteReader(const QString& filePath, QTextDocument *doc)
     file.close(); // local object gets destroyed
 }
 
-void XmlNoteReader::read()
+void XmlNoteReader::parseXml()
 {
     if( !this->QXmlStreamReader::device())
     {

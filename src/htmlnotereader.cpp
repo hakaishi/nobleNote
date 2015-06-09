@@ -34,10 +34,15 @@
 HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
 {
    document_ = doc;
-   read(filePath);
+   filePath_ = filePath;
+
 }
 
-// TODO fallback file info also for XmlNoteReader
+void HtmlNoteReader::read()
+{
+    read(filePath_);
+}
+
 void HtmlNoteReader::read(const QString& filePath)
 {
     QFile file(filePath);
@@ -70,6 +75,7 @@ void HtmlNoteReader::read(const QString& filePath)
 //    if(lastChange_.isNull())
 //        lastChange_ = info.lastModified();
 
+
      if(document_)
      {
          document_->setHtml(html);
@@ -77,6 +83,7 @@ void HtmlNoteReader::read(const QString& filePath)
      }
        title_ = info.baseName();  // always use file name
 
+       html_ = html;
 }
 
 /*QUuid*/ QUuid HtmlNoteReader::uuid(QString filePath)

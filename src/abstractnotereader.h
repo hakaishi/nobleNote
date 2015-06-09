@@ -43,6 +43,11 @@ public:
     AbstractNoteReader(){}
     virtual ~AbstractNoteReader(){}
 
+    virtual void read() = 0; // read the contents of the document, methods below can only used after read has been called
+
+   // virtual void read() = 0; // should send a signal when finished
+
+
     virtual QUuid uuid() const = 0; // get the uuid that has been extracted during read()
 
     virtual const QString& title() const                 = 0;

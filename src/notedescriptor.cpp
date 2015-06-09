@@ -34,6 +34,7 @@
 #include <QTextDocument>
 #include <QDir>
 #include <QTextStream>
+#include <QtConcurrentRun>
 
 NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, TextDocument *document, QWidget *noteWidget) :
     QObject(noteWidget), readOnly_(false)
@@ -44,10 +45,10 @@ NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, Text
     document_ = document;
     textBrowser_ = textBrowser;
     filePath_ = filePath;
-    load(filePath_);
+    load();
     connect(document_,SIGNAL(delayedModificationChanged()),this,SLOT(stateChange()));
-
-    QTimer::singleShot(0,this,SLOT(unlockStateChange())); // enable stateChange() after all events have been processed
+    connect(this,SIGNAL(loadFinished(HtmlNoteReader*)),this,SLOT(onHtmlLoadFinished(HtmlNoteReader*)),Qt::QueuedConnection); // signal across threads, used to load html asynchronous
+    // unlocking stateChange happens in onLoadFinished, which is called by load();
 }
 
 /**
@@ -96,7 +97,7 @@ void NoteDescriptor::stateChange()
         }
         else // not modified, silently reload
         {
-            load(filePath_);
+            load();
         }
         return;
      }
@@ -145,6 +146,8 @@ void NoteDescriptor::unlockStateChange()
     delete initialLock;
 }
 
+
+
 void NoteDescriptor::save(const QString& filePath,QUuid uuid, bool overwriteExisting)
 {
     if(!overwriteExisting)
@@ -192,33 +195,50 @@ void NoteDescriptor::write(const QString &filePath, QUuid uuid)
     writer.write();
 }
 
-void NoteDescriptor::load(const QString& filePath)
+void NoteDescriptor::load()
 {
     AbstractNoteReader * reader;
     // check if the file is a tomboy note
 
-    bool isXmlNote = false;
-
-
-    if(XmlNoteReader::mightBeXmlNote(filePath))
+    if(XmlNoteReader::mightBeXmlNote(filePath_))
     {
-        reader = new XmlNoteReader(filePath,document_);
+        reader = new XmlNoteReader(filePath_,document_);
+        reader->read(); // XmlNoteReader.read can only be run in the gui thread
         title_ = reader->title();
-        isXmlNote = true;
+        onLoadFinished(reader);
     }
     else
     {
-        reader = new HtmlNoteReader(filePath,document_);
-        title_ = QFileInfo(filePath).baseName();
+        reader = new HtmlNoteReader(filePath_);
+
+        // run read concurrently
+         // calls onHtmlLoadFinished to set the text document in the gui thread, then calls onLoadFinished
+        QtConcurrent::run(this,&NoteDescriptor::loadHtml,reader);
+        title_ = QFileInfo(filePath_).baseName();
     }
+}
 
+void NoteDescriptor::loadHtml(AbstractNoteReader *reader)
+{
+    reader->read();
+    emit loadFinished(static_cast<HtmlNoteReader*>(reader));
+}
 
+// wrapper, because document must be set in ui thread
+void NoteDescriptor::onHtmlLoadFinished(HtmlNoteReader *reader)
+{
+    document_->setHtml(reader->html());
+    onLoadFinished(reader);
+}
+
+void NoteDescriptor::onLoadFinished(AbstractNoteReader *reader, bool isXmlNote)
+{
     if(noteWidget_)
         noteWidget_->setWindowTitle(title_);
 
     // dates can be null, HtmlNoteWriter will generate non null dates
     createDate_ = reader->createDate();
-    lastChange_ = QFileInfo(filePath).lastModified();
+    lastChange_ = QFileInfo(filePath_).lastModified();
     uuid_ = reader->uuid(); // can be null
 
     QTextCursor cursor(document_);
@@ -227,6 +247,7 @@ void NoteDescriptor::load(const QString& filePath)
 
     delete reader;
     reader = 0;
+
 
      // incomplete note, overwrite with html format
     if(isXmlNote /*|| createDate_.isNull()*/ || uuid_.isNull())
@@ -243,7 +264,12 @@ void NoteDescriptor::load(const QString& filePath)
     //lastMetadataChange_ = reader->lastMetadataChange().isNull() ? QFileInfo(filePath).lastModified() : reader->lastMetadataChange();
 
     document_->setModified(false); // avoid emit of delayedModificationChanged()
+
+     QTimer::singleShot(0,this,SLOT(unlockStateChange())); // enable stateChange() after all events have been processed
+
 }
+
+
 
 
 bool NoteDescriptor::Lock::isLocked()
