@@ -37,7 +37,7 @@
 #include <QColorDialog>
 #include <QSettings>
 #include <QDesktopWidget>
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 //#include "flickcharm.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
@@ -113,8 +113,8 @@ void Note::closeEvent(QCloseEvent* close_Note)
     QVariantList variantList;
 
     // collect all stuff that requires the gui thread and pointers that are soon not longer valid
-    variantList << size()  << saveState() << saveGeometry() << textBrowser->textCursor().position()<<
-                           noteDescriptor()->uuid() << noteDescriptor()->filePath();
+    variantList << size() << saveState() << saveGeometry() << textBrowser->textCursor().position() <<
+                           noteDescriptor()->uuid().toString() << noteDescriptor()->filePath();
 
    // run it asynchronously to avoid blocking the gui thread, when he destroys the window
      QtConcurrent::run(this, &Note::saveWindowState,variantList);
@@ -125,7 +125,7 @@ void Note::closeEvent(QCloseEvent* close_Note)
 void Note::saveWindowState(QVariantList variantList)
 {
     // see closeEvent() for the order of items in this variant list
-    QUuid uuid = variantList[4].toUuid();
+    QUuid uuid = QUuid(variantList[4].toString()); // qt 4.8 does not support QUUId in QVariant
     QSettings().setValue("Notes/"+uuid.toString()+"_size", variantList[0].toSize());
     QSettings().setValue("Note_window_and_toolbar/state", variantList[1].toByteArray());
     QSettings().setValue("Notes/"+uuid.toString()+"_window_position", variantList[2].toByteArray());
