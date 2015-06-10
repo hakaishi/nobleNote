@@ -45,7 +45,7 @@ NoteDescriptor::NoteDescriptor(QString filePath,QTextBrowser * textBrowser, Text
     document_ = document;
     textBrowser_ = textBrowser;
     filePath_ = filePath;
-    load();
+    QTimer::singleShot(0,this,SLOT(load())); // load after gui events have been processed
     connect(document_,SIGNAL(delayedModificationChanged()),this,SLOT(stateChange()));
     connect(this,SIGNAL(loadFinished(HtmlNoteReader*)),this,SLOT(onHtmlLoadFinished(HtmlNoteReader*)),Qt::QueuedConnection); // signal across threads, used to load html asynchronous
     // unlocking stateChange happens in onLoadFinished, which is called by load();
@@ -227,6 +227,8 @@ void NoteDescriptor::loadHtml(AbstractNoteReader *reader)
 // wrapper, because document must be set in ui thread
 void NoteDescriptor::onHtmlLoadFinished(HtmlNoteReader *reader)
 {
+    // this call is expensive but cannot moved out of the gui thread because QTextDocument is a QObject which has thread affinity for the
+    // thread is has been created in
     document_->setHtml(reader->html());
     onLoadFinished(reader);
 }

@@ -64,13 +64,14 @@ public slots:
 private slots:
     void unlockStateChange();
     void onHtmlLoadFinished(HtmlNoteReader * reader);
+    void load(); // load a note file into the document, calls onLoadFinished synchonously or asynchronously
+
 
 
 private:
 
     void save(const QString &filePath, QUuid uuid, bool overwriteExisting); // calls write with note and backup
     void write(const QString &filePath, QUuid uuid); // write note file to disc
-    void load(); // load a note file into the document, calls onLoadFinished synchonously or asynchronously
     void loadHtml(AbstractNoteReader *reader); // used with QtConcurrent::run to load async
     void onLoadFinished(AbstractNoteReader * reader, bool isXmlNote = false); // called when the async note loading via HtmlNoteReader finishes
 
