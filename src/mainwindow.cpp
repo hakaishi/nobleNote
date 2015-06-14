@@ -515,7 +515,7 @@ void MainWindow::showOpenNotes() //do not confuse with "recent"
                Note* note = new Note(path);
                openNotes += note;
                note->setObjectName(path);
-               note->showAfterLoading();
+               note->showAfterLoaded();
           }
        }
 }
@@ -602,7 +602,7 @@ void MainWindow::openOneNote(QString path)
      // only show the searchBar if the note contains the search text
      if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
         note->setSearchBarText(searchText->text());
-     note->showAfterLoading();
+     note->showAfterLoaded();
 
      QStringList recentNoteList = QSettings().value("Recent_notes").toStringList();
      recentNoteList.removeAll(path); //remove if already present

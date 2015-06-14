@@ -41,6 +41,26 @@ class TextSearchToolbar;
 class Highlighter;
 class NoteDescriptor;
 
+/**
+ * @brief The Note class is the widget that displays note content
+ *
+ * most lifecycle handling and loading/saving of html and xml type notes is handled
+ * in NoteDescriptor.
+ *
+ * note loading workflow:
+ * //TODO workflow should be refactored to load the file before creating the note window
+ *
+ * this clas creates a NoteDescriptor
+ * the NoteDescriptor loads the html file asynchronously and reads the uuid
+ * a signal onLoadFinished() is sent, this is used in this class to call loadSizeAndShow
+ * loadSizeAndShow reads the UUId from NoteDescriptor, that is now initialized
+ * (before, it is 0000-...) and loads the Note Window size from the QSettings
+ * loadSizeAndSHow resizes the Note window and calls show()
+ *
+ * you should not directly call show() but instead call showAfterLoaded()
+ * to set the flag to show the Note window after all initialization has been finished
+ */
+
 class Note : public QMainWindow, public Ui::Note {
      Q_OBJECT // important for creating own singals and slots
  
@@ -69,7 +89,7 @@ class Note : public QMainWindow, public Ui::Note {
 public slots:
       void setSearchBarText(QString str);
 
-      void showAfterLoading(); // calls show() after loading data and size settings
+      void showAfterLoaded(); // calls show() after loading data and size settings
 
      private slots:
       void showContextMenu(const QPoint &pt);

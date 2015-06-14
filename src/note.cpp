@@ -208,7 +208,7 @@ void Note::showOrHideToolbars()
      }
 }
 
-void Note::showAfterLoading()
+void Note::showAfterLoaded()
 {
     showAfterLoading_ = true;
 }
