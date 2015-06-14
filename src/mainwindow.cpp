@@ -602,7 +602,7 @@ void MainWindow::openOneNote(QString path)
      // only show the searchBar if the note contains the search text
      if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
         note->setSearchBarText(searchText->text());
-     note->show();
+     note->showAfterLoading();
 
      QStringList recentNoteList = QSettings().value("Recent_notes").toStringList();
      recentNoteList.removeAll(path); //remove if already present

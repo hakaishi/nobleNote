@@ -62,11 +62,15 @@ class Note : public QMainWindow, public Ui::Note {
       TextSearchToolbar *searchBar;
 
       NoteDescriptor *noteDescriptor_;
+      bool showAfterLoading_; // state variable, call show() after loadSizeAndShow()
 
       // this is called asynchronously when the window is closed and saves geometry etc.
       void saveWindowState(QVariantList variantList);
 public slots:
       void setSearchBarText(QString str);
+
+      void showAfterLoading(); // calls show() after loading data and size settings
+
      private slots:
       void showContextMenu(const QPoint &pt);
       void showOrHideToolbars();
@@ -74,9 +78,11 @@ public slots:
      protected:
       void keyPressEvent(QKeyEvent *k);
       void keyReleaseEvent(QKeyEvent *k);
-      virtual void showEvent(QShowEvent* event);
       virtual void closeEvent(QCloseEvent *close_Note);
       // focus events must be overridden in the TextBrowser class
+
+private slots:
+      void loadSizeAndShow(); // load size from settings and resize
 };
 
 #endif

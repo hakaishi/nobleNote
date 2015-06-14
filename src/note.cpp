@@ -45,6 +45,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      setupUi(this);
      setAttribute(Qt::WA_DeleteOnClose);
 
+     showAfterLoading_ = false; // do not show() after loading settings
      textBrowser = new TextBrowser(this);
      textDocument = new TextDocument(this);
      textBrowser->setDocument(textDocument);
@@ -93,6 +94,7 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
 
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
      connect(textBrowser,SIGNAL(signalFocusInEvent()),this->noteDescriptor_,SLOT(stateChange()));
+     connect(noteDescriptor_,SIGNAL(loadFinished(HtmlNoteReader*)),this,SLOT(loadSizeAndShow()),Qt::QueuedConnection);
 }
 
 void Note::highlightText(const QString &str)
@@ -100,12 +102,16 @@ void Note::highlightText(const QString &str)
      searchBar->highlightText(str);
 }
 
-void Note::showEvent(QShowEvent* event){
-     QSize defaultSize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
-     QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_size", defaultSize).toSize();
-     resize(size);
 
-     QMainWindow::showEvent(event);
+void Note::loadSizeAndShow()
+{
+    QSize defaultSize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
+    QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_size", defaultSize).toSize();
+    resize(size);
+    if(showAfterLoading_)
+    {
+        show();
+    }
 }
 
 void Note::closeEvent(QCloseEvent* close_Note)
@@ -117,8 +123,7 @@ void Note::closeEvent(QCloseEvent* close_Note)
                            noteDescriptor()->uuid().toString() << noteDescriptor()->filePath();
 
    // run it asynchronously to avoid blocking the gui thread, when he destroys the window
-     QtConcurrent::run(this, &Note::saveWindowState,variantList);
-
+     QFuture<void> future = QtConcurrent::run(this, &Note::saveWindowState,variantList);
      QMainWindow::closeEvent(close_Note);
 }
 
@@ -201,4 +206,9 @@ void Note::showOrHideToolbars()
           searchBar->setVisible(true);
           toolbar->setVisible(true);
      }
+}
+
+void Note::showAfterLoading()
+{
+    showAfterLoading_ = true;
 }
