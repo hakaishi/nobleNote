@@ -515,7 +515,7 @@ void MainWindow::showOpenNotes() //do not confuse with "recent"
                Note* note = new Note(path);
                openNotes += note;
                note->setObjectName(path);
-               note->show();
+               note->showAfterLoading();
           }
        }
 }
