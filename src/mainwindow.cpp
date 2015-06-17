@@ -1003,9 +1003,12 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
           noteIconProvider = new FileIconProvider();
           noteFSModel->setIconProvider(noteIconProvider);
 
-//TODO: this works only if the marked file is selected. -> do for all
-          foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
-            noteView->update(idx);
+          //update noteView's items
+          QSet<QModelIndex> rows; //no duplicates for performance
+          for(int i = 0; noteView->indexAt(QPoint(0,i)).isValid(); i++)
+               rows << noteView->indexAt(QPoint(0,i));
+          foreach(QModelIndex index, rows)
+               noteView->update(index);
      }
 }
 
