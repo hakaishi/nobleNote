@@ -535,6 +535,20 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
      else{
        QSettings().setValue("mainwindow_size", saveGeometry());
        QSettings().setValue("splitter", splitter->saveState());
+
+       // find widgets that still are saving their settings and let their futuures (worker threads) finish
+       QListIterator<QPointer<QWidget> > it(openNotes);
+       while(it.hasNext())
+       {
+           QPointer<QWidget> ptr = it.next();
+           QWidget * widget = ptr.data();
+           Note * note = qobject_cast<Note*>(widget);
+           if(note != NULL)
+           {
+               if(!note->future().isFinished())
+                   note->future().waitForFinished();
+           }
+       }
        qApp->quit();
      }
      QMainWindow::closeEvent(window_close);

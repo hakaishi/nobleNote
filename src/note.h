@@ -34,6 +34,7 @@
 #include <QTextBrowser>
 #include <QDialogButtonBox>
 #include <QMenu>
+#include <QFuture>
 #include "textbrowser.h"
 
 class TextFormattingToolbar;
@@ -72,6 +73,8 @@ class Note : public QMainWindow, public Ui::Note {
 
       QTextEdit * textEdit() const { return textBrowser;}
 
+      QFuture<void> future() const { return future_;}
+
      private:
       TextBrowser *textBrowser;
       TextDocument *textDocument;
@@ -80,6 +83,7 @@ class Note : public QMainWindow, public Ui::Note {
 
       TextFormattingToolbar *toolbar;
       TextSearchToolbar *searchBar;
+      QFuture<void> future_; // a future that holds the worker thread that is invoked when window states are changed
 
       NoteDescriptor *noteDescriptor_;
       bool showAfterLoading_; // state variable, call show() after loadSizeAndShow()

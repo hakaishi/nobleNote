@@ -123,7 +123,7 @@ void Note::closeEvent(QCloseEvent* close_Note)
                            noteDescriptor()->uuid().toString() << noteDescriptor()->filePath();
 
    // run it asynchronously to avoid blocking the gui thread, when he destroys the window
-     QFuture<void> future = QtConcurrent::run(this, &Note::saveWindowState,variantList);
+     future_ = QtConcurrent::run(this, &Note::saveWindowState,variantList);
      QMainWindow::closeEvent(close_Note);
 }
 
