@@ -117,6 +117,7 @@ void Note::loadSizeAndShow()
 void Note::closeEvent(QCloseEvent* close_Note)
 {
     QVariantList variantList;
+    noteDescriptor_->stateChange();
 
     // collect all stuff that requires the gui thread and pointers that are soon not longer valid
     variantList << size() << saveState() << saveGeometry() << textBrowser->textCursor().position() <<
@@ -125,6 +126,15 @@ void Note::closeEvent(QCloseEvent* close_Note)
    // run it asynchronously to avoid blocking the gui thread, when he destroys the window
      future_ = QtConcurrent::run(this, &Note::saveWindowState,variantList);
      QMainWindow::closeEvent(close_Note);
+}
+
+/*static */ void Note::addToOpenNoteList(QString path)
+{
+     QStringList savedOpenNoteList;
+    if(QSettings().value("open_notes").isValid())
+      savedOpenNoteList = QSettings().value("open_notes").toStringList();
+    savedOpenNoteList.append(path);
+    QSettings().setValue("open_notes",savedOpenNoteList);
 }
 
 void Note::saveWindowState(QVariantList variantList)

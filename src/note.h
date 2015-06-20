@@ -73,9 +73,12 @@ class Note : public QMainWindow, public Ui::Note {
 
       QTextEdit * textEdit() const { return textBrowser;}
 
+      // the future of the worker thread that handles saving settings
       QFuture<void> future() const { return future_;}
 
-     private:
+      // adds this file Path to the list of open notes that is stored in the settings
+      static void addToOpenNoteList(QString path);
+private:
       TextBrowser *textBrowser;
       TextDocument *textDocument;
       QMenu    *menu;

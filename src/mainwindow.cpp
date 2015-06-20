@@ -545,12 +545,21 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
            Note * note = qobject_cast<Note*>(widget);
            if(note != NULL)
            {
+               // calls close event (this is normally not called, because Notes are no childs of this)
+               // TODO check why Notes are no children of this
+
+               note->close();
                if(!note->future().isFinished())
                    note->future().waitForFinished();
+
+               // close() calls the closeEvent, this method assumes the user has closed the window
+               // so we manually have to re-add this note to the list of open notes.
+               Note::addToOpenNoteList(note->noteDescriptor()->filePath());
            }
        }
-       qApp->quit();
+       qApp->setQuitOnLastWindowClosed(true);
      }
+
      QMainWindow::closeEvent(window_close);
 }
 
@@ -604,11 +613,8 @@ void MainWindow::openOneNote(QString path)
      Note* note = new Note(path);
      openNotes += note;
      note->setObjectName(path);
-     QStringList savedOpenNoteList;
-     if(QSettings().value("open_notes").isValid())
-       savedOpenNoteList = QSettings().value("open_notes").toStringList();
-     savedOpenNoteList.append(path);
-     QSettings().setValue("open_notes",savedOpenNoteList);
+
+     Note::addToOpenNoteList(path);
      if(QSettings().value("kinetic_scrolling", false).toBool())
      {
          flickCharm->activateOn(note->textEdit());
