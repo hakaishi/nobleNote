@@ -122,6 +122,11 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
     if(path.isEmpty() || (fileName.isEmpty() && content.isEmpty()))
         return;
 
+    if(future.isRunning())
+        future.cancel();
+    else
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
     QStringList files;
     QDirIterator it(path, QDirIterator::Subdirectories);
     while(it.hasNext())
@@ -130,11 +135,6 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
         if(it.fileInfo().isFile())
             files << filePath;
     }
-
-    if(future.isRunning())
-        future.cancel();
-    else
-        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     fileContainsFunctor.content = content;
     fileContainsFunctor.fileName = fileName;
