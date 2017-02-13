@@ -132,7 +132,7 @@ QString Preferences::openDir()
        return QString();
      }
 
-     return QString(path + QDir::separator() + "nobleNote");
+     return path;
 }
 
 void Preferences::setNewPaths()
