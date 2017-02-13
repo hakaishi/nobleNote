@@ -768,7 +768,10 @@ void MainWindow::newNote(){
          noteView->edit(idx); // 'open' for rename
      }
      noteView->model()->sort(0);
-     noteView->scrollTo(noteView->selectionModel()->selectedRows().first());
+     if(!noteView->selectionModel()->selectedRows().isEmpty())
+     {
+        noteView->scrollTo(noteView->selectionModel()->selectedRows().first());
+     }
 }
 
 void MainWindow::renameFolder(){
