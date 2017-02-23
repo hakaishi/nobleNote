@@ -61,7 +61,7 @@ public:
         if((row == -1 && column == -1)  && !isRootFolder)
         {
             QStringList files;
-            foreach(QUrl url, data->urls())
+            for(QUrl url :  data->urls())
                    if(!url.toLocalFile().isEmpty())
                      files << url.toLocalFile();
 
@@ -76,7 +76,7 @@ public:
 
             //Search for the right dir
             QString parentPath;
-            foreach(QFileInfo file, dirList)
+            for(QFileInfo file :  dirList)
                    if(this->index(QFileInfo(file).absoluteFilePath()) == parent)
                      parentPath = QFileInfo(file).absoluteFilePath();
 
@@ -84,7 +84,8 @@ public:
                action = Qt::MoveAction;
 
             //remove all file titles that don't exist in the target folder, because they will be sucessfully dropped
-            foreach(QString file, files)
+            // TODO FIXME foreach operates on a copy
+            foreach(QString file,files)
             {
                 QString path = parentPath + QDir::separator() + QFileInfo(file).fileName();
                 if(!QFileInfo(path).exists())
@@ -96,7 +97,7 @@ public:
             if(!dropped)
             {
                 QString existingFiles;
-                foreach(QString file, files)
+                for(QString file : files)
                        existingFiles += file + "\n";
                 if(!existingFiles.isEmpty())
                 {

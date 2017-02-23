@@ -149,7 +149,8 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
 
 void FindFileModel::findInFilesFinished()
 {
-    foreach(QString fileName, future.results())
+    const auto res = future.results();
+    for(QString fileName : res )
         this->appendFile(fileName);
     QApplication::restoreOverrideCursor();
 }

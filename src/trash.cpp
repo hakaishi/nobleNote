@@ -32,7 +32,8 @@ Trash::Trash(QHash<QString,QStringList> *backupDataHash, QWidget *parent): QDial
 
      setAttribute(Qt::WA_DeleteOnClose);
 
-     foreach(QString key, backupDataHash->keys())
+     const auto keys =  backupDataHash->keys();
+     for(QString key : keys)
      {
           QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
           item->setText(0,backupDataHash->value(key).first()); //title
@@ -56,7 +57,7 @@ void Trash::restoreBackup()
      if(!QDir(dir).exists())
        QDir().mkpath(dir);
 
-     foreach(QTreeWidgetItem *item, treeWidget->selectedItems())
+     for(QTreeWidgetItem *item : treeWidget->selectedItems())
      {
           QStringList dataList = item->data(0,Qt::UserRole).toStringList();
           QString title = dataList.takeFirst();
@@ -83,8 +84,8 @@ void Trash::deleteBackup()
         return;
 
      QStringList files;
-     QList<QTreeWidgetItem*> itemList = treeWidget->selectedItems();
-     foreach(QTreeWidgetItem *item, itemList)
+     const QList<QTreeWidgetItem*> itemList = treeWidget->selectedItems();
+     for(QTreeWidgetItem *item : itemList)
      {
           QStringList dataList = item->data(0,Qt::UserRole).toStringList();
           dataList.takeFirst(); //removing title from the list
@@ -96,7 +97,7 @@ void Trash::deleteBackup()
              ,QMessageBox::Yes | QMessageBox::Abort) != QMessageBox::Yes)
         return;
 
-     foreach(QString file, files)
+     for(QString file : files)
      {
           if(QFile(file).exists())
             QFile(file).remove();
@@ -108,7 +109,7 @@ void Trash::deleteBackup()
           QSettings().remove("Notes/" + QUuid(uuid).toString() + "_window_position");
      }
 
-     foreach(QTreeWidgetItem *item, itemList)
+     for(QTreeWidgetItem *item : itemList)
           delete item;
 }
 

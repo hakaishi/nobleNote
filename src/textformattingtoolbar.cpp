@@ -130,8 +130,8 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     fontSizeComboBox->setEditable(true);
     connect(fontSizeComboBox, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
 
-    QFontDatabase db;
-    foreach(int size, db.standardSizes())
+    const auto sizes = QFontDatabase().standardSizes();
+    for(int size : sizes)
       fontSizeComboBox->addItem(QString::number(size));
 
     connect(textEdit_, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this,

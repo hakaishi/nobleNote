@@ -35,7 +35,7 @@ void Highlighter::highlightBlock(const QString &text){
        rule.format = keywordFormat;
        highlightingRules.append(rule);
 
-       foreach(const HighlightingRule &rule, highlightingRules){
+       for(const HighlightingRule &rule : highlightingRules){
          QRegExp expression(rule.pattern);
          int index = expression.indexIn(text);
          while(index >= 0){

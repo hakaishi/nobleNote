@@ -44,10 +44,10 @@ QString FindFileSystemModel::fileName(const QModelIndex &index) const
     return QString();
 }
 
-QStringList FindFileSystemModel::fileNames(const QList<QModelIndex> &index) const
+QStringList FindFileSystemModel::fileNames(const QList<QModelIndex> &indices) const
 {
     QHash<QModelIndex,QString> names;
-    foreach(QModelIndex idx, index)
+    for(QModelIndex idx : indices)
     {
          if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
            names.insert(idx,fsm->fileName(mapToSource(idx)));
@@ -96,7 +96,7 @@ bool FindFileSystemModel::remove(const QModelIndex &index) const
 bool FindFileSystemModel::removeList(const QModelIndexList &index) const
 {
     bool successfull = true;
-    foreach(QModelIndex idx, index)
+    for(QModelIndex idx : index)
     {
         if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
         {
@@ -119,7 +119,7 @@ bool FindFileSystemModel::removeList(const QModelIndexList &index) const
 {
     qDebug("FindFileSystemModel::removeList FIXME: removal works?");
     bool successfull = true;
-    foreach(const QFileInfo& fileInfo, fileInfos)
+    for(const QFileInfo& fileInfo : fileInfos)
     {
         QString path = fileInfo.path();
         if(!QFile::remove(fileInfo.path()))
@@ -192,7 +192,7 @@ QModelIndex FindFileSystemModel::index(const QString &path, int column) const
 
 void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes) const
 {
-    foreach(const QModelIndex& index, indexes)
+    for(const QModelIndex& index : indexes)
     {
         QString filePath = this->filePath(index);
         QUuid uuid = HtmlNoteReader::uuid(filePath);
@@ -203,7 +203,7 @@ void FindFileSystemModel::copyNotesToBackupDir(const QModelIndexList& indexes) c
 
 /*static*/ void FindFileSystemModel::copyNotesToBackupDir(const QFileInfoList& fileInfos)
 {
-    foreach(const QFileInfo& fileInfo, fileInfos)
+    for(const QFileInfo& fileInfo : fileInfos)
     {
         QUuid uuid = HtmlNoteReader::uuid(fileInfo.path());
         if(!uuid.isNull())

@@ -36,8 +36,8 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
 
      settings = new QSettings(this);
 
-     QFontDatabase db;
-     foreach(int size, db.standardSizes())
+     const auto sizes = QFontDatabase().standardSizes();
+     for(int size : sizes)
        fontSizeComboBox->addItem(QString::number(size));
 
      dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
@@ -94,8 +94,8 @@ void Preferences::saveSettings()
           .arg(QDir::toNativeSeparators(settings->value("backup_dir_path").toString())),
           QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
        {
-            QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
-            foreach(QFileInfo backup, backups)
+            const QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
+            for(QFileInfo backup : backups)
               QFile(backup.absoluteFilePath()).remove();
             if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
               QMessageBox::warning(this,tr("Couldn't delete trash folder"), tr("Could not delete the trash folder!"));

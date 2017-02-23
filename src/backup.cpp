@@ -79,7 +79,7 @@ void Backup::setupBackups()
      QDir backupDir(QSettings().value("backup_dir_path").toString());
      backupFiles = backupDir.entryInfoList(QDir::Files, QDir::Name);
 
-     foreach(QString uuid, noteUuidList)
+     for(QString uuid : noteUuidList)
      {
           if(backupFiles.contains(QFileInfo(QSettings().value("backup_dir_path").toString()
                                   + QDir::separator() + uuid.mid(1,36))))

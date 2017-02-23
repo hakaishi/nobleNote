@@ -44,7 +44,7 @@ class FindFileSystemModel : public QSortFilterProxyModel
 public:
     explicit FindFileSystemModel(QObject *parent = 0);
     QString fileName(const QModelIndex & index) const;
-    QStringList fileNames(const QList<QModelIndex> & index) const;
+    QStringList fileNames(const QList<QModelIndex> & indices) const;
     QString filePath(const QModelIndex & index) const;
     bool	rmdir ( const QModelIndex & index ) const;
     QModelIndex	mkdir ( const QModelIndex & parent, const QString & name );

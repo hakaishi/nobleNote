@@ -130,9 +130,6 @@ MainWindow::MainWindow()
      noteFSModel->setReadOnly(false);
      noteFSModel->setIconProvider(noteIconProvider);
 
-     //foreach(QString str, noteFSModel->mimeTypes())
-     //    qDebug() << "mime types: " << str;
-
      findNoteModel = new FindFileModel(this);
 
      noteModel = new FindFileSystemModel(this);
@@ -148,9 +145,9 @@ MainWindow::MainWindow()
 
      flickCharm = new FlickCharm(this);
 
-     QList<QListView*> listViews;
-     listViews << folderView << noteView;
-     foreach(QListView* list, listViews) // add drag drop options
+     const QList<QListView*> listViews = QList<QListView*>() << folderView << noteView;
+
+     for(QListView* list : listViews) // add drag drop options
      {
         if(QSettings().value("kinetic_scrolling", false).toBool())
         {
@@ -299,9 +296,12 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
 
 void MainWindow::changeRootIndex(){
      if(!openNotes.isEmpty()){
-        foreach(QWidget *note, openNotes)
+        for(QWidget *note : openNotes)
             if(note)
+            {
                 note->close();
+            }
+
         openNotes.clear();
      }
      writeBackupDirPath();
@@ -507,7 +507,9 @@ void MainWindow::showEvent(QShowEvent* show_window)
 void MainWindow::showOpenNotes() //do not confuse with "recent"
 {
      if(QSettings().value("open_notes").isValid())
-       foreach(QString path, QSettings().value("open_notes").toStringList())
+     {
+       const QStringList list = QSettings().value("open_notes").toStringList();
+       for(QString path : list)
        {
            // check if the notePath is already used in a open note
           if(!noteIsOpen(path) && QFile(path).exists())
@@ -518,6 +520,7 @@ void MainWindow::showOpenNotes() //do not confuse with "recent"
                note->showAfterLoaded();
           }
        }
+     }
 }
 
 void MainWindow::hideEvent(QHideEvent* window_hide)
@@ -588,8 +591,8 @@ void MainWindow::openNote(const QModelIndex &index /* = new QModelIndex*/){
 }
 
 void MainWindow::openAllNotes(){
-     QList<QModelIndex> indexes = noteView->selectionModel()->selectedRows();
-     foreach(QModelIndex ind, indexes)
+     const QList<QModelIndex> indexes = noteView->selectionModel()->selectedRows();
+     for(QModelIndex ind :  indexes)
      {
           if(!ind.isValid()) // default constructed model index
             ind = noteView->currentIndex();
@@ -811,10 +814,10 @@ void MainWindow::removeFolder(){
 
         // list all files
         QString path = folderModel->filePath(idx);
-        QStringList fileList = QDir(path).entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
+        const QStringList fileList = QDir(path).entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
 
         QModelIndexList indexes;
-        foreach(const QString & fileName, fileList)
+        for(const QString & fileName : fileList)
         {
             indexes << folderModel->index(QString("%1/%2").arg(path).arg(fileName));
         }
@@ -854,7 +857,8 @@ void MainWindow::removeNote(){
        return;
 
      QString names;
-     foreach(QString name, noteModel->fileNames(noteView->selectionModel()->selectedRows()))
+     const auto list = noteModel->fileNames(noteView->selectionModel()->selectedRows());
+     for(QString name : list)
           names += "\"" + name + "\"\n";
 
      QString title = tr("Delete Note");
@@ -880,20 +884,22 @@ void MainWindow::removeNote(){
 
 void MainWindow::setKineticScrollingEnabled(bool b)
 {
-    QList<QAbstractScrollArea* > widgets;
-    widgets << noteView << folderView;
-    foreach(QWidget * w, openNotes)
+    QList<QAbstractScrollArea* > widgets  = QList<QAbstractScrollArea*>() << noteView << folderView;
+    for(QWidget * w : openNotes)
+    {
         if(Note * note = qobject_cast<Note*>(w))
             widgets << note->textEdit();
+    }
+
     if(b)
     {
-        foreach(QAbstractScrollArea* widget, widgets)
+        for(QAbstractScrollArea* widget : widgets)
             if(widget)
                 flickCharm->activateOn(widget);
     }
     else
     {
-        foreach(QAbstractScrollArea* widget, widgets)
+        for(QAbstractScrollArea* widget : widgets)
             if(widget)
                 flickCharm->deactivateFrom(widget);
     }
@@ -967,8 +973,11 @@ void MainWindow::getCutFiles()
      shortcutNoteList.clear();
 
      if(noteView->hasFocus())
-       foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
+     {
+         const auto selected = noteView->selectionModel()->selectedRows();
+       for(QModelIndex idx  : selected)
           shortcutNoteList << noteModel->filePath(idx);
+     }
 
      if(!shortcutNoteList.isEmpty())
        action_Paste->setEnabled(true);
@@ -979,7 +988,8 @@ void MainWindow::getCutFiles()
      noteIconProvider->setCutFiles(shortcutNoteList);
      noteFSModel->setIconProvider(noteIconProvider);
 
-     foreach(QModelIndex idx, noteView->selectionModel()->selectedRows())
+     const auto selected = noteView->selectionModel()->selectedRows();
+     for(QModelIndex idx : selected)
        noteView->update(idx);
 }
 
@@ -989,7 +999,7 @@ void MainWindow::pasteFiles()
        return;
 
      QString copyErrorFiles;
-     foreach(QString note, shortcutNoteList)
+     for(QString note : shortcutNoteList)
      {
           if(!QFile(note).copy(folderModel->filePath(
              folderView->selectionModel()->selectedRows().first())
@@ -1030,7 +1040,8 @@ void MainWindow::keyPressEvent(QKeyEvent *k){
           QSet<QModelIndex> rows; //no duplicates for performance
           for(int i = 0; noteView->indexAt(QPoint(0,i)).isValid(); i++)
                rows << noteView->indexAt(QPoint(0,i));
-          foreach(QModelIndex index, rows)
+
+          for(QModelIndex index : rows)
                noteView->update(index);
      }
 }

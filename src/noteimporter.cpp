@@ -75,10 +75,9 @@ void NoteImporter::importXmlNotes()
      QObject::connect(futureWatcher, SIGNAL(finished()), dialog, SLOT(reset()));
      QObject::connect(dialog, SIGNAL(canceled()), futureWatcher, SLOT(cancel()));
 
-     QList<QObject*> objects;
-     objects << futureWatcher << dialog << progressReceiver << fileDialog;
+     const auto objects = QList<QObject*>()  << futureWatcher << dialog << progressReceiver << fileDialog;
 
-     foreach(QObject * o, objects)
+     for(QObject * o : objects)
      {
          connect(futureWatcher, SIGNAL(canceled()),o,SLOT(deleteLater()));
          connect(futureWatcher, SIGNAL(finished()),o,SLOT(deleteLater()));
