@@ -29,6 +29,9 @@
 #include <QString>
 #include <QDateTime>
 
+/**
+ * @brief date formatting helper class
+ */
 class DateTime
 {
 public:

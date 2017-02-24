@@ -28,6 +28,9 @@
 
 #include <QFileIconProvider>
 
+/**
+ * @brief The FileIconProvider class provides icons for the note and folder lists
+ */
 class FileIconProvider : public QFileIconProvider
 {
 public:
