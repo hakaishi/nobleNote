@@ -30,6 +30,9 @@
 #include <QHash>
 #include <QTextCharFormat>
 
+/**
+ * highlights words when find in text is activated
+ */
 class QTextDocument;
 
 class Highlighter : public QSyntaxHighlighter{
