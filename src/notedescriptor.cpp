@@ -204,7 +204,7 @@ void NoteDescriptor::load()
     {
         reader = new XmlNoteReader(filePath_,document_);
         reader->read(); // XmlNoteReader.read can only be run in the gui thread
-        title_ = reader->title();
+
         onLoadFinished(reader);
     }
     else
@@ -214,8 +214,9 @@ void NoteDescriptor::load()
         // run read concurrently
          // calls onHtmlLoadFinished to set the text document in the gui thread, then calls onLoadFinished
         QtConcurrent::run(this,&NoteDescriptor::loadHtml,reader);
-        title_ = QFileInfo(filePath_).baseName();
+
     }
+    title_ = QFileInfo(filePath_).baseName();
 }
 
 void NoteDescriptor::loadHtml(AbstractNoteReader *reader)

@@ -37,13 +37,6 @@ Backup::Backup(QWidget *parent)
      getNotes(); //Searches for notes and backups. For the backups with no notes it will create the trees children.
 }
 
-void Backup::getNoteUuidList()
-{
-     QFutureIterator<QString> it(future1->future());
-     while(it.hasNext())
-       noteUuidList << it.next();
-}
-
 void Backup::getNotes()
 {
      //get note files
@@ -63,7 +56,6 @@ void Backup::getNotes()
      future1->setFuture(QtConcurrent::mapped(noteFiles, getUuid));
 
      QObject::connect(progressReceiver1,SIGNAL(valueChanged(int)),progressDialog1, SLOT(setValue(int)));
-     QObject::connect(future1, SIGNAL(finished()), this, SLOT(getNoteUuidList()));
      QObject::connect(future1, SIGNAL(finished()), this, SLOT(setupBackups()));
      QObject::connect(future1, SIGNAL(finished()), progressDialog1, SLOT(reset()));
      QObject::connect(progressDialog1, SIGNAL(canceled()), future1, SLOT(cancel()));
@@ -73,6 +65,12 @@ void Backup::getNotes()
 
 void Backup::setupBackups()
 {
+    QStringList noteUuidList;
+
+    QFutureIterator<QString> it(future1->future());
+    while(it.hasNext())
+      noteUuidList << it.next();
+
      backupFiles.clear(); //remove old files
 
      //get backup uuids
@@ -101,7 +99,7 @@ void Backup::setupBackups()
      progressDialog2 = new QProgressDialog(parent_);
      progressDialog2->setLabelText(QString(tr("Indexing trash...")));
      setupBackup.p = progressReceiver2;
-     setupBackup.hash = &backupDataHash;
+     setupBackup.hash = &backupDataHash; // captures results
      future2 = new QFutureWatcher<void>(this);
      future2->setFuture(QtConcurrent::map(backupFiles, setupBackup));
 
