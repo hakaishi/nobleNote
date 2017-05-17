@@ -60,6 +60,7 @@ class Backup : public QObject {
       QHash<QString,QStringList> backupDataHash;
       Trash         *trash;
 
+      // functor that reads uuids
       struct GetUuid
       {
            ProgressReceiver *p;
@@ -73,6 +74,7 @@ class Backup : public QObject {
            }
       };
 
+      // functor used for multithreaded note file reading method
       struct SetupBackup
       {
            ProgressReceiver *p;
@@ -83,7 +85,12 @@ class Backup : public QObject {
                 QStringList data;
                 HtmlNoteReader reader(file.absoluteFilePath());
                 reader.read();
-                data << reader.title() << file.absoluteFilePath() << reader.html();
+                QString title = reader.title();
+                if(title.isEmpty())
+                {
+                    title = tr("deleted note");
+                }
+                data << title << file.absoluteFilePath() << reader.html();
                 hash->insert(file.absoluteFilePath(),data);
 
                 p->postProgressEvent();
