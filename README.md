@@ -1,12 +1,11 @@
 nobleNote is a cross-platform application to manage notes in a simle two pane layout with folders and text files in the html format.
 
 
-INSTALL:
-========
+## INSTALL:
 
 Note for Windows users: Binary releases can be found on the releases page of this github repository
 
-Requires at least Qt 5.0 or newer.
+Requires at least Qt4.8, Qt 5.0 or newer.
 
 Dependencies: build-essential, qtbase5-dev, qttools5-dev-tools (or libqt4-dev)
 
@@ -16,8 +15,7 @@ To install type:
 qmake
 sudo make install distclean
 
-UNINSTALL:
-==========
+## UNINSTALL:
 
 To uninstall type:
 
