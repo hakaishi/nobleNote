@@ -37,7 +37,6 @@
 #include "fileiconprovider.h"
 #include "textsearchtoolbar.h"
 #include "backup.h"
-#include "flickcharm.h"
 #include "noteimporter.h"
 #include <QTextStream>
 #include <QFile>
@@ -50,6 +49,7 @@
 #include <QPushButton>
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrentMap>
+#include <QScroller>
 #include <QStandardPaths>
 #else
 #include <QtConcurrentMap>
@@ -143,15 +143,13 @@ MainWindow::MainWindow()
      folderView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
      noteView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-     flickCharm = new FlickCharm(this);
-
      const QList<QListView*> listViews = QList<QListView*>() << folderView << noteView;
 
      for(QListView* list : listViews) // add drag drop options
      {
         if(QSettings().value("kinetic_scrolling", false).toBool())
         {
-            flickCharm->activateOn(list);// enable kinetic scrolling for touchscreens
+            QScroller::grabGesture(list->viewport(), QScroller::LeftMouseButtonGesture);
         }
         list->setContextMenuPolicy(Qt::CustomContextMenu);
         //list->setSelectionMode(QAbstractItemView::SingleSelection); // single item can be draged or droped
@@ -620,7 +618,7 @@ void MainWindow::openOneNote(QString path)
      Note::addToOpenNoteList(path);
      if(QSettings().value("kinetic_scrolling", false).toBool())
      {
-         flickCharm->activateOn(note->textEdit());
+         QScroller::grabGesture(note->textEdit()->viewport(), QScroller::LeftMouseButtonGesture);
      }
      // only show the searchBar if the note contains the search text
      if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
@@ -694,7 +692,7 @@ void MainWindow::openNoteSource()
 
     if(QSettings().value("kinetic_scrolling", false).toBool())
     {
-        flickCharm->activateOn(textEdit);
+        QScroller::grabGesture(textEdit->viewport(), QScroller::LeftMouseButtonGesture);
     }
 
     mainWindow->setCentralWidget(textEdit);
@@ -895,13 +893,17 @@ void MainWindow::setKineticScrollingEnabled(bool b)
     {
         for(QAbstractScrollArea* widget : widgets)
             if(widget)
-                flickCharm->activateOn(widget);
+            {
+                QScroller::grabGesture(widget->viewport(), QScroller::LeftMouseButtonGesture);
+            }
     }
     else
     {
         for(QAbstractScrollArea* widget : widgets)
             if(widget)
-                flickCharm->deactivateFrom(widget);
+            {
+                QScroller::ungrabGesture(widget->viewport());
+            }
     }
 }
 
