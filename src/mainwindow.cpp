@@ -1059,7 +1059,7 @@ void MainWindow::about()
 
      QMessageBox::about(this, tr("About ") + qApp->applicationName(),
                       tr("<h1>%1 version %2</h1><p><b>%1</b> is a note taking application</p>"
-                   "<p>Copyright (C) 2015 Christian Metscher, Fabian Deuchler</p>"
+                   "<p>Copyright (C) 2017 Christian Metscher</p>"
 
                    "<p>Permission is hereby granted, free of charge,"
                    " to any person obtaining a copy of this software and associated documentation files (the \"Software\"),"
