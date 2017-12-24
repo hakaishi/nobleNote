@@ -37,11 +37,15 @@
 class ProgressReceiver;
 class Trash;
 
+///
+/// \brief The Backup class asynchronously reads note backup files from the file system
+/// and shows a Trash window where trashed notes can be inspected and restored
+///
 class Backup : public QObject {
      Q_OBJECT
  
      public:
-      Backup(QWidget *parent);
+      Backup(QWidget *parent); // creating an instances launches the async file loading and widget creation immediately
       QWidget *parent_;
 
      private:
@@ -52,11 +56,11 @@ class Backup : public QObject {
       QFutureWatcher<void> *future2;
       ProgressReceiver *progressReceiver1, *progressReceiver2;
       QProgressDialog  *progressDialog1, *progressDialog2;
-      QStringList noteUuidList;
       QList<QFileInfo> backupFiles; //don't ever use a local stack variable
       QHash<QString,QStringList> backupDataHash;
       Trash         *trash;
 
+      // functor that reads uuids
       struct GetUuid
       {
            ProgressReceiver *p;
@@ -70,6 +74,7 @@ class Backup : public QObject {
            }
       };
 
+      // functor used for multithreaded note file reading method
       struct SetupBackup
       {
            ProgressReceiver *p;
@@ -77,16 +82,18 @@ class Backup : public QObject {
 
            void operator()(const QFileInfo &file)
            {
-
-                QTextDocument *d = new QTextDocument;
-                HtmlNoteReader *reader = new HtmlNoteReader(file.absoluteFilePath(),d);
                 QStringList data;
-                data << reader->titleFromHtml() << file.absoluteFilePath() << d->toHtml();
+                HtmlNoteReader reader(file.absoluteFilePath());
+                reader.read();
+                QString title = reader.title();
+                if(title.isEmpty())
+                {
+                    title = tr("deleted note");
+                }
+                data << title << file.absoluteFilePath() << reader.html();
                 hash->insert(file.absoluteFilePath(),data);
 
                 p->postProgressEvent();
-                delete d;
-                delete reader;
            }
       };
 
@@ -94,7 +101,6 @@ class Backup : public QObject {
       SetupBackup setupBackup;
 
      private slots:
-      void getNoteUuidList();
       void getNotes();
       void setupBackups();
       void showTrash();

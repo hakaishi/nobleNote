@@ -31,6 +31,11 @@
 #include <QFile>
 #include <QDir>
 
+///
+/// \brief a Trash window where trashed notes can be inspected and restored
+/// created by the Backup class
+///
+
 class Trash : public QDialog, public Ui::Trash {
      Q_OBJECT
  

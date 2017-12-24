@@ -114,7 +114,6 @@ private:
       QList<QPointer<QWidget> > openNotes; // every access to openNotes must check for null pointers
       QPointer<Backup> backup;
 
-      FlickCharm      *flickCharm; // kinetic scrolling for both list views and all notes
       QStringList     shortcutNoteList;
 
       NoteImporter * noteImporter;
@@ -160,7 +159,7 @@ private:
       void renameNote();
       void removeFolder();
       void removeNote();
-      void setKineticScrollingEnabled(bool b); // enable flickCharm
+      void setKineticScrollingEnabled(bool b);
       void folderRenameFinished( QWidget * editor, QAbstractItemDelegate::EndEditHint hint = QAbstractItemDelegate::NoHint ); // reloads current folder
       void noteRenameFinished(const QString &path, const QString &oldName, const QString &newName); // updates window title
       void getCutFiles();

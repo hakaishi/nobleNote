@@ -57,7 +57,6 @@ HEADERS = src/mainwindow.h src/note.h \
     src/backup.h \
     src/trash.h \
     src/progressreceiver.h \
-    src/flickcharm.h \
     src/noteimporter.h
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
         src/ui/preferences.ui src/ui/trash.ui 
@@ -80,7 +79,6 @@ SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
     src/backup.cpp \
     src/trash.cpp \
     src/progressreceiver.cpp \
-    src/flickcharm.cpp \
     src/noteimporter.cpp
 RESOURCES += nobleNote.qrc
 TRANSLATIONS = src/translations/noblenote_ast.ts\

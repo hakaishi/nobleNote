@@ -42,13 +42,9 @@
 class HtmlNoteReader : public AbstractNoteReader
 {
 public:
-     HtmlNoteReader(const QString &filePath, QTextDocument* doc = 0);
+     HtmlNoteReader(const QString &filePath);
 
      void read();
-
-
-    void setDocument(QTextDocument * document)       {   document_ = document;}
-    QTextDocument * document() const              { return document_;}
 
     // get the uuid that has been extracted during read()
     QUuid uuid() const                         { return uuid_;}
@@ -56,7 +52,6 @@ public:
 
     const QString& title() const            { return title_;} // file name
 
-    const QString& titleFromHtml() const { return titleFromHtml_;} // returns the title from the html header
 
      // get last change date
     const QDateTime& lastChange() const         { return lastChange_;}
@@ -68,6 +63,9 @@ public:
     const QDateTime& createDate() const         { return createDate_;}
 
     const QString& html() const { return html_;} // returns the html contents of the file
+
+    // returns the title from the html header
+    static QString titleFromHtml(const QString& filePath);
 
 //     // reads a uuid from a file, if uuid could not be found, a null uuid is returned
     static QUuid uuid(QString filePath);
@@ -87,8 +85,6 @@ private:
     static QUuid parseUuid(QString idStr);
     void readContent(); // read contents of <note-content> tag
     QString title_;
-    QString titleFromHtml_;
-    QTextDocument * document_;
     QString filePath_;
     QUuid uuid_;
     QDateTime lastChange_;

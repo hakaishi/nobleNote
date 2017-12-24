@@ -31,9 +31,8 @@
 #include <QTextDocument>
 
 
-HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
+HtmlNoteReader::HtmlNoteReader(const QString &filePath)
 {
-   document_ = doc;
    filePath_ = filePath;
 
 }
@@ -41,6 +40,24 @@ HtmlNoteReader::HtmlNoteReader(const QString &filePath, QTextDocument *doc)
 void HtmlNoteReader::read()
 {
     read(filePath_);
+}
+
+QString HtmlNoteReader::titleFromHtml(const QString &filePath)
+{
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        return QString();
+    }
+    QString content;
+    QTextStream in(&file);
+    content = in.readAll();
+    file.close();
+
+    QTextDocument  document;
+    document.setHtml(content);
+    QString title =  document.metaInformation(QTextDocument::DocumentTitle);
+    return title;
 }
 
 void HtmlNoteReader::read(const QString& filePath)
@@ -70,18 +87,21 @@ void HtmlNoteReader::read(const QString& filePath)
     lastChange_ = QDateTime::fromString(metaContent(html,"last-change-date"),Qt::ISODate);
     createDate_ = QDateTime::fromString(metaContent(html,"create-date"),Qt::ISODate);
 
-    QFileInfo info(filePath);
+
 //    // fallback dates
 //    if(lastChange_.isNull())
 //        lastChange_ = info.lastModified();
 
 
-     if(document_)
-     {
-         document_->setHtml(html);
-         titleFromHtml_ = document_->metaInformation(QTextDocument::DocumentTitle);
-     }
-       title_ = info.baseName();  // always use file name
+       // read <title>
+       int titleStartIndex = html.indexOf("<title>");
+       int titleEndIndex = html.indexOf("</title>");
+
+       if(titleStartIndex != -1 && titleEndIndex != -1 && titleStartIndex < titleEndIndex)
+       {
+            int start = titleStartIndex + QLatin1String("<title>").size();
+           title_ = html.mid(start,titleEndIndex - start);
+       }
 
        html_ = html;
 }
@@ -160,35 +180,3 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
     }
     return QString();
 }
-
-
-
-
-
-// does not work because QXmlStreamReader sometimes reports errors with html
-    // TODO same device for both QTextStreama and QXmlStreamReader allowed?
-//    QXmlStreamReader reader(file);
-
-//    while(!reader.atEnd())
-//    {
-
-//        QXmlStreamReader::TokenType type = reader.readNext();
-//        qDebug(reader.name().toAscii());
-//        if(type == QXmlStreamReader::StartElement && reader.name() == "meta")
-//        {
-//                QXmlStreamAttributes attributes = reader.attributes();
-
-//                if(!attributes.isEmpty())
-//                {
-//                    if((attributes.value("name") == "uuid" || attributes.value("name") == "id") && attributes.hasAttribute("content"))
-//                        uuid_ = QUuid(attributes.value("content").toString());
-
-//                }
-//        }
-
-//        if (reader.hasError())
-//        {
-//            qDebug("XmlNoteReader::read failed: Error reading xml content");
-//            return;
-//        }
-//    }
