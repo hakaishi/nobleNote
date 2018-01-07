@@ -61,6 +61,7 @@ public:
 
     static void copyNotesToBackupDir(const QFileInfoList &fileInfos);
     static bool removeList(const QFileInfoList &fileInfos);
+    bool allSizeZero(const QList<QModelIndex> &indices) const; // true when file size 0 bytes
 };
 
 #endif // FINDFILESYSTEMMODEL_H

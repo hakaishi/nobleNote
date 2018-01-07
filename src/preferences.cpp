@@ -66,8 +66,8 @@ void Preferences::setFontSize(const QString size)
 
 void Preferences::showEvent(QShowEvent* show_pref)
 {
-     rootPathLabel->setText(settings->value("root_path").toString());
-     backupPathLabel->setText(settings->value("backup_dir_path").toString());
+     rootPathLabel->setText(QDir::toNativeSeparators(settings->value("root_path").toString()));
+     backupPathLabel->setText(QDir::toNativeSeparators(settings->value("backup_dir_path").toString()));
      rootPath = settings->value("root_path").toString();
      originalRootPath = rootPath;
      QFont font;

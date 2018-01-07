@@ -58,6 +58,7 @@ public:
 
     bool setData(const QModelIndex &index, const QVariant &value, int role); // returns if rename succeeded, overwritten to enable QAbstractItemView::edit
 
+    qint64 size(const QModelIndex &index) const; // returns the file size in bytes
 private:
     struct FileContains // functor that checks if a text file (read as html) contains a given text
     {
