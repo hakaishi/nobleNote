@@ -44,6 +44,29 @@ QString FindFileSystemModel::fileName(const QModelIndex &index) const
     return QString();
 }
 
+bool FindFileSystemModel::allSizeZero(const QList<QModelIndex> &indices) const
+{
+    for(QModelIndex idx : indices)
+    {
+        int size = 0;
+        if(QFileSystemModel* fsm= qobject_cast<QFileSystemModel*>(sourceModel()))
+        {
+            // requires QFileInfo wrapper, because QFileSystemModel::size only updates after app restart
+            size = QFileInfo(fsm->filePath(mapToSource(idx))).size();
+        }
+        else if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
+        {
+            size = ffm->size(mapToSource(idx));
+        }
+
+        if(size > 0) // at least one non-zero
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 QStringList FindFileSystemModel::fileNames(const QList<QModelIndex> &indices) const
 {
     QHash<QModelIndex,QString> names;

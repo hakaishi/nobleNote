@@ -859,16 +859,27 @@ void MainWindow::removeNote(){
      for(QString name : list)
           names += "\"" + name + "\"\n";
 
-     QString title = tr("Delete Note");
-     QString text = tr("Are you sure you want to move the note %1 to the trash?").arg(names);
+     QString title;
+     QString text;
 
      int numNotes = noteView->selectionModel()->selectedRows().size();
-     if(numNotes > 1)
-     {
-        title = tr("Delete Multiple Notes");
-        text =  tr("Are you sure you want to move these %1 notes to the trash?\n\n%2").arg(QString::number(numNotes)).arg(names);
-     }
 
+     if(noteModel->allSizeZero(noteView->selectionModel()->selectedRows()))
+     {
+         // zero size files do not go to the trash
+         title = tr("Deleting notes");
+         text = tr("Are you sure you want to permanently delete the selected notes?");
+     }
+     else if(numNotes > 1)
+     {
+         title = tr("Delete Multiple Notes");
+         text =  tr("Are you sure you want to move these %1 notes to the trash?\n\n%2").arg(QString::number(numNotes)).arg(names);
+     }
+     else
+     {
+         title = tr("Delete Note");
+         text = tr("Are you sure you want to move the note %1 to the trash?").arg(names);
+     }
 
      if(QMessageBox::warning(this,title,text,QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
        return;

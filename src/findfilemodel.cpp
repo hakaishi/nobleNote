@@ -50,6 +50,13 @@ QString FindFileModel::filePath(const QModelIndex &index) const
     return QFileInfo(itemFromIndex(index)->data(Qt::UserRole + 1).toString()).filePath();
 }
 
+
+qint64 FindFileModel::size(const QModelIndex &index) const
+{
+    return QFileInfo(itemFromIndex(index)->data(Qt::UserRole + 1).toString()).size();
+}
+
+
 bool FindFileModel::remove(const QModelIndex &index)
 {
     QStandardItem * item = itemFromIndex(index);
