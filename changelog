@@ -1,3 +1,9 @@
+Release 1.2.0
+=============
+
+ - added timer to wait while typing (solves slow search)
+ - fixed renaming problems when renaming from search results
+
 Release 1.1.0
 =============
 
