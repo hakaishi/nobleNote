@@ -1,3 +1,10 @@
+noblenote (1.2.0-1) unstable; urgency=low
+
+  - added timer to wait while typing (solves slow search)
+  - fixed renaming problems when renaming from search results
+
+ -- Christian Metscher <hakaishi@web.de>  Tue, 18 Jun 2019 23:59:58 +0900
+
 noblenote (1.1.0-1) unstable; urgency=low
 
   - fixed word formatting
