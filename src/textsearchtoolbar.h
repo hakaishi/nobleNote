@@ -57,6 +57,7 @@ private:
      QCheckBox   *caseSensitiveBox;
      QTextEdit   *textEdit_;
      Highlighter *highlighter;
+     QTimer * typingTimer;
 };
 
 #endif // TEXTSEARCHTOOLBAR_H

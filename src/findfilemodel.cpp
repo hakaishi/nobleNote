@@ -32,6 +32,7 @@
 #include <QTimer>
 #include <QApplication>
 #include <QTextDocument>
+#include <QRegularExpression>
 
 FindFileModel::FindFileModel(QObject *parent) :
     QStandardItemModel(parent)
@@ -179,6 +180,8 @@ bool FindFileModel::FileContains::operator ()(const QString& htmlFilePath)
 
 bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePath)
 {
+    static  QRegularExpression htmlRegex("<[^>]*>");
+
     QFile file(htmlFilePath);
     if(file.open(QIODevice::ReadOnly))
     {
@@ -196,11 +199,7 @@ bool FindFileModel::FileContains::fileContentContains(const QString &htmlFilePat
           text.remove(index,whiteSpacePreWrap.size());
       }
 
-#if QT_VERSION >= 0x050000
-      return text.remove(QRegExp("<[^>]*>")).contains(content.toHtmlEscaped(),Qt::CaseInsensitive);
-#else
-      return text.remove(QRegExp("<[^>]*>")).contains(Qt::escape(content),Qt::CaseInsensitive);
-#endif
+      return text.remove(htmlRegex).contains(content.toHtmlEscaped(),Qt::CaseInsensitive);
     }
     return false;
 }

@@ -1070,7 +1070,7 @@ void MainWindow::about()
 
      QMessageBox::about(this, tr("About ") + qApp->applicationName(),
                       tr("<h1>%1 version %2</h1><p><b>%1</b> is a note taking application</p>"
-                   "<p>Copyright (C) 2017 Christian Metscher</p>"
+                   "<p>Copyright © %3 Christian Metscher</p>"
 
                    "<p>Permission is hereby granted, free of charge,"
                    " to any person obtaining a copy of this software and associated documentation files (the \"Software\"),"
@@ -1081,7 +1081,7 @@ void MainWindow::about()
                    "<p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
                    " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,"
                    " WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>"
-                         ).arg(qApp->applicationName()).arg(version)  //: %1 is the application name, also do not translate the licence text
+                         ).arg(qApp->applicationName()).arg(version).arg(QDate::currentDate().year())  //: %1 is the application name, also do not translate the licence text
 
                         // these macros should work for every compiler
                         +   "<p>Build " + QString(__TIME__) + " " + QString(__DATE__)  // build time and date
