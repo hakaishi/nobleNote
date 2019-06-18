@@ -1,5 +1,5 @@
 /* nobleNote, a note taking application
- * Copyright (C) 2015 Christian Metscher <hakaishi@web.de>,
+ * Copyright (C) 2019 Christian Metscher <hakaishi@web.de>,
                       Fabian Deuchler <Taiko000@gmail.com>
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,11 +27,19 @@
 #include "lineedit.h"
 #include "highlighter.h"
 
+#include <QTimer>
+
 TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
        QToolBar(parent), textEdit_(textEdit){
 
      setWindowTitle(tr("Search bar"));
      setObjectName(tr("Searchtoolbar"));
+
+     typingTimer = new QTimer(this),
+     typingTimer->setSingleShot(true);
+     int typingThrottleTime = textEdit_->document()->characterCount() > 5000 ? 300 : 0;
+     typingTimer->setInterval(typingThrottleTime);
+     connect(typingTimer,&QTimer::timeout,this,&TextSearchToolbar::selectNextExpression);
 
      closeSearch = new QToolButton(this);
      closeSearch->setText("X");
@@ -57,7 +65,12 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
 
      connect(closeSearch, SIGNAL(clicked(bool)), this, SLOT(hide()));
 
-     connect(searchLine_, SIGNAL(textChanged(QString)), this, SLOT(selectNextExpression()));
+     connect(searchLine_, &QLineEdit::textChanged, this,
+             [this](){
+         typingTimer->start();
+     });
+
+
      connect(findNext, SIGNAL(clicked(bool)), SLOT(selectNextExpression()));
      connect(findPrevious, SIGNAL(clicked(bool)), SLOT(selectPreviousExpression()));
      connect(searchLine_, SIGNAL(returnPressed()), SLOT(selectNextExpression()));

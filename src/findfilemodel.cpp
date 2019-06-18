@@ -1,5 +1,5 @@
 /* nobleNote, a note taking application
- * Copyright (C) 2015 Christian Metscher <hakaishi@web.de>,
+ * Copyright (C) 2019 Christian Metscher <hakaishi@web.de>,
                       Fabian Deuchler <Taiko000@gmail.com>
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -100,10 +100,14 @@ void FindFileModel::appendFile(QString filePath)
 
 bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-     QStandardItemModel::setData(index,value,role);
-
+     QStandardItemModel::setData(index,value,role); //set new name for list item
+     //rename file before changing path of original file
      //value can be folder/filename or simply filename
-     return QFile::rename(filePath(index),fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName());
+     bool f = QFile::rename(filePath(index),fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName());
+
+     //change path data
+     QStandardItemModel::setData(index, fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName(), Qt::UserRole + 1);
+     return f;
 }
 
 QStringList FindFileModel::mimeTypes() const
