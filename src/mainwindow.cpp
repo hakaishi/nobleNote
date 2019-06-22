@@ -621,7 +621,7 @@ void MainWindow::openOneNote(QString path)
          QScroller::grabGesture(note->textEdit()->viewport(), QScroller::LeftMouseButtonGesture);
      }
      // only show the searchBar if the note contains the search text
-     if(noteModel->sourceModel() == findNoteModel && note->textEdit()->document()->toPlainText().contains(searchText->text(),Qt::CaseInsensitive))
+     if(noteModel->sourceModel() == findNoteModel)
         note->setSearchBarText(searchText->text());
      note->showAfterLoaded();
 
