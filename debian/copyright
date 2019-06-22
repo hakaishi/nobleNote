@@ -2,7 +2,7 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: nobleNote
 Source: https://github.com/hakaishi/nobleNote
 
-Files: ../*
+Files: * */*
 Copyright: 2019, Christian Metscher <hakaishi@web.de>
            2019, Fabian Deuchler <Taiko000@gmail.com>
 License: MIT
