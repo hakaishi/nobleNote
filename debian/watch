@@ -1,2 +1,3 @@
 version=3
+opts=pgpsigurlmangle=s/$/.asc/ \
 https://launchpad.net/qt-shutdown-p/+download .*/noblenote_(\d.*)\.orig\.tar\.gz
