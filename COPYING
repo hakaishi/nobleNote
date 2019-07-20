@@ -1,4 +1,5 @@
-Copyright (c) 2019 Christian Metscher, Fabian Deuchler
+Copyright (c) 2019 Christian Metscher <hakaishi@web.de>,
+                   Fabian Deuchler <Taiko000@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -17,3 +18,56 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Some icons are from Gnome or Oxygen and have different licenses and copy-
+right holders.
+
+File: src/noblenote-icons/preferences.png
+Copyright: 2007, Nuno F. Pinheiro <nuno@oxygen-icons.org>
+           2007, David Vignoni <david@oxygen-icons.org>
+           2007, David J. Miller <miller@oxygen-icons.org>
+           2007, David Vignoni <david@oxygen-icons.org>
+           2007, Johann Ollivier Lapeyre <johann@oxygen-icons.org>
+           2007, Kenneth Wimer <ken@oxygen-icons.org> 
+           2007, Nuno F. Pinheiro <nuno@oxygen-icons.org>
+           2007, Riccardo Iaconelli <riccardo@oxygen-icons.org>
+           2007, David J. Miller <miller@oxygen-icons.org>
+License: LGPL-3
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 3 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library. If not, see <http://www.gnu.org/licenses/>.
+
+Files: src/noblenote-icons/trash.png src/noblenote-icons/emblem-web.png src/noblenote-icons/format-text*
+Copyright: 2002-2008, Ulisse Perusin <uli.peru@gmail.com>
+           2002-2008, Riccardo Buzzotta <raozuzu@yahoo.it>
+           2002-2008, Josef Vybíral <cornelius@vybiral.info>
+           2002-2008, Hylke Bons <h.bons@student.rug.nl>
+           2002-2008, Ricardo González <rick@jinlabs.com>
+           2002-2008, Lapo Calamandrei <calamandrei@gmail.com>
+           2002-2008, Rodney Dawes <dobey@novell.com>
+           2002-2008, Luca Ferretti <elle.uca@libero.it>
+           2002-2008, Tuomas Kuosmanen <tigert@gimp.org>
+           2002-2008, Andreas Nilsson <nisses.mail@home.se>
+           2002-2008, Jakub Steiner <jimmac@novell.com>
+License: LGPL-3 or CC-BY-SA-3
+ GNOME icon theme is distributed under the terms of either
+ GNU LGPL v.3 or Creative Commons BY-SA 3.0 license.
+ .
+ .
+ This work is licenced under the Creative Commons Attribution-Share Alike 3.0
+ United States License. To view a copy of this licence, visit
+ http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative
+ Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
+ .
+ When attributing the artwork, using "GNOME Project" is enough. 
+ Please link to http://www.gnome.org where available.
