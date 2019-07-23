@@ -1,19 +1,12 @@
 noblenote (1.2.0-1) unstable; urgency=low
 
   - fixed word formatting
-  - added bullet list option
+  - added new options
   - fixed backup path
-  - added "create portable version"
-  - added show/hide tool bars via context menu
-  - save position of notes
-  - other fixes
   - added history
-  - added timer to wait while typing (solves slow search)
   - fixed renaming problems when renaming from search results
-  - fixed not highlighting search result when opening note from the
-    search view
 
- -- Christian Metscher <hakaishi@web.de>  Sat, 20 Jul 2019 20:31:15 +0900
+ -- Christian Metscher <hakaishi@web.de>  Tue, 23 Jul 2019 23:00:49 +0900
 
 noblenote (1.0.8-1) unstable; urgency=low
 
