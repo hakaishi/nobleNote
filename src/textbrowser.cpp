@@ -26,6 +26,8 @@
 #include "textbrowser.h"
 #include <QTextBrowser>
 #include <QDesktopServices>
+#include <QMimeData>
+#include <QTextDocumentFragment>
 
 TextBrowser::TextBrowser(QWidget *parent) : QTextBrowser(parent)
 {
@@ -48,6 +50,30 @@ void TextBrowser::focusOutEvent(QFocusEvent *e)
 void TextBrowser::openLinkInBrowser(const QUrl link)
 {
     QDesktopServices::openUrl(link);
+}
+
+void TextBrowser::insertFromMimeData(const QMimeData *source)
+{
+    QTextCharFormat format = this->textCursor().charFormat();
+
+    if (source->hasHtml()) {
+            QTextDocumentFragment fragment = QTextDocumentFragment::fromHtml(source->html(), this->document());
+            this->textCursor().insertFragment(fragment);
+           ensureCursorVisible();
+
+           textCursor().insertText(" ",format);
+           textCursor().movePosition(QTextCursor::Right);
+
+    }
+    else {
+        QTextBrowser::insertFromMimeData(source);
+    }
+}
+
+bool TextBrowser::canInsertFromMimeData(const QMimeData *source) const
+{
+    QTextCharFormat format = this->textCursor().charFormat();
+
 }
 
 void TextBrowser::slotSetReadOnly(bool ro)
