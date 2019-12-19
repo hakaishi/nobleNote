@@ -62,8 +62,6 @@ void TextBrowser::insertFromMimeData(const QMimeData *source)
            ensureCursorVisible();
 
            textCursor().insertText(" ",format);
-           textCursor().movePosition(QTextCursor::Right);
-
     }
     else {
         QTextBrowser::insertFromMimeData(source);

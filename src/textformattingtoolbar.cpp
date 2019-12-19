@@ -316,10 +316,15 @@ QRegExp(">\\b([a-zA-Z0-9_\\.\\-]+@[a-zA-Z0-9_\\.\\-]+)\\b(<?)", Qt::CaseInsensit
     if(selectedText.isEmpty())
         selectedText = link;
 
+    QTextCharFormat format = cursor.charFormat();
+
+
     if(link.contains("@"))
       cursor.insertHtml("<a href=mailto:"+link+"\">"+selectedText+"</a>");
     else
       cursor.insertHtml("<a href=\""+link+"\">"+selectedText+"</a>");
+
+    cursor.insertText(" ",format);
 }
 
 void TextFormattingToolbar::fontOfText(const QString &f){
