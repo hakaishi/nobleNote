@@ -35,6 +35,7 @@ QMAKE_DISTCLEAN = src/translations/*.qm
 
 # Input
 HEADERS = src/mainwindow.h src/note.h \
+    src/systemtraycreator.h \
     src/welcome.h \
     src/filesystemmodel.h \
     src/preferences.h \
@@ -61,6 +62,7 @@ HEADERS = src/mainwindow.h src/note.h \
 FORMS = src/ui/mainwindow.ui src/ui/welcome.ui src/ui/note.ui \
         src/ui/preferences.ui src/ui/trash.ui 
 SOURCES = src/main.cpp src/mainwindow.cpp src/note.cpp \
+    src/systemtraycreator.cpp \
     src/welcome.cpp\
     src/preferences.cpp \
     src/findfilemodel.cpp \
