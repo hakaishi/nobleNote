@@ -10,7 +10,7 @@ class SystemTrayCreator : public QObject
 public:
     explicit SystemTrayCreator(QObject *parent = nullptr);
 
-     QMenu * createMenu();
+     void populateMenu(QMenu * menu);
 
 signals:
 

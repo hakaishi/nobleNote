@@ -84,9 +84,8 @@ MainWindow::MainWindow()
      SystemTrayCreator * creator = new SystemTrayCreator(this);
 
      connect(creator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
-
-     TIcon->setContextMenu(creator->createMenu());
-     //TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
+     TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
+     connect(iMenu,&QMenu::aboutToShow,this,[this,creator](){creator->populateMenu(iMenu);});
 #endif
 
    //Toolbar
