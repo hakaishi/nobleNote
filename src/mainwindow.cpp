@@ -78,6 +78,8 @@ MainWindow::MainWindow()
 
    //TrayIconContextMenu
      iMenu = new QMenu(this);
+
+     // context menu needs at least one action else right click will not work
      iMenu->addAction(minimizeRestoreAction);
      iMenu->addAction(quit_action);
 
@@ -85,7 +87,13 @@ MainWindow::MainWindow()
 
      connect(creator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
-     connect(iMenu,&QMenu::aboutToShow,this,[this,creator](){creator->populateMenu(iMenu);});
+     connect(iMenu,&QMenu::aboutToShow,this,[this,creator](){
+
+         creator->populateMenu(iMenu);
+         iMenu->addSeparator();
+         iMenu->addAction(minimizeRestoreAction);
+         iMenu->addAction(quit_action);
+     });
 #endif
 
    //Toolbar
