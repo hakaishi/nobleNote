@@ -105,8 +105,7 @@ void Note::highlightText(const QString &str)
 
 void Note::loadSizeAndShow()
 {
-    QSize defaultSize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
-    QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_size", defaultSize).toSize();
+    QSize size = QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_size", editorSize()).toSize();
     resize(size);
     if(showAfterLoading_)
     {
@@ -221,4 +220,9 @@ void Note::showOrHideToolbars()
 void Note::showAfterLoaded()
 {
     showAfterLoading_ = true;
+}
+
+/*static*/ QSize Note::editorSize()
+{
+    return QSettings().value("note_editor_default_size",QSize(650,400)).toSize();
 }

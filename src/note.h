@@ -78,6 +78,8 @@ class Note : public QMainWindow, public Ui::Note {
 
       // adds this file Path to the list of open notes that is stored in the settings
       static void addToOpenNoteList(QString path);
+
+      static QSize editorSize();
 private:
       TextBrowser *textBrowser;
       TextDocument *textDocument;
