@@ -33,9 +33,18 @@
 #include "welcome.h"
 
 int main (int argc, char *argv[]){
+
      QApplication app(argc, argv);
+
+#ifdef Q_OS_WINDOWS
+     // this replaces Qt's MS ShellDlg2 font with the proper Windows font in some labels
+     app.setFont(QApplication::font("QMenu"));
+#endif
+
+
      app.setApplicationName("nobleNote");
      app.setOrganizationName("nobleNote");
+
 
      //Qt translations
      QTranslator qtTranslator;

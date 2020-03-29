@@ -698,7 +698,7 @@ void MainWindow::openNoteSource()
     mainWindow->setCentralWidget(textEdit);
     TextSearchToolbar * searchBar = new TextSearchToolbar(textEdit,mainWindow);
     mainWindow->addToolBar(searchBar);
-    mainWindow->resize(QSettings().value("note_editor_default_size",QSize(335,250)).toSize());
+    mainWindow->resize(Note::editorSize());
 //    searchBar->searchLine()->setFocus();
 //    searchBar->setFocusPolicy(Qt::TabFocus);
 

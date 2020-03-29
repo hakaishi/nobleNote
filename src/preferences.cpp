@@ -23,6 +23,7 @@
  * nobleNote is licensed under the MIT, see `http://copyfree.org/licenses/mit/license.txt'.
  */
 
+#include "note.h"
 #include "preferences.h"
 #include <QDir>
 #include <QMessageBox>
@@ -45,8 +46,8 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
      showSource->setChecked(settings->value("show_source", false).toBool());
      kineticScrolling->setChecked(settings->value("kinetic_scrolling", false).toBool());
      silentStart->setChecked(settings->value("Hide_main_at_startup",false).toBool());
-     sizeSpinHeight->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().height());
-     sizeSpinWidth->setValue(settings->value("note_editor_default_size",QSize(335,250)).toSize().width());
+     sizeSpinHeight->setValue(Note::editorSize().height());
+     sizeSpinWidth->setValue(Note::editorSize().width());
 
 
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
