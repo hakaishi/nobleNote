@@ -8,7 +8,7 @@ It is compatible to the [nobleNoteAndroid](https://github.com/taiko000/nobleNote
 
 ## Supported Platforms
 
-Any Qt: Windows, Linux, macOS, Android
+Any platform supported by Qt: Windows, Linux, macOS
 
 ## Sync notes between desktop and mobile devices
 
@@ -26,11 +26,15 @@ Any Qt: Windows, Linux, macOS, Android
 
 ## Installation
 
-Note for Windows users: Binary releases can be found on the releases page of this github repository
+Windows: Binary releases can be found on the releases page of this github repository
 
-Requires at least Qt 5.0 or newer.
+Debian based Linux distributions (Ubuntu): 
 
-It can be build using the QtCreator IDE. 
+`sudo apt-get install noblenote`
+
+Building from source requires at least Qt 5.0 or newer.
+
+It can also be build using the QtCreator IDE. 
 
 ## Building From CLI
 
@@ -39,13 +43,15 @@ Dependencies: build-essential, qtbase5-dev, qttools5-dev-tools
 To compile from source, open a terminal and change into the nobleNote source folder.
 To install type:
 
-qmake
-sudo make install distclean
+`qmake`
+
+`sudo make install distclean`
 
 To uninstall type:
 
-qmake     (if the Makefile has been removed)
-sudo make deinstall
+`qmake`     (if the Makefile has been removed)
+
+`sudo make deinstall`
 
 (Note that ~/.config/nobleNote.conf and
  the notes at their location won't be removed.
@@ -54,6 +60,8 @@ Backups are in their default data location.)
 ## License
 
 nobleNote is licensed under the MIT License
+
+(C) 2020 The creators of nobleNote
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
