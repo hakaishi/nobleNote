@@ -550,8 +550,6 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
                // TODO check why Notes are no children of this
 
                note->close();
-               if(!note->future().isFinished())
-                   note->future().waitForFinished();
 
                // close() calls the closeEvent, this method assumes the user has closed the window
                // so we manually have to re-add this note to the list of open notes.

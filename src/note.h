@@ -73,9 +73,6 @@ class Note : public QMainWindow, public Ui::Note {
 
       QTextEdit * textEdit() const { return textBrowser;}
 
-      // the future of the worker thread that handles saving settings
-      QFuture<void> future() const { return future_;}
-
       // adds this file Path to the list of open notes that is stored in the settings
       static void addToOpenNoteList(QString path);
 
@@ -88,13 +85,13 @@ private:
 
       TextFormattingToolbar *toolbar;
       TextSearchToolbar *searchBar;
-      QFuture<void> future_; // a future that holds the worker thread that is invoked when window states are changed
 
       NoteDescriptor *noteDescriptor_;
       bool showAfterLoading_; // state variable, call show() after loadSizeAndShow()
 
       // this is called asynchronously when the window is closed and saves geometry etc.
       void saveWindowState(QVariantList variantList);
+      void restoreWindowState();
 public slots:
       void setSearchBarText(QString str);
 
