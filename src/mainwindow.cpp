@@ -69,7 +69,7 @@ MainWindow::MainWindow()
      QIcon icon = QIcon(":nobleNote");
 
      minimizeRestoreAction = new QAction(tr("&Restore"),this);
-     quit_action = new QAction(tr("&Quit"),this);
+     actionQuitSystrayMenu = new QAction(tr("&Quit"),this);
 
 #ifndef NO_SYSTEM_TRAY_ICON
      TIcon = new QSystemTrayIcon(this);
@@ -81,7 +81,7 @@ MainWindow::MainWindow()
 
      // context menu needs at least one action else right click will not work
      iMenu->addAction(minimizeRestoreAction);
-     iMenu->addAction(quit_action);
+     iMenu->addAction(actionQuitSystrayMenu);
 
      SystemTrayCreator * creator = new SystemTrayCreator(this);
 
@@ -221,10 +221,10 @@ MainWindow::MainWindow()
 #endif
 
      connect(actionImport,SIGNAL(triggered()),noteImporter,SLOT(importDialog()));
-     connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
+     connect(actionQuitFileMenu, SIGNAL(triggered()), this, SLOT(quit()));
 
      connect(actionTrash, SIGNAL(triggered()), this, SLOT(showBackupWindow()));
-     connect(quit_action, SIGNAL(triggered()), this, SLOT(quit())); //contextmenu "Quit" for the systray
+     connect(actionQuitSystrayMenu, SIGNAL(triggered()), this, SLOT(quit()));
      connect(actionNew_folder, SIGNAL(triggered()), this, SLOT(newFolder()));
      connect(actionRename_folder, SIGNAL(triggered()), this, SLOT(renameFolder()));
      connect(actionDelete_folder, SIGNAL(triggered()), this, SLOT(removeFolder()));
@@ -550,7 +550,6 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
        QSettings().setValue("mainwindow_size", saveGeometry());
        QSettings().setValue("splitter", splitter->saveState());
 
-       // find widgets that still are saving their settings and let their futuures (worker threads) finish
        QListIterator<QPointer<QWidget> > it(openNotes);
        while(it.hasNext())
        {
@@ -559,12 +558,8 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
            Note * note = qobject_cast<Note*>(widget);
            if(note != NULL)
            {
-               // calls close event (this is normally not called, because Notes are no childs of this)
-               // TODO check why Notes are no children of this
 
                note->close();
-               if(!note->future().isFinished())
-                   note->future().waitForFinished();
 
                // close() calls the closeEvent, this method assumes the user has closed the window
                // so we manually have to re-add this note to the list of open notes.
@@ -581,7 +576,9 @@ void MainWindow::quit()
 {
      QSettings().setValue("mainwindow_size", saveGeometry());
      QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
-     qApp->quit();
+     qApp->setQuitOnLastWindowClosed(true);
+     qApp->closeAllWindows();
+     close();
 }
 
 bool MainWindow::noteIsOpen(const QString &path)

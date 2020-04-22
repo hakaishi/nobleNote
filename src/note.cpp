@@ -84,12 +84,6 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      searchBar->setFocusPolicy(Qt::TabFocus);
      addToolBar(searchBar);
 
-     restoreState(QSettings().value("Note_window_and_toolbar/state").toByteArray());
-
-     if(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").isValid())
-        restoreGeometry(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").toByteArray());
-     else // center in desktop if there's no saved position
-        move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
 
      connect(noteDescriptor_,SIGNAL(close()),this,SLOT(close()));
@@ -111,6 +105,8 @@ void Note::loadSizeAndShow()
     {
         show();
     }
+    restoreWindowState();
+
 }
 
 void Note::closeEvent(QCloseEvent* close_Note)
@@ -122,8 +118,7 @@ void Note::closeEvent(QCloseEvent* close_Note)
     variantList << size() << saveState() << saveGeometry() << textBrowser->textCursor().position() <<
                            noteDescriptor()->uuid().toString() << noteDescriptor()->filePath();
 
-   // run it asynchronously to avoid blocking the gui thread, when he destroys the window
-     future_ = QtConcurrent::run(this, &Note::saveWindowState,variantList);
+    saveWindowState(variantList);
      QMainWindow::closeEvent(close_Note);
 }
 
@@ -149,6 +144,17 @@ void Note::saveWindowState(QVariantList variantList)
     QSettings().setValue("open_notes", savedOpenNoteList);
 
 
+
+}
+
+void Note::restoreWindowState()
+{
+    restoreState(QSettings().value("Note_window_and_toolbar/state").toByteArray());
+
+    if(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").isValid())
+       restoreGeometry(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").toByteArray());
+    else // center in desktop if there's no saved position
+       move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
 }
 

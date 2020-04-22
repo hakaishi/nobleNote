@@ -46,7 +46,7 @@
     <addaction name="separator"/>
     <addaction name="actionImport"/>
     <addaction name="actionTrash"/>
-    <addaction name="actionQuit"/>
+    <addaction name="actionQuitFileMenu"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">
@@ -96,7 +96,7 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionQuit">
+  <action name="actionQuitFileMenu">
    <property name="text">
     <string>&amp;Quit</string>
    </property>

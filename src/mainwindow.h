@@ -107,7 +107,7 @@ private:
       FileSystemModel *noteFSModel;
       FindFileSystemModel *noteModel;
       QListView        *folderView, *noteView;
-      QAction         *quit_action, *minimizeRestoreAction;
+      QAction         *actionQuitSystrayMenu, *minimizeRestoreAction;
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
