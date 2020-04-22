@@ -38,6 +38,7 @@
 #include "textsearchtoolbar.h"
 #include "backup.h"
 #include "noteimporter.h"
+#include "systemtraycreator.h"
 #include <QTextStream>
 #include <QFile>
 #include <QModelIndex>
@@ -77,10 +78,22 @@ MainWindow::MainWindow()
 
    //TrayIconContextMenu
      iMenu = new QMenu(this);
+
+     // context menu needs at least one action else right click will not work
      iMenu->addAction(minimizeRestoreAction);
      iMenu->addAction(quit_action);
 
+     SystemTrayCreator * creator = new SystemTrayCreator(this);
+
+     connect(creator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
+     connect(iMenu,&QMenu::aboutToShow,this,[this,creator](){
+
+         creator->populateMenu(iMenu);
+         iMenu->addSeparator();
+         iMenu->addAction(minimizeRestoreAction);
+         iMenu->addAction(quit_action);
+     });
 #endif
 
    //Toolbar
