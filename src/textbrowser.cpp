@@ -68,12 +68,6 @@ void TextBrowser::insertFromMimeData(const QMimeData *source)
     }
 }
 
-bool TextBrowser::canInsertFromMimeData(const QMimeData *source) const
-{
-    QTextCharFormat format = this->textCursor().charFormat();
-
-}
-
 void TextBrowser::slotSetReadOnly(bool ro)
 {
     this->setReadOnly(ro);

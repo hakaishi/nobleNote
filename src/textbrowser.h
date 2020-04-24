@@ -53,7 +53,6 @@ public slots:
 private slots:
       void openLinkInBrowser(const QUrl link);
       void insertFromMimeData(const QMimeData *source);
-      bool canInsertFromMimeData(const QMimeData *source) const;
 };
 
 #endif // TEXTEDIT_H
