@@ -1,14 +1,14 @@
 # C++ objects and libs
 
-*.slo
-*.lo
-*.o
-*.a
-*.la
-*.lai
-*.so
-*.dll
-*.dylib
+**.slo
+**.lo
+**.o
+**.a
+**.la
+**.lai
+**.so
+**.dll
+**.dylib
 
 # Qt-es
 
@@ -18,18 +18,22 @@
 *.pro.user.*
 *.qbs.user
 *.qbs.user.*
-*.moc
-*.qmlc
+**.moc
+**.qmlc
 moc_*.cpp
 qrc_*.cpp
 ui_*.h
 Makefile*
 *build-*
-*.qm
+**.qm
+
+# folders
+build/
+bin/
 
 # QtCreator
 
-*.autosave
+**.autosave
 
 # QtCtreator Qml
 *.qmlproject.user

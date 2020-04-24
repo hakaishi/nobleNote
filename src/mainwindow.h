@@ -85,6 +85,7 @@ class Highlighter;
 class ProgressReceiver;
 class Backup;
 class FlickCharm;
+class SystemTrayCreator;
 
 class MainWindow : public QMainWindow, public Ui::MainWindow
 {
@@ -121,6 +122,7 @@ private:
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
       QSystemTrayIcon *TIcon;
+      SystemTrayCreator *iconCreator;
 #endif
 
       Note * noteWindow(const QString & filePath); // return the open note window for the note at filePath
@@ -166,6 +168,7 @@ private:
       void pasteFiles();
       void about();
       void selectFolder();
+      void settingsAccepted();
 
      protected:
       void keyPressEvent(QKeyEvent *k);
