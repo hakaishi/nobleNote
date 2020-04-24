@@ -78,22 +78,25 @@ MainWindow::MainWindow()
 
    //TrayIconContextMenu
      iMenu = new QMenu(this);
-
-     // context menu needs at least one action else right click will not work
+     
+   // context menu needs at least one action else right click will not work
      iMenu->addAction(minimizeRestoreAction);
      iMenu->addAction(actionQuitSystrayMenu);
-
-     SystemTrayCreator * creator = new SystemTrayCreator(this);
-
-     connect(creator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
+     
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
-     connect(iMenu,&QMenu::aboutToShow,this,[this,creator](){
+     
+     iconCreator = new SystemTrayCreator(this);
 
-         creator->populateMenu(iMenu);
-         iMenu->addSeparator();
-         iMenu->addAction(minimizeRestoreAction);
-         iMenu->addAction(quit_action);
-     });
+     if(QSettings().value("open_notes_from_tray", false).toBool()){
+         connect(iconCreator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
+         connect(iMenu,&QMenu::aboutToShow,this,[=](){
+             iconCreator->populateMenu(iMenu);
+             iMenu->addSeparator();
+             iMenu->addAction(minimizeRestoreAction);
+             iMenu->addAction(actionQuitSystrayMenu);
+         });     
+     }
+
 #endif
 
    //Toolbar
@@ -362,8 +365,30 @@ void MainWindow::showPreferences()
           connect(pref, SIGNAL(pathChanged()), this, SLOT(changeRootIndex()));
           connect(pref,SIGNAL(kineticScrollingEnabledChanged(bool)),this,SLOT(setKineticScrollingEnabled(bool)));
           connect(pref, SIGNAL(recentCountChanged()), this, SLOT(createAndUpdateRecent()));
+          connect(pref, SIGNAL(accepted()), this, SLOT(settingsAccepted()));
      }
      pref->show();
+}
+
+void MainWindow::settingsAccepted(){
+#ifndef NO_SYSTEM_TRAY_ICON
+    if(QSettings().value("open_notes_from_tray", false).toBool()){
+         connect(iconCreator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
+         connect(iMenu,&QMenu::aboutToShow,this,[=](){
+             iconCreator->populateMenu(iMenu);
+             iMenu->addSeparator();
+             iMenu->addAction(minimizeRestoreAction);
+             iMenu->addAction(actionQuitSystrayMenu);
+         });    
+     }
+     else{
+        iconCreator->disconnect();
+        iMenu->disconnect();
+        iMenu->clear();
+        iMenu->addAction(minimizeRestoreAction);
+        iMenu->addAction(actionQuitSystrayMenu);
+     }
+#endif
 }
 
 void MainWindow::showBackupWindow()
@@ -550,6 +575,7 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
        QSettings().setValue("mainwindow_size", saveGeometry());
        QSettings().setValue("splitter", splitter->saveState());
 
+       // find widgets that still are saving their settings and let their futuures (worker threads) finish
        QListIterator<QPointer<QWidget> > it(openNotes);
        while(it.hasNext())
        {
@@ -558,6 +584,8 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
            Note * note = qobject_cast<Note*>(widget);
            if(note != NULL)
            {
+               // calls close event (this is normally not called, because Notes are no childs of this)
+               // TODO check why Notes are no children of this
 
                note->close();
 
