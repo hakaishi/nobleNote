@@ -372,6 +372,8 @@ void MainWindow::showPreferences()
 
 void MainWindow::settingsAccepted(){
 #ifndef NO_SYSTEM_TRAY_ICON
+    iconCreator->disconnect();
+    iMenu->disconnect();
     if(QSettings().value("open_notes_from_tray", false).toBool()){
          connect(iconCreator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
          connect(iMenu,&QMenu::aboutToShow,this,[=](){
@@ -382,8 +384,6 @@ void MainWindow::settingsAccepted(){
          });    
      }
      else{
-        iconCreator->disconnect();
-        iMenu->disconnect();
         iMenu->clear();
         iMenu->addAction(minimizeRestoreAction);
         iMenu->addAction(actionQuitSystrayMenu);
