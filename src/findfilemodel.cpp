@@ -87,10 +87,8 @@ void FindFileModel::appendFile(QString filePath)
         return;
     }
 
-    QString filePathTrunc = info.filePath();
+    QString filePathTrunc = info.dir().dirName() + " / " + info.fileName();
 
-    while(filePathTrunc.count(QDir::separator()) > 1)
-      filePathTrunc.remove(0,filePathTrunc.indexOf(QDir::separator())+1);
 
     QStandardItem * fileItem = new QStandardItem(filePathTrunc);
     fileItem->setIcon(QFileIconProvider().icon(info));
