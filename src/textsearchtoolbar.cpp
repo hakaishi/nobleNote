@@ -42,7 +42,7 @@ TextSearchToolbar::TextSearchToolbar(QTextEdit * textEdit, QWidget *parent) :
      connect(typingTimer,&QTimer::timeout,this,&TextSearchToolbar::selectNextExpression);
 
      closeSearch = new QToolButton(this);
-     closeSearch->setText("X");
+     closeSearch->setText("❌");
      closeSearch->setShortcut(Qt::Key_Escape);
      addWidget(closeSearch);
 
