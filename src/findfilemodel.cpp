@@ -101,7 +101,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
      QStandardItemModel::setData(index,value,role); //set new name for list item
      //rename file before changing path of original file
      //value can be folder/filename or simply filename
-     bool f = QFile::rename(filePath(index),fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName());
+     bool f = QFile::rename(filePath(index),fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName().trimmed());
 
      //change path data
      QStandardItemModel::setData(index, fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName(), Qt::UserRole + 1);
