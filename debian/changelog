@@ -1,5 +1,13 @@
 noblenote (1.2.0-1) unstable; urgency=low
 
+  - added "open notes from tray"
+  - fixed saving notes window location
+  - fixed font size on windows for the app
+
+ -- Christian Metscher <hakaishi@web.de>  Wed, 06 May 2020 23:36:42 +0900
+
+noblenote (1.2.0-1) unstable; urgency=low
+
   - fixed word formatting
   - added new options
   - fixed backup path

@@ -11,6 +11,10 @@
         <source>Indexing trash...</source>
         <translation>Индексация корзины…</translation>
     </message>
+    <message>
+        <source>deleted note</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileSystemModel</name>
@@ -305,8 +309,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright (C) %3 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;h1&gt;%1, версия %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; — приложение для создания заметок&lt;/p&gt;&lt;p&gt;Авторские права (C) %3 Christian Metscher, Fabian Deuchler&lt;/p&gt;&lt;p&gt;Данная лицензия разрешает лицам, получившим копию данного программного обеспечения и сопутствующей документации (в дальнейшем именуемыми «Программное Обеспечение»), безвозмездно использовать Программное Обеспечение без ограничений, включая неограниченное право на использование, копирование, изменение, добавление, публикацию, распространение, сублицензирование и/или продажу копий Программного Обеспечения, также как и лицам, которым предоставляется данное Программное Обеспечение, при соблюдении следующих условий:&lt;/p&gt;Указанное выше уведомление об авторском праве и данные условия должны быть включены во все копии или значимые части данного Программного Обеспечения.&lt;p&gt;ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНО ВЫРАЖЕННЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ, СООТВЕТСТВИЯ ПО ЕГО КОНКРЕТНОМУ НАЗНАЧЕНИЮ И ОТСУТСТВИЯ НАРУШЕНИЙ ПРАВ. НИ В КАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПО ИСКАМ О ВОЗМЕЩЕНИИ УЩЕРБА, УБЫТКОВ ИЛИ ДРУГИХ ТРЕБОВАНИЙ ПО ДЕЙСТВУЮЩИМ КОНТРАКТАМ, ДЕЛИКТАМ ИЛИ ИНОМУ, ВОЗНИКШИМ ИЗ, ИМЕЮЩИМ ПРИЧИНОЙ ИЛИ СВЯЗАННЫМ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ ИЛИ ИСПОЛЬЗОВАНИЕМ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ ИЛИ ИНЫМИ ДЕЙСТВИЯМИ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ.&lt;/p&gt; {1&gt;?} {1 ?} {2&lt;?} {1&gt;?} {1&lt;?} {%3 ?}</translation>
+        <source>Deleting notes</source>
+        <translation type="unfinished">Удаление заметок</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently delete the selected notes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h1&gt;%1 version %2&lt;/h1&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; is a note taking application&lt;/p&gt;&lt;p&gt;Copyright © %3 Christian Metscher&lt;/p&gt;&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;p&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -456,6 +468,23 @@
         <source>(Will be updated after pressing OK.)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Notes can be opened from the tray icon when the application is minimized to the system tray&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open notes from tray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not show the main interface and notes on startup.
+(Minimized to tray icon)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Hide main window at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextFormattingToolbar</name>
@@ -598,12 +627,6 @@ You can choose a directory where the notes will be saved in.</source>
     </message>
     <message>
         <source>Welcome to nobleNote!
-This is the first time that nobleNote has been started.
-You are encouraged to use the standard path, but you can also choose a directory located on the system. Please note that the notes won&apos;t be saved on your drive if you do.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Welcome to nobleNote!
 The set path for the notes does not exist.
 Maybe it has been moved or renamed.
 You can choose a new directory where the notes are or where they will be saved in.</source>
@@ -619,6 +642,13 @@ Maybe your drive is running in read only mode.</source>
         <source>Welcome to nobleNote!
 The path where the notes are located is not writable.
 You can choose a new directory where the notes will be saved in. Otherwise changes might not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to nobleNote!
+This is the first time that nobleNote has been started.
+This is the portable edition of nobleNote.
+You are encouraged to use the default path, but you can also choose any other directory.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

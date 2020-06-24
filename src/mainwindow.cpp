@@ -1,5 +1,5 @@
 /* nobleNote, a note taking application
- * Copyright (C) 2019 Christian Metscher <hakaishi@web.de>,
+ * Copyright (C) 2020 Christian Metscher <hakaishi@web.de>,
                       Fabian Deuchler <Taiko000@gmail.com>
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -373,9 +373,9 @@ void MainWindow::showPreferences()
 void MainWindow::settingsAccepted(){
 #ifndef NO_SYSTEM_TRAY_ICON
     iconCreator->disconnect();
-    iMenu->disconnect();
     if(QSettings().value("open_notes_from_tray", false).toBool()){
          connect(iconCreator,&SystemTrayCreator::noteClicked,this,&MainWindow::openOneNote);
+         iMenu->disconnect(SIGNAL(aboutToShow()));
          connect(iMenu,&QMenu::aboutToShow,this,[=](){
              iconCreator->populateMenu(iMenu);
              iMenu->addSeparator();
@@ -385,6 +385,7 @@ void MainWindow::settingsAccepted(){
      }
      else{
         iMenu->clear();
+        iMenu->disconnect(SIGNAL(aboutToShow()));
         iMenu->addAction(minimizeRestoreAction);
         iMenu->addAction(actionQuitSystrayMenu);
      }
