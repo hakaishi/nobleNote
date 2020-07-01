@@ -126,16 +126,20 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
 }
 
  // this method may be called multiple times if the user is typing a search word
-void FindFileModel::findInFiles(const QString& fileName, const QString &content,const QString &path)
+void FindFileModel::findInFiles(const QString& fileName, const QString &content,const QString &path, bool waitCursor)
 {
 
     if(path.isEmpty() || (fileName.isEmpty() && content.isEmpty()))
         return;
 
     if(future.isRunning())
+    {
         future.cancel();
-    else
+    }
+    else if(waitCursor)
+    {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    }
 
     QStringList files;
     QDirIterator it(path, QDirIterator::Subdirectories);
@@ -152,7 +156,6 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
     future = QtConcurrent::filtered(files,fileContainsFunctor);
 
     futureWatcher.setFuture(future);
-
     // sometimes, wait cursor persists, this is a workaround
     QTimer::singleShot(5000,this,SLOT(restoreOverrideCursor()));
 }

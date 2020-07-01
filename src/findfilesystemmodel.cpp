@@ -195,11 +195,11 @@ void FindFileSystemModel::clear()
         qDebug("FindFileSystemModel::clear failed: cast failed");
 }
 
-void FindFileSystemModel::findInFiles(const QString &fileName, const QString &content, const QString &path)
+void FindFileSystemModel::findInFiles(const QString &fileName, const QString &content, const QString &path, bool waitCursor)
 {
     if(FindFileModel* ffm= qobject_cast<FindFileModel*>(sourceModel()))
     {
-        ffm->findInFiles(fileName,content,path);
+        ffm->findInFiles(fileName,content,path, waitCursor);
         return;
     }
     qDebug("FindFileSystemModel::findInFiles failed: cast failed");

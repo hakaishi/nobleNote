@@ -51,7 +51,7 @@ public:
     QFileInfo fileInfo(const QModelIndex & index) const;
     void appendFile(QString filePath); // append file with full path
     static QStringList find0(const QString &searchName, const QString &searchText,const QString& path); // searchName and searchText can be null QStrings
-    void findInFiles(const QString &path, const QString& fileName, const QString &content);
+    void findInFiles(const QString &path, const QString& fileName, const QString &content, bool waitCursor);
 
     QStringList mimeTypes() const;
     QMimeData * mimeData(const QModelIndexList &indexes) const;

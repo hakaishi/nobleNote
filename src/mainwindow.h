@@ -146,7 +146,7 @@ private:
       void tray_actions();
 #endif
 
-      void find();
+      void find(bool waitCursorEnabled = true);
       void openNote(const QModelIndex &ind);
       void openOneNote(QString path);
       void openAllNotes();
