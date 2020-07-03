@@ -247,6 +247,14 @@ MainWindow::MainWindow()
 
      connect(folderFSModel, SIGNAL(droppedAFile()), this, SLOT(createAndUpdateRecent())); //moving a note with
                                                                  //drag and drop removes it from the recent files
+
+     connect(folderFSModel,&FileSystemModel::droppedAFile, this, [this](){
+         QString text = searchText->text();
+         if(!text.isEmpty())
+         {
+             find(false);
+         }
+     });
 }
 
 MainWindow::~MainWindow()
@@ -398,7 +406,7 @@ void MainWindow::showBackupWindow()
        backup = new Backup(this);
 }
 
-void MainWindow::find()
+void MainWindow::find(bool waitCursorEnabled)
 {
     // disable note toolbar buttons because the current notes are not longer visible with the findNoteModel
 
@@ -407,7 +415,7 @@ void MainWindow::find()
          noteModel->setSourceModel(findNoteModel);
          noteModel->clear(); // if findNoteModel already set, clear old found list
          //noteModel->findInFiles(searchName->text(),searchText->text(),folderModel->rootPath());
-         noteModel->findInFiles(searchText->text(),searchText->text(),folderModel->rootPath());
+         noteModel->findInFiles(searchText->text(),searchText->text(),folderModel->rootPath(),waitCursorEnabled);
 
          actionNew_note->setDisabled(true);
 }

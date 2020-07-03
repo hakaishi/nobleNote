@@ -87,10 +87,8 @@ void FindFileModel::appendFile(QString filePath)
         return;
     }
 
-    QString filePathTrunc = info.filePath();
+    QString filePathTrunc = info.dir().dirName() + " / " + info.fileName();
 
-    while(filePathTrunc.count(QDir::separator()) > 1)
-      filePathTrunc.remove(0,filePathTrunc.indexOf(QDir::separator())+1);
 
     QStandardItem * fileItem = new QStandardItem(filePathTrunc);
     fileItem->setIcon(QFileIconProvider().icon(info));
@@ -103,7 +101,7 @@ bool FindFileModel::setData(const QModelIndex &index, const QVariant &value, int
      QStandardItemModel::setData(index,value,role); //set new name for list item
      //rename file before changing path of original file
      //value can be folder/filename or simply filename
-     bool f = QFile::rename(filePath(index),fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName());
+     bool f = QFile::rename(filePath(index),fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName().trimmed());
 
      //change path data
      QStandardItemModel::setData(index, fileInfo(index).path() + QDir::separator() + QFileInfo(value.toString()).fileName(), Qt::UserRole + 1);
@@ -128,16 +126,20 @@ QMimeData *FindFileModel::mimeData(const QModelIndexList &indexes) const
 }
 
  // this method may be called multiple times if the user is typing a search word
-void FindFileModel::findInFiles(const QString& fileName, const QString &content,const QString &path)
+void FindFileModel::findInFiles(const QString& fileName, const QString &content,const QString &path, bool waitCursor)
 {
 
     if(path.isEmpty() || (fileName.isEmpty() && content.isEmpty()))
         return;
 
     if(future.isRunning())
+    {
         future.cancel();
-    else
+    }
+    else if(waitCursor)
+    {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    }
 
     QStringList files;
     QDirIterator it(path, QDirIterator::Subdirectories);
@@ -154,7 +156,6 @@ void FindFileModel::findInFiles(const QString& fileName, const QString &content,
     future = QtConcurrent::filtered(files,fileContainsFunctor);
 
     futureWatcher.setFuture(future);
-
     // sometimes, wait cursor persists, this is a workaround
     QTimer::singleShot(5000,this,SLOT(restoreOverrideCursor()));
 }

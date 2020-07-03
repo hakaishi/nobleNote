@@ -106,6 +106,16 @@ void Note::loadSizeAndShow()
         show();
     }
     restoreWindowState();
+    if(!searchBar->text().isEmpty())
+    {
+        searchBar->searchLine()->setFocus();
+        searchBar->selectNextExpression();
+        searchBar->show();
+    }
+    else
+    {
+        searchBar->hide();
+    }
 
 }
 
@@ -170,8 +180,11 @@ void Note::keyPressEvent(QKeyEvent *k){
          searchBar->setText(textBrowser->textCursor().selectedText());
        }
        if(!searchBar->isVisible())
+       {
          searchBar->setVisible(true);
          searchBar->searchLine()->setFocus();
+        }
+
      }
 
      if((k->modifiers() == Qt::ControlModifier) && (k->key() == Qt::Key_T))

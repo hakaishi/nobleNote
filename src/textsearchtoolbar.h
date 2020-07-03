@@ -44,6 +44,8 @@ public:
 
      QLineEdit* searchLine() { return searchLine_;}
 
+     QString text() const { return searchLine_->text(); }
+
 public slots:
      void selectPreviousExpression();
      void highlightText(QString str);
