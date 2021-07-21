@@ -29,6 +29,7 @@
 #include <QFileInfo>
 #include <QDirIterator>
 #include <QTextDocument>
+#include <QElapsedTimer>
 
 
 HtmlNoteReader::HtmlNoteReader(const QString &filePath)
@@ -73,7 +74,11 @@ void HtmlNoteReader::read(const QString& filePath)
     QString html;
 
     QTextStream in(&file);
+#if QT_VERSION >= 0x060000
+    in.setEncoding(QStringConverter::Utf8);
+#else
     in.setCodec("UTF-8");
+#endif
     html = in.readAll();
     file.close();
 
@@ -146,7 +151,7 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
         return QString();
 
     QString content = html;
-    QTime time; // avoid forever loop
+    QElapsedTimer time; // avoid forever loop
     time.start();
     int metaIdx = 0;
     int endIdx = 0;
@@ -160,7 +165,7 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
 
         endIdx = content.indexOf(">",metaIdx+1);
 #if QT_VERSION >= 0x040800 // Qt Version > 4.8
-        QStringRef metaLine = content.midRef(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
+        QString metaLine = content.mid(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
 #else
         QString metaLine = content.mid(metaIdx,endIdx-metaIdx+1); // e.g. <meta name="qrichtext" content="1" />
 #endif
@@ -171,7 +176,7 @@ QString HtmlNoteReader::metaContent(const QString &html, const QString &name)
             if(idx != -1 || beforeIdx != -1)
             {
                 #if QT_VERSION >= 0x040800 // Qt Version > 4.8
-                return metaLine.toString().mid(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
+                return metaLine.mid(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
                 #else
                 return metaLine.mid(beforeIdx +1,(idx-beforeIdx+1) -2); // +1 and -1 to take the content between the " "
                 #endif

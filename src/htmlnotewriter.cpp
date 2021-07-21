@@ -31,6 +31,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QSettings>
+#include <QRegularExpression>
 
 HtmlNoteWriter::HtmlNoteWriter(const QString &filePath)
 {
@@ -76,7 +77,11 @@ void HtmlNoteWriter::write()
     }
 
     QTextStream out(&file);
+    #if QT_VERSION >= 0x060000
+    out.setEncoding(QStringConverter::Utf8); // set to UTF-8 for every platform, else ISO-8859-1 would be used on windows by default
+    #else
     out.setCodec("UTF-8"); // set to UTF-8 for every platform, else ISO-8859-1 would be used on windows by default
+    #endif
     out << html;
     file.close();
 }
@@ -100,7 +105,7 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
     QString folder;
     QString tag = reader.tag();
 
-    QRegExp illegal("[" +QRegExp::escape("\\^/?<>:*|\"")+ "]|^(com\\d|lpt\\d|con|nul|prn)$");
+    QRegularExpression illegal("[" +QRegularExpression::escape("\\^/?<>:*|\"")+ "]|^(com\\d|lpt\\d|con|nul|prn)$");
     if(!tag.isEmpty())
     {
         //  takes 2nd colon, remove before

@@ -36,7 +36,7 @@
 #include <QtWidgets/QSystemTrayIcon>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QListView>
-#include <QtWidgets/QFileSystemModel>
+#include <QFileSystemModel>
 #include <QAbstractItemModel>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QLabel>

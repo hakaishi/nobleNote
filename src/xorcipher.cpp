@@ -32,7 +32,7 @@ QString XorCipher::encrypt(QString sourceString, ushort key)
     encryptedString.reserve(sourceString.size());
     for(int i = 0; i< sourceString.size(); ++i)
     {
-        encryptedString+=sourceString.at(i).unicode()^key%255;
+        encryptedString+=QChar::fromLatin1(sourceString.at(i).unicode()^key%255);
     }
     return encryptedString;
 }
@@ -43,7 +43,7 @@ QString XorCipher::decrypt(QString encryptedString, ushort key)
     dencryptedString.reserve(encryptedString.size());
     for(int i = 0; i< encryptedString.size(); ++i)
     {
-        dencryptedString+=encryptedString.at(i).unicode()^key%255;
+        dencryptedString+=QChar::fromLatin1(encryptedString.at(i).unicode()^key%255);
     }
     return dencryptedString;
 }

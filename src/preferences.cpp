@@ -29,7 +29,7 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QFileDialog>
-#include <QRegExp>
+#include <QRegularExpression>
 
 Preferences::Preferences(QWidget *parent): QDialog(parent)
 {

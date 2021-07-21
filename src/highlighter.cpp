@@ -25,24 +25,28 @@
 
 #include "highlighter.h"
 
+#include <QRegularExpression>
+
 Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){ }
 
 void Highlighter::highlightBlock(const QString &text){
      if(!expression.isEmpty()){
        HighlightingRule rule;
        keywordFormat.setBackground(Qt::yellow);
-       rule.pattern = QRegExp(expression, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+       rule.pattern = QRegularExpression(expression, caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption);
        rule.format = keywordFormat;
        highlightingRules.append(rule);
 
-       for(const HighlightingRule &rule : highlightingRules){
-         QRegExp expression(rule.pattern);
-         int index = expression.indexIn(text);
-         while(index >= 0){
-           int length = expression.matchedLength();
-           setFormat(index, length, rule.format);
-           index = expression.indexIn(text, index + length);
-         }
+       for(const HighlightingRule &rule : qAsConst(highlightingRules)){
+           // FIXME this was ported from QRegExp and is not longer working
+//         QRegularExpression expression(rule.pattern);
+//         int index = 0;
+//         while(index >= 0){
+//            QRegularExpressionMatch matched  =  expression.match(text,index);
+//           int length = matched.capturedLength();
+//           setFormat(index, length, rule.format);
+//           index = index + length+1;
+//         }
        }
      }
 }

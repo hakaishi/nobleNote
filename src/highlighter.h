@@ -29,6 +29,7 @@
 #include <QSyntaxHighlighter>
 #include <QHash>
 #include <QTextCharFormat>
+#include <QRegularExpression>
 
 /**
  * highlights words when find in text is activated
@@ -48,7 +49,7 @@ class Highlighter : public QSyntaxHighlighter{
 
      private:
       struct HighlightingRule{
-         QRegExp pattern;
+         QRegularExpression pattern;
          QTextCharFormat format;
       };
       QVector<HighlightingRule> highlightingRules;

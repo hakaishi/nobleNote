@@ -289,9 +289,9 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
       #if QT_VERSION < 0x050000 && !defined(Q_OS_WIN32)
        backupPath = QDir::home().absolutePath() +  "/.local/share/" + qApp->applicationName();
       #elif QT_VERSION < 0x050000
-       backupPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+       backupPath = QDesktopServices::storageLocation(QDesktopServices::AppLocalDataLocation);
       #elif QT_VERSION >= 0x050000
-       backupPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+       backupPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).first();
       #endif
 
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...

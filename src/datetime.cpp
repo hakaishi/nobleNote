@@ -33,9 +33,9 @@ QString DateTime::getTimeZoneOffset(QDateTime dt1)
     int offset = dt2.secsTo(dt1) / 3600;
 
     if (offset > 0)
-        return QString().sprintf("+%02d:00",offset);
+        return QString().asprintf("+%02d:00",offset);
 
-    return QString().sprintf("%02d:00",offset);
+    return QString().asprintf("%02d:00",offset);
 }
 
 QString DateTime::toISO8601(QDateTime dt)

@@ -40,7 +40,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
     actionTextBold = new QAction(QIcon::fromTheme("format-text-bold",
       QIcon(":bold")), tr("&Bold"), this);
-    actionTextBold->setShortcut(Qt::CTRL + Qt::Key_B);
+    actionTextBold->setShortcut(Qt::CTRL | Qt::Key_B);
     actionTextBold->setPriority(QAction::LowPriority);
     QFont bold;
     bold.setBold(true);
@@ -52,7 +52,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     actionTextItalic = new QAction(QIcon::fromTheme("format-text-italic",
       QIcon(":italic")), tr("&Italic"), this);
     actionTextItalic->setPriority(QAction::LowPriority);
-    actionTextItalic->setShortcut(Qt::CTRL + Qt::Key_I);
+    actionTextItalic->setShortcut(Qt::CTRL | Qt::Key_I);
     QFont italic;
     italic.setItalic(true);
     actionTextItalic->setFont(italic);
@@ -62,7 +62,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
     actionTextUnderline = new QAction(QIcon::fromTheme("format-text-underline",
       QIcon(":underlined")), tr("&Underline"), this);
-    actionTextUnderline->setShortcut(Qt::CTRL + Qt::Key_U);
+    actionTextUnderline->setShortcut(Qt::CTRL | Qt::Key_U);
     actionTextUnderline->setPriority(QAction::LowPriority);
     QFont underline;
     underline.setUnderline(true);
@@ -73,7 +73,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
     actionTextStrikeOut = new QAction(QIcon::fromTheme("format-text-strikethrough",
       QIcon(":strikedout")), tr("&Strike Out"), this);
-    actionTextStrikeOut->setShortcut(Qt::CTRL + Qt::Key_S);
+    actionTextStrikeOut->setShortcut(Qt::CTRL | Qt::Key_S);
     actionTextStrikeOut->setPriority(QAction::LowPriority);
     QFont strikeOut;
     strikeOut.setStrikeOut(true);
@@ -83,20 +83,20 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     actionTextStrikeOut->setCheckable(true);
 
     actionInsertHyperlink = new QAction(QIcon::fromTheme("emblem-web",QIcon(":hyperlink")),tr("&Hyperlink"),this);
-    actionInsertHyperlink->setShortcut(Qt::CTRL + Qt::Key_K); // word shortcut
+    actionInsertHyperlink->setShortcut(Qt::CTRL | Qt::Key_K); // word shortcut
     actionInsertHyperlink->setPriority(QAction::LowPriority);
     connect(actionInsertHyperlink,SIGNAL(triggered()),this,SLOT(insertHyperlink()));
     addAction(actionInsertHyperlink);
 
     actionClearFormatting = new QAction(QIcon::fromTheme("TODO",QIcon(":clearFormatting")),tr("&Clear formatting"),this);
     actionClearFormatting->setPriority(QAction::LowPriority);
-    actionClearFormatting->setShortcut(Qt::CTRL + Qt::Key_Space); // ms word clear font formatting shortcut
+    actionClearFormatting->setShortcut(Qt::CTRL | Qt::Key_Space); // ms word clear font formatting shortcut
     connect(actionClearFormatting,SIGNAL(triggered()),this,SLOT(clearCharFormat()));
     addAction(actionClearFormatting);
 
     actionBulletPoint = new QAction(QIcon::fromTheme("TODO",QIcon(":bulletpoints")),tr("Bullet point"),this);
     actionBulletPoint->setPriority(QAction::LowPriority);
-    actionBulletPoint->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L); // ms word add bullet points formatting shortcut
+    actionBulletPoint->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_L); // ms word add bullet points formatting shortcut
     actionBulletPoint->setCheckable(true);
     connect(actionBulletPoint,SIGNAL(triggered()),this,SLOT(insertBulletPoints()));
     addAction(actionBulletPoint);
@@ -130,7 +130,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     fontSizeComboBox->setEditable(true);
     connect(fontSizeComboBox, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
 
-    const auto sizes = QFontDatabase().standardSizes();
+    const auto sizes = QFontDatabase::standardSizes();
     for(int size : sizes)
       fontSizeComboBox->addItem(QString::number(size));
 
@@ -142,7 +142,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 
 void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &format){
      QTextCursor cursor = textEdit_->textCursor();
-     if(cursor.selectedText() == 0)
+     if(cursor.selectedText().isEmpty())
      {
         cursor.select(QTextCursor::WordUnderCursor);
      }
@@ -153,7 +153,7 @@ void TextFormattingToolbar::mergeFormatOnWordOrSelection(const QTextCharFormat &
 void TextFormattingToolbar::clearCharFormat()
 {
      QTextCursor cursor = textEdit_->textCursor();
-     if(cursor.selectedText() == 0)
+     if(cursor.selectedText().isEmpty())
        cursor.select(QTextCursor::WordUnderCursor);
      cursor.setCharFormat(QTextCharFormat());
      textEdit_->setCurrentCharFormat(QTextCharFormat());
@@ -329,7 +329,7 @@ QRegExp(">\\b([a-zA-Z0-9_\\.\\-]+@[a-zA-Z0-9_\\.\\-]+)\\b(<?)", Qt::CaseInsensit
 
 void TextFormattingToolbar::fontOfText(const QString &f){
      QTextCharFormat fmt;
-     fmt.setFontFamily(f);
+     fmt.setFontFamilies(QStringList(f));
      mergeFormatOnWordOrSelection(fmt);
 }
 

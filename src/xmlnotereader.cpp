@@ -76,35 +76,35 @@ void XmlNoteReader::parseXml()
     {
         readNext();
 
-        if(name() == "note-content")
+        if(name() == QLatin1String("note-content"))
         {
             if(!document_) // if no document_ set where note content can be written into
                 skipCurrentElement();
             else
                 readContent();
         }
-        else if(name() == "id" || name() == "uuid") // only "id" is written
+        else if(name() == QLatin1String("id") || name() == QLatin1String("uuid")) // only "id" is written
         {
             QString idStr = readElementText();
             uuid_ = parseUuid(idStr);
         }
-        else if(name() == "title")
+        else if(name() == QLatin1String("title"))
         {
             title_ = readElementText();
         }
-        else if(name() == "last-change-date")
+        else if(name() == QLatin1String("last-change-date"))
         {
             lastChange_ = QDateTime::fromString(readElementText(),Qt::ISODate);
         }
-        else if(name() == "last-metadata-change")
+        else if(name() == QLatin1String("last-metadata-change"))
         {
             lastMetadataChange_ = QDateTime::fromString(readElementText(),Qt::ISODate);
         }
-        else if(name() == "create-date")
+        else if(name() == QLatin1String("create-date"))
         {
             createDate_ = QDateTime::fromString(readElementText(),Qt::ISODate);
         }
-        else if(name() == "tag")
+        else if(name() == QLatin1String("tag"))
         {
             tag_ = readElementText();
         }
@@ -148,66 +148,68 @@ void XmlNoteReader::readContent()
             // read elements <bold> <italic> and set the formatting
         case StartElement:
         {
-            if(name() == "bold")
+            if(name().toLatin1() == "bold")
                 format.setFontWeight(QFont::Bold);
 
-            if(name() == "italic")
+            if(name().toLatin1() == "italic")
                 format.setFontItalic(true);
 
-            if(name() == "underline")
+            if(name().toLatin1() == "underline")
                 format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
 
-            if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
+            if(name().toLatin1() == "strikethrough" || name().toLatin1() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(true);
 
-            if(name() == "highlight")
+            if(name().toLatin1() == "highlight")
                 format.setBackground(QColor(255,255,0));
 
-            if(qualifiedName() == "size:small")
+            if(qualifiedName().toLatin1() == "size:small")
                 format.setFontPointSize(QApplication::font().pointSize()* 0.8f);
 
-            if(qualifiedName() == "size:large")
+            if(qualifiedName().toLatin1() == "size:large")
                 format.setFontPointSize(QApplication::font().pointSize()*1.4f);
 
-            if(qualifiedName() == "size:huge")
+            if(qualifiedName().toLatin1() == "size:huge")
                 format.setFontPointSize(QApplication::font().pointSize()*1.6f);
 
-            if(name() == "monospace")
-                format.setFontFamily("Monospace");
+            if(name().toLatin1() == "monospace")
+                format.setFontFamilies(QStringList("Monospace"));
 
-            if(qualifiedName() == "link:url")
+            if(qualifiedName().toLatin1() == "link:url")
+            {
                 linkFormat = true;
+            }
 
                 break;
         }
            // unset formatting
         case EndElement:
         {
-            if(name() == "note-content") // end of note content, exit this method
+            if(name().toLatin1() == "note-content") // end of note content, exit this method
                 return;
 
-            if(name() == "bold")
+            if(name().toLatin1() == "bold")
                 format.setFontWeight(QFont::Normal);
 
-            if(name() == "italic")
+            if(name().toLatin1() == "italic")
                 format.setFontItalic(false);
 
-            if(name() == "underline")
+            if(name().toLatin1() == "underline")
                 format.setUnderlineStyle(QTextCharFormat::NoUnderline);
 
-            if(name() == "strikethrough" || name() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
+            if(name().toLatin1() == "strikethrough" || name().toLatin1() == "strikeout") // only strikethrough is written, but strikeout is also allowed for reading
                 format.setFontStrikeOut(false);
 
-            if(name() == "highlight")
+            if(name().toLatin1() == "highlight")
                 format.clearBackground();
 
-            if(qualifiedName() == "size:small" || qualifiedName() == "size:large" || qualifiedName() == "size:huge") // mutual exclusive options
+            if(qualifiedName().toLatin1() == "size:small" || qualifiedName().toLatin1() == "size:large" || qualifiedName().toLatin1() == "size:huge") // mutual exclusive options
                 format.setFontPointSize(QApplication::font().pointSizeF());
 
-            if(name() == "monospace")
-                format.setFontFamily(QApplication::font().family());
+            if(name().toLatin1() == "monospace")
+                format.setFontFamilies(QStringList(QApplication::font().family()));
 
-            if(name() == "link:url")
+            if(name().toLatin1() == "link:url")
                 linkFormat = false;
 
             // ignore id
@@ -229,14 +231,14 @@ void XmlNoteReader::readContent()
 {
     QUuid uuid;
      // try to parse the rightmost 32 digits and four hyphens
-    uuid = QUuid(idStr.rightRef(32 + 4).toString());
+    uuid = QUuid(idStr.right(32 + 4));
 
     if(uuid.isNull()) // if parsing fails, try more complex parsing
     {
-        if(idStr.leftRef(QString("urn:uuid:").length()) == "urn:uuid:") // check if first 9 chars match "urn:uuid:"
+        if(idStr.left(QString("urn:uuid:").length()) == "urn:uuid:") // check if first 9 chars match "urn:uuid:"
         {
-            QStringRef uuidRef = idStr.midRef(QString("urn:uuid:").length(),32+4); //32 digits and four hyphens
-            uuid = QUuid(uuidRef.toString());
+            QString uuidRef = idStr.mid(QString("urn:uuid:").length(),32+4); //32 digits and four hyphens
+            uuid = QUuid(uuidRef);
         }
         else // try to parse the whole string
         {
@@ -260,7 +262,7 @@ void XmlNoteReader::readContent()
     QXmlStreamReader reader(&file);
     while(!reader.atEnd())
     {
-        if(reader.readNextStartElement() && (reader.name() == "id" || reader.name() == "uuid"))
+        if(reader.readNextStartElement() && (reader.name().toLatin1() == "id" || reader.name().toLatin1() == "uuid"))
         {
             QString idStr = reader.readElementText();
             return parseUuid(idStr);
@@ -303,9 +305,9 @@ void XmlNoteReader::readContent()
         reader.readNext();
         if(reader.isStartElement())
         {
-            if(reader.name() == "note")
+            if(reader.name().toLatin1() == "note")
                 return true;
-            else if(reader.name() == "html" || reader.name() == "head") // detect html
+            else if(reader.name().toLatin1() == "html" || reader.name().toLatin1() == "head") // detect html
                 return false;
         }
         if(reader.hasError()) // this should detect plain text

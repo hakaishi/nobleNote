@@ -49,8 +49,13 @@ int main (int argc, char *argv[]){
      //Qt translations
      QTranslator qtTranslator;
      qtTranslator.load("qt_" + QLocale::system().name(),
+#if QT_VERSION >= 0x060000
+       QLibraryInfo::path(QLibraryInfo::TranslationsPath));
+#else
        QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#endif
      app.installTranslator(&qtTranslator);
+
 
      //NobleNote translations
      QTranslator translator;
@@ -66,7 +71,7 @@ int main (int argc, char *argv[]){
 
      QSettings::setDefaultFormat(QSettings::IniFormat);
 
-     QFileInfo settingsFile = QFile(QDir::toNativeSeparators(app.applicationDirPath() + "/" +
+     QFileInfo settingsFile = QFileInfo(QDir::toNativeSeparators(app.applicationDirPath() + "/" +
                               app.applicationName() + "/" + QFileInfo(QSettings().fileName()).fileName()));
 
      if(settingsFile.exists()) //check if there is a conf/ini file in a folder called nobleNote next to the executable (for portable version)

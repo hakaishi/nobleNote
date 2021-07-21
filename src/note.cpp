@@ -36,8 +36,10 @@
 #include <QToolBar>
 #include <QColorDialog>
 #include <QSettings>
-#include <QDesktopWidget>
 #include <QtConcurrentRun>
+#if QT_VERSION < 0x060000
+#include <QDesktopWidget>
+#endif
 //#include "flickcharm.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
@@ -50,10 +52,10 @@ Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
      textDocument = new TextDocument(this);
      textBrowser->setDocument(textDocument);
      textBrowser->ensureCursorVisible();
-     textBrowser->setTabStopWidth( fontMetrics().width(" ") * 4); // set tab size to 4 for android compatibility
+     textBrowser->setTabStopDistance(fontMetrics().boundingRect(" ").width() * 4); // set tab size to 4 for android compatibility
 
      showHideToolbars = new QAction(this);
-     showHideToolbars->setShortcut(Qt::CTRL + Qt::Key_T);
+     showHideToolbars->setShortcut(Qt::CTRL | Qt::Key_T);
      showHideToolbars->setPriority(QAction::LowPriority);
      connect(showHideToolbars, SIGNAL(triggered()), this, SLOT(showOrHideToolbars()));
      textBrowser->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -164,7 +166,11 @@ void Note::restoreWindowState()
     if(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").isValid())
        restoreGeometry(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").toByteArray());
     else // center in desktop if there's no saved position
-       move(QApplication::desktop()->screen()->rect().center() - rect().center());
+#if QT_VERSION >= 0x060000
+        move(QWidget::screen()->geometry().center() - rect().center());
+#else
+        move(QApplication::desktop()->rect().center() - rect().center());
+#endif
 
 }
 
