@@ -38,15 +38,12 @@ void Highlighter::highlightBlock(const QString &text){
        highlightingRules.append(rule);
 
        for(const HighlightingRule &rule : qAsConst(highlightingRules)){
-           // FIXME this was ported from QRegExp and is not longer working
-//         QRegularExpression expression(rule.pattern);
-//         int index = 0;
-//         while(index >= 0){
-//            QRegularExpressionMatch matched  =  expression.match(text,index);
-//           int length = matched.capturedLength();
-//           setFormat(index, length, rule.format);
-//           index = index + length+1;
-//         }
+
+         QRegularExpressionMatchIterator it  =  rule.pattern.globalMatch(text);
+         while(it.hasNext()){
+           QRegularExpressionMatch match = it.next();
+           setFormat(match.capturedStart(), match.capturedLength(), rule.format);
+         }
        }
      }
 }

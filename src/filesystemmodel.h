@@ -80,7 +80,8 @@ public:
                    if(this->index(QFileInfo(file).absoluteFilePath()) == parent)
                      parentPath = QFileInfo(file).absoluteFilePath();
 
-            if(dirList.contains(QFileInfo(files.first()).absolutePath())) //check if files come from outside the note folders
+            auto firstInfo = QFileInfo(files.first());
+            if(dirList.contains(firstInfo)) //check if files come from outside the note folders
                action = Qt::MoveAction;
 
             //remove all file titles that don't exist in the target folder, because they will be sucessfully dropped

@@ -53,7 +53,7 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
      connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveSettings()));
      connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(setNewPaths()));
      connect(kineticScrolling,SIGNAL(toggled(bool)),this,SIGNAL(kineticScrollingEnabledChanged(bool)));
-     connect(fontSizeComboBox,SIGNAL(activated(QString)),this,SLOT(setFontSize(QString)));
+     connect(fontSizeComboBox,&QFontComboBox::currentTextChanged,this,&Preferences::setFontSize);
 }
 
 void Preferences::setFontSize(const QString size)

@@ -213,7 +213,8 @@ void NoteDescriptor::load()
 
         // run read concurrently
          // calls onHtmlLoadFinished to set the text document in the gui thread, then calls onLoadFinished
-        QtConcurrent::run(this,&NoteDescriptor::loadHtml,reader);
+        auto fn = std::bind(&NoteDescriptor::loadHtml,this,reader);
+        QtConcurrent::run(fn);
 
     }
     title_ = QFileInfo(filePath_).baseName();

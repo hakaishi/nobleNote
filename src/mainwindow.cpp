@@ -196,20 +196,20 @@ MainWindow::MainWindow()
           QItemSelection)),this,SLOT(folderActivated(QItemSelection,QItemSelection))); //Wrapper
      connect(folderView->itemDelegate(),SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)),
              this,SLOT(folderRenameFinished(QWidget*,QAbstractItemDelegate::EndEditHint)));
-     connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)),
-             this, SLOT(showContextMenuFolder(const QPoint &)));
+     connect(folderView, SIGNAL(customContextMenuRequested(QPoint)),
+             this, SLOT(showContextMenuFolder(QPoint)));
      //connect(searchName, SIGNAL(textChanged(const QString)), this, SLOT(find()));
-     connect(searchText, SIGNAL(textChanged(const QString)), this, SLOT(find()));
+     connect(searchText, SIGNAL(textChanged(QString)), this, SLOT(find()));
      connect(noteFSModel,SIGNAL(fileRenamed(QString,QString,QString)),this,SLOT(noteRenameFinished(QString,QString,QString)));
-     connect(fileWatcher, SIGNAL(fileChanged(const QString)), this, SLOT(createAndUpdateRecent()));
+     connect(fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(createAndUpdateRecent()));
      //     connect(folderList, SIGNAL(clicked(const QModelIndex &)), this,
      //       SLOT(setCurrentFolder(const QModelIndex &)));
      //     connect(folderList,SIGNAL(activated(QModelIndex)), this,
      //       SLOT(setCurrentFolder(QModelIndex)));
      connect(noteView,SIGNAL(activated(QModelIndex)), this,
              SLOT(openNote(QModelIndex)));
-     connect(noteView, SIGNAL(customContextMenuRequested(const QPoint &)),
-             this, SLOT(showContextMenuNote(const QPoint &)));
+     connect(noteView, SIGNAL(customContextMenuRequested(QPoint)),
+             this, SLOT(showContextMenuNote(QPoint)));
      connect(noteView->selectionModel(),SIGNAL(selectionChanged(QItemSelection,
           QItemSelection)),this,SLOT(noteActivated(QItemSelection,QItemSelection))); //Wrapper
      connect(noteView,SIGNAL(activated(QModelIndex)),this,SLOT(noteActivated(QModelIndex)));

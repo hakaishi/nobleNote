@@ -37,8 +37,10 @@ int main (int argc, char *argv[]){
      QApplication app(argc, argv);
 
 #ifdef Q_OS_WINDOWS
+#if QT_VERSION < 0x060000
      // this replaces Qt's MS ShellDlg2 font with the proper Windows font in some labels
      app.setFont(QApplication::font("QMenu"));
+#endif
 #endif
 
 
@@ -89,7 +91,7 @@ int main (int argc, char *argv[]){
      if(!QFile(QSettings().value("import_path").toString()).exists())
          QSettings().setValue("import_path", QDir::homePath());
      bool rootPathIsSet = QSettings().value("root_path").isValid();
-     bool rootPathExists = QFileInfo(QSettings().value("root_path").toString()).exists();
+     bool rootPathExists = QFileInfo::exists(QSettings().value("root_path").toString());
      bool rootPathIsWritable = QFileInfo(QSettings().value("root_path").toString()).isWritable();
      if(!rootPathExists || !rootPathIsWritable)
      {

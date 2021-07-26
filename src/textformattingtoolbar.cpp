@@ -121,14 +121,13 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
     fontComboBox = new QFontComboBox(this);
     fontComboBox->setFocusPolicy(Qt::TabFocus);
     addWidget(fontComboBox);
-    connect(fontComboBox, SIGNAL(activated(QString)), this, SLOT(fontOfText(QString)));
-
+    connect(fontComboBox, &QFontComboBox::currentTextChanged, this, &TextFormattingToolbar::fontOfText);
     fontSizeComboBox = new QComboBox(this);
     fontSizeComboBox->setFocusPolicy(Qt::TabFocus);
     fontSizeComboBox->setObjectName("comboSize");
     addWidget(fontSizeComboBox);
     fontSizeComboBox->setEditable(true);
-    connect(fontSizeComboBox, SIGNAL(activated(QString)), this, SLOT(pointSizeOfText(QString)));
+    connect(fontSizeComboBox, &QFontComboBox::currentTextChanged, this, &TextFormattingToolbar::pointSizeOfText);
 
     const auto sizes = QFontDatabase::standardSizes();
     for(int size : sizes)
