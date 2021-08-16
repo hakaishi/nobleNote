@@ -12,6 +12,8 @@
 
 # Qt-es
 
+!Qt5*.dll
+
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -41,3 +43,6 @@ bin/
 
 # QtCtreator CMake
 CMakeLists.txt.user
+
+# Visual Studio
+.vs
