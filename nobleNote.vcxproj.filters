@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts;xlf</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts;xlf</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\backup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\datetime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fileiconprovider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\findfilemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\findfilesystemmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\highlighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\htmlnotereader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\htmlnotewriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lineedit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\note.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\notedescriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\noteimporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\preferences.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\progressreceiver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\systemtraycreator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textbrowser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textdocument.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textformattingtoolbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textsearchtoolbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\trash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\welcome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xmlnotereader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xmlnotewriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xorcipher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\abstractnotereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="src\backup.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="src\datetime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fileiconprovider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="src\filesystemmodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\findfilemodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\findfilesystemmodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\highlighter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="src\htmlnotereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\htmlnotewriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="src\lineedit.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\note.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\notedescriptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\noteimporter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\preferences.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\progressreceiver.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\systemtraycreator.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\textbrowser.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\textdocument.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\textformattingtoolbar.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\textsearchtoolbar.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\trash.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\welcome.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="src\xmlnotereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\xmlnotewriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\xorcipher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <CustomBuild Include="build\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\translations\noblenote_ast.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_cs.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_de.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_de_DE.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_es.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_gl.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_ms.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_pl.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_ru.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="src\translations\noblenote_uk.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="src\ui\mainwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\ui\note.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\ui\preferences.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\ui\trash.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\ui\welcome.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\noblenote-icons\bulletpoints.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\clearFormatting.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\cut_file.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\emblem-web.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\file.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\fileclose.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\filenew.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\fileremove.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\filerename.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\folder.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\foldernew.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\folderremove.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\folderrename.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\format-text-bold.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\format-text-italic.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\format-text-strikethrough.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\format-text-underline.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <QtRcc Include="nobleNote.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <None Include="src\noblenote-icons\noblenote_64x64.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\preferences.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\noblenote-icons\trash.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="version.txt">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+</Project>
