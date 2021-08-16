@@ -10,6 +10,8 @@ It is compatible to the [nobleNoteAndroid](https://github.com/taiko000/nobleNote
 
 Any platform supported by Qt: Windows, Linux, macOS
 
+[Qt 5.9](https://doc.qt.io/archives/qt-5.9/) is the latest version that will build without any changes to the project.
+
 ## Sync notes between desktop and mobile devices
 
 1.) Install [nobleNote](https://github.com/hakaishi/nobleNote) on your Linux/Windows/macOS device and find the folder containing the nobleNote notebooks. 
@@ -56,6 +58,18 @@ To uninstall type:
 (Note that ~/.config/nobleNote.conf and
  the notes at their location won't be removed.
 Backups are in their default data location.)
+
+## Building From Visual Studio 2019
+
+1. Install the [Qt Creator IDE](http://qt.io/download).  You will only need the Qt 5.9 component.
+
+2. Install the [Qt Visual Studio Tools](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools2019) extension from the Visual Studio Marketplace.
+
+3. Import your .pro projects into Visual Studio. To do that, select the Qt VS Tools > Open Qt Project File (.pro) to let the extension create a VS solution and project from your existing Qt .pro file.
+
+4. You will probably need to retarget your solution in VS 2019 to get the build to work.  Make sure you clean and rebuild.
+
+[Source](https://devblogs.microsoft.com/cppblog/bring-your-existing-qt-projects-to-visual-studio/)
 
 ## License
 
