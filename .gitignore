@@ -12,8 +12,6 @@
 
 # Qt-es
 
-!Qt5*.dll
-
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -31,7 +29,11 @@ Makefile*
 
 # folders
 build/
-bin/
+debug/bin/*
+release/bin/*
+
+!Qt5*.dll
+!Qt5*.pdb
 
 # QtCreator
 
