@@ -29,11 +29,8 @@ Makefile*
 
 # folders
 build/
-debug/bin/*
-release/bin/*
-
-!Qt5*.dll
-!Qt5*.pdb
+debug/
+release/
 
 # QtCreator
 
