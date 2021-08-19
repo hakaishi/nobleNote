@@ -69,6 +69,22 @@ Backups are in their default data location.)
 
 4. You will probably need to retarget your solution in VS 2019 to get the build to work.  Make sure you clean and rebuild.
 
+5. After building the project, you will need to copy the following files from C:\Qt\5.9\msvc2017_64\bin to your project's \debug\bin directory:
+    * Qt5Concurrentd.dll
+    * Qt5Cored.dll
+    * Qt5Guid.dll
+    * Qt5Widgetsd.dll
+    * Optionally copy the *.pdb files as well.
+
+6. Copy the following to your project's \release\bin directory:
+    * Qt5Concurrent.dll
+    * Qt5Core.dll
+    * Qt5Gui.dll
+    * Qt5Widgets.dll
+    * Optionally copy the *.pdb files as well.
+
+...or just run C:\Qt\5.9\msvc2017_64\bin\windeployqt.exe.
+
 [Source](https://devblogs.microsoft.com/cppblog/bring-your-existing-qt-projects-to-visual-studio/)
 
 ## License
