@@ -43,3 +43,5 @@ bin/
 
 # QtCtreator CMake
 CMakeLists.txt.user
+
+*.qtc_clangd
