@@ -95,6 +95,7 @@ void HtmlNoteWriter::insertMetaElement(QString *html, const QString &name, const
 
     QTextDocument document;
     XmlNoteReader reader(xmlFilePath,&document);
+    reader.read();
 
     QString folder;
     QString tag = reader.tag();
