@@ -258,9 +258,7 @@ void NoteDescriptor::onLoadFinished(AbstractNoteReader *reader, bool isXmlNote)
         uuid_ = uuid_.isNull() ? QUuid::createUuid() : uuid_;
         //lastChange_ gets written by save
         // createDate_ gets written by HtmlNoteWriter
-        readOnly_ = !QSettings().value("convert_notes",true).toBool();
-        if(!readOnly_)
-            save(filePath_,uuid_,true); // only overwrite if convert_notes is enabled in settings
+        save(filePath_,uuid_,true);
     }
 
 

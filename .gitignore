@@ -39,5 +39,7 @@ bin/
 *.qmlproject.user
 *.qmlproject.user.*
 
+.qtc_clangd*
+
 # QtCtreator CMake
 CMakeLists.txt.user

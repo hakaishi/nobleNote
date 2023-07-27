@@ -43,7 +43,6 @@ Preferences::Preferences(QWidget *parent): QDialog(parent)
 
      openNotesFromTray->setChecked(settings->value("open_notes_from_tray", false).toBool());
      dontQuit->setChecked(settings->value("dont_quit_on_close",false).toBool());
-     convertNotes->setChecked(settings->value("convert_notes",true).toBool());
      showSource->setChecked(settings->value("show_source", false).toBool());
      kineticScrolling->setChecked(settings->value("kinetic_scrolling", false).toBool());
      silentStart->setChecked(settings->value("Hide_main_at_startup",false).toBool());
@@ -109,7 +108,6 @@ void Preferences::saveSettings()
 
      settings->setValue("dont_quit_on_close", dontQuit->isChecked());
      settings->setValue("open_notes_from_tray", openNotesFromTray->isChecked());
-     settings->setValue("convert_notes", convertNotes->isChecked());
      settings->setValue("note_editor_default_size", QSize(sizeSpinWidth->value(),sizeSpinHeight->value()));
      settings->setValue("show_source", showSource->isChecked());
      settings->setValue("Hide_main_at_startup", silentStart->isChecked());
