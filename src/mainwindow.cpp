@@ -649,15 +649,18 @@ void MainWindow::openAllNotes(){
               return;
           }
 
-          if(noteIsOpen(notePath))
-            return;
-
           openOneNote(notePath);
      }
 }
 
 void MainWindow::openOneNote(QString path)
 {
+     if(noteIsOpen(path))
+     {
+          return;
+     }
+
+
      Note* note = new Note(path);
      openNotes += note;
      note->setObjectName(path);
