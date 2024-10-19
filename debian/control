@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: nobleNote Developers <noblenote.developers@gmail.com>
 Uploaders: Fabian Deuchler <Taiko000@gmail.com>,
            Christian Metscher <hakaishi@web.de>
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper-compat (= 13),
                qt5-qmake:native,
                qtbase5-dev,
                qttools5-dev-tools
