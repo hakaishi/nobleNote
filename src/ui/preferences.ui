@@ -282,7 +282,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Backup directroy:</string>
+      <string>Backup directory:</string>
      </property>
     </widget>
    </item>

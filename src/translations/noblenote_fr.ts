@@ -445,7 +445,7 @@
         <translation>Dossier racine</translation>
     </message>
     <message>
-        <source>Backup directroy:</source>
+        <source>Backup directory:</source>
         <translation>Dossier de sauvegarde</translation>
     </message>
     <message>
