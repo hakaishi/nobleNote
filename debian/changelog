@@ -1,6 +1,7 @@
 noblenote (1.3.0-1) UNRELEASED; urgency=medium
 
   * New upstream release.
+  * Run wrap-and-sort.
 
  -- Simon Quigley <tsimonq2@debian.org>  Sat, 19 Oct 2024 12:03:39 -0500
 
