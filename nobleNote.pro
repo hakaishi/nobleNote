@@ -22,15 +22,6 @@ RC_FILE += icon.rc
 
 system(lrelease nobleNote.pro)
 
-# BUILDTIME and BUILDDATE will be shown in the About dialog
-win32 {
-DEFINES += BUILDTIME=\\\"$$system('echo %time%')\\\"
-DEFINES += BUILDDATE=\\\"$$system('echo %date%')\\\"
-} else {
-DEFINES += BUILDTIME=\\\"$$system(date '+%H:%M.%s')\\\"
-DEFINES += BUILDDATE=\\\"$$system(date '+%d/%m/%y')\\\"
-}
-
 QMAKE_DISTCLEAN = src/translations/*.qm
 
 # Input
