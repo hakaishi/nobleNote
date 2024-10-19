@@ -26,6 +26,7 @@
 #include "highlighter.h"
 
 #include <QRegularExpression>
+#include <utility>
 
 Highlighter::Highlighter(QTextDocument *parent) : QSyntaxHighlighter(parent){ }
 
@@ -37,7 +38,7 @@ void Highlighter::highlightBlock(const QString &text){
        rule.format = keywordFormat;
        highlightingRules.append(rule);
 
-       for(const HighlightingRule &rule : qAsConst(highlightingRules)){
+       for (const HighlightingRule &rule : std::as_const(highlightingRules)) {
 
          QRegularExpressionMatchIterator it  =  rule.pattern.globalMatch(text);
          while(it.hasNext()){

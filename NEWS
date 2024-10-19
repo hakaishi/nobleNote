@@ -1,6 +1,8 @@
 Release 1.4.0
 =============
 
+ - port to Qt 6 and only support that version
+
 Release 1.3.0
 =============
 

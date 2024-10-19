@@ -37,9 +37,6 @@
 #include <QColorDialog>
 #include <QSettings>
 #include <QtConcurrentRun>
-#if QT_VERSION < 0x060000
-#include <QDesktopWidget>
-#endif
 //#include "flickcharm.h"
 
 Note::Note(QString filePath, QWidget *parent) : QMainWindow(parent){
@@ -166,11 +163,7 @@ void Note::restoreWindowState()
     if(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").isValid())
        restoreGeometry(QSettings().value("Notes/"+noteDescriptor_->uuid().toString()+"_window_position").toByteArray());
     else // center in desktop if there's no saved position
-#if QT_VERSION >= 0x060000
         move(QWidget::screen()->geometry().center() - rect().center());
-#else
-        move(QApplication::desktop()->rect().center() - rect().center());
-#endif
 
 }
 

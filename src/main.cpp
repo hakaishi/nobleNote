@@ -36,13 +36,6 @@ int main (int argc, char *argv[]){
 
      QApplication app(argc, argv);
 
-#ifdef Q_OS_WINDOWS
-#if QT_VERSION < 0x060000
-     // this replaces Qt's MS ShellDlg2 font with the proper Windows font in some labels
-     app.setFont(QApplication::font("QMenu"));
-#endif
-#endif
-
 
      app.setApplicationName("nobleNote");
      app.setOrganizationName("nobleNote");
@@ -50,12 +43,10 @@ int main (int argc, char *argv[]){
 
      //Qt translations
      QTranslator qtTranslator;
-     qtTranslator.load("qt_" + QLocale::system().name(),
-#if QT_VERSION >= 0x060000
-       QLibraryInfo::path(QLibraryInfo::TranslationsPath));
-#else
-       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#endif
+     if (!qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+        return 0;
+     }
+       QLibraryInfo::path(QLibraryInfo::TranslationsPath);
      app.installTranslator(&qtTranslator);
 
 
@@ -65,7 +56,9 @@ int main (int argc, char *argv[]){
      translator.load(":" + QLocale::system().name());
     #else
      QString tmp = "/usr/share/noblenote/translations/noblenote_";
-     translator.load(tmp + QLocale::system().name());
+     if (!translator.load(tmp + QLocale::system().name())) {
+        return 0;
+     }
     #endif
      app.installTranslator(&translator);
 

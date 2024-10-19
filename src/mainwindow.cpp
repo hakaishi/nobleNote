@@ -48,14 +48,9 @@
 #include <QFileIconProvider>
 #include <QList>
 #include <QPushButton>
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrentMap>
 #include <QScroller>
 #include <QStandardPaths>
-#else
-#include <QtConcurrentMap>
-#include <QDesktopServices>
-#endif
 
 MainWindow::MainWindow()
 {
@@ -286,13 +281,7 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
 
        suffix.replace(QDir::separator(), "_");
 
-      #if QT_VERSION < 0x050000 && !defined(Q_OS_WIN32)
-       backupPath = QDir::home().absolutePath() +  "/.local/share/" + qApp->applicationName();
-      #elif QT_VERSION < 0x050000
-       backupPath = QDesktopServices::storageLocation(QDesktopServices::AppLocalDataLocation);
-      #elif QT_VERSION >= 0x050000
        backupPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).first();
-      #endif
 
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
 

@@ -28,11 +28,7 @@
 
 #include "ui_welcome.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QDialog>
-#else
-#include <QDialog>
-#endif
 
 class LineEdit;
 
