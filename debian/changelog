@@ -7,6 +7,7 @@ noblenote (1.4.0) UNRELEASED; urgency=medium
   * Convert to a native package, since the upstream tarball and the debian/
     directory are in the same repository.
   * Make the package completely Lintian-clean.
+  * Make the package reproducible by removing hardcoded build dates.
 
  -- Simon Quigley <tsimonq2@debian.org>  Sat, 19 Oct 2024 12:03:39 -0500
 
