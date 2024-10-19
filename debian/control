@@ -5,9 +5,9 @@ Maintainer: nobleNote Developers <noblenote.developers@gmail.com>
 Uploaders: Fabian Deuchler <Taiko000@gmail.com>,
            Christian Metscher <hakaishi@web.de>
 Build-Depends: debhelper-compat (= 13),
-               qt5-qmake:native,
-               qtbase5-dev,
-               qttools5-dev-tools
+               qmake6,
+               qt6-base-dev,
+               qt6-tools-dev-tools
 Standards-Version: 4.7.0
 Vcs-Git: https://github.com/hakaishi/nobleNote.git
 Vcs-Browser: https://github.com/hakaishi/nobleNote

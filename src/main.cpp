@@ -43,7 +43,9 @@ int main (int argc, char *argv[]){
 
      //Qt translations
      QTranslator qtTranslator;
-     !qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
+     if (!qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+        return 0;
+     }
        QLibraryInfo::path(QLibraryInfo::TranslationsPath);
      app.installTranslator(&qtTranslator);
 
@@ -54,7 +56,9 @@ int main (int argc, char *argv[]){
      translator.load(":" + QLocale::system().name());
     #else
      QString tmp = "/usr/share/noblenote/translations/noblenote_";
-     translator.load(tmp + QLocale::system().name());
+     if (!translator.load(tmp + QLocale::system().name())) {
+        return 0;
+     }
     #endif
      app.installTranslator(&translator);
 
