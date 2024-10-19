@@ -10,8 +10,9 @@ Build-Depends: debhelper-compat (= 13),
                qttools5-dev-tools
 Standards-Version: 4.7.0
 Vcs-Git: https://github.com/hakaishi/nobleNote.git
-Vcs-browser: https://github.com/hakaishi/nobleNote
+Vcs-Browser: https://github.com/hakaishi/nobleNote
 Homepage: https://github.com/hakaishi/nobleNote
+Rules-Requires-Root: no
 
 Package: noblenote
 Architecture: any
