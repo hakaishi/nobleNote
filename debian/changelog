@@ -2,6 +2,7 @@ noblenote (1.4.0-1) UNRELEASED; urgency=medium
 
   * New upstream release.
   * Run wrap-and-sort.
+  * Bump Standards-version to 4.7.0, no changes needed.
 
  -- Simon Quigley <tsimonq2@debian.org>  Sat, 19 Oct 2024 12:03:39 -0500
 
