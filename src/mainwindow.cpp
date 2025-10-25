@@ -48,14 +48,9 @@
 #include <QFileIconProvider>
 #include <QList>
 #include <QPushButton>
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrentMap>
 #include <QScroller>
 #include <QStandardPaths>
-#else
-#include <QtConcurrentMap>
-#include <QDesktopServices>
-#endif
 
 MainWindow::MainWindow()
 {
@@ -286,13 +281,7 @@ void MainWindow::writeBackupDirPath() //generates a backup path according to OS 
 
        suffix.replace(QDir::separator(), "_");
 
-      #if QT_VERSION < 0x050000 && !defined(Q_OS_WIN32)
-       backupPath = QDir::home().absolutePath() +  "/.local/share/" + qApp->applicationName();
-      #elif QT_VERSION < 0x050000
-       backupPath = QDesktopServices::storageLocation(QDesktopServices::AppLocalDataLocation);
-      #elif QT_VERSION >= 0x050000
        backupPath = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation).first();
-      #endif
 
      // reduce extraordinary long path, replaces .../nobleNote/nobleNote/... with .../nobleNote/...
 
@@ -1120,7 +1109,7 @@ void MainWindow::about()
 
      QMessageBox::about(this, tr("About ") + qApp->applicationName(),
                       tr("<h1>%1 version %2</h1><p><b>%1</b> is a note taking application</p>"
-                   "<p>Copyright © %3 Christian Metscher</p>"
+                   "<p>Copyright © 2020 Christian Metscher</p>"
 
                    "<p>Permission is hereby granted, free of charge,"
                    " to any person obtaining a copy of this software and associated documentation files (the \"Software\"),"
@@ -1131,10 +1120,8 @@ void MainWindow::about()
                    "<p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
                    " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,"
                    " WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>"
-                         ).arg(qApp->applicationName()).arg(version).arg(QDate::currentDate().year())  //: %1 is the application name, also do not translate the licence text
+                         ).arg(qApp->applicationName()).arg(version)  //: %1 is the application name, also do not translate the licence text
 
                         // these macros should work for every compiler
-                        +   "<p>Build " + QString(__TIME__) + " " + QString(__DATE__)  // build time and date
-
                         +   "</p><p>Qt " + QString(QT_VERSION_STR) + "</p>");  // the Qt version this build is linked against
 }

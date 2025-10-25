@@ -2,16 +2,21 @@ Source: noblenote
 Section: editors
 Priority: optional
 Maintainer: nobleNote Developers <noblenote.developers@gmail.com>
-Uploaders: Fabian Deuchler <Taiko000@gmail.com>, Christian Metscher <hakaishi@web.de>
-Build-Depends: debhelper (>= 9), qtbase5-dev, qttools5-dev-tools, qt5-qmake:native
-Standards-Version: 4.5.0
+Uploaders: Fabian Deuchler <Taiko000@gmail.com>,
+           Christian Metscher <hakaishi@web.de>
+Build-Depends: debhelper-compat (= 13),
+               qmake6,
+               qt6-base-dev,
+               qt6-tools-dev-tools
+Standards-Version: 4.7.0
 Vcs-Git: https://github.com/hakaishi/nobleNote.git
-Vcs-browser: https://github.com/hakaishi/nobleNote
+Vcs-Browser: https://github.com/hakaishi/nobleNote
 Homepage: https://github.com/hakaishi/nobleNote
+Rules-Requires-Root: no
 
 Package: noblenote
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Qt program for taking notes
  nobleNote is a program to organize and create notes. It has an icon
  in the system tray and supports drag and drop. The note-editor supports

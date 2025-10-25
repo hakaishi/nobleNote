@@ -1,8 +1,8 @@
 # nobleNote
 
-nobleNote is a cross-platform note taking application. 
-Manage notes in a simple two-pane layout with notebooks and an integrated rich text editor. 
-Notes are stored in the html format for maximum compatibility with other applications. 
+nobleNote is a cross-platform note taking application.
+Manage notes in a simple two-pane layout with notebooks and an integrated rich text editor.
+Notes are stored in the html format for maximum compatibility with other applications.
 
 It is compatible to the [nobleNoteAndroid](https://github.com/taiko000/nobleNoteAndroid) app for Android.
 
@@ -12,11 +12,11 @@ Any platform supported by Qt: Windows, Linux, macOS
 
 ## Sync notes between desktop and mobile devices
 
-1.) Install [nobleNote](https://github.com/hakaishi/nobleNote) on your Linux/Windows/macOS device and find the folder containing the nobleNote notebooks. 
+1.) Install [nobleNote](https://github.com/hakaishi/nobleNote) on your Linux/Windows/macOS device and find the folder containing the nobleNote notebooks.
 
 2.) In nobleNoteAndroid, select a folder on the external storage (sd-card) using the overflow menu on the main screen.
 
-3.) Use a sync software of your choice (e.g. [Syncthing](https://syncthing.net), Dropbox) to sync the folder containining the notebooks with the same folder on your Linux/Windows/macOS device. nobleNote will detect when notes have been changed on the file system and reload them automatically. 
+3.) Use a sync software of your choice (e.g. [Syncthing](https://syncthing.net), Dropbox) to sync the folder containining the notebooks with the same folder on your Linux/Windows/macOS device. nobleNote will detect when notes have been changed on the file system and reload them automatically.
 
 ## Screenshots
 
@@ -28,28 +28,28 @@ Any platform supported by Qt: Windows, Linux, macOS
 
 Windows: Binary releases can be found on the releases page of this github repository
 
-Debian based Linux distributions (Ubuntu): 
+Debian based Linux distributions (Ubuntu):
 
-`sudo apt-get install noblenote`
+`sudo apt install noblenote`
 
-Building from source requires at least Qt 5.0 or newer.
+Building from source requires at least Qt 6.0 or newer.
 
-It can also be build using the QtCreator IDE. 
+It can also be build using the QtCreator IDE.
 
 ## Building From CLI
 
-Dependencies: build-essential, qtbase5-dev, qttools5-dev-tools
+Dependencies: build-essential, qt6-base-dev, qt6-tools-dev-tools
 
 To compile from source, open a terminal and change into the nobleNote source folder.
 To install type:
 
-`qmake`
+`qmake6`
 
 `sudo make install distclean`
 
 To uninstall type:
 
-`qmake`     (if the Makefile has been removed)
+`qmake6`     (if the Makefile has been removed)
 
 `sudo make deinstall`
 

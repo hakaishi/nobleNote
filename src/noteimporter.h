@@ -31,13 +31,8 @@
 #include <QFutureWatcher>
 #include "htmlnotewriter.h"
 #include "progressreceiver.h"
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QProgressDialog>
 #include <QtWidgets/QFileDialog>
-#else
-#include <QProgressDialog>
-#include <QFileDialog>
-#endif
 
 class NoteImporter : public QObject
 {

@@ -1,0 +1,5 @@
+# Allow translations to have very long lines
+noblenote source: very-long-line-length-in-source-file * [src/translations/*]
+
+# We converted to native format at a later date, old non-native formats are okay
+noblenote source: odd-historical-debian-changelog-version * (for native) [debian/changelog:*]

@@ -32,7 +32,6 @@
 #include "noteimporter.h"
 #include <QSyntaxHighlighter>
 #include <QSettings>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QSystemTrayIcon>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QListView>
@@ -46,21 +45,6 @@
 #include <QFutureWatcher>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMainWindow>
-#else
-#include <QSystemTrayIcon>
-#include <QSplitter>
-#include <QListView>
-#include <QFileSystemModel>
-#include <QAbstractItemModel>
-#include <QToolButton>
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QPointer>
-#include <QProgressDialog>
-#include <QFutureWatcher>
-#include <QFileDialog>
-#include <QMainWindow>
-#endif
 #include <QFileSystemWatcher>
 
 /**

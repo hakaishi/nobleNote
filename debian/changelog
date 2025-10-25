@@ -1,3 +1,17 @@
+noblenote (1.4.0) UNRELEASED; urgency=medium
+
+  * New upstream release.
+  * Run wrap-and-sort.
+  * Bump Standards-version to 4.7.0, no changes needed.
+  * Bump to debhelper compat 13.
+  * Convert to a native package, since the upstream tarball and the debian/
+    directory are in the same repository.
+  * Make the package completely Lintian-clean.
+  * Make the package reproducible by removing hardcoded build dates.
+  * Update the package to Qt 6.
+
+ -- Simon Quigley <tsimonq2@debian.org>  Sat, 19 Oct 2024 12:03:39 -0500
+
 noblenote (1.2.0-1) unstable; urgency=low
 
   - added "open notes from tray"
