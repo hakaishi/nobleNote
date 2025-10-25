@@ -42,8 +42,7 @@ const int userTypeOffset = 314;
 
 void ProgressReceiver::postProgressEvent()
 {
-    ++value_;
-    value_ = value_; // the number of the currently processed item
+    ++value_; // the number of the currently processed item
 
     ProgressEvent * me = new ProgressEvent(static_cast<QEvent::Type>(QEvent::User + userTypeOffset));
     me->value = value_;
