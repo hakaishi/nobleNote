@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="10.468067mm"
+   height="12.96503mm"
+   viewBox="0 0 10.468067 12.96503"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -25,8 +25,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="4.6291328"
-     inkscape:cx="354.38603"
-     inkscape:cy="568.78904"
+     inkscape:cx="10.15309"
+     inkscape:cy="51.197494"
      inkscape:window-width="1147"
      inkscape:window-height="1032"
      inkscape:window-x="26"
@@ -46,10 +46,10 @@
          style="stop-color:#a3d79f;stop-opacity:1;"
          offset="1"
          id="stop3" /></linearGradient><rect
-       x="353.13468"
-       y="592.03524"
-       width="20.864678"
-       height="23.125018"
+       x="353.13467"
+       y="592.03522"
+       width="20.864677"
+       height="23.125017"
        id="rect1" /><linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient25"
@@ -141,7 +141,8 @@
        gradientTransform="translate(-17.740675,5.4828071)" /></defs><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"><path
+     id="layer1"
+     transform="translate(-88.635415,-148.16666)"><path
        id="rect1-8"
        style="fill:#b4b4b4;stroke-width:0.407808"
        d="m 88.635415,148.19264 h 5.1 2.154249 l 2.945748,2.89411 2e-6,10.04494 H 88.635415 Z"
