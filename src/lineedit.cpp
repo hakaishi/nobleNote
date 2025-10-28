@@ -31,9 +31,7 @@ LineEdit::LineEdit(QWidget *parent)
     : QLineEdit(parent)
 {
     clearButton = new QToolButton(this);
-    QPixmap pixmap(":closeB");
-    clearButton->setIcon(QIcon(pixmap));
-    clearButton->setIconSize(pixmap.size());
+    clearButton->setIcon(QIcon(":closeB"));
     clearButton->setCursor(Qt::ArrowCursor);
     clearButton->setStyleSheet("QToolButton { border: none; padding: 0px; }");
     clearButton->hide();
