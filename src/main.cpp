@@ -29,6 +29,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QSettings>
+#include <QStyleFactory>
 
 #include "welcome.h"
 
@@ -40,6 +41,9 @@ int main (int argc, char *argv[]){
      app.setApplicationName("nobleNote");
      app.setOrganizationName("nobleNote");
 
+#ifdef Q_OS_WIN32
+     QApplication::setStyle(QStyleFactory::create("Fusion"));
+#endif
 
      //Qt translations
      QTranslator qtTranslator;
