@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="4.6291328"
-     inkscape:cx="10.15309"
-     inkscape:cy="51.197494"
+     inkscape:zoom="6.5465824"
+     inkscape:cx="13.900383"
+     inkscape:cy="31.314049"
      inkscape:window-width="1147"
      inkscape:window-height="1032"
      inkscape:window-x="26"
@@ -138,7 +138,7 @@
        x2="111.62593"
        y2="149.09178"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-17.740675,5.4828071)" /></defs><g
+       gradientTransform="matrix(0.81971283,0,0,0.81971283,3.1955825,33.49819)" /></defs><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
@@ -177,8 +177,8 @@
        style="fill:url(#linearGradient14);fill-opacity:1;stroke:none;stroke-width:0.129;stroke-dasharray:none;stroke-opacity:1"
        d="m 95.889664,148.49249 c 1.190625,0.45475 2.634015,2.59633 2.634015,2.59633 0,0 -2.28374,-0.45544 -2.634015,-0.002 z"
        sodipodi:nodetypes="cccc" /><path
-       d="m 94.394157,158.41734 c 0,0 -1.46475,-0.0106 -2.01206,0 -0.52632,0.0102 -0.52641,-1.57924 0,-1.57924 h 2.01206 c 0,0 0.0387,-1.36068 0,-1.96859 -0.0357,-0.55964 1.64227,-0.55934 1.68233,0 0.0421,0.5877 0,1.96859 0,1.96859 h 1.8403 c 0.52641,0 0.52641,1.57924 0,1.57924 h -1.8403 v 1.96298 c 0,0.56078 -1.68233,0.56078 -1.68233,0 z"
+       d="m 95.113942,158.86059 c 0,0 -1.200674,-0.009 -1.649311,0 -0.431432,0.009 -0.431506,-1.29452 0,-1.29452 h 1.649311 c 0,0 0.03173,-1.11537 0,-1.61369 -0.02927,-0.45874 1.34619,-0.4585 1.379027,0 0.03451,0.48175 0,1.61369 0,1.61369 h 1.508518 c 0.431506,0 0.431506,1.29452 0,1.29452 h -1.508518 v 1.60908 c 0,0.45967 -1.379027,0.45967 -1.379027,0 z"
        id="text1"
-       style="font-size:13.3333px;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';white-space:pre;fill:url(#linearGradient3);fill-opacity:1;stroke:#2fa520;stroke-width:0.15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="font-size:13.3333px;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';white-space:pre;fill:url(#linearGradient3);fill-opacity:1;stroke:#2fa520;stroke-width:0.122957;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        aria-label="+"
        sodipodi:nodetypes="csscsscsscssc" /></g></svg>
