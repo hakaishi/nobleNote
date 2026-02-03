@@ -53,7 +53,7 @@ class Backup : public QObject {
       QPushButton   *deleteOldButton;
       QStringList   noteFiles;
       QFutureWatcher<QString> *future1;
-      QFutureWatcher<void> *future2;
+      QFutureWatcher<QPair<QString, QStringList>> *future2;
       ProgressReceiver *progressReceiver1, *progressReceiver2;
       QProgressDialog  *progressDialog1, *progressDialog2;
       QList<QFileInfo> backupFiles; //don't ever use a local stack variable
@@ -74,28 +74,33 @@ class Backup : public QObject {
            }
       };
 
+
       // functor used for multithreaded note file reading method
       struct SetupBackup
       {
-           ProgressReceiver *p;
-           QHash<QString,QStringList> *hash;
+          ProgressReceiver *p;
 
-           void operator()(const QFileInfo &file)
-           {
-                QStringList data;
-                HtmlNoteReader reader(file.absoluteFilePath());
-                reader.read();
-                QString title = reader.title();
-                if(title.isEmpty())
-                {
-                    title = tr("deleted note");
-                }
-                data << title << file.absoluteFilePath() << reader.html();
-                hash->insert(file.absoluteFilePath(),data);
+          // Return key/value pair instead of mutating shared QHash
+          typedef QPair<QString, QStringList> result_type;
 
-                p->postProgressEvent();
-           }
+          result_type operator()(const QFileInfo &file)
+          {
+              QStringList data;
+              HtmlNoteReader reader(file.absoluteFilePath());
+              reader.read();
+
+              QString title = reader.title();
+              if (title.isEmpty())
+                  title = QObject::tr("deleted note");
+
+              data << title << file.absoluteFilePath() << reader.html();
+
+              if (p) p->postProgressEvent();
+
+              return qMakePair(file.absoluteFilePath(), data);
+          }
       };
+
 
       GetUuid getUuid;
       SetupBackup setupBackup;
