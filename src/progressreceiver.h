@@ -78,9 +78,7 @@ private:
     };
 
     int interval_;
-    int value_;
-    QTime time_;
-    
+    int value_;    
 };
 
 #endif // PROGRESSRECEIVER_H
