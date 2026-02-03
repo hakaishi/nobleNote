@@ -105,16 +105,14 @@ void Backup::setupBackups()
      future2 = new QFutureWatcher<QPair<QString, QStringList>>(this);
      future2->setFuture(future);
 
-     // progress dialog range (fix 5)
      progressDialog2->setRange(0, backupFiles.size());
 
-     // connect finished BEFORE showing so we can merge results on UI thread
      QObject::connect(
          future2,
          &QFutureWatcherBase::finished,
          this,
          [this]() {
-             // Merge results safely on the main thread
+             // Merge results  on the main thread
              QFuture<QPair<QString, QStringList>> f = future2->future();
              for (auto it = f.begin(); it != f.end(); ++it) {
                  backupDataHash.insert(it->first, it->second);
@@ -122,6 +120,9 @@ void Backup::setupBackups()
              showTrash();
          }
          );
+
+     progressDialog1->setAttribute(Qt::WA_DeleteOnClose);
+     progressDialog2->setAttribute(Qt::WA_DeleteOnClose);
 
      QObject::connect(progressReceiver2, SIGNAL(valueChanged(int)),
                       progressDialog2, SLOT(setValue(int)));
@@ -135,5 +136,9 @@ void Backup::showTrash()
 {
      trash = new Trash(&backupDataHash, parent_);
      connect(trash, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+
+     // reparent so that these windows don't linger around after closing the trash window
+     progressDialog1->setParent(trash);
+     progressDialog2->setParent(trash);
      trash->show();
 }
