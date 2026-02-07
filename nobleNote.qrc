@@ -1,25 +1,25 @@
 <RCC>
     <qresource prefix="/">
         <file alias="version">version.txt</file>
-        <file alias="nobleNote">src/noblenote-icons-vector/noblenote.svg</file>
-        <file alias="closeB">src/noblenote-icons-vector/fileclose.svg</file>
-        <file alias="hyperlink">src/noblenote-icons-vector/emblem-web.svg</file>
-        <file alias="newFolder">src/noblenote-icons-vector/foldernew.svg</file>
-        <file alias="newNote">src/noblenote-icons-vector/filenew.svg</file>
-        <file alias="deleteFolder">src/noblenote-icons-vector/folderremove.svg</file>
-        <file alias="deleteNote">src/noblenote-icons-vector/fileremove.svg</file>
-        <file alias="renameFolder">src/noblenote-icons-vector/folderrename.svg</file>
-        <file alias="renameNote">src/noblenote-icons-vector/filerename.svg</file>
-        <file alias="file">src/noblenote-icons-vector/file.svg</file>
-        <file alias="cut_file">src/noblenote-icons-vector/cut_file.svg</file>
-        <file alias="folder">src/noblenote-icons-vector/folder.svg</file>
-        <file alias="bulletpoints">src/noblenote-icons-vector/bulletpoints.svg</file>
-        <file alias="trash">src/noblenote-icons-vector/trash.svg</file>
-        <file alias="preferences">src/noblenote-icons-vector/preferences.svg</file>
-        <file alias="bold">src/noblenote-icons-vector/format-text-bold.svg</file>
-        <file alias="italic">src/noblenote-icons-vector/format-text-italic.svg</file>
-        <file alias="strikedout">src/noblenote-icons-vector/format-text-strikethrough.svg</file>
-        <file alias="underlined">src/noblenote-icons-vector/format-text-underline.svg</file>
-        <file alias="clearFormatting">src/noblenote-icons-vector/clear_formatting.svg</file>
+        <file alias="nobleNote">src/noblenote-icons/noblenote.svg</file>
+        <file alias="closeB">src/noblenote-icons/fileclose.svg</file>
+        <file alias="hyperlink">src/noblenote-icons/emblem-web.svg</file>
+        <file alias="newFolder">src/noblenote-icons/foldernew.svg</file>
+        <file alias="newNote">src/noblenote-icons/filenew.svg</file>
+        <file alias="deleteFolder">src/noblenote-icons/folderremove.svg</file>
+        <file alias="deleteNote">src/noblenote-icons/fileremove.svg</file>
+        <file alias="renameFolder">src/noblenote-icons/folderrename.svg</file>
+        <file alias="renameNote">src/noblenote-icons/filerename.svg</file>
+        <file alias="file">src/noblenote-icons/file.svg</file>
+        <file alias="cut_file">src/noblenote-icons/cut_file.svg</file>
+        <file alias="folder">src/noblenote-icons/folder.svg</file>
+        <file alias="bulletpoints">src/noblenote-icons/bulletpoints.svg</file>
+        <file alias="trash">src/noblenote-icons/trash.svg</file>
+        <file alias="preferences">src/noblenote-icons/preferences.svg</file>
+        <file alias="bold">src/noblenote-icons/format-text-bold.svg</file>
+        <file alias="italic">src/noblenote-icons/format-text-italic.svg</file>
+        <file alias="strikedout">src/noblenote-icons/format-text-strikethrough.svg</file>
+        <file alias="underlined">src/noblenote-icons/format-text-underline.svg</file>
+        <file alias="clearFormatting">src/noblenote-icons/clear_formatting.svg</file>
     </qresource>
 </RCC>
