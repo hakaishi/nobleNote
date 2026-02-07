@@ -7,7 +7,7 @@ MOC_DIR = build
 UI_DIR = build
 RCC_DIR = build
 
-QT += gui widgets concurrent
+QT += gui widgets concurrent svg
 
 win32 {
 #QMAKE_LFLAGS += -static-libgcc
