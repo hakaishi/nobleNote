@@ -99,7 +99,6 @@ void Backup::setupBackups()
      progressDialog2 = new QProgressDialog(parent_);
      progressDialog2->setLabelText(QString(tr("Indexing trash...")));
      setupBackup.p = progressReceiver2;
-     setupBackup.p = progressReceiver2;
 
      auto future = QtConcurrent::mapped(backupFiles, setupBackup);
      future2 = new QFutureWatcher<QPair<QString, QStringList>>(this);
