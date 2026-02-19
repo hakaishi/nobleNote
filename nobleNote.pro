@@ -20,7 +20,7 @@ win32 {
 RC_FILE += icon.rc
 }
 
-system(lrelease nobleNote.pro)
+system($$[QT_HOST_BINS]/lrelease nobleNote.pro)
 
 QMAKE_DISTCLEAN = src/translations/*.qm
 
