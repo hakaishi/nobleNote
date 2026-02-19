@@ -604,7 +604,7 @@ void MainWindow::quit()
      QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
      qApp->setQuitOnLastWindowClosed(true);
      qApp->closeAllWindows();
-     close();
+     qApp->quit();
 }
 
 bool MainWindow::noteIsOpen(const QString &path)
