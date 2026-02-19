@@ -92,7 +92,7 @@ private:
       FileSystemModel *noteFSModel;
       FindFileSystemModel *noteModel;
       QListView        *folderView, *noteView;
-      QAction         *actionQuitSystrayMenu, *minimizeRestoreAction;
+      QAction         *actionQuitSystrayMenu, *minimizeRestoreAction, *closeAll;
       QPointer<Preferences> pref;
       QHBoxLayout     *hBoxLayout;
       FindFileModel   *findNoteModel;
@@ -153,6 +153,7 @@ private:
       void about();
       void selectFolder();
       void settingsAccepted();
+      void close_all();
 
      protected:
       void keyPressEvent(QKeyEvent *k);

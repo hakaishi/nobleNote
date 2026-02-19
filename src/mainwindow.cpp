@@ -64,6 +64,7 @@ MainWindow::MainWindow()
      QIcon icon = QIcon(":nobleNote");
 
      minimizeRestoreAction = new QAction(tr("&Restore"),this);
+     closeAll = new QAction(tr("Close &All"),this);
      actionQuitSystrayMenu = new QAction(tr("&Quit"),this);
 
 #ifndef NO_SYSTEM_TRAY_ICON
@@ -76,6 +77,7 @@ MainWindow::MainWindow()
      
    // context menu needs at least one action else right click will not work
      iMenu->addAction(minimizeRestoreAction);
+     iMenu->addAction(closeAll);
      iMenu->addAction(actionQuitSystrayMenu);
      
      TIcon->setContextMenu(iMenu);  //setting contextmenu for the systray
@@ -88,6 +90,7 @@ MainWindow::MainWindow()
              iconCreator->populateMenu(iMenu);
              iMenu->addSeparator();
              iMenu->addAction(minimizeRestoreAction);
+             iMenu->addAction(closeAll);
              iMenu->addAction(actionQuitSystrayMenu);
          });     
      }
@@ -221,6 +224,7 @@ MainWindow::MainWindow()
      connect(TIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
              this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason))); //handles systray-symbol
      connect(minimizeRestoreAction, SIGNAL(triggered()), this, SLOT(tray_actions()));
+     connect(closeAll, SIGNAL(triggered()), this, SLOT(close_all()));
 #endif
 
      connect(actionImport,SIGNAL(triggered()),noteImporter,SLOT(importDialog()));
@@ -521,6 +525,18 @@ void MainWindow::tray_actions()
      else
        hide();
 }
+
+void MainWindow::close_all()
+{
+  for(QList<QPointer<QWidget> >::Iterator it = openNotes.begin(); it < openNotes.end(); ++it)
+  {
+    Note * note = qobject_cast<Note*>(*it);
+    if(note)
+    {
+      note->close();
+    }
+  }
+}
 #endif
 
 /*#ifndef NO_SYSTEM_TRAY_ICON
@@ -576,6 +592,7 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
      }
      else{
        QSettings().setValue("mainwindow_size", saveGeometry());
+       QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
        QSettings().setValue("splitter", splitter->saveState());
 
        // find widgets that still are saving their settings and let their futuures (worker threads) finish
@@ -597,7 +614,7 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
                Note::addToOpenNoteList(note->noteDescriptor()->filePath());
            }
        }
-       qApp->setQuitOnLastWindowClosed(true);
+       qApp->quit();
      }
 
      QMainWindow::closeEvent(window_close);
@@ -605,11 +622,7 @@ void MainWindow::closeEvent(QCloseEvent* window_close)
 
 void MainWindow::quit()
 {
-     QSettings().setValue("mainwindow_size", saveGeometry());
-     QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
-     qApp->setQuitOnLastWindowClosed(true);
-     close();
-     qApp->closeAllWindows();
+     this->close();
      qApp->quit();
 }
 

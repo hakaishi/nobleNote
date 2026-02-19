@@ -128,12 +128,12 @@ void Note::closeEvent(QCloseEvent* close_Note)
                            noteDescriptor()->uuid().toString() << noteDescriptor()->filePath();
 
     saveWindowState(variantList);
-     QMainWindow::closeEvent(close_Note);
+    QMainWindow::closeEvent(close_Note);
 }
 
 /*static */ void Note::addToOpenNoteList(QString path)
 {
-     QStringList savedOpenNoteList;
+    QStringList savedOpenNoteList;
     if(QSettings().value("open_notes").isValid())
       savedOpenNoteList = QSettings().value("open_notes").toStringList();
     savedOpenNoteList.append(path);

@@ -62,8 +62,6 @@ int main (int argc, char *argv[]){
     #endif
      app.installTranslator(&translator);
 
-     app.setQuitOnLastWindowClosed(false);
-
      QSettings::setDefaultFormat(QSettings::IniFormat);
 
      QFileInfo settingsFile = QFileInfo(QDir::toNativeSeparators(app.applicationDirPath() + "/" +
