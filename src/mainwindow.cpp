@@ -608,6 +608,7 @@ void MainWindow::quit()
      QSettings().setValue("mainwindow_size", saveGeometry());
      QSettings().setValue("mainwindow_toolbar_visible", actionShowToolbar->isChecked());
      qApp->setQuitOnLastWindowClosed(true);
+     close();
      qApp->closeAllWindows();
      qApp->quit();
 }
