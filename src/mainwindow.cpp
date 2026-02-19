@@ -94,6 +94,11 @@ MainWindow::MainWindow()
 
 #endif
 
+#ifdef Q_OS_WIN32
+     QSize newSize(32,32);
+     toolBar->setIconSize(newSize);
+#endif
+
    //Toolbar
      toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
      toolBar->addAction(actionNew_folder);
