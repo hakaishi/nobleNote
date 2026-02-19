@@ -99,12 +99,32 @@ void Backup::setupBackups()
      progressDialog2 = new QProgressDialog(parent_);
      progressDialog2->setLabelText(QString(tr("Indexing trash...")));
      setupBackup.p = progressReceiver2;
-     setupBackup.hash = &backupDataHash; // captures results
-     future2 = new QFutureWatcher<void>(this);
-     future2->setFuture(QtConcurrent::map(backupFiles, setupBackup));
 
-     QObject::connect(progressReceiver2,SIGNAL(valueChanged(int)),progressDialog2, SLOT(setValue(int)));
-     QObject::connect(future2, SIGNAL(finished()), this, SLOT(showTrash()));
+     auto future = QtConcurrent::mapped(backupFiles, setupBackup);
+     future2 = new QFutureWatcher<QPair<QString, QStringList>>(this);
+     future2->setFuture(future);
+
+     progressDialog2->setRange(0, backupFiles.size());
+
+     QObject::connect(
+         future2,
+         &QFutureWatcherBase::finished,
+         this,
+         [this]() {
+             // Merge results  on the main thread
+             QFuture<QPair<QString, QStringList>> f = future2->future();
+             for (auto it = f.begin(); it != f.end(); ++it) {
+                 backupDataHash.insert(it->first, it->second);
+             }
+             showTrash();
+         }
+         );
+
+     progressDialog1->setAttribute(Qt::WA_DeleteOnClose);
+     progressDialog2->setAttribute(Qt::WA_DeleteOnClose);
+
+     QObject::connect(progressReceiver2, SIGNAL(valueChanged(int)),
+                      progressDialog2, SLOT(setValue(int)));
      QObject::connect(future2, SIGNAL(finished()), progressDialog2, SLOT(reset()));
      QObject::connect(progressDialog2, SIGNAL(canceled()), future2, SLOT(cancel()));
 
@@ -115,5 +135,9 @@ void Backup::showTrash()
 {
      trash = new Trash(&backupDataHash, parent_);
      connect(trash, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+
+     // reparent so that these windows don't linger around after closing the trash window
+     progressDialog1->setParent(trash);
+     progressDialog2->setParent(trash);
      trash->show();
 }

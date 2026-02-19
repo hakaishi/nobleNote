@@ -33,7 +33,6 @@ ProgressReceiver::ProgressReceiver(QObject *parent) :
 {
     interval_ = 20;
     value_ = 0;
-    time_  = QTime::currentTime();
 }
 
 // if the event user type collides with an existing user type, the static_cast in the
@@ -47,14 +46,10 @@ void ProgressReceiver::postProgressEvent()
     ProgressEvent * me = new ProgressEvent(static_cast<QEvent::Type>(QEvent::User + userTypeOffset));
     me->value = value_;
 
-    // only report periodically
-    if(QTime::currentTime() > time_)
-    {
-        time_ = time_.addMSecs(interval_);
 
         // ProgressReceiver now receives a event with the current progress
-        QCoreApplication::postEvent(this,me);
-    }
+    QCoreApplication::postEvent(this,me);
+
 }
 
 bool ProgressReceiver::event(QEvent *e)
