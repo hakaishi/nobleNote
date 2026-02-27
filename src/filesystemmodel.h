@@ -77,12 +77,19 @@ public:
             //Search for the right dir
             QString parentPath;
             for(QFileInfo file :  dirList)
+            {
                    if(this->index(QFileInfo(file).absoluteFilePath()) == parent)
-                     parentPath = QFileInfo(file).absoluteFilePath();
+                   {
+                    parentPath = QFileInfo(file).absoluteFilePath();
+                   }
+            }
 
             auto firstInfo = QFileInfo(files.first());
-            if(dirList.contains(firstInfo)) //check if files come from outside the note folders
+            // check if the parent directory of the dragged file is one of the notebook directories
+            if(dirList.contains(QFileInfo(firstInfo.absolutePath())))
+            {
                action = Qt::MoveAction;
+            }
 
             //remove all file titles that don't exist in the target folder, because they will be sucessfully dropped
             // TODO FIXME foreach operates on a copy
