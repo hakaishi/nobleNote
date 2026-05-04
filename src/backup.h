@@ -33,6 +33,7 @@
 #include <QTextDocument>
 #include <QProgressDialog>
 #include <QFutureWatcher>
+#include <QPointer>
 
 class ProgressReceiver;
 class Trash;
@@ -55,7 +56,7 @@ class Backup : public QObject {
       QFutureWatcher<QString> *future1;
       QFutureWatcher<QPair<QString, QStringList>> *future2;
       ProgressReceiver *progressReceiver1, *progressReceiver2;
-      QProgressDialog  *progressDialog1, *progressDialog2;
+      QPointer<QProgressDialog> progressDialog1, progressDialog2;
       QList<QFileInfo> backupFiles; //don't ever use a local stack variable
       QHash<QString,QStringList> backupDataHash;
       Trash         *trash;
