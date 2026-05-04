@@ -137,7 +137,7 @@ void Backup::showTrash()
      connect(trash, SIGNAL(destroyed()), this, SLOT(deleteLater()));
 
      // reparent so that these windows don't linger around after closing the trash window
-     progressDialog1->setParent(trash);
-     progressDialog2->setParent(trash);
+     if (progressDialog1) progressDialog1->setParent(trash);
+     if (progressDialog2) progressDialog2->setParent(trash);
      trash->show();
 }

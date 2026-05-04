@@ -63,6 +63,7 @@ void Welcome::openDir(){
 }
 
 void Welcome::setRootDir(){
+     QSettings().remove("Recent_notes"); // clear recent files from old root folder
      if(path->text() == "")
        QSettings().setValue("root_path", defaultPath);
      else

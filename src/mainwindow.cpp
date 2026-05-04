@@ -320,6 +320,7 @@ void MainWindow::changeRootIndex(){
 
         openNotes.clear();
      }
+     QSettings().remove("Recent_notes"); // clear recent files from old root folder
      writeBackupDirPath();
      makeStandardPaths();
 }
