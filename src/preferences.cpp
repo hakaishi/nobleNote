@@ -88,18 +88,31 @@ void Preferences::saveSettings()
        QMessageBox::warning(this,tr("Warning"),tr("Could not write settings!"));
 
      if(rootPath != originalRootPath){
-       if(QMessageBox::question(this,tr("Keep old trash folder?"),
-          tr("Do you want to keep the old trash folder associated with the path %1? "
-            "(You will be able to see the old files in the trash again if you change "
-            "back to the previous directory.)")
-          .arg(QDir::toNativeSeparators(settings->value("backup_dir_path").toString())),
-          QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-       {
-            const QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
-            for(QFileInfo backup : backups)
-              QFile(backup.absoluteFilePath()).remove();
+       const QList<QFileInfo> backups = QDir(settings->value("backup_dir_path").toString()).entryInfoList(QDir::Files);
+       
+       // If there are no trash files, remove the directory without asking
+       if(backups.isEmpty()) {
             if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
-              QMessageBox::warning(this,tr("Couldn't delete trash folder"), tr("Could not delete the trash folder!"));
+              QMessageBox::warning(this, tr("Couldn't delete trash folder"), tr("Could not delete the trash folder!"));
+       }
+       else {
+            // There are trash files, ask the user
+            QString message = tr("You are changing the root folder. A new trash folder will be created for the new location.\n\n"
+                                 "Do you want to keep the trash files from the old location?\n"
+                                 "(They will be available again if you switch back to the previous root folder.)\n\n")
+                             + tr("New root folder:\n%1\n\n")
+                               .arg(QDir::toNativeSeparators(rootPath))
+                             + tr("Old trash folder:\n%1")
+                               .arg(QDir::toNativeSeparators(settings->value("backup_dir_path").toString()));
+            
+            if(QMessageBox::question(this, tr("Change root folder?"), message,
+               QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+            {
+                 for(QFileInfo backup : backups)
+                   QFile(backup.absoluteFilePath()).remove();
+                 if(!QDir().rmdir(settings->value("backup_dir_path").toString()))
+                   QMessageBox::warning(this, tr("Couldn't delete trash folder"), tr("Could not delete the trash folder!"));
+            }
        }
 
        settings->setValue("root_path",rootPath);
