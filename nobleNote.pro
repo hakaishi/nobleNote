@@ -26,6 +26,7 @@ QMAKE_DISTCLEAN = src/translations/*.qm
 
 # Input
 HEADERS = src/mainwindow.h src/note.h \
+    src/contentpalette.h \
     src/systemtraycreator.h \
     src/welcome.h \
     src/filesystemmodel.h \

@@ -24,6 +24,7 @@
  */
 
 #include "mainwindow.h"
+#include "contentpalette.h"
 #include "welcome.h"
 #include "note.h"
 #include "findfilemodel.h"
@@ -154,6 +155,8 @@ MainWindow::MainWindow()
 
      folderView = new QListView(splitter);
      noteView = new QListView(splitter);
+     contentPaletteReady = true;
+     updateContentPalettes();
 
      // FlickCharm needs this mode
      folderView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
@@ -255,6 +258,20 @@ MainWindow::MainWindow()
              find(false);
          }
      });
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+     QMainWindow::changeEvent(event);
+     if (event->type() == QEvent::PaletteChange && contentPaletteReady)
+         updateContentPalettes();
+}
+
+void MainWindow::updateContentPalettes()
+{
+     updateContentPalette(searchText);
+     updateContentPalette(folderView);
+     updateContentPalette(noteView);
 }
 
 MainWindow::~MainWindow()
