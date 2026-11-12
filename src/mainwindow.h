@@ -102,6 +102,8 @@ private:
       QStringList     shortcutNoteList;
 
       NoteImporter * noteImporter;
+      bool contentPaletteReady = false;
+      void updateContentPalettes();
 
 #ifndef NO_SYSTEM_TRAY_ICON
       QMenu           *iMenu;
@@ -155,6 +157,7 @@ private:
       void settingsAccepted();
 
      protected:
+      void changeEvent(QEvent *event) override;
       void keyPressEvent(QKeyEvent *k);
       virtual void closeEvent(QCloseEvent* window_close);
       virtual void showEvent(QShowEvent* window_show);

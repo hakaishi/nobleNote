@@ -55,8 +55,6 @@ private slots:
       void openLinkInBrowser(const QUrl link);
       void insertFromMimeData(const QMimeData *source);
 
-private:
-      void updateEditorPalette();
 };
 
 #endif // TEXTEDIT_H
