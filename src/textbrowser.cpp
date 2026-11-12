@@ -24,6 +24,7 @@
  */
 
 #include "textbrowser.h"
+#include <QApplication>
 #include <QTextBrowser>
 #include <QDesktopServices>
 #include <QMimeData>
@@ -34,6 +35,29 @@ TextBrowser::TextBrowser(QWidget *parent) : QTextBrowser(parent)
     this->viewport()->setCursor(Qt::IBeamCursor);
     setOpenLinks(false); // also disables external links
     connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(openLinkInBrowser(QUrl))); // because all links should be opened in the web browser
+    updateEditorPalette();
+}
+
+void TextBrowser::changeEvent(QEvent *event)
+{
+    QTextBrowser::changeEvent(event);
+    if (event->type() == QEvent::PaletteChange)
+        updateEditorPalette();
+}
+
+void TextBrowser::updateEditorPalette()
+{
+    const QPalette applicationPalette = QApplication::palette();
+    const bool dark = applicationPalette.color(QPalette::Window).lightness()
+            < applicationPalette.color(QPalette::WindowText).lightness();
+    const QPalette currentPalette = palette();
+    QPalette editorPalette = currentPalette;
+    const QColor background = dark ? Qt::black : Qt::white;
+    const QColor text = dark ? Qt::white : Qt::black;
+    editorPalette.setColor(QPalette::Base, background);
+    editorPalette.setColor(QPalette::Text, text);
+    if (editorPalette != currentPalette)
+        setPalette(editorPalette);
 }
 
 void TextBrowser::focusInEvent(QFocusEvent *event){

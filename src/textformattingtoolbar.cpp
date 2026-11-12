@@ -107,7 +107,7 @@ TextFormattingToolbar::TextFormattingToolbar(QTextEdit * textEdit, QWidget *pare
 //    addAction(actionRemoveWhitespace);
 
     QPixmap textPix(16, 16);
-    textPix.fill(textEdit_->palette().windowText().color());
+    textPix.fill(textEdit_->palette().text().color());
     actionTextColor = new QAction(textPix, tr("&Text color..."), this);
     connect(actionTextColor, SIGNAL(triggered()), this, SLOT(coloredText()));
     addAction(actionTextColor);
@@ -175,7 +175,7 @@ void TextFormattingToolbar::getFontAndPointSizeOfText(const QTextCharFormat &for
      actionTextStrikeOut->setChecked(f.strikeOut());
      QPixmap textPix(16,16);
      if(format.foreground().style() == Qt::NoBrush)
-       textPix.fill(textEdit_->palette().windowText().color());
+       textPix.fill(textEdit_->palette().text().color());
      else
        textPix.fill(format.foreground().color());
      actionTextColor->setIcon(textPix);

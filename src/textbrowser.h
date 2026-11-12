@@ -47,12 +47,16 @@ public slots:
       void slotSetReadOnly(bool ro); // wrapper slot
 
      protected:
+      void changeEvent(QEvent *event) override;
       virtual void focusInEvent(QFocusEvent *fe);
       virtual void focusOutEvent(QFocusEvent *e);
 
 private slots:
       void openLinkInBrowser(const QUrl link);
       void insertFromMimeData(const QMimeData *source);
+
+private:
+      void updateEditorPalette();
 };
 
 #endif // TEXTEDIT_H
